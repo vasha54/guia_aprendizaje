@@ -1,0 +1,91 @@
+\subsection{Punto}
+El punto va estar caracterizado por las coordenadas que componen el espacio en que se encuentran. En el caso de un Punto en un espacio de 2D tiene una coordenada \emph{X} y otra \emph{Y}. Si fuera un punto en un espacio de tres dimensiones tendría una tercera coordenada \emph{Z}.
+
+Para su representación computacional podemos hacer uso de una \emph{struct} o \emph{pair} en el caso de C++ mientras en Java se puede utilizar una clase.
+
+En el caso que sea un punto de 2 dimensiones y sea C++ que utileces tambien puedes apoyarte en la estructura de números complejos que propone C++ para trabajar con estos números en este caso la parte real sería la \emph{x} mientras la parte compleja sería la \emph{y}.
+
+\subsection{Segmento}
+
+El segmento se puede representar utilizando una estructura en caso de C++ y una clase en Java. El segmento puede ser definido por los dos puntos que sirven de extremos.
+
+\subsection{Intersección de segmentos}
+Para analizar este caso vamos a partir que tenemos dos segmentos {\em A} y {\em C} definidos por los puntos {\em a} y {\em b} el primero y {\em c} y {\em d} el segundo. Para que los segmentos {\em A} y {\em C} se intersecten una de las siguientes condiciones tiene que cumplirse o ser verdadera.
+
+\begin{enumerate}
+	\item Los puntos {\em a}, {\em b} y {\em c} ser colineales y {\em c} estar entre {\em a} y  {\em b}.
+	\item Los puntos {\em a}, {\em b} y {\em d} ser colineales y {\em d} estar entre {\em a} y {\em b}.
+	\item Los puntos {\em c}, {\em d} y {\em a} ser colineales y {\em a} estar entre {\em c} y {\em d}.
+	\item Los puntos {\em c}, {\em d} y {\em b} ser colineales y {\em b} estar entre {\em c} y {\em d}.
+	\item Los puntos {\em c} y {\em d} estar en lados opuestos con respecto al segmento {\em A} y los puntos {\em a} y {\em b} estar en lados opuestos con respecto al segmento {\em C}.
+\end{enumerate}
+
+Una vez definida las condiciones que harían que los segmentos {\em A} y {\em C} se intersecten, nos podemos percatar que que para primera cuatro condiciones son identicas solo cambian los puntos o su orden. Mientras en la quinta se comprueba en un sentido y luego en el otro. Es por eso que vamos centrarnos en como determinar:
+
+\begin{itemize}
+	\item Dados tres puntos saber son colineales.
+	\item Saber si un punto está entre otros dos.
+	\item Dado un punto saber de que lado esta con respecto a un segmento definido por dos puntos.
+\end{itemize}
+
+\subsection{Dados tres puntos saber son colineales} 
+Dos puntos siempre van ser colineales porque es la mínima cantidad de puntos para definir un línea. Ahora tres o más puntos van ser colineales si se es capaz de trazar una línea recta entre los dos puntos extremos y que pase por el resto de los puntos. 
+
+
+Para determinar si los puntos \emph{e}, \emph{f} y \emph{g} son colineales 
+vamos construir dos vectores  $\overrightarrow{F}$ y  $\overrightarrow{G}$ 
+que tengan como punto de origen el punto {\em e} y como de destino los 
+puntos \emph{f} y \emph{g} respectivamente. Sin importar las posiciones de 
+los puntos el ángulo entre los dos vectores siempre va estar en el rango 
+de 0 a 180 grados. Precisamente con esa amplitudes sería los casos en que 
+los puntos serían colineales. Bueno entonces queda ver como hallar el 
+ángulo entre dos vectores y luego ver si esa amplitud es 0 ó 180 entonces 
+los puntos son colineales.
+
+Con la operación binaria producto vectorial o producto cruz entre dos vectores es posible determinar el valor del seno del ángulo comprendido entre los vectores segun la siguiente expresión:
+
+$\overrightarrow{F}$x$\overrightarrow{G} = (|\overrightarrow{F}||\overrightarrow{G}|\sin \theta)\hat n$
+
+
+donde $\hat n$ es el vector unitario y ortogonal a los vectores 
+$\overrightarrow{F}$ y $\overrightarrow{G}$ y su dirección está dada por la 
+regla de la mano derecha y $\theta$ es, como antes, el ángulo entre a y b. 
+A la regla de la mano derecha se la llama a menudo también regla del 
+sacacorchos. El valor de $\theta$ para nuestro caso será 0 o 180 (0 o 
+$\pi$) y en ambos caso la expresión $\sin \theta$ se hace cero y esto 
+produce que el miembro derecho de la 
+
+expresión sea cero.
+
+$\overrightarrow{F}$x$\overrightarrow{G} = 0$
+
+Esto conduce a plantaer que tres puntos son colineales si el producto vectorial o cruz entre dos de los vectores que se construir con ellos es igual cero. Desarrollando el miembro izquierdo de la expresión:
+
+$$ ((Pe_{x} - Pf_{x}) * (Pg_{y} - Pf_{y}) - (Pe_{y} - Pf_{y}) * (Pg_{x} - Pf_{x}))= 0 $$
+
+
+\subsection{Saber si un punto está entre otros dos puntos}
+
+
+Determinar si un punto {\em c} esta entre los puntos {\em a} y {\em b} es bastante sencillo. Solo se debe cumplir las siguientes condiciones.
+
+\begin{itemize}
+	\item min({\em a$_{x}$},{\em b$_{x}$}) $<=$  {\em c$_{x}$}
+	\item min({\em a$_{y}$},{\em b$_{y}$}) $<=$  {\em c$_{y}$}
+	\item max({\em a$_{x}$},{\em b$_{x}$}) $>=$  {\em c$_{x}$}
+	\item max({\em a$_{y}$},{\em b$_{y}$}) $>=$  {\em c$_{y}$}
+\end{itemize}
+
+Donde {\em min} y {\em max} son funciones que devuelven el mínimo y máximo respectivamente entre los valores pasado por argumentos.
+
+\subsection{Dado un punto saber de que lado esta con respecto a un segmento definido por dos puntos}
+
+Como saber que posición ocupa el punto {\em c} o de que lado está con respecto al segmento delimitado por los puntos {\em a} y {\em b}. Anteriormente vimos como saber si tres puntos son colineales, pues bien el análisis para resolver esta nueva problemática es identica a la de los tres puntos colineales. Una vez hecho el mismo análisis nos podemos percatar que cuando se cumpla la siguiente expresión:
+
+$\overrightarrow{F}$x$\overrightarrow{G} > 0$ 
+
+El punto se encuentra a la derecha del segmento.
+
+%\subsection{Linea}
+
+%\subsection{Plano}

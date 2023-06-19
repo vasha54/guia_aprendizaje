@@ -1,0 +1,29 @@
+\subsection{Concepto de función o método}
+Las aplicaciones informáticas que habitualmente se utilizan, incluso a nivel de informática personal, suelen contener decenas y aún cientos de miles de líneas de código fuente. A medidaque los programas se van desarrollando y aumentan de tamaño, se convertirían rápidamente ensistemas poco manejables si no fuera por la modularización, que es el proceso consistente endividir un programa muy grande en una serie de módulos mucho más pequeños y manejables.A estos módulos se les ha solido denominar de distintas formas (subprogramas, subrutinas,procedimientos, funciones, métodos etc.) según los distintos lenguajes. Sea cual sea la nomenclatura, la idea es sin embargo siempre
+la misma: dividir un programa grande en un conjunto de subprogramas o funciones más
+pequeñas que son llamadas por el programa principal; éstas a su vez llaman a otras funcionesmás específicas y así sucesivamente.
+
+La división de un programa en unidades más pequeñas o funciones presenta –entre
+otras– las ventajas siguientes:
+
+\begin{enumerate}
+	\item \textbf{Modularización} Cada función tiene una misión muy concreta, de modo que nunca tieneun número de líneas excesivo y siempre se mantiene dentro de un tamaño manejable.Además, una misma función (por ejemplo, un producto de matrices, una resolución deun sistema de ecuaciones lineales, ...) puede ser llamada muchas veces en un mismoprograma, e incluso puede ser reutilizada por otros programas. Cada función puede serdesarrollada y comprobada por separado.
+	\item \textbf{Ahorro de memoria y tiempo de desarrollo} En la medida en que una misma función esutilizada muchas veces, el número total de líneas de código del programa disminuye, ytambién lo hace la probabilidad de introducir errores en el programa.
+	\item \textbf{Independencia de datos y ocultamiento de información} Una de las fuentes máscomunes de errores en los programas de computador son los efectos colaterales operturbaciones que se pueden producir entre distintas partes del programa. Es muyfrecuente que al hacer una modificación para añadir una funcionalidad o corregir unerror, se introduzcan nuevos errores en partes del programa que antes funcionabancorrectamente. Una función es capaz de mantener una gran independencia con el restodel programa, manteniendo sus propios datos y definiendo muy claramente la interfaz ocomunicación con la función que la ha llamado y con las funciones a las que llama, y noteniendo ninguna posibilidad de acceso a la información que no le compete.
+\end{enumerate}
+
+Una función de C++ o Java es una porción de código o programa que realiza una determinada tarea.Una función está asociada con un \textbf{identificador o nombre}, que se utiliza para referirse a elladesde el resto del programa. En toda función utilizada en C++ o Java hay que distinguir entre su \textbf{definición}, su \textbf{declaración} su \textbf{llamada}, su \textbf{valor de retorno} y sus \textbf{argumentos}. En algunos casos tanto la \textbf{definición} y su \textbf{declaración} se realizan en conjunto.
+
+
+
+
+
+\subsection{La pila de recursión}
+La memoria de un ordenador se divide en 4 segmentos:
+
+\begin{itemize}
+	\item Segmento de código: almacena las instrucciones del programa en código máquina
+	\item Segmento de datos: almacena las variables estáticas o constantes.
+	\item Montículo: almacena las variables dinámicas
+	\item Pila del programa: Parte destinada a las variables locales y parámetros de la función que se está ejecutando.
+\end{itemize}

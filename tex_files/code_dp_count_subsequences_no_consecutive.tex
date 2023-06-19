@@ -1,0 +1,42 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+long long count(string a, string b){
+   int m= a.size();
+   int n= b.size();
+   long long look[m+1][n+1];
+   for(int i=0;i<=n;i++) look[0][i]=0;
+   
+   for(int i=0;i<=m;i++) look[i][0]=1;
+   
+   for(int i=1;i<=m;i++){
+      for(int j=1;j<=n;j++){
+        if(a[i-1]==b[j-1]) look[i][j]=look[i-1][j-1]+ look[i-1][j];
+        else look[i][j]=look[i-1][j];
+      }
+   }
+   return look[m][n];
+}
+\end{lstlisting}
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+public long countSubsequence(String _text, String _pattern){
+   int m=_text.length();
+   int n=_pattern.length();
+   long [][] dp =new long [m+10][n+10]; 
+	
+   for(int i=0;i<=n;++i)dp[0][i]=0;
+	
+   for(int i=0;i<=m;++i)dp[i][0]=1;
+   
+   for(int i=1;i<=m;i++){
+      for(int j=1;j<=n;j++){
+         if(_text.charAt(i-1) == _pattern.charAt(j-1))
+            dp[i][j]=dp[i-1][j-1]+dp[i-1][j];
+         else
+            dp[i][j]=dp[i - 1][j];
+      }
+   }
+   return dp[m][n];
+}
+\end{lstlisting}

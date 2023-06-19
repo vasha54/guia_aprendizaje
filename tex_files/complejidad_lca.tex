@@ -1,0 +1,12 @@
+Usando {\em Sqrt-Descomposición}, es posible obtener una solución respondiendo a cada consulta en O($\sqrt{N}$) con preprocesamiento en tiempo O(N).
+
+Usando un Árbol de Rango ({\em Range Tree}), puede responder a cada consulta en $O(\log N)$ con preprocesamiento en tiempo $O(N)$.
+
+Usando elevación binaria necesitará $O(N \log N)$ para preprocesar el árbol, y luego $O(\log N)$ para cada consulta LCA.
+
+En el caso del algoritmo Tarjan offline la complejidad temporal de este algoritmo. en primer lugar tenemos $O(n)$ debido a la DFS. En segundo lugar, tenemos las llamadas a funciones union\_sets que suceden $n$ veces, 
+resultando también en $O(n)$. Y en tercer lugar tenemos las llamadas de find\_set para cada consulta, lo que 
+da $O(m)$. Entonces, en total, la complejidad del tiempo es $O(n + m)$, lo que significa que para valores 
+suficientemente grandes $m$ esto corresponde a $O(1)$ por responder una consulta.
+
+El algoritmo de Farach-Colton y Bender  es capaz de resolver las consultas mínimas de rango dado en $O(1)$ tiempo, sin dejar de tomar $O(N)$ tiempo de preprocesamiento.

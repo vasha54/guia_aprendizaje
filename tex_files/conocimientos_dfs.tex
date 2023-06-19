@@ -1,0 +1,94 @@
+\subsection{Recursividad}
+La recursividad es una técnica de programación que se utiliza para realizar una llamada a una
+función desde ella misma, de allí su nombre. Un algoritmo recursivo es un algoritmo que expresa la solución de un problema en términos de una llamada a sí mismo. La llamada a sí mismo se conoce como llamada recursiva o recurrente
+
+\subsection{Pila}
+
+Una pila es una estructura de datos en la que el modo de acceso a sus elementos es de tipo LIFO (del
+inglés Last In First Out, último en entrar, primero en salir) que permite almacenar y recuperar datos.
+Para el manejo de los datos se cuenta con dos operaciones básicas: apilar, que coloca un objeto en
+la pila, y su operación inversa, des-apilar (retirar), que retira el último elemento apilado.
+
+\subsubsection{C++}
+
+En el caso de C++ para utilizar la pila incluimos la biblioteca \emph{stack} que nos permite utilizar la pila propia del lenguaje la cual cuenta con las siguientes funcionalidades
+
+\begin{itemize}
+	\item \textbf{stack::top():} Devuelve el elemento que esta en el tope de la pila.
+	\item \textbf{stack::empty():} Está función retorna verdad si la pila está vacía y retorna falso si es que por lo menos
+tiene un elemento como tope.
+	\item \textbf{stack::size():} Está función retorna cuantos elementos tiene la pila, pero sin embargo no se puede
+acceder a ellas por lo que no es muy usual el uso de está función.
+	\item \textbf{stack::push(g):} Agrega el elemento 'g' al tope de la pila.
+	\item \textbf{stack::pop():} Elimina el elemento que esta en el tope de la pila.
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <stack>
+using namespace std ;
+int main (){
+   stack<int> stc;
+   stc.push(100) ;
+   stc.push (200) ;
+   stc.push(300) ;
+   cout<<stc.top()<<"\n";//resultado 300
+   stc.pop();
+   cout<<stc.top()<<"\n";//resultado 200
+}
+\end{lstlisting}
+
+
+\subsubsection{Java}
+En java para se uso de la pila debemos hacer uso de la clase {\em Stack} la cual extiende de la clase {\em Vector}. Para incluirla en nuestra solución debemos primero importarla del paquete {\em java} en el subpaquete {\em util}
+
+\begin{lstlisting}[language=Java]
+import java.util.Stack ;
+\end{lstlisting}
+
+Luego solo debemos crear una instancia de esta clase y tenemos una pila lista para ser usada en nuestra solución. 
+
+\begin{lstlisting}[language=Java]
+Stack< <Tipo de dato> > pila =new Stack< <Tipo dedato> > ();
+\end{lstlisting}
+
+Por supuesto la expresión {\em $<$Tipo de dato$>$ } se sustituye en la sentencia anterior por el tipo de dato que va almacenar la pila, por ejemplo a continuación una pila para almacenar cadena de caracteres.
+
+\begin{lstlisting}[language=Java]
+Stack<String> pila =new Stack<String> ();
+\end{lstlisting}
+
+Los principales fucionalidades que posee la clase {\em Stack} son:
+
+\begin{itemize}
+	\item {\bf push:} Adiciona al tope de la pila el elemento pasado por parámetro 
+	
+	\begin{lstlisting}[language=Java]
+pila.push("Matanzas");
+	\end{lstlisting}
+	
+	\item {\bf pop:} Elimina y devuelve el elemento que esta en el tope de la pila siempre que esta tenga elemento, en caso de estar vacia se lanza una excepción.
+	
+	\begin{lstlisting}[language=Java]
+String tope=pila.pop();
+	\end{lstlisting}
+	
+	\item {\bf peek:} Devuelve el elemento sin eleiminarlo que esta en el tope de la pila siempre que esta tenga elemento, en caso de estar vacia se lanza una excepción.
+	
+	\begin{lstlisting}[language=Java]
+String tope=pila.peek();
+	\end{lstlisting}
+	
+	\item {\bf empty:} Comprueba si la pila esta vacia. Devuelve verdadero si la pila esta vacia y falso en caso contrario.
+	
+	\begin{lstlisting}[language=Java]
+boolean isEmpty=pila.empty();
+	\end{lstlisting}
+	
+	\item {\bf search:} Busca un elemento de la pila y devuelve la posición con respecto al tope de la pila donde se encuentra la primera ocurrencia del elemento. En caso que el elemento fuera el tope de la pila el valor devuelto sería 1 y así sucesivamente se iría incrementando a medida que se alejara del tope. En caso que elemento no este el valor devuelto será -1.
+	
+	\begin{lstlisting}[language=Java]
+int position=pila.search("Matanzas");
+	\end{lstlisting}
+	
+\end{itemize}

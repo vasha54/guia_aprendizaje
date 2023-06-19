@@ -1,0 +1,53 @@
+\subsection{C++}
+
+\begin{lstlisting}[language=C++]
+int partition(int arr[], int l, int r){
+   int x = arr[r], i = l;
+   for (int j = l; j <= r - 1; j++) {
+      if (arr[j] <= x) {
+         swap(arr[i], arr[j]);i++;
+      }
+   }
+   swap(arr[i], arr[r]); return i;
+}
+
+int kthSmallest(int arr[], int l, int r, int k){
+   if(k > 0 && k <= r - l + 1) {
+      int index = partition(arr, l, r);
+      if (index - l == k - 1) return arr[index];
+      if (index - l > k - 1) return kthSmallest(arr, l, index - 1, k);
+	  return kthSmallest(arr, index + 1, r, k - index + l - 1);
+   }
+   return INT_MAX;
+}
+\end{lstlisting}
+
+Se implementa una solución lineal determinista en la biblioteca estándar C ++ como std::nth\_element.
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+public int nth_element(int[] a, int low, int high, int n) {
+   if (low == high - 1) return low;
+   int q = randomizedPartition(a, low, high);
+   int k = q - low;
+   if (n < k) return nth_element(a, low, q, n);
+   if (n > k) return nth_element(a, q + 1, high, n - k - 1);
+   return q;
+}
+
+public int randomizedPartition(int[] a, int low, int high) {
+   swap(a, low + rnd.nextInt(high - low), high - 1);
+   int x = a[high - 1]; int i = low - 1;
+   for (int j = low; j < high; j++) {
+      if (a[j] <= x) {
+         ++i;swap(a, i, j);
+      }
+   }
+   return i;
+}
+
+public void swap(int[] a, int i, int j) {
+   int t = a[i]; a[i] = a[j]; a[j] = t;
+}
+\end{lstlisting}

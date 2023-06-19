@@ -1,0 +1,71 @@
+\subsection{C++}
+
+\subsubsection{Ganar o perder}
+
+El la siguiente implementación la función devolverá verdadero siempre y cuando el jugador que juegue primero tenga una estrategia ganadora y falso en caso contrario.
+
+\begin{lstlisting}[language=C++]
+bool winOrLoss(int K, int *moves) {
+   bool *isWinnig = new bool[K + 1];
+   fill(isWinnig, isWinnig + (K + 1), false);
+   for (int i = 1; i <= K; i++) {
+      for (int j = 0; j < sizeof(moves) / sizeof(moves[0]); j++) {
+         if (i - moves[j] >= 0 && isWinnig[i - moves[j]] == false) {
+            isWinnig[i] = true; break;
+			}
+		}
+	}
+	return isWinnig[K] == true;
+}
+\end{lstlisting}
+
+\subsubsection{Juego del Nim}
+
+El la siguiente implementación la función devolverá verdadero siempre y cuando el jugador que juegue primero tenga una estrategia ganadora y falso en caso contrario.
+
+\begin{lstlisting}[language=C++]
+bool nim(vector<int> stacks) {
+   int sums=0;
+   if(stacks.empty()==false) {
+      sums = stacks[0];
+      for(int i=1;i<stacks.size();i++) sums = sums ^ stacks[0];
+   }
+   return (sums!=0);
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Ganar o perder}
+
+El la siguiente implementación la función devolverá verdadero siempre y cuando el jugador que juegue primero tenga una estrategia ganadora y falso en caso contrario.
+
+\begin{lstlisting}[language=Java]
+public boolean winOrLoss(int K,int [] moves) {
+   boolean [] isWinnig = new boolean[K+1];
+   Arrays.fill(isWinnig, false);
+   for(int i=1;i<=K;i++) {
+      for(int j=0;j<moves.length;j++) {
+         if(i-moves[j]>=0 && isWinnig[i-moves[j]]==false) {
+            isWinnig[i]=true;break;
+         }
+      }
+   }
+   return isWinnig[K]==true;
+}
+\end{lstlisting}
+
+\subsubsection{Juego del Nim}
+
+El la siguiente implementación la función devolverá verdadero siempre y cuando el jugador que juegue primero tenga una estrategia ganadora y falso en caso contrario.
+
+\begin{lstlisting}[language=Java]
+public boolean nim(List<Integer> stacks) {
+   int sums=0;
+   if(stacks.isEmpty()==false) {
+      sums = stacks.get(0);
+      for(int i=1;i<stacks.size();i++) sums = sums ^ stacks.get(i);
+   }
+   return (sums!=0);
+}
+\end{lstlisting}

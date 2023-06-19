@@ -1,0 +1,166 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+struct edge{
+   int a, b, cost;
+};
+
+int n, m, v;
+vector<edge> e;
+/*debe seleccionarse de tal manera que sea mayor que todas las longitudes de ruta posibles.*/
+const int INF = 1000000000; 
+
+void bellmanFord(){
+   vector<int> d (n, INF);
+   d[v] = 0;
+   for (;;){
+      bool any = false;
+      for (int j=0; j<m; ++j)
+         if (d[e[j].a] < INF)
+            if (d[e[j].b] > d[e[j].a] + e[j].cost){
+               d[e[j].b] = d[e[j].a] + e[j].cost;
+               any = true;
+            }
+      if (!any) break;
+    }
+}
+\end{lstlisting}
+
+Si queremos recuperar el camino la modificación al algoritmo sería la siguiente
+
+\begin{lstlisting}[language=C++]
+void bellmanFord(){
+   vector<int> d (n, INF);
+   d[v] = 0;
+   vector<int> p (n, -1);
+   for (;;){
+      bool any = false;
+      for (int j = 0; j < m; ++j)
+         if (d[e[j].a] < INF)
+            if (d[e[j].b] > d[e[j].a] + e[j].cost){
+               d[e[j].b] = d[e[j].a] + e[j].cost;
+               p[e[j].b] = e[j].a;
+               any = true;
+            }
+       if (!any)  break;
+    }
+	if (d[t] == INF)
+	   cout << "No hay camino de " << v << " a " << t << ".";
+	else{
+       vector<int> path;
+       for (int cur = t; cur != -1; cur = p[cur])
+          path.push_back (cur);
+       reverse (path.begin(), path.end());
+	   cout << "Camino de " << v << " a " << t << ": ";
+       for (size_t i=0; i<path.size(); ++i)
+           cout << path[i] << ' ';
+     }
+}
+\end{lstlisting}	
+
+Para detectar los ciclos negativos
+
+\begin{lstlisting}[language=C++]
+void bellmanFord(){
+   vector<int> d (n, INF);
+   d[v] = 0;
+   vector<int> p (n, - 1);
+   int x;
+   
+   for (int i=0; i<n; ++i) {
+      x = -1;
+      for (int j=0; j<m; ++j)
+         if (d[e[j].a] < INF)
+            if (d[e[j].b] > d[e[j].a] + e[j].cost){
+               d[e[j].b] = max (-INF, d[e[j].a] + e[j].cost);
+               p[e[j].b] = e[j].a;
+               x = e[j].b;
+            }
+   }
+   if (x == -1)
+      cout << "No existe ciclos negativos" << v;
+   else{
+      int y = x;
+      for (int i=0; i<n; ++i)
+         y = p[y];
+      vector<int> path;
+      for (int cur=y; ; cur=p[cur]){
+         path.push_back (cur);
+         if (cur == y && path.size() > 1) break;
+      }
+      reverse (path.begin(), path.end());
+	  cout << "Ciclo negativo: ";
+      for (size_t i=0; i<path.size(); ++i)
+         cout << path[i] << ' ';
+   }
+}
+\end{lstlisting}	
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+	
+private class BellmanFord {
+   final int  INF = Integer.MAX_VALUE / 2;
+   
+   public static class Edge {
+      int v, cost;
+      
+      public Edge(int v, int cost) {
+         this.v = v; this.cost = cost;
+      }
+   }
+	
+   public boolean bellmanFord(List<Edge>[] graph, int s, int[] dist, int[] pred) {
+      Arrays.fill(pred, -1);
+      Arrays.fill(dist, INF);
+      dist[s] = 0;
+      int n = graph.length;
+      for (int step = 0; step < n; step++) {
+         boolean updated = false;
+         for (int u = 0; u < n; u++) {
+            if (dist[u] == INF) continue;
+            for (Edge e : graph[u]) {
+               if (dist[e.v] > dist[u] + e.cost) {
+                  dist[e.v] = dist[u] + e.cost;
+                  dist[e.v] = Math.max(dist[e.v], -INF);
+                  pred[e.v] = u;
+                  updated = true;
+               }
+             }
+          }
+          if (!updated) return true;
+       }
+       // existe un ciclo negativo
+       return false;
+   }
+	
+   public int[] findNegativeCycle(List<Edge>[] graph) {
+      int n = graph.length;
+      int[] pred = new int[n];
+      Arrays.fill(pred, -1);
+      int[] dist = new int[n];
+      int last = -1;
+      for(int step=0;step<n;step++){
+         last = -1;
+         for(int u=0;u<n;u++){
+            if(dist[u] == INF) continue;
+            for (Edge e : graph[u]) {
+               if(dist[e.v] > dist[u] + e.cost){
+                  dist[e.v] = dist[u] + e.cost;
+                  dist[e.v] = Math.max(dist[e.v], -INF);
+                  pred[e.v] = u;
+                  last = e.v;
+               }
+             }
+          }
+          if (last == -1) return null;
+       }
+       for(int i=0;i<n;i++){ last = pred[last]; }
+       int[] p = new int[n]; int cnt = 0;
+       for(int u=last; u!=last || cnt==0;u=pred[u]){ p[cnt++]=u;}
+       int[] cycle = new int[cnt];
+       for(int i=0;i<cycle.length;i++){ cycle[i] = p[--cnt]; }
+       return cycle;
+   }
+}
+	
+\end{lstlisting}

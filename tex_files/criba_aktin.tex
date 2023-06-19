@@ -1,0 +1,34 @@
+La criba de Atkin es un algoritmo rápido y moderno empleado en matemática para hallar todos los números primos menores o iguales que un número natural dado. Es una versión optimizada de la criba de Eratóstenes, pero realiza algo de trabajo preliminar y no tacha los múltiplos de los números primos, sino concretamente los múltiplos de los cuadrados de los primos. Fue ideada por A. O. L. Atkin y Daniel J. Bernstein.
+
+Así funciona el algoritmo:
+\begin{itemize}
+	\item Todos los restos son módulo 60, es decir, se divide el número entre 60 y se toma el resto.
+	\item Todos los números, incluidos x e y, son enteros positivos.
+	\item Invertir un elemento de la lista de la criba significa cambiar el valor (\textquotedblleft primos\textquotedblright o \textquotedblleft no primos\textquotedblright) al valor opuesto.
+	\begin{enumerate}
+		\item Crear una lista de resultados, compuesta por 2, 3 y 5.
+		\item Crear una lista de la criba con una entrada por cada entero positivo; todas las entradas deben marcarse inicialmente como \textquotedblleft no primos\textquotedblright.
+		\item Para cada entrada en la lista de la criba: 
+		\begin{itemize}
+			\item Si la entrada es un número con resto 1, 13, 17, 29, 37, 41, 49 ó 53, se invierte tantas veces como soluciones posibles hay para 4x$^{2}$ + y$^{2}$ = entrada.
+			\item Si la entrada es un número con resto 7, 19, 31 ó 43, se invierte tantas veces como soluciones posibles hay para 3x$^{2}$ + y$^{2}$ = entrada.
+			\item Si la entrada es un número con resto 11, 23, 47 ó 59, se invierte tantas veces como soluciones posibles hay para 3x$^{2}$ - y$^{2}$ = entrada con la restricción x $>$ y.
+			\item Si la entrada tiene otro resto, se ignora.
+		\end{itemize}
+		\item Se empieza con el menor número de la lista de la criba.
+		\item Se toma el siguiente número de la lista de la criba marcado como \textquotedblleft primos\textquotedblright.
+		\item Se incluye el número en la lista de resultados.
+		\item Se eleva el número al cuadrado y se marcan todos los múltiplos de ese cuadrado como \textquotedblleft no primos\textquotedblright.
+		\item Repetir los pasos 5 a 8.
+	\end{enumerate}
+\end{itemize}
+
+El algoritmo ignora cualquier número divisible por 2, 3 ó 5. Todos los números con resto, módulo 60, igual a 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56 ó 58 son pares y por tanto compuestos. Los de resto 3, 9, 15, 21, 27, 33, 39, 45, 51 ó 57 son divisibles por 3 y por tanto compuestos. Finalmente, los de resto 5, 25, 35 ó 55 son divisibles entre 5 y por tanto compuestos.Todos estos restos son ignorados.
+
+Todos los números con resto, módulo 60, igual a 1, 13, 17, 29, 37, 41, 49 ó 53 tienen un resto, módulo 4, de 1. Estos números son primos si y sólo si el número de soluciones de 4x$^{2}$ + y$^{2}$ = n es impar y el número es libre de cuadrados.
+
+Todos los números con resto, módulo 60, igual a 7, 19, 31 ó 43 tienen un resto, módulo 6, de 1. Estos números son primos si y sólo si el número de soluciones de 3x$^{2}$ + y$^{2}$=n es impar y el número es libre de cuadrados.
+
+Todos los números con resto, módulo 60, de 11, 23, 47 ó 59 tienen un resto, módulo 12, de 11. Estos números son primos si y sólo si el número de soluciones de 3x$^{2}$ - y$^{2}$= n es impar y el número es libre de cuadrados.
+
+Ninguno de los candidatos a primos es divisible entre 2, 3 ó 5, por lo que no puede ser divisible entre sus cuadrados. Esta es la razón por la que las comprobaciones de si un número es libre de cuadrados no incluyen los casos 2$^{2}$, 3$^{2}$ y 5$^{2}$.

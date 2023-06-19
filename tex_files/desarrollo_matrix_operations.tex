@@ -1,0 +1,122 @@
+\subsection{Orden}
+El orden de la matriz A es \emph{ n por m } donde $n$ es la cantidad de filas y $m$ la cantidad de columnas. La matriz descrita anteriormente antes tiene $n$ filas y $m$ columnas, por lo que decimos que es de orden $n\times m$. Sin $n != m$ la matriz se dice rectangular y si $n == m$ la matriz se dice cuadrada, en este último caso diremos que su orden es $n$.
+
+\subsection{Igualdad}
+
+Dos matrices $A=\begin{bmatrix} a_{ij} \end{bmatrix}$  y $B=\begin{bmatrix} b_{ij} \end{bmatrix}$ son iguales solo y solo si tiene el mismo orden y se cumple que $a_{ij} == b_{ij}$ para todo $i$ y todo $j$.
+
+\subsection{Identidad}
+
+La matriz identidad es una matriz que cumple la propiedad de ser el elemento neutro del producto de matrices. Esto quiere decir que el producto de cualquier matriz por la matriz identidad (donde dicho producto esté definido) no tiene ningún efecto. La columna i-ésima de una matriz identidad es el vector unitario  $e_{i}$, de una base vectorial inmersa en un espacio Euclídeo de dimensión n. Toda matriz representa una aplicación lineal entre dos espacios vectoriales de dimensión finita. La matriz identidad se llama así porque representa a la aplicación identidad que va de un espacio vectorial de dimensión finita a sí mismo. Dicha matriz es cuadrada y todos sus valores son cero exceptuando los de la diagonal principal los cuales son de valor 1.
+
+\subsection{Suma}
+
+Sea  $A=\begin{bmatrix} a_{11}  & ... & a_{1m} \\ ... & ... & ... \\ a_{n1}  & ... & a_{nm} \end{bmatrix} $ y $B=\begin{bmatrix} b_{11}  & ... & b_{1m} \\ ... & ... & ... \\ b_{n1}  & ... & b_{nm} \end{bmatrix} $ matrices de igual orden tal que $c_{ij} = a_{ij} + b_{ij}$. Solo se puede realizar la operación cuando las matrices tienen el mismo orde.
+
+\textbf{Ejemplo:}
+
+$A +B =\begin{bmatrix} 1 & -1 & 2 & 4 \\ 3 & 0 & 1 & 2 \\ 0 & -1 & 1 & 1 \end{bmatrix} + \begin{bmatrix} 0 & 2 & 4 & 2 \\ 0 & 1 & 3 & 1 \\ 1 & -1 & 1 & -1 \end{bmatrix} = \begin{bmatrix} 1 & 1 & 6 & 6 \\ 3 & 1 & 4 & 3 \\ 1 & -2 & 2 & 0 \end{bmatrix} $
+
+\textbf{Propiedades:}
+
+\begin{enumerate}
+	\item Conmutativa $A+B=B+A$
+	\item Asociativa $(A+B)+C=A+(B+C)$
+	\item Distributiva $(\alpha+\beta)A=\alpha A + \beta A$
+	\item Distributiva $\alpha(A+B)=\alpha A + \alpha B$
+	\item Existencia de elemento nulo $A+O=O+A=A$
+	\item Existencia del reciproco: Para toda matriz $A$, existe una matriz $B$ tal que $A+B=0$. Está matriz recibe el nombre de reciproco de $A$ y se denota por $-A$. Observe que: $-A=-1A$
+\end{enumerate}
+
+\subsection{Resta}
+
+La diferencia de matriz se define como la suma de la matriz con su reciproco. $A-B = A + (-B)$. Si C = A-B entonces $c_{ij} = a_{ij} - b_{ij}$
+
+\textbf{Ejemplo:}
+
+$A - B =\begin{bmatrix} 1 & -1 & 2 & 4 \\ 3 & 0 & 1 & 2 \\ 0 & -1 & 1 & 1 \end{bmatrix} - \begin{bmatrix} 0 & 2 & 4 & 2 \\ 0 & 1 & 3 & 1 \\ 1 & -1 & 1 & -1 \end{bmatrix} = \begin{bmatrix} 1 & -3 & -2 & 2 \\ 3 & -1 & -2 & 1 \\ -1 & 0 & 0 & 2 \end{bmatrix} $
+
+\subsection{Multiplicación}
+
+En el caso de la operación de la múltiplicación se puede dar dos posibles escenarios los cuales vamos a analizar a continuación:
+
+\subsubsection{Por un escalar}
+
+Sea $\lambda$ un número real y $A=\begin{bmatrix} a_{11}  & ... & a_{1m} \\ ... & ... & ... \\ a_{n1}  & ... & a_{nm} \end{bmatrix} $. El producto de$\lambda$ por A es, la matriz que resulta de multiplicar por $\lambda$ todos los elementos de la matriz A.
+
+$\lambda A= \lambda \begin{bmatrix} a_{11}  & ... & a_{1m} \\ ... & ... & ... \\ a_{n1}  & ... & a_{nm} \end{bmatrix} =\begin{bmatrix}  \lambda a_{11}  & ... &  \lambda a_{1m} \\ ... & ... & ... \\  \lambda a_{n1}  & ... &  \lambda a_{nm} \end{bmatrix}  $
+
+\textbf{Ejemplo:}
+
+$3\begin{bmatrix} 
+	4  & -1 & 5 \\ 
+	2 & 1 & 0  
+\end{bmatrix} =\begin{bmatrix} 
+	12  & -3 & 15 \\ 
+	6 & 3 & 0  
+\end{bmatrix} $
+
+\subsubsection{Por una matriz}
+
+Sean $A=\begin{bmatrix} a_{11}  & ... & a_{1q} \\ ... & ... & ... \\ a_{p1}  & ... & a_{pq} \end{bmatrix} $ y $B=\begin{bmatrix} b_{11}  & ... & b_{1n} \\ ... & ... & ... \\ b_{q1}  & ... & b_{qn} \end{bmatrix} $ donde la cantidad de columnas de $A$ tiene que ser igual a la cantidad de filas de la columna $B$ la matriz $ C = AB = \begin{bmatrix} b_{11}  & ... & b_{1n} \\ ... & ... & ... \\ b_{p1}  & ... & b_{pn} \end{bmatrix}$ donde:
+
+$$ c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \dots + a_{iq}b_{qj} \quad  (i=[1,p] ; j=[1,n]) $$
+
+\textbf{Ejemplo:}
+
+$ A =\begin{bmatrix} 2  & 5  \\ -1  & 3 \\ 0 & 1 \end{bmatrix} \quad B =\begin{bmatrix} -1  & 0  \\ 4  &  1 \end{bmatrix} $
+
+$$ AB= \begin{bmatrix} 2  & 5  \\ -1  & 3 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} -1  & 0  \\ 4  &  1 \end{bmatrix} = \begin{bmatrix} 2(-1)+ 5(4)  & 2(0)+ 5(1) \\ -1(-1)+3(4)  & -1(0)+3(1) \\ 0(-1)+1(4) & 0(0) + 1(1) \end{bmatrix}  = \begin{bmatrix} 18  & 5  \\ 13  & 3 \\ 4 & 1 \end{bmatrix} $$
+
+Nótese que la multiplicación de matrices no es conmutativa.
+Para concluir queremos recordar que para efectuar el producto de matrices éstas deben ser
+conformes para esta operación, es decir, el número de columnas de la primera debe ser igual
+al número de filas de la segunda.
+
+\subsection{Trasposición}
+
+Se llama matriz traspuesta de una matriz $A=\begin{bmatrix} a_{11}  & ... & a_{1m} \\ ... & ... & ... \\ a_{n1}  & ... & a_{nm} \end{bmatrix} $ , a la matriz que resulta de intercambiar en A las
+filas por las columnas. Se denota como$A'=\begin{bmatrix} a_{11}  & ... & a_{1n} \\ ... & ... & ... \\ a_{m1}  & ... & a_{mn} \end{bmatrix} $
+
+\textbf{Ejemplo:}
+
+$A=\begin{bmatrix} 
+	4  & -1 & 5 \\ 
+	2 & 1 & 0  
+\end{bmatrix} \qquad   A'=\begin{bmatrix} 
+ 4  &  2 \\ 
+-1  &  1 \\
+ 5  &  0 
+\end{bmatrix} $
+
+\subsection{Determinate}
+
+El determinante de una matriz siempre es un número real y únicamente lo podremos calcular para matrices cuadradas. El determinante de una matriz cuadrada se obtiene de restar la multiplicación de los elementos de la diagonales principales de la matriz y la multiplicación de los elementos de la diagonales secundarias de la misma matriz.  
+
+\subsection{Inversa}
+
+\subsection{Rango}
+
+El rango de una matriz es el mayor número de filas/columnas linealmente independientes de la matriz. 
+El rango no solo se define para matrices cuadradas. El rango de una matriz también se puede definir 
+como el orden más grande de cualquier menor distinto de cero en la matriz. Sea la matriz rectangular y 
+de tamaño $N\times M$. Tenga en cuenta que si la matriz es cuadrada y su determinante es distinto de 
+cero, entonces el rango es $N$ ($=M$); de lo contrario será menos. Generalmente, el rango de una 
+matriz no excede $\min (N,M)$.
+
+\subsection{Exponenciación}
+La exponenciación matricial es una de las técnicas más usadas en la programación competitiva
+
+Suponga que tiene una matriz $A$ con $n$ filas y $n$ columnas, este tipo de matrices se llaman matices cuadradas de tamaño $n$. Podemos definir como la exponenciación matricial como :
+
+$A^{x}= A*A*A*...*A$ ($x$ veces) con el caso especial de $x=0$: 
+
+$A^{0}= I_{n}$
+
+Aqui $x$ es un entero no negativo. Analicemos que tan rápido podemos calcular $A^x$, dados $A$ y $x$.
+
+Esta idea hacemos $x$ multiplicaciones en matrices cuadradas de tamaño $n$ por lo que la complejidad de la idea anterior es $O(x*n^3)$ 
+
+Veamos como podemos mejorar lo anterior. Supongamos que queremos calcular $A^{75}$ donde $x$ es 75. Si escribimos 75 en binario sería $10001011_{2}$ por lo que podemos decir que $75 = 2^0 + 2^1 + 2^3 + 2^6 = 1 + 2 +8 + 64$.
+
+Ahora podemos reescribir a $A^{75}=A^{1}+A^{2}+A^{8}+A^{64}$. Esto ya cambia las cosas porque antes teníamos 75 multiplicaciones y ahora solo tenemos 4 multiplicaciones.

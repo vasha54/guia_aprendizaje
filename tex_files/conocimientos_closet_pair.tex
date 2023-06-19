@@ -1,0 +1,21 @@
+\subsection{Distancia eucludiana}
+
+En matemáticas, la distancia euclidiana o euclídea, es la distancia "ordinaria" entre dos puntos de un espacio euclídeo, la cual se deduce a partir del teorema de Pitágoras.
+
+Por ejemplo, en un espacio bidimensional, la distancia euclidiana entre dos puntos $P_1$ y $P_2$, de coordenadas cartesianas ($x_1$, $y_1$) y ($x_2$, $y_2$) respectivamente, es: 
+
+$$ d_e (P_1,P_2) = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}  $$
+
+\subsection{Estrategia algoritmica: Divide y Conquista}
+Los algoritmos de este tipo se caracterizan por estar diseñados siguiendo estrictamente las siguientes fases:
+\begin{itemize}
+	\item {\bf Dividir:} Se divide el problema en partes más pequeñas.
+	\item {\bf Conquistar:} Se resuelven recursivamente los problemas mas chicos. 
+	\item {\bf Combinar:} Los problemas mas chicos se combinan para resolver el grande.
+\end{itemize} 
+Los algoritmos que utilizan este principio son netamente recursivos. 
+
+\subsection{Estrategia algoritmica: Línea de barrido \emph{Sweep Line}}
+En la geometría computacional, un algoritmo de línea de barrido o barrido de plano es un paradigma algorítmico que utiliza una línea de barrido conceptual o una superficie de barrido para resolver diversos problemas en el espacio euclidiano . Es una de las técnicas clave en geometría computacional.
+
+La idea detrás de los algoritmos de este tipo es imaginar que una línea (a menudo una línea vertical) se barre o se mueve a través del plano, deteniéndose en algunos puntos. Las operaciones geométricas están restringidas a objetos geométricos que se cruzan o se encuentran en las inmediaciones de la línea de barrido cada vez que se detiene, y la solución completa está disponible una vez que la línea ha pasado por todos los objetos.

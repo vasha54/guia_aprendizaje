@@ -1,0 +1,220 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+vector<long long> trialDivision(long long n) {
+   vector<long long> factorization;
+   for (long long d = 2; d * d <= n; d++) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+   }
+   if (n > 1)
+      factorization.push_back(n);
+   return factorization;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++]
+vector<long long> wheelFactorization(long long n) {
+   vector<long long> factorization;
+   for (int d : {2, 3, 5}) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+   }
+   static array<int, 8> increments = {4, 2, 4, 2, 4, 6, 2, 6};
+   int i = 0;
+   for (long long d = 7; d * d <= n; d += increments[i++]) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+      if (i == 8)
+         i = 0;
+   }
+   if (n > 1)
+      factorization.push_back(n);
+   return factorization;
+}
+\end{lstlisting}
+
+En las dos implementaciones siguientes es evidente que se necesita precalcular todos los primos al menos hasta $N$ y tenerlos almacenados en el vector \emph{primos}
+
+\begin{lstlisting}[language=C++]
+//definir una tupla para almacenar a^b 
+//(a base)=>.first  (b expo)=>.second
+typedef pair<int,int>fac;
+vector<fac> Factorizar(int n){
+   int l = primos.size();
+   //iterar sobre todos los primos
+   //hasta que algun primo sea mayor que n
+   vector<fac>FP;
+   for(int i=0;i<l && primos[i]<=n ;i++){
+      int pi = primos[i];
+      int exp = 0;
+      if(n%pi==0){
+         while(n%pi==0){
+            exp++;//contador para el exponente
+            n/=pi;//divido entre la base
+         }
+         // pi^exp
+         // {a,b}  es lo mismo que make_pair(a,b) o Pair(a,b)
+        FP.push_back({pi,exp});
+      }
+    }
+    // si n es distinto n es un primo
+    if(n>1){
+	   FP.push_back({n,1});
+    }
+    return FP;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++]
+vector<fac> FactorizarFactorial(int n){
+   int l = primos.size();
+   vector<fac>FP;
+   //iterar sobre todos los primos menores e iguales que n
+   for(int i=0;i<l && primos[i]<=n;i++){
+      //acumulador para la potencia del primo actual
+      int exp = 0;
+      //potencia del primo actual
+      int pot = primos[i];
+      //mientras la potencia sea menor que n
+      while(pot<=n){
+         //multiplos de la potencia menores que n
+         exp+=n/pot;
+         //proxima potencia del primo
+         pot*=primos[i];
+      }
+      FP.push_back({primos[i],exp});
+  }
+  return FP;
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+int fermat(int n) {
+   int a = ceil(sqrt(n)); int b2 = a*a - n;
+   int b = round(sqrt(b2));
+   while (b * b != b2) {
+      a = a + 1; b2 = a*a - n;
+      b = round(sqrt(b2));
+   }
+   return a - b;
+}
+\end{lstlisting}
+
+En la siguiente implementación comenzamos con $B=10$ y aumentar $B$ después de cada iteración.
+\begin{lstlisting}[language=C++]
+long long pollards_p_minus_1(long long n) {
+   int B = 10; long long g = 1;
+   while (B <= 1000000 && g < n) {
+      long long a = 2 + rand() % (n - 3);
+      g = gcd(a, n);
+      if (g > 1) return g;
+      // compute a^M
+      for (int p : primes) {
+         if (p >= B) continue;
+         long long p_power = 1;
+         while (p_power * p <= B)
+            p_power *= p;
+         a = power(a, p_power, n);
+         g = gcd(a - 1, n);
+         if (g > 1 && g < n) return g;
+      }
+      B *= 2;
+   }
+   return 1;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++]
+long long mult(long long a, long long b, long long mod) {
+   long long result = 0;
+   while (b) {
+      if (b & 1) result = (result + a) % mod;
+      a = (a + a) % mod;
+      b >>= 1;
+   }
+   return result;
+}
+
+long long mult(long long a, long long b, long long mod) {
+   return (__int128)a * b % mod;
+}
+
+long long f(long long x, long long c, long long mod) {
+   return (mult(x, x, mod) + c) % mod;
+}
+
+long long rho(long long n, long long x0=2, long long c=1) {
+   long long x = x0; long long y = x0;
+   long long g = 1;
+   while (g == 1) {
+      x = f(x, c, n); y = f(y, c, n); y = f(y, c, n);
+      g = gcd(abs(x - y), n);
+   }
+   return g;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=C++]
+long long brent(long long n, long long x0=2, long long c=1) {
+   long long x = x0; long long g = 1;
+   long long q = 1; long long xs, y;
+   int m = 128; int l = 1;
+   while (g == 1) {
+      y = x;
+      for (int i = 1; i < l; i++)
+         x = f(x, c, n);
+      int k = 0;
+      while (k < l && g == 1) {
+         xs = x;
+         for (int i = 0; i < m && i < l - k; i++) {
+            x = f(x, c, n); q = mult(q, abs(y - x), n);
+         }
+         g = gcd(q, n); k += m;
+      }
+      l *= 2;
+   }
+   if (g == n) {
+      do {
+         xs = f(xs, c, n); g = gcd(abs(xs - y), n);
+      } while (g == 1);
+   }
+   return g;
+}
+
+\end{lstlisting}
+
+
+\subsection{Java}
+\begin{lstlisting}
+private class Tuple{
+   private int prime, int exponent;
+	
+   public Tuple(int _p,int _e) {
+      this.prime =_p; this.exponent = _e;
+   }
+}
+
+public Queue<Tuple> factorize(int n) {
+   Queue<Tuple> factors = new ArrayDeque<Tuple>();
+   Tuple p;
+   for (int d = 2; d * d <= n; d++) {
+      int power=0;
+      while (n % d == 0) {
+         n /= d; power++;
+      }
+      if(power!=0) {
+         factors.add(new Tuple(d,power));
+      }
+   }
+   if (n > 1) {
+      factors.add(new Tuple(n,1));
+   }
+   return factors;
+}
+\end{lstlisting}

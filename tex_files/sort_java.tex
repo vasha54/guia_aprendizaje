@@ -1,0 +1,71 @@
+En el caso del lenguaje de programación Java cuenta con la clase {\em Collections} perteneciente al paquete java en el subpaquete util. Esta clase con un número métodos estáticos entre los cuales podemos encontrar métodos para ordenar colecciones. El algoritmo sort ordena los elementos de un objeto List , el cual debe implementar a la interfaz Comparable . El orden se determina en base al orden natural del tipo de los elementos, según su implementación mediante el método compareTo de ese objeto. El método compareTo está declarado en la interfaz Comparable y algunas veces se le conoce como el método de comparación natural. La llamada a sort puede especificar como segundo argumento un objeto Comparator , para determinar un ordenamiento alterno de los elementos.
+
+\begin{lstlisting}[language=Java]
+   void sort(List list)
+   void sort(List list, Comparator c)
+\end{lstlisting}
+
+El primer método lo utilizaremos cuando los elementos de la lista implementan la interfaz Comparable vista anteriormente y el segundo lo utilizaremos cuando querramos utilizar nuestro propio comparador o cuando no nos guste el funcionamiento del comparador por defecto de los elementos de nuestra lista.
+
+Ambas versiones garantizan un coste de O(nlog(n)) y puede acercarse a un rendimiento lineal cuando las los elementos se encuentran cerca de su orden natural. El algoritmo utilizado es una pequeña variación del algoritmo de mergesort y la operación que realiza es destructiva, es decir, no podremos recuperar el orden original si no hemos guardado la lista previamente.
+
+\paragraph{Ordenamiento ascendente}
+Se utiliza el algoritmo sort para ordenar los elementos de un objeto List en forma ascendente
+(línea 20). Recuerde que List es un tipo genérico y acepta un argumento de tipo, el cual especifi ca el tipo de
+elemento de lista; en la línea 15 se declara a lista como un objeto List de objetos String . Observe que en las
+líneas 18 y 23 se utiliza una llamada implícita al método toString de lista para imprimir el contenido de la
+lista en el formato que se muestra en las líneas segunda y cuarta de los resultados.
+
+\begin{lstlisting}[language=Java]
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+public class Ordenamiento1{
+   private static final String palos[] ={ "Corazones", "Diamantes", "Bastos", "Espadas" };
+   // muestra los elementos del arreglo
+   public void imprimirElementos(){
+      List< String > lista = Arrays.asList( palos ); // crea objeto List
+      // imprime lista
+      System.out.printf( "Elementos del arreglo desordenados:\n%s\n", lista );
+      Collections.sort( lista ); // ordena ArrayList
+      // imprime lista
+      System.out.printf( "Elementos del arreglo ordenados:\n%s\n", lista );
+   } // fin del metodo imprimirElementos
+   
+   public static void main( String args[] ){
+      Ordenamiento1 orden1 = new Ordenamiento1();
+      orden1.imprimirElementos();
+   } // fin de main
+} // fin de la clase Ordenamiento1
+\end{lstlisting} 
+
+\paragraph{Ordenamiento descendente}
+se ordena la misma lista de cadenas utilizadas en el ejemplo, en orden descendente. El ejemplo
+introduce la interfaz Comparator , la cual se utiliza para ordenar los elementos de un objeto Collection en un
+orden distinto. En la línea 21 se hace una llamada al método sort de Collections para ordenar el objeto List
+en orden descendente. El método static reverseOrder de Collections devuelve un objeto Comparator que
+ordena los elementos de la colección en orden inverso.
+\begin{lstlisting}[language=Java]
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
+public class Ordenamiento1{
+   private static final String palos[] ={ "Corazones", "Diamantes", "Bastos", "Espadas" };
+   // muestra los elementos del arreglo
+   public void imprimirElementos(){
+      List< String > lista = Arrays.asList( palos ); // crea objeto List
+      // imprime lista
+      System.out.printf( "Elementos del arreglo desordenados:\n%s\n", lista );
+      Collections.sort( lista, Collections.reverseOrder() );
+      // imprime lista
+	  System.out.printf( "Elementos del arreglo ordenados:\n%s\n", lista );
+   } // fin del metodo imprimirElementos
+		
+   public static void main( String args[] ){
+      Ordenamiento1 orden1 = new Ordenamiento1();
+      orden1.imprimirElementos();
+   } // fin de main
+} // fin de la clase Ordenamiento1
+\end{lstlisting}
+
+Mientras para ordenar arreglos Java proporciona la clase {\em Array} que de similar manera que {\em Collections } posee un grupo de métodos para trabajar pero con arreglos.

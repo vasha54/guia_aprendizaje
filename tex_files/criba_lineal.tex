@@ -1,0 +1,40 @@
+Aunque hay muchos algoritmos conocidos con tiempo de ejecución sublineal (es decir,$O(N)$), el algoritmo descrito a continuación es interesante por su simplicidad: no es más complejo que el clásico criba de Eratóstenes.
+
+Además, el algoritmo dado aquí calcula factorizaciones de todos los números en el segmento$[2,N]$ como efecto secundario, y que puede ser útil en muchas aplicaciones prácticas.
+
+La debilidad del algoritmo dado es que usa más memoria que la criba clásica de Eratóstenes: requiere una matriz de números, mientras que para criba clásico de Eratóstenes basta con tener
+bits de memoria (que es 32 veces menos).
+
+Por lo tanto, tiene sentido usar el algoritmo descrito solo hasta que para números de orden
+y no mayor $10^{7}$.
+
+La autoría del algoritmo parece pertenecer a Gries \& Misra (Gries, Misra, 1978: ver referencias al final del artículo). Sin embargo, también se puede atribuir a Euler, y también se le conoce como el tamiz de Euler, quien ya utilizó una versión similar durante su trabajo.
+
+El algoritmo se centra en calcular el factor primo mínimo para cada número en el segmento $[2,N]$ . 
+
+Además, necesitamos almacenar la lista de todos los números primos encontrados, llamémoslo $pr[]$
+
+Inicializaremos los valores $lp[i]$ con ceros, lo que significa que asumimos que todos los números son primos. Durante la ejecución del algoritmo, este vector se llenará gradualmente.
+
+Ahora repasaremos los números del 2 al $N$. Tenemos dos casos para el número actual $i$:
+
+\begin{enumerate}
+	\item $lp[i] = 0$ - eso significa que i es primo, es decir, no hemos encontrado factores menores para él. Por lo tanto, asignamos $lp [i] = i$ y agregamos $i$ al final de la lista $pr[]$. 
+	\item $lp[i] != 0$ - eso significa que i es compuesto y que su minimo factor primo es $lp[i]$
+\end{enumerate}  
+
+En ambos casos actualizamos los valores $lp[]$ de para los números que son divisibles por $i$. Sin embargo, nuestro objetivo es aprender a hacerlo para establecer un valor como máximo una vez para cada número $lp[]$. Podemos hacerlo de la siguiente manera:
+
+Consideremos los números $x_j = i \cdot p_j$ donde $p_j$ son todos los números primos menores o iguales que $lp [i]$ (por eso necesitamos almacenar la lista de todos los números primos).
+
+Estableceremos un nuevo valor $lp [x_j] = p_j$ para todos los números de esta forma.
+
+Aunque el tiempo de ejecución de $O(n)$ es mejor que $O(n \log \log n)$ de la criba clásica de Eratóstenes, la diferencia entre ambos no es tan grande. En la práctica, la criba lineal funciona tan rápido como una implementación típica de la criba de Eratóstenes.
+
+En comparación con las versiones optimizadas del tamiz de Eratóstenes, p. el tamiz segmentado, es mucho más lento.
+
+Teniendo en cuenta los requisitos de memoria de este algoritmo: un vector $lp []$ de longitud $n$ y un vector de $pr []$ de longitud $\frac n {\ln n}$, este algoritmo parece peor que la criba clásicá en todos los sentidos.
+
+Sin embargo, su cualidad redentora es que este algoritmo calcula un vector $lp []$, lo que nos permite encontrar la factorización de cualquier número en el segmento $[2; n]$ en el tiempo del orden de tamaño de esta factorización. Además, usar solo una matriz adicional nos permitirá evitar divisiones al buscar factorización.
+
+Conocer las factorizaciones de todos los números es muy útil para algunas tareas, y este algoritmo es uno de los pocos que permiten encontrarlos en tiempo lineal.

@@ -1,0 +1,46 @@
+Usamos la reducción clásica del problema LCA al problema RMQ. Atravesamos todos los nodos del árbol con DFS 
+y mantenemos una matriz con todos los nodos visitados y las alturas de estos nodos. El LCA de dos nodos $u$ y $v$ es el nodo entre las ocurrencias de $u$ y $v$ en el recorrido, que tiene la menor altura.
+
+Tenga en cuenta que el problema de RMQ reducido es muy específico: dos elementos adyacentes cualquiera en la matriz difieren exactamente en uno (dado que los elementos de la matriz no son más que las alturas de los nodos visitados en orden de recorrido, y vamos a un descendiente , en cuyo caso el siguiente elemento es uno más grande, o volver al ancestro, en cuyo caso el siguiente elemento es uno más bajo). El algoritmo de Farach-Colton y Bender describe una solución exactamente para este problema especializado de RMQ.
+
+Denotemos con $A$ el arreglo en el que queremos realizar las consultas de rango mínimo. Y $N$ será del tamaño de $A$.
+
+Hay una estructura de datos fácil que podemos usar para resolver el problema de RMQ con $O(N \log N)$ preprocesamiento y $O(1)$ para cada consulta: la tabla dispersa. Creamos una tabla $T$ donde cada elemento $T[i][j]$ es igual al mínimo de $A$ en el intervalo $[i, i + 2^j - 1]$. Obviamente $0 \leq j \leq \lceil 
+\log N \rceil$, y por lo tanto el tamaño de la Tabla Dispersa será $O(N \log N)$. Puedes construir la 
+tabla fácilmente en $O(N\log N)$ al notar que $T[i][j] = \min(T[i][j-1],T[i+2^{j-1}][j-1])$.
+
+¿Cómo podemos responder una consulta RMQ en $O(1)$ utilizando esta estructura de datos? Que la consulta 
+recibida sea $[l, r]$, entonces la respuesta es $\min(T[l][\text{sz}],T[r-2^{\text{sz}}+1][\text{sz}])$, 
+dónde $\text{sz}$ es el mayor exponente tal que $2^{\text{sz}}$ no es mayor que la longitud del 
+rango $r-l+1$. De hecho, podemos tomar el rango $[l, r]$ y cubrirlo dos rangos de longitud
+$2^{\text{sz}}$-1 que comienza en $l$ y el otro termina en $r$. Estos rangos se superponen, 
+pero esto no interfiere con nuestro cálculo. Para lograr realmente la complejidad temporal de $O(1)$ por 
+consulta, necesitamos saber los valores de $\text{sz}$ para todas las longitudes posibles desde $1$ a 
+$N$. Pero esto se puede precalcular fácilmente.
+
+Ahora queremos mejorar la complejidad del preprocesamiento hasta $O(N)$.
+
+Dividimos el arreglo $A$ en bloques de tamaño $K = 0.5 \log N$ con $\log$ siendo el logaritmo en base 2. Para cada bloque calculamos el elemento mínimo y los almacenamos en un arreglo $B$. $B$ tiene el tamaño $\frac{N}{K}$. Construimos una tabla dispersa a partir del arreglo $B$. El tamaño y la complejidad temporal del mismo será:
+
+$$ \frac{N}{K}\log\left(\frac{N}{K}\right) = \frac{2N}{\log(N)} \log\left(\frac{2N}{\log(N)}\right) =  $$
+
+$$= \frac{2N}{\log(N)} \left(1 + \log\left(\frac{N}{\log(N)}\right)\right) \leq \frac{2N}{\log(N)} + 2N = O(N)$$
+
+Ahora solo tenemos que aprender a responder rápidamente consultas de rango mínimo dentro de cada bloque. 
+De hecho, si la consulta mínima del rango recibido es $[l, r]$ y $l$ y $r$ están en diferentes bloques, 
+entonces la respuesta es el mínimo de los siguientes tres valores: el mínimo del sufijo de bloque de $l$ a 
+partir de $l$, el mínimo del prefijo de bloque de $r$ terminando en $r$, y el mínimo de los bloques 
+entre ellos. El mínimo de los bloques intermedios se puede responder en $O(1)$ utilizando la tabla 
+dispersa. Así que esto nos deja solo el rango mínimo de consultas dentro de los bloques.
+
+Aquí explotaremos la propiedad del arreglo. Recuerde que los valores en el arreglo, que son solo valores de altura en el árbol, siempre diferirán en uno. Si eliminamos el primer elemento de un bloque y lo restamos de todos los demás elementos del bloque, cada bloque se puede identificar por una secuencia de longitud $K-1$ que consiste en el número $+1$ y $-1$. Debido a que estos bloques son tan pequeños, solo pueden ocurrir unas pocas secuencias diferentes. El número de secuencias posibles es:
+
+$$2^{K-1} = 2^{0.5 \log(N) - 1} = 0.5 \left(2^{\log(N)}\right)^{0.5} = 0.5 \sqrt{N}$$
+
+Por lo tanto, el número de bloques diferentes es $O(\sqrt{N})$, y por lo tanto podemos precalcular los 
+resultados de las consultas mínimas de rango dentro de todos los bloques diferentes en $O(\sqrt{N} K^2) = 
+O(\sqrt{N} \log^2(N)) = O(N)$ tiempo. Para la implementación podemos caracterizar un bloque por una 
+máscara de bits de longitud $K-1$ (que cabrá en un int estándar) y almacenará el índice del mínimo en una 
+matriz $\text{block}[\text{mask}][l][r]$ de tamaño $O(\sqrt{N} \log^2(N))$.
+
+Así que aprendimos a precalcular consultas mínimas de rango dentro de cada bloque, así como consultas mínimas de rango sobre un rango de bloques, todo en $O(N)$. Con estos precálculos podemos responder cada consulta en $O(1)$, utilizando como máximo cuatro valores precalculados: el mínimo del bloque que contiene l, el mínimo del bloque que contiene ry los dos mínimos de los segmentos superpuestos de los bloques entre ellos.

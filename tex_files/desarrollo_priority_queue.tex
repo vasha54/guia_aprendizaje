@@ -1,0 +1,51 @@
+Una cola de prioridad es una estructura de datos en la que los elementos se atienden en el orden
+indicado por una prioridad asociada a cada uno. Si varios elementos tienen la misma prioridad, se
+atenderán de modo convencional según la posición que ocupen, puede llegar a ofrecer la extracción
+constante de tiempo del elemento más grande (por defecto), a expensas de la inserción logarítmica, o
+utilizando una sobrecarga de operadores causaría que el menor elemento aparezca como la parte superior.
+Trabajar con una cola de prioridad es similar a la gestión de un \emph{Heap}.
+
+Como con cualquier tipo de dato abstracto, una cola de prioridades puede tener múltiples implementaciones, siempre que cumplan las restricciones y el modelo formalizado. A continuación se distinguen implementaciones sencillas frente a otras más especializadas y, también, más habituales para las estructuras de datos que modelen colas de prioridad. 
+
+\subsection{Implementaciones ingenuas}
+
+Hay muchas formas de implementar de forma sencilla, aunque a menudo ineficientemente, una cola de prioridades. A pesar de su ineficiencia, pueden ser muy útiles para observar la analogía con la realidad y comprender el funcionamiento abstracto de una cola de prioridades. Por ejemplo, una implementación posible sería mantener todos los elementos en una lista no ordenada. Cuando se pida el elemento con mayor prioridad, se buscan todos los elementos hasta encontrar el de mayor prioridad (la complejidad de esta estructura tendría, según la notación O grande complejidad computacional de O($1$) en inserción, y de O($n$) para el desencolado, ya que es la complejidad mínima para buscar en una lista no ordenada).
+
+\subsection{Implementación con montículos}
+Para mejorar el rendimiento, las colas de prioridades suelen implementarse utilizando un montículo como estructura de datos subyacente, y obteniendo así un rendimiento de O ($\log N$) para inserciones y borrados, y de O($N$) para la construcción inicial. Existen ciertos tipos especializados de montículos, como los montículos de Fibonacci, que pueden ofrecer mejores cotas asintóticas para algunas operaciones.
+
+En lugar de un montículo, puede utilizarse un árbol binario de búsqueda auto-balanceable, en cuyo caso la inserción y borrado siguen teniendo un coste de O ($\log N$), mientras que la construcción de árboles a partir de secuencias de elementos ya existentes pasaría a tener un coste de O($N\log N$).
+
+Desde el punto de vista de la complejidad computacional, las colas de prioridades son congruentes con los algoritmos de búsqueda. 
+
+\subsection{C++}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{\#include
+	<queue>}, gracias a esto ya podemos utilizar la estructura de otro modo no.
+
+\begin{itemize}
+	\item \textbf{priority\_queue::top():} En una cola de prioridad solo podemos acceder a la raíz del \emph{heap} con esta función. Es como obtener el primer elemento de la cola. Está función
+	si es constante ya que siempre se sabe dónde está la raíz del \emph{heap}.
+	\item \textbf{priority\_queue::empty():} Está función retorna verdad si la cola de prioridad está vacía y retorna falso en otro
+	caso.
+	\item \textbf{priority\_queue::size():} Está función retorna cuantos elementos tiene la cola de prioridad.
+	\item \textbf{priority\_queue::push(valor):} Está función inserta un elemento (valor) a la cola de prioridad, valor debe ser un
+	tipo de dato aceptado por la cola de prioridad. Está función tiene complejidad
+	logarítmica O($\log_2 N$).
+	\item \textbf{priority\_queue::pop():} Está función elimina el valor que esta en el tope o frente de la cola de prioridad. Está función tiene complejidad logarítmica O($\log_2 N$).
+\end{itemize}
+
+\subsection{Java}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{import java.util.*}, gracias a esto ya podemos utilizar la estructura de otro modo no.
+
+\begin{itemize}
+	\item \textbf{add(E elemento):} Agrega un elemento a la cola
+de prioridad.
+	\item \textbf{clear():} Borra la cola de prioridad.
+	\item \textbf{addAll(coleccion):} Agrega toda una colección.
+	\item \textbf{remove():} Elimina el elemento más pequeño.
+	\item \textbf{isEmpty():} Devuelve verdadera si está vacía.
+	\item \textbf{contains(E elemento):} Devuelve verdadero si la cola contiene el elemento.
+	\item \textbf{size():} Devuelve el número de elementos.
+\end{itemize}

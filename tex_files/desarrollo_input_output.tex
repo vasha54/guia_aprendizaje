@@ -1,0 +1,133 @@
+Para la lectura e impresión de datos se puede realizar por dos métodos por \textbf{cin} y \textbf{cout} primitivosde C++ o por \textbf{printf} y \textbf{scanf} primitivos de C, en el programa se pueden usar ambos métodos si esnecesario.
+
+\subsection{Primitivos de C++}
+
+En sus programas, si usted desea hacer uso de los objetos  \textbf{cin} y \textbf{cout} tendrá que incluir el uso de labiblioteca iostream ( por medio de la directiva \#include ). La iostream es la biblioteca estándar enC++ para poder tener acceso a los dispositivos estándar de entrada y/o salida.
+Si usted usa la directiva \#include <iostream.h> \quad o \#include <iostream> \quad en sus programas, automáticamente la iostream pone a su disposición los objetos \textbf{cin} y \textbf{cout} en el ámbito estándar (std), de talmanera que usted puede comenzar a enviar o recibir información a través de los mismos sin siquierapreocuparse de su creación.
+
+Para el manejo de \textbf{cin} y \textbf{cout} se necesita también el uso de los \textbf{operadores de direccionamiento}$<<$ y $>>$. Los operadores de direccionamiento son los encargados de manipular el flujo de datosdesde o hacia el dispositivo referenciado por un stream específico. El operador de direccionamientopara salidas es una pareja de símbolos de "menor que" $<<$, y el operador de direccionamientopara entradas es una pareja de símbolos de "mayor que" $>>$. Los operadores de direccionamientose colocan entre dos operandos, el primero es el stream y el segundo es una variable o constanteque proporciona o recibe los datos de la operación.
+
+\subsubsection{Funciones miembro get y getline}
+
+La función miembro \textbf{get} sin argumentos recibe como entrada un carácter del flujo designado (incluyendo caracteres de espacio en blanco y otros caracteres no gráfi cos, como la secuencia de teclas que representa el fi n de archivo) y lo devuelve como elvalor de la llamada a la función. Esta versión de get devuelve EOF cuando se encuentra el fin del archivo en el flujo.
+
+La función miembro \textbf{getline} opera de manera similar, inserta un carácter nulo después de la línea en el arreglo de caracteres. La función \textbf{getline} elimina el delimitador del flujo (es decir, leeel carácter y lo descarta), pero no lo almacena en el arreglo de caracteres.
+
+\subsubsection{Precisión de punto flotante ( precision , setprecision )}
+
+Para controlar la precisión de los números de punto flotante (es decir, el número de dígitos a la derecha del puntodecimal), podemos usar el manipulador de flujo \textbf{setprecision} o la función miembro \textbf{precision} de ios\_base . Unallamada a uno de estos miembros establece la precisión para todas las operaciones de salida subsecuentes, hasta la siguiente llamada para establecer la precisión. Una llamada a la función miembro \textbf{precision} sin argumento devuelve la opción
+de precisión actual (esto es lo que necesitamos usar para poder restaurar la precisión original en un momento dado, unavez que ya no sea necesaria una opción pegajosa).
+
+\subsubsection{Anchura de campos ( width , setw )}
+
+La función miembro \textbf{width} (de la clase base ios\_base ) establece la anchura de campo (es decir, el número de posicionesde caracteres en los que debe imprimirse un valor, o el número máximo de caracteres que deben introducirse) y devuelvela anchura anterior. Si los valores que se imprimen son menos que la anchura de campo, se insertan caracteres de rellenocomo relleno ( padding). Un valor más ancho que la anchura designada no se truncará; se imprimirá el número completo.
+La función \textbf{width} sin argumento devuelve la configuración actual.
+
+\subsubsection{Estados de formato de flujos y manipuladores de flujos}
+
+Se pueden utilizar varios manipuladores de flujos para especificar los tipos de formato a realizar durante las operacionesde E/S de flujos. Los manipuladores de flujos controlan la configuración del formato de la salida. Todos estos manipuladores pertenecen ala clase ios\_base.
+
+\begin{longtable}{|c|p{11cm}|}
+	\hline
+  \textbf{Manipulador de flujo}	& \textbf{Descripción}  \\
+	\hline
+	skipws & Omite los caracteres de espacio en blanco en un flujo de entrada. Esta opción se restablece con elmanipulador de flujo noskipws . \\
+	\hline
+	left & Justifica la salida a la izquierda en un campo. Si es necesario, aparecen caracteres de relleno a laderecha.  \\
+	\hline
+	right & Justifica la salida a la derecha en un campo. Si es necesario, aparecen caracteres de relleno a la izquierda.  \\
+	\hline
+	internal & Indica que el signo de un número debe justifi carse a la izquierda en un campo, y que la magnituddel número se debe justificar a la derecha en ese mismo campo (es decir, deben aparecer caracteres derelleno entre el signo y el número). \\
+	\hline
+	dec & Especifica que los enteros deben tratarse como valores decimales (base 10). \\
+	\hline
+	oct & Especifica que los enteros se deben tratar como valores octales (base 8). \\
+	\hline
+	hex & Especifica que los enteros se deben tratar como valores hexadecimales (base 16). \\
+	\hline
+	showbase & Especifica que la base de un número se debe imprimir adelante del mismo (un 0 a la izquierda paralos valores octales; 0x o 0X a la izquierda para los valores hexadecimales). Esta opción se restablececon el manipulador de flujo noshowbase . \\
+	\hline
+	showpoint & Especifica que los números de punto f lotante se deben imprimir con un punto decimal. Esto se usageneralmente con fixed para garantizar cierto número de dígitos a la derecha del punto decimal, auny cuando sean ceros. Esta opción se restablece con el manipulador de flujo noshowpoint. \\
+	\hline
+	uppercase & Especifica que deben usarse letras mayúsculas (es decir, X y de la A a la F ) en un entero hexadecimal,y que se debe usar la letra E al representar un valor de punto flotante en notación científica. Estaopción se restablece con el manipulador de flujo nouppercase . \\
+	\hline
+	showpos & Especifica que a los números positivos se les debe anteponer un signo positivo ( + ). Esta opción serestablece con el manipulador de flujo noshowpos . \\
+	\hline
+	scientific & Especifica la salida de un valor de punto flotante en notación científica. \\
+	\hline
+	fixed & Especifica la salida de un valor de punto flotante en notación de punto fijo, con un número específico de dígitos a la derecha del punto decimal. \\
+	\hline
+\end{longtable}
+
+\subsection{Primitivos de C}
+
+En sus programas, si usted desea hacer uso de los objetos \textbf{scanf} y \textbf{printf} tendrá que incluir el uso dela biblioteca cstdio ( por medio de la directiva \#include <cstdio> ). Cstdio es la biblioteca estándar en C parapoder tener acceso a los dispositivos estándar de entrada y/o salida.
+
+Por defecto las funciones de entrada/salida de C (Input/Output) son un conjunto de funciones, incluidas
+con el compilador, que permiten a un programa recibir y enviar datos al exterior. Para su
+utilización es necesario incluir, al comienzo del programa, el archivo stdio.h en el que están
+definidos sus prototipos \#include <stdio.h>donde stdio proviene de \emph{standard-input-output}.
+
+Generalmente, \textbf{printf()} y \textbf{scanf()} funcionan utilizando cada una de ellas una \emph{tira de caracteres decontrol} y una lista de \emph{argumentos}. Veremos estas características; en primer lugar en \textbf{printf()}, y acontinuación en \textbf{scanf()}.
+
+
+
+Las instrucciones que se han de dar a \textbf{printf()} cuando se desea imprimir una variable dependen deltipo de variable de que se trate. Así, tendremos que utilizar la notación \%d para imprimir un entero,y \%c para imprimir un carácter, como ya se ha dicho. A continuación damos la lista de todos losidentificadores que emplea la función \textbf{printf()} y el tipo de salida que imprimen. La mayor parte desus necesidades queda cubierta con los ocho primeros; de todas formas, ahí están los dos restantespor si desea emplearlos.
+
+\begin{tabular}{|c|p{12cm}|}
+	\hline
+	\textbf{Identificador} & \textbf{Salida} \\
+	\hline
+	\%c & Carácter o entero pequeño \\
+	\hline
+	\%s &  Tira de caracteres \\
+	\hline
+	\%d, \%i &  Entero decimal \\
+	\hline
+	\%u &  Entero decimal sin signo\\
+	\hline
+	\%lld &  Entero largo\\
+	\hline
+	\%llu &  Entero largo sin signo\\
+	\hline
+	\%f &  Número de punto flotante en notación decimal\\
+	\hline
+	\%lf &  Número de punto flotante en notación decimal con doble presición\\
+	\hline
+	\%o &  Entero octal sin signo\\
+	\hline
+	\%x &  Entero hexadecimal sin signo\\
+	\hline
+\end{tabular}
+
+El formato para uso de \textbf{printf()} es éste:
+
+\qquad \textbf{ printf(Control, item1, item2, ....);} 
+
+\textbf{item1}, \textbf{item2}, etc., son las distintas variables o constantes a imprimir. Pueden también ser expresiones, las cuales se evalúan antes de imprimir el resultado. \textbf{Control} es una tira de caracteres quedescriben la manera en que han de imprimirse los items.
+
+También se debe hablar de \textbf{modificadores de especificaciones de conversión} en printf(), estos sonapéndices que se agregan a los especificadores de conversión básicos para modificar la salida. Se
+colocan entre el símbolo \textbf{\%} y el carácter que define el tipo de conversión. A continuación se da unalista de los símbolos que está permitido emplear. Si se utiliza más de un modificador en el mismositio, el orden en que se indican deberá ser el mismo que aparece en la tabla. Tenga presente que notodas las combinaciones son posibles.
+
+\begin{enumerate}
+	\item \textbf{-}: El ítem correspondiente se comenzará a escribir empezando en el extremo izquierdo delcampo que tenga asignado. Normalmente se escribe el ítem de forma que acabe a laderecha del campo.Ejemplo: \%-10d
+	\item \textbf{número}: Anchura mínima del campo. En el caso de que la cantidad a imprimir (o la tira de caracteres) no quepa en el lugar asignado, se usará automáticamente un campo mayor. Ejemplo: \%4d
+	\item \textbf{.número}: Precisión. En tipos flotantes es la cantidad de cifras que se han de imprimir a la derechadel punto (es decir, el número de decimales). En el caso de tiras, es el máximo número de caracteres que se ha de imprimir. Ejemplo: \%.2f (dos decimales )
+\end{enumerate}
+
+Para el uso de \textbf{scanf()} se utilizan los mismo identificadores que en \textbf{printf()}, y al igual que \textbf{printf()},\textbf{scanf()} emplea una tira de caracteres de control y una lista de argumentos. La mayor diferenciaentre ambas está en esta última; \textbf{printf()} utiliza en sus listas nombres de variables, constantes yexpresiones; \textbf{scanf()} usa punteros a variable. Afortunadamente no se necesita saber mucho depunteros para emplear esta expresión; se trata simplemente de seguir las dos reglas que se dan acontinuación:
+
+\begin{itemize}
+	\item Si se desea leer un valor perteneciente a cualquier de los tipos básicos coloque el nombre de lavariable precedido por un \&.
+	\item Si lo que desea es leer una variable de tipo tira de caracteres, no use \&.
+\end{itemize}
+
+Otro detalle a tomar en cuenta es que \textbf{scanf()} considera que dos ítems de entrada son diferentes cuando están separados por blancos, tabulados o espacios. Va encajando cada especificador de
+conversión con su campo correspondiente, ignorando los blancos intermedios. La única excepción
+es la especificación \%c, que lee el siguiente caracter, sea blando o no.
+
+\subsubsection{Macros getchar() y putchar()}
+
+Las macros \textbf{getchar()} y \textbf{putchar()} permiten respectivamente leer e imprimir un sólo caráctercada vez, en la entrada o en la salida estándar. La macro \textbf{getchar()} recoge un carácter
+introducido por teclado y lo deja disponible como valor de retorno. La macro \textbf{putchar()}
+escribe en la pantalla el carácter que se le pasa como argumento.

@@ -1,0 +1,18 @@
+\begin{itemize}
+	\item Para problemas con múltiples casos de prueba en una sola ejecución, debe
+	incluir dos casos de prueba de muestra idénticos consecutivamente en la misma ejecución. Ambos deben generar las mismas respuestas correctas conocidas. Esto ayuda a determinar si ha olvidado
+	para inicializar cualquier variable, si la primera instancia produce la respuesta correcta pero la
+	el segundo no, es probable que no haya reiniciado sus variables.
+	\item Sus casos de prueba deben incluir casos extermos complicados. Piense como el autor del problema y intente encontrar la peor entrada posible para su algoritmo identificando casos
+	que están ocultos o implícitos en la descripción del problema. Estos casos suelen ser
+	incluidos en los casos de prueba secretos del juez, pero no en la muestra de entrada y salida.
+	Los casos de esquina generalmente ocurren en valores extremos como N = 0, N = 1, negativo
+	valores, valores finales grandes (y/o intermedios) que no se ajustan a enteros con signo de 32 bits, grafo vacío/ en línea/ árbol / bipartito / cíclico / acíclico / completo / desconectado, etc.
+	
+	\item Sus casos de prueba deben incluir casos grandes. Aumente el tamaño de entrada gradualmente hasta los límites de entrada máximos establecidos en la descripción del problema. Use casos de prueba grandes con estructuras triviales que son fáciles de verificar con cálculo manual y grandes cantidades aleatorias casos de prueba para probar si su código termina a tiempo y aún produce resultados razonables (ya que la corrección sería difícil de verificar aquí). A veces su programa puede funciona para casos de prueba pequeños, pero produce una respuesta incorrecta, falla o excede el tiempo límite cuando el tamaño de entrada aumenta. Si eso sucede, verifique si hay desbordamientos, fuera de límite errores, o mejorar su algoritmo.
+	
+	\item Aunque esto es raro en los concursos de programación modernos, no asuma que la entrada
+	siempre estará bien formateado si la descripción del problema no lo establece explícitamente
+	(especialmente para un problema mal escrito). Intente insertar espacios en blanco adicionales (espacios, tabs) en la entrada y pruebe si su código aún puede obtener los valores correctamente.
+	
+\end{itemize}

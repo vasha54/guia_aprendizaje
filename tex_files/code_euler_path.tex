@@ -1,0 +1,235 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+vector<int> findPathEuler(vector<vector<int> > matrix_ady, int n) {
+   vector<int> deg(n); vector<int> path; path.assign(1,-1);
+   for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < n; ++j)
+         deg[i] += matrix_ady[i][j];
+   }
+   int first = 0;
+   while (first < n && !deg[first]) ++first;
+   
+   if(first == n){return path;}
+	
+   int v1 = -1, v2 = -1;
+   bool bad = false;
+   for (int i = 0; i < n; ++i) {
+      if (deg[i] & 1) {
+         if (v1 == -1) v1 = i;
+         else if (v2 == -1) v2 = i;
+         else bad = true;
+      }
+   }
+   
+   if (v1 != -1){
+      ++matrix_ady[v1][v2]; ++matrix_ady[v2][v1];
+   }	
+   stack<int> st; st.push(first);
+   vector<int> res;
+   while (!st.empty()) {
+      int v = st.top(); int i;
+      for (i = 0; i < n; ++i)
+         if (matrix_ady[v][i]) break;
+      if (i == n) { res.push_back(v); st.pop();} 
+      else { --matrix_ady[v][i];
+             --matrix_ady[i][v]; st.push(i); }
+   }
+   if (v1 != -1) {
+      for (size_t i = 0; i + 1 < res.size(); ++i) {
+         if ((res[i] == v1 && res[i + 1] == v2)
+             || (res[i] == v2 && res[i + 1] == v1)) {
+            vector<int> res2;
+            for (size_t j = i + 1; j < res.size(); ++j)
+               res2.push_back(res[j]);
+            for (size_t j = 1; j <= i; ++j)
+               res2.push_back(res[j]);
+            res = res2;
+            break;
+         }
+      }
+   }
+	
+   for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < n; ++j) {
+          if (matrix_ady[i][j]) bad = true;
+      }
+   }
+	
+   if (bad){ return path; } 
+   else {
+      path.clear();
+      for (int x : res)
+         path.push_back(x);
+   }
+}
+\end{lstlisting}
+
+Esta implementación esta pensada para multigrafo no dirigido con bucles
+
+La siguiente implementación  halla el ciclo de Euler en un grafo dirigido asumiendo que todos los nodos sus grados de entrada y salida son iguales y el grafo es conexo. Al método se le pasa el grafo y el nodo por el cual quiere comenzar el ciclo.
+
+\begin{lstlisting}[language=C++]
+vector<int> eulerCycle(vector<vector<int> > graph, int v) {
+   vector<int> curEdge (graph.size(),0);
+   vector<int> res; stack<int> st ;
+   st.push(v);
+   while (!st.empty()) {
+      v = st.pop();
+      while (curEdge[v] < graph[v].size()) {
+         st.push(v); v = graph[v][curEdge[v]++];
+      }
+      res.push_back(v);
+   }
+   reverse(res.begin(),res.end());
+   return res;
+}
+\end{lstlisting}
+
+Implementación del algoritmo de Hierholzer que realiza DFS desde el vértice inicial y permite determinar si hay camino (\emph{eulerian\_path}) o ciclo (\emph{eulerian\_tour}) de euler para grafos no dirigidos.
+
+\begin{lstlisting}[language=C++]
+#define fst first
+#define snd second
+#define all(c) ((c).begin()), ((c).end())
+
+struct graph {
+   int n;
+   struct edge { int src, dst, rev; };
+   vector<vector<edge>> adj;
+   graph() : n(0) { }
+   //graph(int n) : n(n), adj(n) { }
+	
+   void add_edge(int src, int dst) {
+      n = max(n, max(src, dst)+1);
+      if (adj.size() < n) adj.resize(n);
+      adj[src].push_back({src, dst, (int)adj[dst].size()});
+      adj[dst].push_back({dst, src, (int)adj[src].size()-1});
+   }
+
+   vector<int> path;
+   void visit(int u) {
+      while (!adj[u].empty()) {
+         auto e = adj[u].back(); adj[u].pop_back();
+         if (e.src >= 0){
+            adj[e.dst][e.rev].src = -1;
+            visit(e.dst);
+         }
+      }
+      path.push_back(u);
+   }
+   vector<int> eulerian_path() {
+      int m = 0, s = -1;
+      for (int u = 0; u < n; ++u) {
+         m += adj[u].size();
+         if (adj[u].size() % 2 == 1) s = u;
+      }
+      path.clear(); if (s >= 0) visit(s);
+      if (path.size() != m/2 + 1) return {};
+      return path;
+   }
+   vector<int> eulerian_tour() {
+      int m = 0, s = 0;
+      for (int u = 0; u < n; ++u) {
+         m += adj[u].size();
+         if (adj[u].size() > 0) s = u;
+      }
+      path.clear(); visit(s);
+      if (path.size() != m/2 + 1 || path[0] != path.back()) return {};
+      return path;
+   }
+};
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public List<Integer> findPathEuler(int[][] matrix_ady, int n) {
+   int[] deg = new int[n]; Arrays.fill(deg, 0);
+   List<Integer> path = new ArrayList<Integer>();
+   path.add(-1);
+   for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < n; ++j)
+         deg[i] += matrix_ady[i][j];
+   }
+   int first = 0;
+   while (first < n && deg[first]==0) ++first;
+   if (first == n) return path;
+	
+   int v1 = -1, v2 = -1; boolean bad = false;
+   for (int i = 0; i < n; ++i) {
+      if ((deg[i] & 1) == 1) {
+         if (v1 == -1) v1 = i;
+         else if (v2 == -1) v2 = i;
+         else bad = true;
+      }
+   }
+	
+   if (v1 != -1) {
+      ++matrix_ady[v1][v2];
+      ++matrix_ady[v2][v1];
+   }
+	
+   Stack<Integer> st = new Stack<Integer>();
+   st.push(first);
+   List<Integer> res = new ArrayList<Integer>();
+   while (!st.empty()) {
+      int v = st.peek(); int i;
+      for (i = 0; i < n; ++i)
+         if(matrix_ady[v][i] != 0) break;
+      if(i == n){res.add(v);st.pop();}
+      else {
+          --matrix_ady[v][i]; --matrix_ady[i][v];
+          st.push(i);
+      }
+   }
+   if(v1 != -1) {
+      for(int i = 0; i + 1 < res.size(); ++i) {
+         if((res.get(i) == v1 && res.get(i + 1) == v2) || (res.get(i) == v2 && res.get(i + 1) == v1)) {
+            List<Integer> res2 = new ArrayList<Integer>();
+            for(int j = i + 1; j < res.size(); ++j)
+               res2.add(res.get(j));
+            for (int j = 1; j <= i; ++j)
+               res2.add(res.get(j));
+            res.clear();
+            res.addAll(res2);
+            break;
+         }
+      }
+   }
+	
+   for (int i = 0; i < n; ++i) {
+      for (int j = 0; j < n; ++j) {
+         if (matrix_ady[i][j] != 0) bad = true;
+      }
+   }
+	
+   if (bad) { return path;}
+   else {
+      path.clear();
+      for (Integer x : res) path.add(x);
+   }
+   return path;
+}
+\end{lstlisting}
+Esta implementación esta pensada para multigrafo no dirigido con bucles
+
+
+La siguiente implementación  halla el ciclo de Euler en un grafo dirigido asumiendo que todos los nodos sus grados de entrada y salida son iguales y el grafo es conexo. Al método se le pasa el grafo y el nodo por el cual quiere comenzar el ciclo.
+
+\begin{lstlisting}[language=Java]
+public static List<Integer> eulerCycle(List<Integer>[] graph, int v) {
+   int[] curEdge = new int[graph.length];
+   List<Integer> res = new ArrayList<>();
+   Stack<Integer> stack = new Stack<>();
+   stack.add(v);
+   while (!stack.isEmpty()) {
+      v = stack.pop();
+      while (curEdge[v] < graph[v].size()) {
+         stack.push(v);
+         v = graph[v].get(curEdge[v]++);
+      }
+      res.add(v);
+    }
+    Collections.reverse(res);
+    return res;
+}
+\end{lstlisting}

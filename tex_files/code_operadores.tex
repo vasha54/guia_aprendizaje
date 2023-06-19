@@ -1,0 +1,65 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+struct {
+   int codigo;
+   float precio;
+} articulo, *ptrstr; //Operador Indireccion
+
+int main() {
+   //Operador asignacion
+   int abc = 22;
+   //Operador de direccion
+   int def = &abc ;
+   //Operador Indireccion
+   int val = *def;
+   //Operador pertenencia directa
+   articulo.codigo = 1265;
+   //Operador de direccion
+   ptrstr = &articulo;
+   // Operador pertenencia indirecta,Operador unitario
+   ptrstr->codigo = -3451;
+   int sum =0;
+   //Operador asignacion, operador coma, operarador asigancion,
+   // operador relacional,operador logico ,operador relacional, operador asignacion
+   for(int chatos=2,ronda=0;ronda<1000 && chatos<=50000;chatos*=2){
+      //Operador asignacion, operador aritmetico
+      ronda = ronda + chatos;
+      //Operador a nivel bits
+      sum =sum | chatos;
+   }
+   //Operador asignacion
+   int x=1 ;
+   //Operador asignacion
+   int y=10;
+   //Operador incremental
+   y++; 
+  //Operador relacional, Operador ternario,Operador aritmetico,Operador aritmetico
+  int z = (x<y)?x-3:y/8;
+  return 0;
+}	
+\end{lstlisting}
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public static void main(String[] args){
+   //Operador asignacion
+   int abc = 22;
+   int sum =0;
+   //Operador asignacion, operador coma, operarador asigancion,
+   // operador relacional,operador logico ,operador relacional, operador asignacion
+   for(int chatos=2,ronda=0;ronda<1000 && chatos<=50000;chatos*=2){
+      //Operador asignacion, operador aritmetico
+      ronda = ronda + chatos;
+      //Operador a nivel bits
+      sum =sum | chatos;
+   }
+   //Operador asignacion
+   int x=1 ;
+   //Operador asignacion
+   int y=10;
+   //Operador incremental
+   y++; 
+   //Operador relacional, Operador ternario,Operador aritmetico,Operador aritmetico
+   int z = (x<y)?x-3:y/8;
+}
+\end{lstlisting}
+

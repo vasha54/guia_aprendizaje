@@ -1,0 +1,235 @@
+Veremos varias aplicaciones de la estructura de datos, tanto los usos triviales como algunas mejoras a la estructura de datos.
+
+\begin{itemize}
+	\item \textbf{Componentes conectados en un grafo:} Esta es una de las aplicaciones obvias de DSU.
+	 Formalmente el problema se define de la siguiente forma: Inicialmente tenemos un grafo vacío. 
+	 Tenemos que agregar vértices y aristas no dirigidas, y responder consultas de la forma $(a,b)$ son los vértices $a$ y $b$ en la misma componente conexa del grafo?. Aquí podemos aplicar directamente la estructura de datos y obtener una solución que maneje la adición de un vértice o una arista y una consulta en un tiempo promedio casi constante. Esta aplicación es bastante importante, porque casi el mismo problema aparece en el algoritmo de Kruskal para encontrar un árbol de expansión mínimo. Usando DSU podemos mejorar la $O(m \log n + n^2)$ complejidad a $O(m \log n)$.
+	 
+	 \item \textbf{Buscar componentes conectados en una imagen:} Una de las aplicaciones de DSU es la siguiente tarea: hay una imagen de $nxm$ píxeles. Originalmente todos son blancos, pero 
+	 luego se dibujan algunos píxeles negros. Desea determinar el tamaño de cada componente conectado blanco en la imagen final. Para la solución, simplemente iteramos sobre todos los píxeles blancos  de la imagen, para cada celda iteramos sobre sus cuatro vecinos, y si el vecino es blanco, llamamos $union\_sets$. Así tendremos un DSU con $nm$ nodos correspondientes a los píxeles de la imagen. Los árboles resultantes en la DSU son los componentes conectados deseados. El problema  también se puede resolver mediante DFS o BFS , pero el método descrito aquí tiene una ventaja: puede procesar la matriz fila por fila (es decir, para procesar una fila solo necesitamos la fila anterior y la actual, y solo necesitamos una DSU construida para los elementos de una fila) en $O(\min(n, m))$ memoria.
+	 
+	 \item \textbf{Almacenar información adicional para cada conjunto:} DSU le permite almacenar fácilmente información adicional en los conjuntos. Un ejemplo sencillo es el tamaño de los conjuntos: el almacenamiento de los tamaños ya se describió en la sección Unión por tamaño (la información fue almacenada por el representante actual del conjunto). De la misma manera, al almacenarlo en los nodos representativos, también puede almacenar cualquier otra información sobre los conjuntos.
+	 
+	 \item \textbf{Comprimir saltos a lo largo de un segmento / Pintar subarreglos fuera de línea:} Una aplicación común de la DSU es la siguiente: hay un conjunto de vértices y cada vértice tiene una arista saliente hacia otro vértice. Con DSU puede encontrar el punto final, al que llegamos después de seguir todos las aristas desde un vertice de inicio dado, en un tiempo casi constante.
+	 
+	 Un buen ejemplo de esta aplicación es el problema de \textbf{pintar subarreglos} . Tenemos un segmento de  
+	 longitud $L$, cada elemento tiene inicialmente el color 0. Tenemos que volver a pintar el 
+	 subarreglo $[l,r]$ con el color $c$ para cada consulta $(l, r, c)$. Al final queremos encontrar el color final de cada celda. Suponemos que conocemos todas las consultas de antemano, es decir, la tarea está fuera de línea.
+	 
+	 Para la solución podemos hacer una DSU, que para cada celda almacene un enlace a la siguiente celda sin pintar. Así inicialmente cada celda apunta a sí misma. Después de pintar un repintado solicitado de un segmento, todas las celdas de ese segmento apuntarán a la celda después del segmento.
+	 
+	 Ahora, para resolver este problema, consideramos las consultas en el \textbf{orden inverso} : del último al primero. De esta manera, cuando ejecutamos una consulta, solo tenemos que pintar exactamente las celdas sin pintar en el subarreglo $[l, r]$. Todas las demás celdas ya contienen su color final. Para iterar rápidamente sobre todas las celdas sin pintar, usamos la DSU. Encontramos la celda sin pintar más a la izquierda dentro de un segmento, la volvemos a pintar y con el puntero nos movemos a la siguiente celda vacía a la derecha. Aquí podemos usar la DSU con compresión de ruta, pero no podemos usar la unión por rango/tamaño (porque es importante quién se convierte en el líder después de la fusión). Por lo tanto la complejidad será $O(\log n)$ por unión (que también es bastante rápido).
+	 
+	 Implementación:
+	 
+	 \begin{lstlisting}[language=C++]
+for (int i = 0; i <= L; i++) { make_set(i); }
+
+for (int i = m-1; i >= 0; i--) {
+   int l = query[i].l; int r = query[i].r; int c = query[i].c;
+   for (int v = find_set(l); v <= r; v = find_set(v)) {
+        answer[v] = c; parent[v] = v + 1;
+   }
+}
+	 \end{lstlisting}
+	 
+	 
+	 Hay una optimización: podemos usar la \textbf{unión por rango} , si almacenamos la siguiente celda sin pintar en un arreglo adicional $end[]$. Entonces podemos fusionar dos conjuntos en uno clasificado de acuerdo con sus heurísticas, y obtenemos la solución en $O(f(n))$.
+	 
+	 \item \textbf{Distancias de soporte hasta representativas:}
+	 
+	 A veces, en aplicaciones específicas de la DSU, es necesario mantener la distancia entre un vértice y el representante de su conjunto (es decir, la longitud del camino en el árbol desde el nodo actual hasta la raíz del árbol).
+	 
+	 Si no usamos compresión de ruta, la distancia es solo el número de llamadas recursivas. Pero esto será ineficiente.
+	 
+	 Sin embargo, es posible comprimir la ruta si almacenamos la distancia al padre como información adicional para cada nodo.
+	 
+	 En la implementación es conveniente usar un arreglos de pares para $parent[]$ y la función $find\_set$ ahora devuelve dos números: el representante del conjunto y la distancia a él.
+	 
+	 \begin{lstlisting}[language=C++]
+void make_set(int v) {
+   parent[v] = make_pair(v, 0);
+   rank[v] = 0;
+}
+
+pair<int, int> find_set(int v) {
+   if (v != parent[v].first) {
+      int len = parent[v].second;
+      parent[v] = find_set(parent[v].first);
+      parent[v].second += len;
+	}
+    return parent[v];
+}
+
+void union_sets(int a, int b) {
+   a = find_set(a).first;
+   b = find_set(b).first;
+   if (a != b) {
+     if (rank[a] < rank[b])
+        swap(a, b);
+        parent[b] = make_pair(a, 1);
+        if (rank[a] == rank[b])
+           rank[a]++;
+	}
+}
+\end{lstlisting}
+	 
+	 \item \textbf{Admite la paridad de la longitud de la ruta / Comprobación de bipartididad en línea:}
+	 
+	 De la misma manera que se calcula la longitud del camino hacia el líder, es posible mantener la paridad de la longitud del camino ante él. ¿Por qué está esta aplicación en un párrafo aparte?
+	 
+	 El requisito inusual de almacenar la paridad del camino surge en la siguiente tarea: inicialmente se nos da un gráfico vacío, se le pueden agregar aristas y tenemos que responder consultas del tipo ¿es bipartito el componente conexo que contiene este vértice ?.
+	 
+	 Para resolver este problema, creamos una DSU para almacenar los componentes y almacenamos la paridad del camino hasta el representante de cada vértice. Por lo tanto, podemos verificar rápidamente si agregar una arista conduce a una violación de la bipartición o no: es decir, si los extremos de la arista se encuentran en el mismo componente conectado y tienen la misma longitud de paridad que el líder, entonces agregar esta arista producirá un ciclo de longitud impar, y el componente perderá la propiedad de bipartididad.
+	 
+	 La única dificultad que enfrentamos es calcular la paridad en el $union_find$ método.
+	 
+	 Si añadimos una arista $(a,b)$ que conecta dos componentes conectados en uno, luego, cuando 
+	 adjunta un árbol a otro, debemos ajustar la paridad. Derivemos una fórmula que calcule la
+	 paridad emitida al lider del conjunto que se adjuntará a otro conjunto. Dejar $x$ sea la paridad de la longitud del camino desde el vértice $a$ hasta su líder $A$ ,y $y$ como la 
+	 paridad de la longitud del camino desde el vértice $b$ hasta su líder $B$ , y $t$ la paridad 
+	 deseada que tenemos que asignar a $B$ después de la fusión. El camino contiene la de las tres 
+	 partes: desde $B$ a $b$, de $b$ a $a$, que está conectado por una arista y por lo tanto tiene 
+	 paridad $1$, y de $a$ a $A$ . Por lo tanto recibimos la fórmula ($\oplus$ denota la operación XOR):
+	 $$t = x \oplus y \oplus 1$$
+	 
+	 Por lo tanto, independientemente de cuántas uniones realicemos, la paridad de las arista se lleva de un líder a otro.
+	 
+	 Damos la implementación del ESD que apoya la paridad. Como en la sección anterior, usamos un par para almacenar el antepasado y la paridad. Además, para cada conjunto, almacenamos en la matriz bipartite[]si todavía es bipartito o no.
+\begin{lstlisting}[language=C++]	 
+void make_set(int v) {
+   parent[v] = make_pair(v, 0);
+   rank[v] = 0;
+   bipartite[v] = true;
+}
+
+pair<int, int> find_set(int v) {
+   if(v!=parent[v].first){
+      int parity = parent[v].second;
+      parent[v] = find_set(parent[v].first);
+      parent[v].second ^= parity;
+   }
+   return parent[v];
+}
+
+void add_edge(int a, int b) {
+   pair<int, int> pa = find_set(a);
+   a = pa.first;
+   int x = pa.second;
+	
+   pair<int, int> pb = find_set(b);
+   b = pb.first;
+   int y = pb.second;
+	
+   if(a == b) {
+      if(x == y)
+         bipartite[a] = false;
+   } else {
+      if (rank[a] < rank[b]) swap (a, b);
+      parent[b] = make_pair(a, x^y^1);
+      bipartite[a] &= bipartite[b];
+      if (rank[a] == rank[b]) ++rank[a];
+   }
+}
+
+bool is_bipartite(int v) {
+   return bipartite[find_set(v).first];
+}
+\end{lstlisting} 	 
+	 \item \textbf{RMQ sin conexión (consulta de rango mínimo) en $O(f(n))$ en promedio / El truco de Arpa:}
+	 
+	 Nos dan un arreglo a[] y tenemos que calcular algunos mínimos en segmentos dados de del arreglo. La idea para resolver este problema con DSU es la siguiente: iteraremos sobre la matriz y cuando estemos en el ielemento th responderemos todas las consultas (L, R)con R == i. Para hacer esto de manera eficiente, mantendremos una DSU usando los primeros ielementos con la siguiente estructura: el padre de un elemento es el siguiente elemento más pequeño a la derecha. Luego, utilizando esta estructura, la respuesta a una consulta será $a[find\_set(L)]$, el número más pequeño a la derecha de L.
+	 
+	 Obviamente, este enfoque solo funciona sin conexión, es decir, si conocemos todas las consultas de antemano.
+	 
+	 Es fácil ver que podemos aplicar compresión de ruta. Y también podemos usar Unión por rango, si almacenamos el líder real en una matriz separada.
+\begin{lstlisting}[language=C++]
+struct Query {
+   int L, R, idx;
+};
+	 
+vector<int> answer;
+vector< vector<Query> > container;
+	 
+//container[i]contiene todas las consultas con R == i.
+	 
+stack<int> s;
+for (int i = 0; i < n; i++) {
+   while (!s.empty() && a[s.top()] > a[i]) {
+      parent[s.top()] = i;
+      s.pop();
+   }
+   s.push(i);
+   for (Query q : container[i]) {
+      answer[q.idx] = a[find_set(q.L)];
+   }
+}
+\end{lstlisting} 
+	 Hoy en día este algoritmo se conoce como el truco de Arpa. Lleva el nombre de AmirReza Poorakhavan, quien descubrió y popularizó esta técnica de forma independiente. Aunque este algoritmo ya existía antes de su descubrimiento.
+	 Offline LCA (ancestro común más bajo en un árbol) en $O(f(n))$ de media
+	 
+	 
+	 \item \textbf{Almacenar el DSU explícitamente en una lista establecida / Aplicaciones de esta idea al fusionar varias estructuras de datos:}
+	 
+	 Una de las formas alternativas de almacenar el DSU es la preservación de cada conjunto en forma de una lista explícitamente almacenada de sus elementos . Al mismo tiempo, cada elemento también almacena la referencia al representante de su conjunto.
+	 
+	 A primera vista esto parece una estructura de datos ineficiente: al combinar dos conjuntos tendremos que agregar una lista al final de otra y actualizar el liderazgo en todos los elementos de una de las listas.
+	 
+	 Sin embargo, resulta que el uso de una heurística de ponderación (similar a Unión por tamaño) puede reducir significativamente la complejidad asintótica: $O(m + n \log n)$ actuar $m$ consultas sobre el $n$ elementos.
+	 
+	 Bajo heurística de ponderación queremos decir que siempre agregaremos el más pequeño de los dos conjuntos al conjunto más grande . Agregar un conjunto a otro es fácil de implementar $union_sets$ y llevará un tiempo proporcional al tamaño del conjunto agregado. Y la búsqueda del líder en $find\_set$ tomará $O(1)$ con este método de almacenamiento.
+	 
+	 Demostremos la complejidad del tiempo. $O(m + n \log n)$ para la ejecución de $m$ consultas 
+	 Arreglaremos un elemento arbitrario. $x$ y cuente con qué frecuencia se tocó en la operación 
+	 de combinación $union_sets$. Cuando el elemento $x$ se toca la primera vez, el tamaño del 
+	 nuevo conjunto será al menos $2$ . Cuando se toca por segunda vez, el conjunto resultante 
+	 tendrá un tamaño de al menos $4$ , porque el conjunto más pequeño se suma al más grande. 
+	 Esto significa que $x$ solo se puede mudar como máximo $\log n$ fusionar operaciones. Así la suma de todos los vértices da $O(n \log n)$ más $O(1)$ para cada solicitud.
+	 
+	 Aquí hay una implementación:
+	 \begin{lstlisting}[language=C++]
+vector<int> lst[MAXN];
+int parent[MAXN];
+	 
+void make_set(int v) {
+   lst[v] = vector<int>(1, v);
+   parent[v] = v;
+}
+	 
+int find_set(int v) {
+   return parent[v];
+}
+	 
+void union_sets(int a, int b) {
+   a = find_set(a);b = find_set(b);
+   if (a != b) {
+      if (lst[a].size() < lst[b].size())
+         swap(a, b);
+         while (!lst[b].empty()) {
+            int v = lst[b].back();
+            lst[b].pop_back();
+            parent[v] = a;
+            lst[a].push_back (v);
+         }
+      }
+   }
+}
+	\end{lstlisting}
+	 Esta idea de agregar la parte más pequeña a una parte más grande también se puede usar en muchas soluciones que no tienen nada que ver con DSU.
+	 
+	 Por ejemplo, considere el siguiente problema : nos dan un árbol, cada hoja tiene un número asignado (el mismo número puede aparecer varias veces en diferentes hojas). Queremos calcular la cantidad de números diferentes en el subárbol para cada nodo del árbol.
+	 
+	 Aplicando a esta tarea la misma idea, es posible obtener esta solución: podemos implementar un DFS , que devolverá un puntero a un conjunto de enteros: la lista de números en ese subárbol. Luego, para obtener la respuesta para el nodo actual (a menos, por supuesto, que sea una hoja), llamamos a DFS para todos los elementos secundarios de ese nodo y fusionamos todos los conjuntos recibidos. El tamaño del conjunto resultante será la respuesta para el nodo actual. Para combinar conjuntos múltiples de manera eficiente, solo aplicamos la receta descrita anteriormente: fusionamos los conjuntos simplemente agregando los más pequeños a los más grandes. Al final obtenemos un $O(n \log^2 n)$ solución, porque un número solo se agregará a un conjunto como máximo $O(\log n)$ veces.
+	 
+	 \item \textbf{Almacenar el DSU manteniendo una estructura de árbol clara / Búsqueda de puentes en línea en $O(f(n))$de media:}
+	 
+	 Una de las aplicaciones más poderosas de DSU es que le permite almacenar árboles comprimidos y sin comprimir . La forma comprimida se puede usar para fusionar árboles y para verificar si dos vértices están en el mismo árbol, y la forma sin comprimir se puede usar, por ejemplo, para buscar caminos entre dos vértices dados u otros recorridos de la estructura del árbol. .
+	 
+	 En la implementación, esto significa que, además de la matriz de ancestros comprimida, $parent[]$ necesitaremos mantener la matriz de ancestros sin comprimir $real_parent[]$. Es trivial que mantener esta matriz adicional no empeore la complejidad: los cambios solo ocurren cuando fusionamos dos árboles, y solo en un elemento.
+	 
+	 Por otro lado, cuando se aplica en la práctica, a menudo necesitamos conectar árboles usando una arista específica que no sea usando los dos nodos raíz. Esto significa que no tenemos más remedio que volver a enraizar uno de los árboles (hacer que los extremos de la arista sean la nueva raíz del árbol).
+	 
+	 A primera vista parece que este rerooteo es muy costoso y empeorará mucho la complejidad del tiempo. De hecho, para enraizar un árbol en el vértice $v$ debemos ir desde el vértice a la raíz anterior y cambiar de dirección en parent[]y $real_parent[]$ para todos los nodos en ese camino.
+	 
+	 Sin embargo, en realidad no es tan malo, podemos volver a enraizar el más pequeño de los dos árboles de forma similar a las ideas de las secciones anteriores, y obtener $O(\log n)$ de media.
+\end{itemize}

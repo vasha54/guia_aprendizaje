@@ -1,0 +1,40 @@
+En definitiva, el diseño Divide y Vencerás produce algoritmos recursivos cuyo
+tiempo de ejecución  se puede expresarmediante una ecuación en recurrencia del tipo:
+
+$$
+T(n) = 
+\begin{cases}
+	cn^k &\text{si  } 1 \le n < b  \\ 
+	aT(n/b) + cn^k   &\text{s1  } n \ge b  
+\end{cases}
+$$
+
+donde $a$, $c$ y $k$ son números reales, $n$ y $b$ son números naturales, y donde $a>0$, $c > 0$,
+$k \ge 0$ y $b\ge1$. El valor de a representa el número de subproblemas, $n/b$ es el tamaño
+de cada uno de ellos, y la expresión cn k representa el coste de descomponer el
+problema inicial en los a subproblemas y el de combinar las soluciones para
+producir la solución del problema original, o bien el de resolver un problema
+elemental. La solución a esta ecuación es:
+
+$$
+T(n) \in
+\begin{cases}
+	\theta(n^k) &\text{si  }  a < b^k  \\ 
+	\theta(n^k \log n) &\text{si  }  a = b^k  \\ 
+	\theta(n^{\log_b a}) &\text{si  }  a > b^k 
+\end{cases}
+$$
+
+Las diferencias surgen de los distintos valores que pueden tomar $a$ y $b$, que en
+definitiva determinan el número de subproblemas y su tamaño. Lo importante es
+observar que en todos los casos la complejidad es de orden polinómico o
+polilogarítmico pero nunca exponencial, frente a los algoritmos recursivos que
+pueden alcanzar esta complejidad en muchos casos. Esto se
+debe normalmente a la repetición de los cálculos que se produce al existir
+solapamiento en los subproblemas en los que se descompone el problema original.
+
+Para aquellos problemas en los que la solución haya de construirse a partir de
+las soluciones de subproblemas entre los que se produzca necesariamente
+solapamiento existe otra técnica de diseño más apropiada, y que permite eliminar el
+problema de la complejidad exponencial debida a la repetición de cálculos.
+Estamos hablando de la \emph{Programación Dinámica}.

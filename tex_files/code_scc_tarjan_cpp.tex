@@ -1,0 +1,31 @@
+\begin{lstlisting}[language=C++]
+struct graph {
+   int n; vector<vector<int>> adj;
+   graph(int n) : n(n), adj(n) { }
+   void add_edge(int src, int dst) { adj[src].push_back(dst);}
+	
+   vector<vector<int>> strongly_connected_components() {
+      vector<int> open, id(n); vector<vector<int>> scc;
+      int t = -n - 1;
+      auto argmin = [&](int u, int v){ return id[u] < id[v] ?u:v;};
+      function<int(int)> dfs = [&](int u) {
+         open.push_back(u); id[u] = t++; int w = u;
+         for (int v : adj[u]) {
+            if (id[v] == 0) w = argmin(w, dfs(v));
+            else if (id[v] < 0) w = argmin(w, v);
+         }
+         if (w == u) {
+            scc.push_back( { });
+            while (1) {
+               int v = open.back(); open.pop_back();
+               id[v] = scc.size(); scc.back().push_back(v);
+               if (u == v) break;
+            }
+         }
+         return w;
+      };
+      for (int u = 0; u < n; ++u) if (id[u] == 0) dfs(u);
+      return scc;
+	}
+};
+\end{lstlisting}

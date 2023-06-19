@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Memo
+% LaTeX Template
+% Version 1.0 (30/12/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Rob Oakes (http://www.oak-tree.us) with modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,11pt]{texMemo} % Set the paper size (letterpaper, a4paper, etc) and font size (10pt, 11pt or 12pt)
+
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{longtable}
+\usepackage{amsmath}
+%----------------------------------------------------------------------------------------
+%	MEMO INFORMATION
+%----------------------------------------------------------------------------------------
+
+\memoto{Luis Andr\'es Valido Fajardo. luis.valido@umcc.cu (53694742)} % Recipient(s)
+
+\memofrom{Josval Díaz Blanco} % Sender(s)
+
+\memosubject{Guía de Aprendizaje para Concursantes ICPC y IOI: Búsqueda Binaria } % Memo subject
+
+\memodate{\today} % Date, set to \today for automatically printing todays date
+
+\logo{\includegraphics[scale=0.5]{img/icpc}} % Institution logo at the top right of the memo, comment out this line for no logo
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%\AddToShipoutPicture{\BackgroundPic}
+\maketitle % Print the memo header information
+%\tableofcontents
+
+\pagebreak
+
+\pagestyle{fancy}
+\fancyhead[LO,CE]{ \includegraphics[scale=0.03]{img/logo1}}
+\fancyhead[RO,CE]{\includegraphics[scale=0.1]{img/icpc}}
+\fancyfoot[LO,CE]{\textbf{Autor:} Luis Andrés Valido Fajardo \\ \textbf{Email:} luis.valido1989@gmail.com \\ \textbf{Teléfono:} 53694742}
+\fancyfoot[RO,CE]{\emph{Existen 10 tipos de personas Las que \\saben binario y LAS QUE NO}}
+\fancypagestyle{plain}{\pagestyle{fancy}}
+
+
+
+%\lhead{ }
+%\rhead{  }
+
+%\fancyfoot[L]{}
+%\fancyfoot[R]{\textbf{Autor:} Luis Andrés Valido Fajardo \\ \textbf{Email:} luis.valido@umcc.cu}
+%----------------------------------------------------------------------------------------
+%	MEMO CONTENT
+%----------------------------------------------------------------------------------------
+
+
+\section{Introducción}
+\input{tex_files/introduccion_complete_search.tex}
+\section{Conocimientos previos}
+\input{tex_files/conocimientos_complete_search.tex}
+\section{Desarrollo}
+\input{tex_files/desarrollo_complete_search.tex}
+\section{Implementación}
+\input{tex_files/code_complete_search.tex}
+\section{Aplicaciones}
+\input{tex_files/aplicaciones_complete_search.tex}
+\section{Complejidad}
+\input{tex_files/complejidad_complete_search.tex}
+\section{Ejercicios propuestos}
+\input{tex_files/excercises_complete_search.tex}
+
+\end{document}

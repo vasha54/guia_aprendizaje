@@ -1,0 +1,154 @@
+\subsection{C++}
+
+\subsubsection{Grafos densos}
+\begin{lstlisting}[language=C++]
+int n; //cantidad de nodos
+vector<vector<int> > adj; //matrix de adyacencia
+const int INF = 1000000000; //el peso INF significa que no hay arista
+struct Edge { int w = INF, to = -1; };
+
+void prim() {
+   int total_weight = 0;
+   vector<bool> selected(n, false);
+   vector<Edge> min_e(n);
+   min_e[0].w = 0;
+	
+   for(int i=0;i<n;++i){
+      int v = -1;
+      for(int j = 0; j < n; ++j) {
+         if(!selected[j] && (v==-1 || min_e[j].w<min_e[v].w))
+            v = j;
+      }
+      if(min_e[v].w == INF) {
+         cout << "No existe MST!" << endl;
+         i=n+1;
+         continue;
+      }
+      
+      selected[v] = true;
+      total_weight += min_e[v].w;
+      if(min_e[v].to!=-1)
+         cout <<v<<" "<<min_e[v].to<<endl;
+      for(int to=0;to<n;++to){
+         if(adj[v][to] < min_e[to].w)
+            min_e[to] = {adj[v][to], v};
+      }
+   }
+   cout << total_weight << endl;
+}
+\end{lstlisting}
+
+La matriz de adyacencia adj[][] de tamaño $n\times n$ almacena los pesos de las aristas, y usa el peso INF si no existe una arista entre dos vértices. El algoritmo utiliza dos matrices: el vector selected[], que indica qué vértices ya hemos seleccionado, y la matriz min\_e[]que almacena la arista con peso mínimo en un vértice seleccionado para cada vértice aún no seleccionado (almacena el peso y el vértice final). El algoritmo hace $n$ pasos, en cada iteración se selecciona el vértice con el peso de borde más pequeño y min\_e[]se actualiza el de todos los demás vértices.
+
+\subsubsection{Grafos dispersos}
+\begin{lstlisting}[language=C++]
+const int INF = 1000000000;
+
+struct Edge {
+   int w = INF, to = -1;
+   bool operator<(Edge const& other) const {
+      return make_pair(w, to) < make_pair(other.w, other.to);
+   }
+};
+
+int n;
+vector<vector<Edge>> adj;
+
+void prim() {
+   int total_weight = 0;
+   vector<Edge> min_e(n);
+   min_e[0].w = 0;
+   set<Edge> q;
+   q.insert({0, 0});
+   vector<bool> selected(n, false);
+   for(int i = 0; i<n; ++i){
+      if(q.empty()) {
+         cout << "No existe MST!" << endl;
+         i=n+1;
+         continue;
+      }
+      int v = q.begin()->to;
+      selected[v] = true;
+      total_weight += q.begin()->w;
+      q.erase(q.begin());
+      if(min_e[v].to != -1)
+         cout << v << " " << min_e[v].to << endl;
+      for(Edge e : adj[v]) {
+         if (!selected[e.to] && e.w < min_e[e.to].w) {
+            q.erase({min_e[e.to].w, e.to});
+            min_e[e.to] = {e.w, v};
+            q.insert({e.w, e.to});
+         }
+      }
+   }
+   cout << total_weight << endl;
+}
+\end{lstlisting}
+
+Aquí, el grafo se representa a través de una lista de adyacencia adj[], donde adj[v] contiene todas las aristas (en forma de pares de peso y vértice) para el vértice v. min\_e[v] almacenará el peso del borde más pequeño desde el vértice v hasta un vértice ya seleccionado (nuevamente en forma de un par de peso y vértice). Además, la cola q se llena con todos los vértices aún no seleccionados en orden de peso creciente min\_e. El algoritmo realiza $n$ pasos, en cada uno de los cuales selecciona el vértice v con el peso más pequeño min\_e (extrayéndolo del principio de la cola), y luego examina todas las aristas este vértice y actualiza los valores en min\_e (durante una actualización también también es necesario eliminar la antigua arista de la cola $q$ y coloque la nueva arista).
+
+\subsection{Java}
+
+\subsubsection{Grafos densos}
+\begin{lstlisting}[language=Java]
+public long mstPrim(int[][] d) {
+   int n = d.length;
+   int[] prev = new int[n];
+   int[] dist = new int[n];
+   Arrays.fill(dist, Integer.MAX_VALUE);
+   dist[0] = 0;
+   boolean[] visited = new boolean[n];
+   long res = 0;
+   for(int i=0;i<n;i++){
+      int u = -1;
+      for(int j=0;j<n;j++){
+         if(!visited[j] && (u==-1 || dist[u]>dist[j])) u = j;
+      }
+      res += dist[u]; visited[u] = true;
+	  for(int j=0;j<n;j++){
+         if(!visited[j] && dist[j]>d[u][j]){
+            dist[j] = d[u][j]; prev[j] = u;
+         }
+      }
+   }
+   return res;
+}
+\end{lstlisting}
+
+\subsubsection{Grafos dispersos}
+\begin{lstlisting}[language=Java]
+public long mstPrim(List<Edge>[] edges, int[] pred) {
+   int n = edges.length;
+   Arrays.fill(pred, -1);
+   boolean[] used = new boolean[n];
+   int[] prio = new int[n];
+   Arrays.fill(prio, Integer.MAX_VALUE);
+   prio[0] = 0;
+   PriorityQueue<Long> q = new PriorityQueue<>();
+   q.add(0L);
+   long res = 0;
+   
+   while (!q.isEmpty()) {
+      long cur = q.poll();
+      int u = (int) cur;
+      if (used[u]) continue;
+      used[u] = true;
+      res += cur >>> 32;
+      for (Edge e : edges[u]) {
+         int v = e.t;
+         if(!used[v] && prio[v] > e.cost) {
+            prio[v] = e.cost; pred[v] = u;
+            q.add(((long) prio[v] << 32) + v);
+         }
+      }
+   }
+   return res;
+}
+
+private class Edge {
+   int t, cost;
+   public Edge(int t, int cost) {
+      this.t = t; this.cost = cost;
+   }
+}
+\end{lstlisting}

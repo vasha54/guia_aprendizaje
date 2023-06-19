@@ -1,0 +1,5 @@
+Este algoritmo  aparece de forma bastante natural como solución  en muchos problemas. Por ejemplo, en el siguiente problema: hay $n$ ciudades y para cada par de ciudades se nos da el costo de construir una carretera entre ellas (o sabemos que es físicamente imposible construir una carretera entre ellas). Tenemos que construir caminos, de modo que podamos ir de una ciudad a otra ciudad, y el costo de construir todos los caminos es mínimo.
+
+En particular, esta implementación para grafos densos es muy conveniente para el problema del árbol de expansión mínimo euclidiano:tenemos $n$ puntos en un plano y la distancia entre cada par de puntos es la distancia euclidiana entre ellos, y queremos encontrar un árbol generador mínimo para este grafo completo. Esta tarea puede ser resuelta por el algoritmo descrito para este tipo de grafo en $O(n^2)$ tiempo y $O(n)$ memoria, lo que no es posible con el algoritmo de Kruskal .
+
+El algoritmo de Prim resuelve el mismo problema que el algoritmo de Kruskal pero es más optimo cuando trabajamos sobre un grafo denso mientras el Kruskal es mas óptimo para grafos dispersos.

@@ -1,0 +1,343 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+vector<int> parent, depth, heavy, head, pos;
+int cur_pos;
+
+int dfs(int v, vector<vector<int>> const& adj) {
+   int size = 1;
+   int max_c_size = 0;
+   for (int c : adj[v]) {
+      if (c != parent[v]) {
+         parent[c] = v, depth[c] = depth[v] + 1;
+         int c_size = dfs(c, adj);
+         size += c_size;
+         if(c_size > max_c_size)
+            max_c_size = c_size, heavy[v] = c;
+      }
+   }
+   return size;
+}
+
+void decompose(int v, int h, vector<vector<int>> const& adj) {
+   head[v] = h, pos[v] = cur_pos++;
+   if (heavy[v] != -1) decompose(heavy[v], h, adj);
+   for (int c : adj[v]) {
+      if (c != parent[v] && c != heavy[v])
+         decompose(c, c, adj);
+   }
+}
+
+void init(vector<vector<int>> const& adj, int root) {
+   int n = adj.size(); parent = vector<int>(n);
+   depth = vector<int>(n); heavy = vector<int>(n, -1);
+   head = vector<int>(n); pos = vector<int>(n);
+   cur_pos = 1; dfs(root, adj);
+   decompose(root, 0, adj);
+}
+\end{lstlisting}
+
+La lista de adyacencia del árbol y su raiz debe pasarse a la función \emph{init}. La función \emph{dfs} se usa para calcular $heavy[v]$, el hijo en el otro extremo de la arista pesada desde $v$, para cada vértice $v$. Además, \emph{dfs} también almacena el padre y la profundidad de cada vértice, lo que será útil más adelante durante las consultas. La función \emph{decompose} asigna para cada vértice $v$ los valores $head[v]$ y $pos[v]$, que son, respectivamente, la cabeza del camino pesado al que $v$ pertenece y la posición de $v$ en el árbol de rango único que cubre todos los vértices.
+
+\begin{lstlisting}[language=C++]
+struct segtree {
+   struct node {
+      // Valor inicial de los nodos hojas
+      long long mx = LLONG_MIN;
+      long long mn = LLONG_MAX;
+      long long sum = 0;
+      long long add = 0;
+      
+      void apply(int l, int r, long long v) {
+         mx = v; mn = v;
+         sum += (r - l + 1) * v;
+         add += v;
+     }
+   };
+   
+   int nnodes;
+   vector<node> tree;
+   
+   static node unite(const node &a, const node &b) {
+      node res; res.mx = max(a.mx, b.mx);
+      res.mn = min(a.mn, b.mn); res.sum = a.sum + b.sum;
+      return res;
+   }
+   
+   segtree(int _n) : nnodes(_n) {
+      tree.resize(2 * nnodes - 1); build(0, 0, nnodes - 1);
+   }
+	
+   void pull(int x, int y) {
+      tree[x] = unite(tree[x + 1], tree[y]);
+   }
+	
+   void push(int x, int l, int r) {
+      int m = (l + r) >> 1; int y = x + ((m - l + 1) << 1);
+      if (tree[x].add != 0) {
+         tree[x + 1].apply(l, m, tree[x].add);
+         tree[y].apply(m + 1, r, tree[x].add);
+         tree[x].add = 0;
+      }
+   }
+	
+   void build(int x, int l, int r) {
+      if (l == r) { return;}
+      int m = (l + r) >> 1;
+      int y = x + ((m - l + 1) << 1);
+      build(x + 1, l, m); build(y, m + 1, r);
+      pull(x, y);
+   }
+	
+   node get(int x, int l, int r, int ll, int rr) {
+      if (ll <= l && r <= rr){ return tree[x];}
+      int m = (l+r)>>1; int y = x+((m-l+1)<<1);
+      push(x, l, r);node res;
+      if (rr <= m){res=get(x+1,l,m,ll,rr);} 
+      else{ 
+         if(ll > m){res = get(y, m + 1, r, ll, rr);}
+         else{
+            res=unite(get(x+1,l,m,ll,rr),get(y,m+1,r,ll,rr));
+         }
+      }
+      pull(x, y); return res;
+   }
+	
+   node get(int ll, int rr) {
+      return get(0, 0, nnodes - 1, ll, rr);
+   }
+   
+   void modify(int x, int l, int r, int ll, int rr, long &v) {
+      if(ll <= l && r <= rr){tree[x].apply(l,r,v);return;}
+      int m = (l + r) >> 1; int y = x + ((m - l + 1) << 1);
+      push(x, l, r);
+      if (ll <= m){ modify(x + 1, l, m, ll, rr, v);}
+      if (rr > m){ modify(y, m + 1, r, ll, rr, v);}
+      pull(x, y);
+   }
+   
+   void modify(int ll, int rr, long v) {
+      modify(0, 0, nnodes - 1, ll, rr, v);
+   }
+};
+
+class HeavyLight {
+   public:
+      vector<vector<int>> tree;
+      // verdadero los valores en los vertices
+      // falso los valores en las aristas
+      bool valuesOnVertices; 
+      segtree segment_tree;
+      vector<int> parent,depth,pathRoot,in;
+      
+      HeavyLight(const vector<vector<int>> &t,int root, bool valuesOnVertices):
+         tree(t), valuesOnVertices(valuesOnVertices), segment_tree(t.size()), 
+         parent(t.size()), depth(t.size()), pathRoot(t.size()), in(t.size()){
+         
+         int time = 0;parent[root] = -1;
+         
+         function<int(int)> dfs1 = [&](int u) {
+            int size = 1; int maxSubtree = 0;
+            for (int &v : tree[u]) {
+               if (v == parent[u]) continue;
+               parent[v] = u;
+               depth[v] = depth[u] + 1;
+               int subtree = dfs1(v);
+		       if (maxSubtree < subtree) {
+                  maxSubtree = subtree;
+                  int t = v; v = tree[u][0]; tree[u][0] = t;
+               }
+               size += subtree;
+             }
+             return size;
+          };
+		
+          function<void(int)> dfs2 = [&](int u) {
+             in[u] = time++;
+             for (int v : t[u]) {
+                if (v == parent[u]) continue;
+                pathRoot[v] = v == t[u][0] ? pathRoot[u] : v;
+                dfs2(v);
+             }
+          };
+          dfs1(root);dfs2(root);
+      }
+      
+      segtree::node get(int u, int v) {
+         segtree::node res;
+         process_path(u, v, [this, &res](int a, int b) {
+            res = segtree::unite(res, segment_tree.get(a, b));});
+         return res;
+      }
+	
+      void modify(int u, int v, long long delta) {
+         process_path(u, v, [this, delta](int a, int b) {
+            segment_tree.modify(a, b, delta);});
+      }
+	
+      void process_path(int u,int v, const function<void(int x,int y)>&op){
+         for(;pathRoot[u]!=pathRoot[v];v=parent[pathRoot[v]]){
+            if(depth[pathRoot[u]]>depth[pathRoot[v]]){
+               int t = u; u = v; v = t;
+            }
+            op(in[pathRoot[v]], in[v]);
+         }
+         if (u != v || valuesOnVertices)
+            op(min(in[u],in[v])+(valuesOnVertices ? 0:1),max(in[u],in[v]));
+      }
+};
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+import java.util.function.BiConsumer;	
+
+private class HeavyLightDescomposition {
+   private List<Integer>[] tree;
+   // Si es verdadero los valores en los vertices
+   // falso los valores en la aristas
+   private boolean valuesOnVertices;
+   private SegmentTree segmentTree;
+   private int[] parent;
+   private int[] depth;
+   private int[] pathRoot;
+   private int[] in;
+   private int time;
+	
+   public HeavyLightDescomposition(List<Integer>[] tree,int root,boolean vOV){
+      this.tree = tree; this.valuesOnVertices = vOV;
+      int n = tree.length; segmentTree = new SegmentTree(n);
+      parent = new int[n]; depth = new int[n];
+      pathRoot = new int[n]; in = new int[n];
+      parent[root] = -1; dfs1(root); dfs2(root);
+   }
+	
+   private int dfs1(int u) {
+      int size = 1; int maxSubtree = 0;
+      for (int i = 0; i < tree[u].size(); i++) {
+         int v = tree[u].get(i);
+         if (v == parent[u]) continue;
+         parent[v] = u; depth[v] = depth[u] + 1;
+         int subtree = dfs1(v);
+         if (maxSubtree < subtree) {
+            maxSubtree = subtree;
+            tree[u].set(i, tree[u].set(0, v));
+         }
+         size += subtree;
+      }
+      return size;
+   }
+	
+   void dfs2(int u) {
+      in[u] = time++;
+      for (int v : tree[u]) {
+         if (v == parent[u]) continue;
+         pathRoot[v] = v == tree[u].get(0) ? pathRoot[u] : v;
+         dfs2(v);
+      }
+   }
+	
+   public Node get(int u, int v) {
+       Node[] res = { new Node() };
+       processPath(u, v, (a, b) -> res[0] = segmentTree.unite(res[0], segmentTree.get(a, b)));
+       return res[0];
+   }
+   
+   public void modify(int u, int v, long delta) {
+      processPath(u, v, (a, b) -> segmentTree.modify(a, b, delta));
+   }
+	
+   public void processPath(int u, int v, BiConsumer<Integer, Integer> op) {
+      for (; pathRoot[u] != pathRoot[v]; v = parent[pathRoot[v]]) {
+         if (depth[pathRoot[u]] > depth[pathRoot[v]]) {
+            int t = u; u = v; v = t;
+         }
+         op.accept(in[pathRoot[v]], in[v]);
+      }
+      if (u != v || valuesOnVertices)
+        op.accept(Math.min(in[u], in[v]) + (valuesOnVertices ? 0 : 1), Math.max(in[u], in[v]));
+   }
+	
+   private class Node { 
+     // Valor inicial para las hojas
+      public long mx = Long.MIN_VALUE;
+      public long mn = Long.MAX_VALUE;
+      public long sum = 0;
+      public long add = 0;
+		
+      public Node(){}
+     
+      public void apply(int l, int r, long v) {
+         mx = v; sum += v * (r - l + 1);
+         add += v; mn = v;
+      }
+   }
+	
+   private class SegmentTree {
+      private int nnodes;
+      private Node[] tree;
+		
+      public Node unite(Node a, Node b) {
+         Node res = new Node(); res.mx = Math.max(a.mx, b.mx);
+         res.mn = Math.min(a.mn, b.mn); res.sum = a.sum + b.sum;
+         return res;
+      }
+      
+      public SegmentTree(int n) {
+         this.nnodes = n; tree = new Node[2 * n - 1];
+         for (int i = 0; i < tree.length; i++) tree[i] = new Node();
+         build(0, 1, n - 1);
+      }
+		
+      private void pull(int x, int y) {
+         tree[x] = unite(tree[x + 1], tree[y]);
+      }
+		
+      void push(int x, int l, int r) {
+         int m = (l + r) >> 1; int y = x + ((m - l + 1) << 1);
+         if (tree[x].add != 0) {
+            tree[x + 1].apply(l, m, tree[x].add);
+            tree[y].apply(m + 1, r, tree[x].add); tree[x].add = 0;
+         }
+      }
+		
+      private void build(int x, int l, int r) {
+         if (l == r) { return; }
+         int m = (l + r) >> 1; int y = x + ((m - l + 1) << 1);
+         build(x + 1, l, m); build(y, m + 1, r); pull(x, y);
+      }
+		
+      private Node get(int ll, int rr) {
+         return get(ll, rr, 0, 0, this.nnodes - 1);
+      }
+		
+      public Node get(int ll, int rr, int x, int l, int r) {
+         if (ll <= l && r <= rr) { return tree[x]; }
+         int m = (l + r) >> 1; int y = x + ((m - l + 1) << 1);
+         push(x, l, r); Node res;
+         if (rr <= m) { res = get(ll, rr, x + 1, l, m);} 
+         else {
+            if(ll > m){ res = get(ll, rr, y, m + 1, r);} 
+            else{
+               res=unite(get(ll,rr,x+1,l,m),get(ll,rr,y,m+1,r));
+            }
+         }
+         pull(x, y); return res;
+      }
+      
+      public void modify(int ll, int rr, long v) {
+         modify(ll, rr, v, 0, 0, this.nnodes - 1);
+      }
+		
+      public void modify(int ll, int rr, long v, int x, int l, int r) {
+         if(ll<=l && r<=rr){
+            tree[x].apply(l, r, v); return;
+         }
+         int m = (l + r) >> 1; int y = x + ((m - l + 1) << 1);
+         push(x, l, r);
+         if(ll<=m){modify(ll, rr, v, x + 1, l, m);}
+         if(rr>m){ modify(ll, rr, v, y, m + 1, r);}
+         pull(x, y);
+      }
+   }
+}
+\end{lstlisting}

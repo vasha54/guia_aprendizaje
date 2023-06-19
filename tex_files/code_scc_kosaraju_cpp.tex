@@ -1,0 +1,48 @@
+\begin{lstlisting}[language=C++]
+vector<vector<int>> adj, adj_rev;// G y G'
+vector<bool> used;
+vector<int> order, component;
+int n; //cantidad de nodos
+
+void dfs1(int v) {
+   used[v] = true;
+   for (auto u : adj[v]) if (!used[u]) dfs1(u);
+   order.push_back(v);
+}
+
+void dfs2(int v) {
+   used[v] = true; component.push_back(v);
+   for (auto u : adj_rev[v]) if (!used[u]) dfs2(u);
+}
+
+void sccKosaraju() {
+   used.assign(n, false);
+   for (int i = 0; i < n; i++) if (!used[i]) dfs1(i);
+   used.assign(n, false);
+   reverse(order.begin(), order.end());
+   
+   vector<int> roots(n, 0); vector<int> root_nodes;
+   vector<vector<int>> adj_scc(n);
+   for (auto v : order) 
+      if(!used[v]) {
+         dfs2(v);
+         int root = component.front();
+         for (auto u : component)
+            roots[u] = root; 
+         root_nodes.push_back(root); component.clear();
+      }
+   
+   for (int v = 0; v < n; v++)
+      for (auto u : adj[v]) {
+         int root_v = roots[v], root_u = roots[u];
+         if (root_u != root_v)
+            adj_scc[root_v].push_back(root_u);
+      }
+}
+\end{lstlisting}
+
+Aquí, $adj$ es grafo, $adj_rev$ es grafo transpuesto. La función $dfs1$ implementa la primera búsqueda en profundidad en el grafo $G$ , la función $dfs2$ en el grafo transpuesto $G^T$. La función $dfs1$ llena la lista $order$ con vértices en orden creciente de sus tiempos de salida (en realidad, se está haciendo un ordenamiento topológico). La función $dfs2$ almacena todos los vértices alcanzados en la lista $component$, que almacenará el siguiente componente fuertemente conectado después de cada ejecución.
+
+Hemos seleccionado la raíz de cada componente como el primer nodo de su lista. Este nodo representará todo su SCC en el grafo de condensación $roots[v]$ indica el nodo raíz del SCC al que $v$ pertenece el nodo. $root\_nodeses$ la lista de todos los nodos raíz (uno por componente) en el grafo de condensación.
+
+$adj\_scces$ la lista de adyacencia del $root\_nodes$. Ahora podemos atravesar $adj\_scc$ como nuestro grafo de condensación, usando solo aquellos nodos que pertenecen a $root\_nodes$.

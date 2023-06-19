@@ -1,0 +1,130 @@
+\subsection{Máximo común divisor (\emph{GCD})}
+
+En matemática, se define el máximo común divisor (GCD) de dos o más números enteros al mayor número entero que los divide sin dejar resto.
+
+Si $a$ y $b$ son números enteros distintos y si el número $c$ es de modo que $c|a$ y a su vez $c|b$  donde $|$ es el símbolo de divisibilidad y para el primer caso se lee como que $c$ divide $a$ mientras en el segundo se interpreta como $c$ divide a $b$ , a este número $c$ se denomina divisor común de los números $a$ y $b$. Obsérvese que dos números enteros cualesquiera tienen divisores comunes. Cuando existen, únicamente, como divisores comunes 1 y -1 de los números $a$ y $b$, estos se llaman primos entre sí o comprimos.
+
+Un número entero $c$ se llama máximo común divisor de los números $a$ y $b$ cuando:
+\begin{enumerate}
+	\item $c$ es divisor común de los números $a$ y $b$
+	\item $c$ es divisible por cualquier otro divisor común de los números $a$ y $b$.
+\end{enumerate}
+
+Lo anterior se define matemáticamente como :
+
+$$\gcd(a, b) = \max_ {k = 1 \dots \infty ~ : ~ k \mid a ~ \wedge k ~ \mid b} k.$$
+
+Cuando uno de los números es cero mientras el otro no lo es, el máximo común divisor por definción es de los dos números aquel que su valor sea distinto de cero. Cuando ambos son ceros el máximo común divisor no está definido (pudiera ser cualquier valor incluso un número arbitrariamente grande), pero nosotros podemos definir que es cero lo cual no da una simple regla: Cuando uno de los números es cero el maximo común es divisor es el otro número.
+
+Algunas de las propiedades del gcd son:
+
+\begin{enumerate}
+	\item Si $gcd(a,b)=d$ entonces $gcd(\frac{a}{d},\frac{b}{d})=1 $
+	\item Si $m$ es un entero, $gcd(m*a,m*b)=|m|*gcd(a,b)$
+	\item Si $p$ es un número primo, entonces $gcd(p,m)=p$ o bien $gcd(p,m)=1$
+	\item Si $m= n*q + r$, entonces $gcd(m,n)=gcd(n,r)$
+\end{enumerate}
+
+
+Los métodos más utilizados para el cálculo del máximo común divisor de dos números son:
+
+\begin{enumerate}
+	\item \textbf{Usando el mínimo común múltiplo:} El máximo común divisor puede ser calculado usando el mínimo común múltiplo. Si $a$ y $b$ son distintos de cero, entonces el máximo común divisor de $a$ y $b$ se obtiene mediante la siguiente fórmula, que involucra el mínimo común múltiplo (lcm) de $a$ y $b$.
+	
+	$$ gcd(a,b)=\frac{a*b}{lcm(a,b)} $$
+	
+	Esta variante tiene que conocer de antemano la forma de hallar el mínimo común multiplo de $a$ y $b$ que hasta este momento desconocemos por tanto esta vía queda descartada por el momento.
+	
+	
+	\item \textbf{Por descomposición en factores primos:}  El máximo común divisor de dos números puede calcularse determinando la descomposición en factores primos de los dos números y tomando los factores comunes elevados a la menor potencia, el producto de los cuales será el GCD. En la práctica, este método solo es operativo para números pequeños tomando en general demasiado tiempo calcular la descomposición en factores primos de dos números cualquiera, esto último hace que esta vía sea tambíén descartada.
+	\item \textbf{Usando el algoritmo de Euclides:} Un método más eficiente es el algoritmo de Euclides, que utiliza el algoritmo de la división junto al hecho que el GCD de dos números también divide al resto obtenido de dividir el mayor entre el más pequeño.
+	
+	\item \textbf{GCD binario:} El algoritmo GCD binario es una optimización del algoritmo euclidiano normal. La parte lenta del algoritmo normal son las operaciones de módulo. Operaciones de módulo, aunque las vemos como $O(1)$, son mucho más lentos que las operaciones más simples como la suma, la resta o las operaciones bit a bit. Así que sería mejor evitarlos.
+\end{enumerate}
+
+\subsubsection{Algoritmo de Euclides}
+
+El algoritmo se describió por primera vez en los \emph{Elementos de Euclides} (alrededor del 300 a.c), pero es posible que el algoritmo tenga orígenes incluso anteriores.
+
+Originalmente, el algoritmo de Euclides se formuló de la siguiente manera: resta el número más pequeño del más grande hasta que uno de los números sea cero. De hecho, si $g$ divide a $a$ y $b$, también divide a $a-b$. Por otro lado, si $g$ divide a $a-b$ y $b$, entonces también divide a $a = b + (a-b)$, lo que significa que los conjuntos de los divisores comunes de $\{a, b\}$ y $\{b,a-b\}$ coinciden.
+
+Tenga en cuenta que $a$ sigue siendo el número más grande hasta que $b$ se le resta al menos $\left\lfloor\frac{a}{b}\right\rfloor$ veces. Por lo tanto, para acelerar las cosas, $a-b$ se sustituye por $a-\left\lfloor\frac{a}{b}\right\rfloor b = a \bmod b$. Entonces el algoritmo se formula de una manera extremadamente simple:
+
+$$\gcd(a, b) = \begin{cases}
+	a,&\text{si }b = 0 \\ 
+	\gcd(b, a \bmod b),& \text{en otro caso.}
+\end{cases}$$
+
+\subsubsection{GCD binario}
+
+Resulta que puede diseñar un algoritmo GCD rápido que evite las operaciones de módulo. Se basa en algunas propiedades:
+
+\begin{itemize}
+	\item Si ambos números son pares, entonces podemos factorizar un dos de ambos y calcular el GCD de los números restantes: $\gcd(2a, 2b) = 2 \gcd(a, b)$.
+	\item Si uno de los números es par y el otro es impar, entonces podemos quitarle el factor 2 al par: $\gcd(2a, b) = \gcd(a, b)$ si $b$ es impar.
+	\item Si ambos números son impares, restar un número del otro no cambiará el GCD: $\gcd(a, b) = \gcd(b, ab)$
+\end{itemize}
+
+\subsection{Mínimo común múltiplo (\emph{LCM})}
+
+En matemáticas, el mínimo común múltiplo (abreviado lcm), de dos o más números naturales es el menor número natural que es múltiplo común de todos ellos (o el ínfimo del conjunto de los múltiplos comunes). Este concepto ha estado ligado históricamente con números naturales, pero se puede usar para enteros negativos o enteros gaussianos.
+
+Partiendo de dos o más números y por descomposición en factores primos, expresados como producto de factores primos, su mínimo común múltiplo será el resultado de multiplicar todos los factores comunes y no comunes elevados a la mayor potencia, por ejemplo el lcm de 72 y 50 será:
+
+$72= 2^{3}·3^{2}$
+
+$50= 2·5^{2}$
+
+Tomando los factores con su mayor exponente, tenemos que: 
+
+$lcm(72,50)= 2^{3}·3^{2}·5^{2}=1800$
+
+Conociendo el máximo común divisor de dos números, se puede calcular el mínimo común múltiplo de ellos, que será el producto de ambos dividido entre su máximo común divisor:
+
+$$\text{lcm}(a, b) = \frac{a \cdot b}{\gcd(a, b)}$$
+
+Por lo tanto, LCM se puede calcular utilizando el algoritmo euclidiano o binario y tendrá la misma complejidad de tiempo.
+
+\textbf{Propiedades básicas:}
+
+\begin{itemize}
+	
+	\item Si $a$ es un entero, entonces $lcm(a,a)=a$.
+	
+	\item Cuando $a$ y $b$ son enteros, $lcm(a,b)=b$ si, sólo si $b$ es múltiplo de $a$.
+	
+	\item $gcd(a,b) = lcm(a,b)$ si son iguales u opuestos.
+	
+	\item $lcm(a,b) =ab$ si, sólo si $gcd(a,b)=1$.
+	
+	\item $lcm(a/d, b/d)$ = $lcm(m/a, m/b)$ donde $m=lcm$ y $d=gcd$.
+	
+	\item $lcm(ma,b)= m*lcm(a,b)$ si $gcd(lcm(a,b)/a,m) = 1$
+	
+	\item $lcm(a,b,c)= lcm(lcm(a,b), lcm(b,c))$
+	
+	\item $lcm(a, b, c)|abc$, donde $abc \neq 0$
+	
+	\item $lcm(a,b,c) = abc gcd(a,b,c)/gcd(a,b)gcd(b,c)gcd(c,d)$
+	
+	\item Si el producto de dos números lo dividimos por su máximo común divisor dicho cociente es el mínimo común múltiplo. $A$ y $B$ que descompuestos en números primos será $A=(p_{1}p_{2})p_{3}p_{4}$ y $B=(p_{1}p_{2})p_{5}p_{6}$ donde si gcd. es $(p_{1}p_{2})$ y el producto de $AB=(p_{1}p_{2})p_{3}p_{4}(p_{1}p_{2})p5p6$ donde vemos que $p_{1}p_{2}$ está repetido dos veces, luego si dividimos ese total por $(p_{1}p_{2})$ tendremos el total menor que contiene a $A$ y $B$ siendo su lcm.
+	
+	\item El mínimo común múltiplo de dos números, donde el menor divide al mayor, será el mayor. Es lógico ya que un múltiplo de ambos inferior al mayor sería imposible ya que no sería múltiplo del mayor.
+	
+	\item El mínimo común múltiplo de dos números primos es el total de su multiplicación. Esto es lógico ya que su máximo común divisor es 1.
+	
+	\item El mínimo común múltiplo de dos números compuestos será igual al cociente entre su producto y el m.c.d de ellos. Es evidente según la propiedad 1 de este tema.
+	
+	\item El máximo común divisor de varios números es un divisor del mínimo común múltiplo de tales números.
+	
+	\item Sea mZ el conjunto de los múltiplos del entero m, nZ el del entero n. Entonces el conjunto $nZ \bigcap mZ$ está formado por los múltiplos comunes de m y n; en otra notación es el conjunto $[m,n]Z$.
+\end{itemize}
+
+
+
+
+
+
+
+
+

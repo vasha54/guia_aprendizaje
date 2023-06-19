@@ -1,0 +1,14 @@
+\subsection{Grafo dirigido}
+
+Un grafo dirigido o digrafo es un tipo de grafo en el cual las aristas tienen un sentido definido, a 
+diferencia del grafo no dirigido, en el cual las aristas son relaciones simétricas y no apuntan en ningún 
+sentido. 
+
+\subsection{Componente fuertemente conexa}
+
+En grafos dirigidos, una componente fuertemente conexa (SCC por sus siglas en inglés, \emph{Strongly Connected Component}) es un conjunto de nodos y aristas del grafo que cumplen 2 condiciones:
+
+\begin{itemize}
+	\item Desde cada nodo de la componente existe un camino hacia todos los otros nodos que usa aristas únicamente de la componente.
+	\item No hay un nodo del grafo fuera de la componente desde el cual se pueda llegar a la componente y al que se pueda llegar desde ella (es maximal, si existiera estaría en la componente).
+\end{itemize} 

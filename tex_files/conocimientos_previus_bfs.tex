@@ -1,0 +1,129 @@
+\subsection{Cola}
+
+Una cola  es una estructura de datos, caracterizada por ser una secuencia de elementos en la que la operación de inserción push se realiza por un extremo y la operación de extracción pull por el otro. También se le llama estructura FIFO (del inglés First In First Out), debido a que el primer elemento en entrar será también el primero en salir.
+
+La particularidad de una estructura de datos de cola es el hecho de que solo podemos acceder al primer y al último elemento de la estructura. Así mismo, los elementos solo se pueden eliminar por el principio y solo se pueden añadir por el final de la cola.
+
+\subsubsection{C++}
+
+En el caso de C++ para utilizar la cola incluimos la biblioteca \emph{queue} que nos permite utilizar la cola propia del lenguaje la cual cuenta con las siguientes funcionalidades
+
+\begin{itemize}
+	\item \textbf{queue::empty():} Devuelve si la cola está vacía.
+	\item \textbf{queue::size():} Devuelve el tamaño de la cola.
+	\item \textbf{queue::swap():} Intercambia el contenido de dos colas, pero las colas deben ser del mismo tipo, aunque los tamaños pueden diferir.
+	\item \textbf{queue::emplace():} Inserta un nuevo elemento en el contenedor de la cola, el nuevo elemento se agrega al final de la cola.
+	\item \textbf{queue::front():} Devuelve una referencia al primer elemento de la cola.
+	\item \textbf{queue::back():} Devuelve una referencia al último elemento de la cola.
+	\item \textbf{queue::push(g):} Agrega el elemento 'g' al final de la cola.
+	\item \textbf{queue::pop():} Elimina el primer elemento de la cola.
+\end{itemize}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <queue>
+	
+using namespace std;
+	
+void showq(queue<int> gq){
+   queue<int> g = gq;
+   while (!g.empty()) {
+     cout << '\t' << g.front();
+     g.pop();
+   }
+   cout << '\n';
+}
+	
+int main(){
+  queue<int> gquiz;
+  gquiz.push(10);
+  gquiz.push(20);
+  gquiz.push(30);
+		
+  cout << "The queue gquiz is : ";
+  showq(gquiz);
+		
+  cout << "\ngquiz.size() : " << gquiz.size();
+  cout << "\ngquiz.front() : " << gquiz.front();
+  cout << "\ngquiz.back() : " << gquiz.back();
+  cout << "\ngquiz.pop() : ";
+  gquiz.pop();
+  showq(gquiz);
+  return 0;
+}
+\end{lstlisting}
+
+\subsubsection{Java}
+
+En Java, Queue es una interfaz que forma parte del paquete java.util. La interfaz de Queue amplía la interfaz de Colllection de Java.
+
+Para usar una cola en Java, primero debemos importar la interfaz de la cola de la siguiente manera:
+
+\begin{lstlisting}[language=Java]
+importar java.util.queue;
+\end{lstlisting}
+
+O
+
+\begin{lstlisting}[language=Java]
+importar java.util.*;
+\end{lstlisting}
+
+Una vez importado, podemos crear una cola como se muestra a continuación:
+
+\begin{lstlisting}[language=Java]
+Queue<String> str_queue = new LinkedList<> ();
+\end{lstlisting}
+
+
+Como Queue es una interfaz, usamos una clase LinkedList que implementa la interfaz Queue para crear un objeto de cola.
+
+Del mismo modo, podemos crear una cola con otras clases concretas.
+
+\begin{lstlisting}[language=Java]
+Queue<String> str_pqueue = new PriorityQueue<> ();
+Queue<Integer> int_queue = new ArrayDeque<> ();
+\end{lstlisting}
+
+Ahora que se creó el objeto de la cola, podemos inicializar el objeto de la cola al proporcionarle los valores a través del método de agregar, como se muestra a continuación.
+
+\begin{lstlisting}[language=Java]
+str_queue.add("uno");
+str_queue.add("dos");
+str_queue.add("tres");
+\end{lstlisting}
+
+\begin{itemize}
+	\item \textbf{add boolean add(E e):} Agrega el elemento e a la cola al final (cola) de la cola sin violar las restricciones de capacidad. Devuelve verdadero si tiene éxito o IllegalStateException si la capacidad está agotada.
+	\item \textbf{peek E peek():} Devuelve la cabeza (frente) de la cola sin eliminarla.
+	\item \textbf{element E element():} Realiza la misma operación que el método peek(). Lanza NoSuchElementException cuando la cola está vacía.
+	\item \textbf{remove E remove():} Elimina la cabeza de la cola y la devuelve. Lanza NoSuchElementException si la cola está vacía.
+	\item \textbf{poll E poll():} Elimina la cabeza de la cola y la devuelve. Si la cola está vacía, devuelve nulo.
+	\item \textbf{size int size():} Devuelve el tamaño o el número de elementos en la cola.
+	\item \textbf{Offer	boolean offer(E e):} Inserta el nuevo elemento e en la cola sin violar las restricciones de capacidad.
+\end{itemize}
+
+Puede tener otro grupo de operaciones las cuales va a depender de con que clase se instancie la interfaz Queue en si.
+
+\begin{lstlisting}[language=Java]
+import java.util.*;
+	
+public class Main {
+  public static void main(String[] args) {
+	Queue<String> str_queue = new LinkedList<>();
+	str_queue.add("one");
+	str_queue.add("two");
+	str_queue.add("three");
+	str_queue.add("four");
+			
+	System.out.println("The Queue contents:" + str_queue);
+  }
+}
+\end{lstlisting}
+
+
+
+
+
+
+

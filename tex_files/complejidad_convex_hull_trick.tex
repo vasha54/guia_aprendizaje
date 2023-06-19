@@ -1,0 +1,5 @@
+Claramente, el espacio requerido es O($M$) necesitamos solo almacenar el conjunto ordenado de lineas,
+las cuales son definidas por dos números reales. El tiempo requerido para ordenar todas las líneas por su 
+pendiente es O($N \log N$). Cuando iteramos a través de ellas, añadiéndolas a la envolvente una por una, 
+podemos notar que todas las líneas son insertadas en la pila exactamente una vez y que cada línea puede ser 
+sacada a lo sumo una vez. Por esta razón, el tiempo requerido sobre todo es O($N$) para este paso. El costo de ordenar domina, por lo que el tiempo de construcción es O($N \log N$).

@@ -1,0 +1,79 @@
+\subsection{C++}
+Para implementar este enfoque, uno debe comenzar con algunas funciones de utilidad geométrica, aquí sugerimos usar el tipo de número de complejo C++. 
+
+Aquí asumiremos que cuando se agregan funciones lineales, su $K$ solo aumenta y queremos encontrar valores mínimos. Mantendremos puntos en el vector $hull$ y vectores normales en el vector $vecs$. Cuando agregamos un nuevo punto, tenemos que mirar el ángulo formado entre el último borde en la envoltura convexa y el vector desde el último punto en la envoltura convexa hasta el nuevo punto. Este ángulo debe dirigirse en sentido antihorario, es decir, el producto DOT del último vector normal en la envoltura (dirigido dentro del casco) y el vector desde el último punto hasta el nuevo debe ser no negativo. Mientras esto no sea cierto, debemos borrar el último punto en la envoltura convexa junto con el borde correspondiente.
+
+Ahora, para obtener el valor mínimo en algún momento, encontraremos el primer vector normal en la envoltura convexa que se dirige en sentido antihorario desde $(x; 1)$. El punto final izquierdo de dicho borde será la respuesta. Para verificar si el vector $a$ no está dirigido en sentido antihorario de vector $b$, debemos verificar si su producto cruzado $[a,b]$ es positivo.
+
+\begin{lstlisting}[language=C++]
+typedef int ftype;
+typedef complex<ftype> point;
+#define x real
+#define y imag
+
+ftype dot(point a, point b) { return (conj(a) * b).x(); }
+
+ftype cross(point a, point b) { return (conj(a) * b).y(); }
+
+vector<point> hull, vecs;
+
+void add_line(ftype k, ftype b) { 
+   point nw = {k, b};
+   while(!vecs.empty() && dot(vecs.back(), nw - hull.back()) < 0) {
+      hull.pop_back(); vecs.pop_back();
+   }
+   if(!hull.empty()) { vecs.push_back(1i * (nw - hull.back())); }
+   hull.push_back(nw);
+}
+
+int get(ftype x) {
+   point query = {x, 1};
+   auto it = lower_bound(vecs.begin(),vecs.end(),query,[](point a,point b) {
+      return cross(a, b) > 0;
+   });
+   return dot(query, hull[it - vecs.begin()]);
+}
+\end{lstlisting}
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+private class ConvexHullTrick{
+   int size, ptr;
+	
+   private class Line{
+      long m, n;
+      public Line(long _m, long _n){
+         this.m =_m; this.n =_n;
+      }
+   }
+	
+   Line [] lineMin;
+	
+   public ConvexHullTrick(int n) {
+      size=ptr=0;
+      lineMin= new Line[n];
+      for(int i=0;i<n;i++) lineMin[i]= new Line(0L,0L);
+   }
+	
+   public long query(long x) {
+      ptr = Math.min(ptr, size - 1);
+      while(ptr+1 < size && 
+         lineMin[ptr+1].m*x+lineMin[ptr+1].n<lineMin[ptr].m*x+lineMin[ptr].n)
+          ++ptr;
+      return lineMin[ptr].m * x + lineMin[ptr].n;
+   }
+	
+   public void add(Line line) {
+      while(size>=2 && bad(lineMin[size-2],lineMin[size-1],line))--size;
+      lineMin[size++] = line;
+   }
+	
+   private boolean bad(Line l1, Line l2, Line l3) {
+      return (l3.n-l1.n)*(l1.m-l2.m)<(l2.n-l1.n)*(l1.m-l3.m);
+   }
+}
+\end{lstlisting} 
+
+
+
+

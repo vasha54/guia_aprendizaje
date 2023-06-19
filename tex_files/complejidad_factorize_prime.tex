@@ -1,0 +1,9 @@
+Tenga en cuenta que si el número que desea factorizar es en realidad un número primo, la mayoría de los algoritmos, especialmente el algoritmo de factorización de Fermat, el p-1 de Pollard, el algoritmo rho de Pollard se ejecutarán muy lentamente. Por lo tanto, tiene sentido realizar una prueba de primalidad probabilística (o determinista rápida) antes de intentar factorizar el número.
+
+El método de factorización de Fermat puede ser muy rápido, si la diferencia entre los dos factores $p$ y $q$ es pequeño. El algoritmo se ejecuta en $O(|p-q|)$ tiempo. Sin embargo, dado que es muy lento, una vez que los factores están muy separados, rara vez se usa en la práctica.
+
+El método de Pollard's \emph{p-1} es un algoritmo probabilístico. Puede suceder que el algoritmo no encuentre un factor. la complejidad es $O(B \log B \log^2 n)$ por iteración.
+
+El algoritmo de búsqueda de ciclos de Floyd se ejecuta (normalmente) en $O(\sqrt[4]{n} \log(n))$ tiempo.
+
+El algoritmo de Brent también se ejecuta en tiempo lineal, pero suele ser más rápido que el algoritmo de Floyd, ya que utiliza menos evaluaciones de la función $f$.

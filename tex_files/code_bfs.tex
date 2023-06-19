@@ -1,0 +1,135 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+#include <queue>
+#define MAX_N 5001
+using namespace std;
+	
+struct Node{
+   vector<int> adj;
+};
+
+Node graf[MAX_N];
+bool mark[MAX_N];
+	
+inline void BFS(int start){
+  queue<int> bfs_queue;
+  bfs_queue.push(start);
+  while (!bfs_queue.empty()){
+    int xt = bfs_queue.front();
+    bfs_queue.pop();
+	mark[xt] = true;
+	for(int i=0;i<graf[xt].adj.size();i++){
+      if(!mark[graf[xt].adj[i]]){
+        bfs_queue.push(graf[xt].adj[i]);
+        mark[graf[xt].adj[i]] = true;
+      }
+    }
+  }
+}
+
+
+\end{lstlisting} 
+
+\subsubsection{BFS sobre tablero}
+
+\begin{lstlisting}[language=C++]
+#include <queue>
+#define MAX 110
+#define REP(i,n) for(int i=0;i<(int)n;++i)
+
+/*Matrices direccionales en este caso dada una celda se puede mover hacia una de la celda vecinas en la vertical u horizontal el primer arreglo indica desplazamiento en la filas mientras el segundo es la columna el primer par ordenado hace referencia a la posicion a la derecha de la celda que este parado en ese momento, el segundo par es la celda a la izquierda mientras tercer y cuarto par son las celdas de arriba y abajo respectivamente */
+const int mov_r[]={ 0, 0,-1, 1};
+const int mov_c[]={ 1,-1, 0, 0};
+
+/*Estructura para representar la celda*/
+struct Cell{
+  int r,c;
+  Cell(int _r=0,int _c=0){
+    r=_r;
+    c=_c;
+  }
+};
+
+int nrows,ncolumns;
+bool maps[MAX][MAX];
+Cell tmp;
+
+/*Funcion tipica para validar que una supesta celda este dentro de la matriz que trabajo*/
+bool validCell(int _r, int _c){
+  return (1<=_r && _r<=nrows && 1<=_c && _c<=ncolumns);
+}
+
+
+void bfs(Cell _start){
+   
+   queue<Cell> visit;
+   Cell current,next;
+   maps[_start.r][_start.c]=true;
+   visit.push(_start);
+	
+   while(!visit.empty()){
+     current=visit.front();
+     visit.pop();
+     REP(i,4){
+     	/*A partir de una celda actual (current) y las matrices de direccion genero cada una de las posibles 
+     	vecinas (next) en cada iteracion del ciclo*/
+       next.c=current.c+mov_c[i];
+       next.r=current.r+mov_r[i];
+       
+       /*Cheqeo que la vecina este dentro de la matriz*/
+       if(validCell(next.r,next.c)){
+          if(maps[next.r][next.c]==false){
+            maps[next.r][next.c]=true;
+            visit.push(next);
+          }
+       }
+     }
+  }
+}	
+\end{lstlisting} 
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+import java.io.*;
+import java.util.*;
+
+class Graph{
+  private int V; // Numero de vertices
+  private LinkedList<Integer> adj[]; //Lista de adyacencia
+	
+  // Constructor
+  Graph(int v){
+    V = v;
+    adj = new LinkedList[v];
+    for (int i=0; i<v; ++i)
+    adj[i] = new LinkedList();
+  }
+	
+  // Funcion para adicionar una arista al grafo
+  void addEdge(int v,int w){
+    adj[v].add(w);
+  }
+	
+  void BFS(int s){
+    boolean visited[] = new boolean[V];
+		
+    Queue<Integer> queue = new LinkedList<Integer>();
+		
+    visited[s]=true;
+    queue.add(s);
+		
+    while (queue.size() != 0){
+	  n = queue.poll();
+	  for (int i = 0; i < adj[n].size(); i++){
+	  	a = adj[n].get(i);
+	  	if(!visited[a]){
+          nodes[a] = true;
+          queue.add(a);
+        }
+	  }  
+	}
+  }
+}
+\end{lstlisting} 
+

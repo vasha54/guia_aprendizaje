@@ -1,0 +1,37 @@
+Los operadores de asignación permiten asignar
+ un valor a una variable. El operador de
+ asignación por excelencia es el operador igual
+ (=). La forma general de las sentencias de
+asignación con este operador es:
+\begin{lstlisting}[language=C++]
+variable = expression;	
+\end{lstlisting}
+
+Cuyo funcionamiento es como sigue: se evalúa expresion y el resultado se deposita en
+variable, sustituyendo cualquier otro valor que hubiera en esa posición de en esa posición de
+memoria anteriormente.
+
+C++ y Java dispone de otros operadores de otros operadores de asignación.
+asignación. Se trata de versiones abreviadas del operador (=) que realizan operaciones acumulativas sobre una variable.
+
+\begin{tabular}{|c|p{6cm}|p{6cm}|}
+	\hline
+	\textbf{Operador}	& \textbf{Utilización} &  \textbf{Expresión equivalente} \\
+	\hline
+	+= & op1 += op2 & op1 = op1 + op2 \\
+	\hline
+	-= & op1 -= op2 & op1 = op1 - op2 \\
+	\hline
+	*= & op1 *= op2 & op1 = op1 * op2 \\
+	\hline
+	/= & op1 /= op2 & op1 = op1 / op2 \\
+	\hline
+	\%= & op1 \%= op2 & op1 = op1 \% op2 \\
+	\hline
+\end{tabular}
+
+Desde el punto de vista matemático no tiene sentido (¡Equivale a 0 = 1!),pero sí lo tiene considerando que en realidad el operador de asignación (=) representa unasustitución; en efecto, se toma el valor de variable contenido en la memoria, se le suma una unidad y el valor resultante vuelve a depositarse en memoria en la zona correspondiente alidentificador variable, sustituyendo al valor que había anteriormente. 
+
+Así pues, una variable puede aparecer a la izquierda y a la derecha del operador (=). Sin
+embargo, a la izquierda del operador de asignación (=) no puede haber nunca una expresión:
+tiene que ser necesariamente el nombre de una variable

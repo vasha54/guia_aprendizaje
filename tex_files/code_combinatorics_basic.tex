@@ -1,0 +1,103 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+#define ULL unsigned long long 	
+ULL variants( ULL n,  ULL  k) {
+    ULL res = 1;
+   for ( ULL i = 0; i < k; i++) {
+      res = res * (n - i) / (i + 1);
+   }
+   return res;
+}
+
+ULL variantsWithRepetions(ULL n,  ULL  k) {
+   long res = 1;
+   while (k > 0) {
+      if ((k & 1)==1 )
+         res = res * n;
+      n = n * n;
+      k >>= 1;
+	}
+}
+
+ULL permutations(ULL n) {
+   ULL res = 1;
+   for (ULL i = 1; i <= n; i++) {
+      res = res * i;
+   }
+   return res;
+}
+
+ULL permutationsWithRepetions(ULL n, int k, ULL  * ns) {
+   ULL res =1;
+   ULL * fact = new ULL [n+1];
+   for(ULL i =1;i<=n;i++){
+      res= res*i;
+      fact[i] = res;
+   }
+   for(int i=0;i<k;i++)
+      res/=fact[ns[i]];
+   return res; 
+}
+
+ULL combination(ULL n,ULL  k) {
+   ULL res = 1;
+   k = min(k, n - k);
+   for (ULL i = 0; i < k; i++) {
+      res = res * (n - i) / (i + 1);
+   }
+   return res;
+}
+\end{lstlisting}
+
+
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public long variants(long n, long k) {
+  long res = 1;
+  for (long i = 0; i < k; i++) {
+     res = res * (n - i);
+  }
+  return res;
+}
+
+public long variantsWithRepetions(long n, long k) {
+   long res = 1;
+   while (k > 0) {
+      if ((k & 1)==1 )
+         res = res * n;
+      n = n * n;
+      k >>= 1;
+   }
+   return res;
+}
+
+public long permutions(long n) {
+   long res = 1;
+   for (long i = 1; i <= n; i++) {
+      res = res * i;
+   }
+   return res;
+}
+
+public long permutationsWithRepetions(long n, int k, long [] ns) {
+   long res =1;
+   long [] fact = new long [n+1];
+   for(long i =1;i<=n;i++){
+      res= res*i;
+      fact[i] = res;
+   }
+   for(int i=0;i<k;i++)
+      res/=fact[ns[i]];
+   return res; 
+}	
+	
+public long combination(long n, long k) {
+   k = Math.min(k, n - k);
+   long res = 1;
+   for (long i = 0; i < k; i++) {
+      res = res * (n - i) / (i + 1);
+   }
+   return res;
+}
+\end{lstlisting}

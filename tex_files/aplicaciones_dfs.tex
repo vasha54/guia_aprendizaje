@@ -1,0 +1,14 @@
+El algoritmo recibe como parámetro el nodo inicial por el cual se inicia el DFS. Una bondad de este algoritmo es que los nodos solo se vistan una vez. Esto implica que si se salvan en alguna estructura las aristas que se van recorriendo se obtiene un conjunto de aristas de cubrimiento mínimo del grafo, lo cual se utiliza frecuentemente se utiliza para reducir la complejidad del grafo cuando la perdida de información de algunas aristas no es importante. Este resultado se conoce como árbol DFS (DFS Tree)
+
+El DFS puede modificarse fácilmente y utilizarse para resolver problemas sencillos como los de conectividad simple, detección de ciclos y camino simple. Por ejemplo, el número de veces que se invoca a la acción DFS\_R desde la acción DFS en el algoritmo anterior es exactamente el número de componentes conexas del grafo, lo cual representa la solución al problema de conectividad simple.
+
+Otras de las aplicaciones de este algoritmo son:
+
+\begin{itemize}
+	\item Para un grafo de pocos nodos se puede implementar un dfs recursivo lo cual podría generar todos los posibles caminos desde un nodos hasta los otros.
+	\item Compruebar si un vértice en un árbol es un antepasado de algún otro vértice.
+	\item Encuentra el ancestro común más bajo (LCA) de dos vértices.
+	\item Compruebar  si un grafo dado es acíclico y encontrar ciclos en un grafos.
+	\item Encuentra las  componentes fuertemente conectados en un grafo dirigido.
+	\item Encuentra los puentes en un grafo dirigido
+\end{itemize}

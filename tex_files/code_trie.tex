@@ -1,0 +1,172 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+struct TrieNode {
+   int wordCount;
+   unordered_map<char, TrieNode*> children;
+   TrieNode() { this->wordCount = 0; children.clear(); }
+};
+
+struct Trie {
+   TrieNode *root;
+   Trie(){root = new TrieNode();}
+   
+   void printSorted() {
+      string s = "";
+      for (unordered_map<char, TrieNode*>::iterator it =
+         root->children.begin(); it != root->children.end(); it++) {
+         preorder(it->second, s + it->first);
+      }
+   }
+	
+   void preorder(TrieNode *node, string s) {
+      for (unordered_map<char, TrieNode*>::iterator it =
+         node->children.begin(); it != root->children.end(); it++) {
+         preorder(it->second, s + it->first);
+		}
+      if(node->wordCount > 0) {
+         for (int i = 0; i < node->wordCount; i++) cout << s << ENDL;
+      }
+   }
+	
+   void insertString(string s) {
+      TrieNode *v = root;
+      for (auto ch : s) {
+         TrieNode *next;
+         if (v->children.find(ch) == v->children.end()) {
+            next = new TrieNode(); v->children.insert(pair<char, TrieNode*>(ch, next));
+         }
+         else { next = v->children[ch];}
+         v = next;
+       }
+       v->wordCount++;
+   }
+	
+   bool searchWord(string key) {
+      TrieNode *currentNode = root;
+      for (char ch : key) {
+         unordered_map<char, TrieNode*>::iterator it=
+         	currentNode->children.find(ch);
+         if(it!=currentNode->children.end()) currentNode = it->second;
+         else return false;
+      }
+      return (currentNode->wordCount > 0);
+   }
+	
+   bool searchPrefix(string key) {
+      TrieNode *currentNode = root;
+      for (char ch : key) {
+         unordered_map<char, TrieNode*>::iterator it =
+           currentNode->children.find(ch);
+         if (it != currentNode->children.end()) currentNode = it->second;
+         else return false;
+      }
+      return true;
+   }
+	
+   void deleteKey(string s){ deleteKey(root, s, 0);}
+	
+   TrieNode* deleteKey(TrieNode *root, string word, int depth) {
+      if (root == NULL) return NULL;
+      if (depth == word.length()) {
+         root->wordCount--;
+         if (isEmpty(root)) root = NULL;
+         return root;
+      }
+      char index = word[depth];
+		
+      TrieNode * t = deleteKey(root->children[index], word, depth + 1);
+      if (t == NULL){
+         unordered_map<char, TrieNode*>::iterator it = root->children.find(index);
+         if(it!=root->children.end()) root->children.erase(it);
+      }
+      if (isEmpty(root) && root->wordCount == 0) root = NULL;
+      return root;
+   }
+	
+   bool isEmpty(TrieNode *node){
+      return node->wordCount==0 && node->children.size()==0;
+   }
+};
+\end{lstlisting}	
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+private class Trie {
+   private class TrieNode {
+      Map<Character, TrieNode> children;
+      int wordCount;
+      public TrieNode() {
+         children = new TreeMap<>();wordCount = 0;
+      }
+   }
+   
+   private TrieNode root;
+	
+   public Trie() { root = new TrieNode();}
+	
+   public void printSorted() {
+      String s = "";
+      for (Character ch : root.children.keySet()){
+         preorder(root.children.get(ch),s+ch);
+      }
+   }
+	
+   private void preorder(TrieNode node, String s) {
+      for (Character ch : node.children.keySet()) 
+         preorder(node.children.get(ch), s + ch);
+
+      if (node.wordCount > 0) 
+         for(int i=0;i<node.wordCount;i++) System.out.println(s);
+   }
+	
+   public void insertString(String s) {
+      TrieNode v = root;
+      for (char ch : s.toCharArray()) {
+         TrieNode next = v.children.get(ch);
+         if (next == null) v.children.put(ch, next = new TrieNode());
+         v = next;
+      }
+      v.wordCount++;
+   }
+	
+   public boolean searchWord(String key) {
+      TrieNode currentNode = root;
+      for (char ch : key.toCharArray()) {
+         TrieNode next = currentNode.children.get(ch);
+         if (next == null) return false;
+         currentNode = next;
+      }
+      return (currentNode.wordCount > 0);
+   }
+	
+   public boolean searchPrefix(String key) {
+      TrieNode currentNode = root;
+      for (char ch : key.toCharArray()) {
+         TrieNode next = currentNode.children.get(ch);
+         if (next == null) return false;
+         currentNode = next;
+      }
+      return true;
+   }
+	
+   public void deleteKey(String word){ deleteKey(root, word, 0); }
+	
+   private TrieNode deleteKey(TrieNode root, String word, int depth) {
+      if (root == null) return null;
+      if(depth == word.length()) {
+         root.wordCount--;
+         if (isEmpty(root)) root = null;
+         return root;
+      }
+      char index = word.charAt(depth);
+      TrieNode t = deleteKey(root.children.get(index), word, depth + 1);
+      if (t == null) root.children.remove(index);
+      if (isEmpty(root) && root.wordCount == 0) root = null;
+      return root;
+   }
+	
+   private boolean isEmpty(TrieNode node) {
+      return node.wordCount == 0 && node.children.size() == 0;
+   }
+}
+\end{lstlisting}

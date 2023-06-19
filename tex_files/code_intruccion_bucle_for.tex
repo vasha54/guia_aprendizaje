@@ -1,0 +1,55 @@
+La implementación de esta estructura es similar en ambos lenguajes no existe ninguna diferencia.
+
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+for ( int i =1; i <=10; i++){
+   cout<<" Hola Mundo " ;
+}
+\end{lstlisting}
+
+Esto indica que el contador \textbf{i} inicia desde \textbf{1} y continuará iterando mientras \textbf{i} sea menor o igual a \textbf{10}(en este caso llegará hasta 10) e \textbf{i++} realiza la suma por unidad lo que hace que el \textbf{for} y el contadorse sumen repitiendo 10 veces \emph{Hola Mundo} en pantalla.
+
+\begin{lstlisting}[language=C++]
+for( int i=10; i>=0; i--){
+   cout<<" Hola Mundo " ;
+}
+\end{lstlisting}
+
+Este ejemplo hace lo mismo que el primero, salvo que el contador se inicializa a 10 en lugar de 1; y por ello cambia la condición que se evalúa así como que el contador se decrementa en lugar de serincrementado.
+
+La condición también puede ser independiente del contador:
+
+\begin{lstlisting}[language=C++]
+int j=20;
+for( int i=0;j>0;i++){
+   cout<<" Hola "<<i<<" - "<<j<<endl;
+   j--;
+}
+\end{lstlisting}
+
+En este ejemplo las iteraciones continuaran mientras i sea mayor que 0, sin tener en cuenta el valorque pueda tener i.
+
+\subsection{Java}
+
+Ahora vamos a ver  los mismos ejemplos en Java
+
+\begin{lstlisting}[language=Java]
+for ( int i =1; i <=10; i++){
+   System.out.print(" Hola Mundo ") ;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+for( int i=10; i>=0; i--){
+   System.out.print(" Hola Mundo ") ;
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java]
+int j=20;
+for( int i=0;j>0;i++){
+   Syste.out.println(" Hola "+i+" - "+j);
+   j--;
+}
+\end{lstlisting}
+

@@ -1,0 +1,118 @@
+Aqui va de algunos de nuestros consejos para convertirte en un programador competitivo:
+
+\begin{enumerate}
+	\item \textbf{Escriba el código más rápido:}: Aunque este consejo puede no significar mucho ya que ICPC y (especialmente) IOI no son concursos de mecanografía, hemos visto equipos ICPC separados solo por unos pocos minutos y concursantes frustrados de IOI que se pierden de salvar marcas importantes al no ser capaz de codificar correctamente una solución de fuerza bruta de última hora. Cuando puedes resolver el mismo número de problemas que sus adversarios, entonces será la habilidad de codificación (su capacidad para producir código conciso y robusto) y ... velocidad de escritura ... que determinan el ganador. Pruebe esta \href{https://www.typingtest.com}{prueba de mecanografía} en  y siga las instrucciones allí sobre cómo mejorar su habilidad de mecanografía. Si su velocidad de escritura es mucho menor que 55-65 ppm , por favor ¡toma este consejo en serio!
+	Además de poder escribir caracteres alfanuméricos de forma rápida y correcta, podrá
+	también necesita familiarizar sus dedos con las posiciones de la programación de uso frecuente
+	caracteres de idioma: paréntisis () o llaves \{\} o corchetes [] o operadores <> ,
+	el punto y coma; y dos puntos:, comillas simples para caracteres, comillas dobles para cadenas, el ampersand \&, la barra vertical  |, el signo de exclamación !, etc.
+	
+	\item \textbf{Identifique rápidamente los tipos de problemas:} El objetivo principal no es solo asociar problemas con las técnicas requeridas para resolverlos. Lo importante es que usted sea capaz de clasificar los problemas en los cuatro tipos siguientes:
+	
+	\begin{longtable}{|c|p{4.5cm}|p{8.5cm}|}
+		\hline
+		\textbf{No} & \textbf{Categoría} &  \textbf{Confianza y velocidad de resolución esperada} \\
+		\hline
+		A1& He resuelto este tipo antes & Estoy seguro de que puedo volver a resolverlo de nuevo (y rápido)  \\
+		\hline
+		A2& He resuelto este tipo antes  & Estoy seguro de que puedo volver a resolverlo de nuevo (pero lento) \\
+		\hline
+		B1& He visto este tipo antes & Has estudiado acerca del tema y tienes nociones de
+		como solucionarlo o sabes dentro del equipo quien este tipo de ejercicio es un A1 o A2 \\
+		\hline
+		B2& He visto este tipo antes & No puedo resolverlo la falta de estudio
+		provoca que tenga que hacerlo de un lado \\
+		\hline
+		C& No he visto este tipo antes. & No tengo ni la menor idea de como solucionarlo por tanto voy a tener que esperar que alguien lo explique. \\
+		\hline
+	\end{longtable}
+	
+	Para ser competitivo, es decir, hacerlo bien en un concurso de programación, debe ser capaz de
+	y con frecuencia clasificar los problemas como tipo A1 y minimice la cantidad de problemas que
+	clasifican en tipo A2, B1, B2. Es decir, debe adquirir suficiente conocimiento del algoritmo y
+	desarrolle sus habilidades de programación para que considere que muchos problemas clásicos son fáciles especialmente al comienzo del concurso.
+	
+	Sin embargo, para ganar un concurso de programación, también deberá desarrollar habilidades de resolución para que usted (o su equipo) pueda derivar la solución requerida a un
+	problema de tipo C dificiles/original en IOI o ICPC y hacerlo dentro de la duración del concurso,
+	no después de que la(s) solución(es) sea(n) revelada(s) por el(los) autor(es) del problema/juez(es) del concurso. Algunos de las habilidades necesarias para resolver problemas son:
+	
+	\input{tex_files/hability_solved_problem_hard.tex}
+	
+	\item \textbf{Hacer análisis de algoritmos:} Una vez que haya diseñado un algoritmo para resolver un problema particular en un concurso de programación, entonces debe hacer esta pregunta: dado el límite máximo de entrada (generalmente dado en un buen descripción del problema), ¿puede el algoritmo desarrollado actualmente, con su complejidad de tiempo/espacio, pasar el límite de tiempo/memoria dado para ese problema en particular?
+	
+	A veces, hay más de una manera de atacar un problema. Algunos enfoques pueden ser
+	incorrectos, otros no lo suficientemente rápidos y otros exagerados. Una buena estrategia es hacer una lluvia de ideas. Para muchos algoritmos posibles y luego elegir la solución más simple que funcione (es decir, es rápido suficiente para pasar el límite de tiempo y memoria y aun así producir la respuesta correcta)
+	
+	Las computadoras modernas son bastante rápidas y pueden procesar hasta $\approx$ 100M (o $10^{8}$ ; 1M = 1 000 000) operaciones en un segundo. Puede utilizar esta información para determinar si su
+	el algoritmo se ejecutará en el tiempo. 
+	
+	Los límites del problema son tan importantes como la complejidad temporal de su algoritmo para determinar si su solución es adecuada. Suponga que sólo puede idear un modelo relativamente simple de algoritmo de código que se ejecuta con una complejidad de tiempo horrenda de O($n^{4}$ ). Esto puede parecer ser una solución no factible, pero si n $\approx$ 50, entonces realmente ha resuelto el problema.
+	
+	Tenga en cuenta, sin embargo, que el orden de complejidad no indica necesariamente el número real número de operaciones que requerirá su algoritmo. Si cada iteración implica un gran número de operaciones (muchos cálculos de punto flotante, o un número significativo de subbucles constantes), o si su implementación tiene una constante alta en su ejecución (bucles repetidos innecesarios, varias pasadas del conjunto de datos, o incluso sobrecarga de ejecución de entrada/salida (E/S), su código puede tardar más en ejecutarse de lo esperado. Sin embargo, esto no suele ser un gran problema ya que el los autores de problemas deberían haber diseñado los límites de tiempo para que unos pocos (más de uno). Las implementaciones razonables del algoritmo con la complejidad de tiempo objetivo prevista serán todas alcanzar el veredicto Aceptado (AC).
+	
+	Al analizar la complejidad de su algoritmo con el límite de entrada dado y el indicado límite de tiempo/memoria, puede decidir mejor si debe intentar implementar su algoritmo (que ocupará un tiempo precioso en los IOI y los ICPC), intenta mejorar su algoritmo primero, o cambie a otros problemas en el conjunto de problemas.
+	
+	Muchos programadores novatos se saltarían esta fase e implementarían inmediatamente la primera (ingenua) algoritmo en el que pueden pensar solo para darse cuenta de que la estructura de datos elegida y/o el algoritmo es/no es lo suficientemente eficiente (o incorrecto). Nuestro consejo para los concursantes : abstenerse desde la codificación hasta que esté seguro de que su algoritmo es correcto y lo suficientemente rápido.
+	Para ayudarlo a comprender el crecimiento de varias complejidades de tiempo comunes y, por lo tanto, ayudarlo a usted juzga qué tan rápido es suficiente. Por lo general, el algoritmo más simple tiene la menor complejidad temporal, pero si puede Ya pasa el límite de tiempo, ¡solo úsalo!
+	
+	\begin{longtable}{|c|p{11cm}|}
+		\hline
+		\textbf{N} & \textbf{El peor algoritmo de AC} \\
+		\hline
+		 $N \le [10 \dots 11]$   &  $O(n!),O(n^{6})$  \\
+		\hline
+		  $ N \le [17 \dots 19]$   &  $O(2^{n} \times n^{2})$   \\
+		\hline
+		  $ N \le [18 \dots 22]$  &   $O(2^{n} \times n)$   \\
+		\hline
+		 $ N \le [24 \dots 26]$   &  $O(2^{n})$   \\
+		\hline
+		$ N \le 100$	&  $O(n^{4})$  \\
+		\hline
+		$ N \le 450$ &  $O(n^{3})$   \\
+		\hline
+		$ N \le 1.5K$    &   $O(n^{2.5})$  \\
+		\hline
+		$ N \le 2.5K$ &  $O(n^{2}\log n)$   \\
+		\hline
+		$ N \le 10K$ &  $O(n^{2})$  \\
+		\hline
+		$ N \le 200K$    &  $O(n^{1.5})$  \\
+		\hline
+		$ N \le 4.5M$ &  $O(n\log n)$   \\
+		\hline
+		$ N \le 10M$ &  $O(n \log \log n)$  \\
+		\hline
+		$ N \le 100M$ &  $O(n),O(\log n),O(1)$  \\
+		\hline
+	\end{longtable}
+	
+	\item \textbf{Maestros en lenguajes de programación:} Hay varios lenguajes de programación compatibles con las competencias de programación , incluidos C/C++, Java y Python. ¿Qué lenguajes de programación se debe aspirar a dominar? 
+	
+	Nuestra experiencia nos da esta respuesta: preferimos C++ (std=gnu++17) con su
+	Biblioteca de plantillas estándar (STL), pero aún necesitamos dominar Java y algunos conocimientos
+	de Python. Aunque es más lento, Java tiene potentes bibliotecas integradas y API como
+	BigInteger/BigDecimal, GregorianCalendar, Regex, etc. Los programas Java son más fáciles de depurar
+	con la capacidad de la máquina virtual para proporcionar un seguimiento de la pila cuando falla (a diferencia de volcados de núcleo o fallas de segmentación en C/C++). De manera similar, el código de Python puede ser sorprendentemente muy corto para algunas tareas adecuadas. Por otro lado, C/C++ tiene sus propios méritos en cuanto tiempo y uso de memoria.
+	
+	\item \textbf{Domina el arte de probar el código:} Pensaste que habías resuelto un problema en particular. Había identificado su tipo de problema, diseñó el algoritmo para ello, verificó que el algoritmo (con las estructuras de datos que utiliza) se ejecutaría en el tiempo (y dentro de los límites de la memoria) considerando el tiempo (y el espacio) e implementó el algoritmo, pero su solución aún no es aceptada (AC).
+	
+	En cualquier caso, deberá poder diseñar pruebas buenas, completas y complicadas.
+	casos. La entrada-salida de muestra dada en la descripción del problema es por naturaleza trivial y
+	sólo allí para ayudar a la comprensión del enunciado del problema. Por lo tanto, los casos de prueba de muestra generalmente son insuficientes para determinar la corrección de su código.
+	
+	En lugar de desperdiciar enviós, es posible que desee diseñar casos de prueba complicados para probar su código en su propia máquina. Asegúrese de que su el código es capaz de resolverlos correctamente (de lo contrario, no tiene sentido enviar su solución ya que es probable que sea incorrecto, a menos que desee probar los límites de los datos de prueba).
+	
+	Aquí hay algunas pautas para diseñar buenos casos de prueba a partir de nuestra experiencia:
+
+	\input{tex_files/tips_test_cases.tex}
+		
+	\item \textbf{Práctica y más práctica:} Los programadores competitivos, como los atletas reales, deben entrenar regularmente y seguir programando. Creemos que el éxito viene como resultado de un
+	esfuerzo continuo para superarte a ti mismo. La puesta en práctica de este consejo de va ayudar mucho cuando apliques el consejo 2.
+	
+	\item \textbf{Trabajo en equipo (para ICPC):}
+	Este consejo no es algo fácil de enseñar, pero aquí hay algunas ideas que pueden servir. Vale la pena intentarlo para mejorar el rendimiento de tu equipo:
+	
+	\input{tex_files/tips_for_team.tex}
+	
+\end{enumerate}

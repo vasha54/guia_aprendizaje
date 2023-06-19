@@ -1,0 +1,73 @@
+La impletemación de esta estructura es similar en Java y C++ la única direrencia es que en Java permite que la variable que sea utilizada en switch sea de tipo string algo que no sucede en C++.
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+//determina cual calificacion se introdujo
+switch ( calificacion ) //instruccion switch
+{
+   case 'A': //calificacion fue A mayuscula
+   case 'a': //or a minuscula
+      aCuenta++; // incrementa aCuenta
+      break; // es necesario salir del switch
+   case 'B': // calificacion fue B mayuscula
+   case 'b': // o b minuscula
+      bCuenta++; // incrementa bCuenta
+      break; // sale del switch
+   case 'C': //calificacion fue C mayuscula
+   case 'c': // o c minuscula
+      cCuenta++; // incrementa cCuenta
+      break; // sale del switch
+   case 'D': //calificacion fue D mayuscula
+   case 'd': //o d minuscula
+      dCuenta++; // incrementa dCuenta
+      break; // sale del switch
+   case 'F': // calificacion fue F mayuscula
+   case 'f': // o f minuscula
+      fCuenta++; // incrementa fCuenta
+      break; // sale del switch
+   case '\n': // ignora caracteres de nueva linea,
+   case '\t': // tabuladores
+   case ' ': // y espacios en la entrada
+      break; // sale del switch
+   default: // atrapa todos los demas caracteres
+      cout << "Se introdujo una letra de calificacion incorrecta." << endl;
+      break; // opcional; saldra del switch de todas formas
+} // fin de switch	
+\end{lstlisting}
+
+
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+//determina cual calificacion se introdujo
+switch ( calificacion ) //instruccion switch
+{
+   case 'A': //calificacion fue A mayuscula
+   case 'a': //or a minuscula
+      aCuenta++; // incrementa aCuenta
+      break; // es necesario salir del switch
+   case 'B': // calificacion fue B mayuscula
+   case 'b': // o b minuscula
+      bCuenta++; // incrementa bCuenta
+      break; // sale del switch
+   case 'C': //calificacion fue C mayuscula
+   case 'c': // o c minuscula
+      cCuenta++; // incrementa cCuenta
+      break; // sale del switch
+   case 'D': //calificacion fue D mayuscula
+   case 'd': //o d minuscula
+      dCuenta++; // incrementa dCuenta
+      break; // sale del switch
+   case 'F': // calificacion fue F mayuscula
+   case 'f': // o f minuscula
+      fCuenta++; // incrementa fCuenta
+      break; // sale del switch
+   case '\n': // ignora caracteres de nueva linea,
+   case '\t': // tabuladores
+   case ' ': // y espacios en la entrada
+      break; // sale del switch
+   default: // atrapa todos los demas caracteres
+      cout << "Se introdujo una letra de calificacion incorrecta." << endl;
+      break; // opcional; saldra del switch de todas formas
+} // fin de switch	
+\end{lstlisting}
+

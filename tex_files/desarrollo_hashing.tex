@@ -1,0 +1,42 @@
+Para la conversión necesitamos una llamada función \emph{hash}. El objetivo de esto es convertir una cadena en un entero, el llamado \emph{hash} de la cadena. La siguiente condición debe mantenerse: si dos cadenas $s$ y $t$ son iguales ($s=t$), entonces sus hashes deben ser iguales ($\textbf{hash}(s) = \textbf{hash}(t)$). De lo contrario no podremos comparar cadenas.
+
+Note, la dirección opuesta no tiene que mantenerse. Si los hashes son iguales ($\textbf{hash}(s) = \textbf{hash}(t)$), entonces las cadenas no tienen por qué ser iguales. Por ejemplo una función hash válida sería simplemente $\textbf{hash}(s) = 0$ para cada $s$. Ahora, esto es solo un ejemplo estúpido, porque esta función será completamente inútil, pero es una función hash válida. La razón por la que no es necesario mantener la dirección opuesta, porque porque hay muchas cadenas exponenciales. Si solo queremos que esta función hash distinga entre todas las cadenas que consisten en caracteres en minúscula de longitud menor a 15, entonces el hash ya no cabría en un entero de 64 bits (por ejemplo, sin signo largo largo), porque hay muchos de ellos. Y, por supuesto, no queremos comparar enteros largos arbitrarios, porque esto también tendrá la complejidad $O(n)$.
+
+Por lo general, queremos que la función hash asigne cadenas a números de un rango fijo $[0, m)$, luego, comparar cadenas es solo una comparación de dos enteros con una longitud fija. Y, por supuesto, queremos que hash $\textbf{hash}(s) \neq \textbf{hash}(t)$  sea muy probable, si $s \neq t$.
+
+Esa es la parte importante que tienes que tener en cuenta. El uso de hash no será 100\% determinísticamente correcto, porque dos cadenas diferentes pueden tener el mismo hash (los hashes chocan). Sin embargo, en una amplia mayoría de problemas donde son utilizados, esto puede ser ignorado de manera segura ya que la probabilidad de que dos hashes diferentes colisionen es muy pequeña. Mas adelante discutiremos algunas técnicas  sobre cómo mantener muy baja la probabilidad de colisiones.
+
+\subsection{Cálculo del hash de una cadena}
+La forma buena y ampliamente utilizada de definir el hash de una cadena $s$ de longitud $n$ es:
+
+$$\textbf{hash}(s) = s[0] + s[1] \cdot p + s[2] \cdot p^2 + ... + s[n-1] \cdot p^{n-1} mod \quad  m = \sum_{i=0}^{n-1} s[i] \cdot p^i mod \quad m $$
+
+donde $p$ y $m$ son algunos números positivos elegidos. Se llama una función de hash rodante polinomial.
+
+Es razonable hacer que $p$ sea un número primo aproximadamente igual al número de caracteres en el alfabeto de entrada. Por ejemplo, si la entrada está compuesta solo de letras minúsculas del alfabeto inglés, $p$ = 31 es una buena opción. Si la entrada puede contener letras mayúsculas y minúsculas, entonces $p$ = 53 es una opción posible. El código en este artículo usará $p$ = 31.
+
+Obviamente, $m$ debería ser un número grande, ya que la probabilidad de que dos cadenas aleatorias colisionen es de aproximadamente $\approx \frac{1}{m}$. A veces se elige $m = 2^{64}$, ya que los desbordamientos de enteros de enteros de 64 bits funcionan exactamente igual que la operación de módulo. Sin embargo, existe un método que genera cadenas en colisión (que funcionan independientemente de la elección de $p$). Así que en la práctica no se recomienda $m = 2^{64}$. Una buena opción para $m$ es un número primo grande. El código en este artículo solo usará $m = 10^9+9$. Este es un número grande, pero aún lo suficientemente pequeño para que podamos realizar la multiplicación de dos valores utilizando enteros de 64 bits.
+
+\subsection{Colisión}
+Una colisión ocurre cuando dos valores de entrada diferente generan el mismo resumen. Una función hash debe ser resistente a la colisión.
+
+El mismo \emph{hash} siempre será el resultado de los mismos datos (funciones deterministas), pero la modificación de la información, aunque sea un solo bit dará como resultado un \emph{hash} totalmente distinto.
+
+La idea básica de un valor \emph{hash} es que sirva como una representación compacta de la cadena de entrada. Cuando dos claves se apuntan a la misma dirección o bucket se dice que hay una colisión y a las claves se les denomina sinónimos.
+
+Formas de disminuir el número de colisiones y garantizar el funcionamiento de la función:
+
+\begin{itemize}
+	\item Esparcir los registros.
+	\item Usar memoria adicional.
+	\item Colocar más de un registro en una dirección (Compartimientos).
+\end{itemize}
+
+Muy a menudo, el hash polinomial mencionado anteriormente es lo suficientemente bueno, y no habrá colisiones durante las pruebas. Recuerde, la probabilidad de que ocurra una colisión es solo $\approx \frac{1}{m}$. Para $m = 10^9 + 9$ la probabilidad es $\approx 10^{-9}$, que es bastante baja. Pero note, que solo hicimos una comparación. ¿Qué pasa si comparamos una cadena $s$ con $10^6$ cadenas diferentes. La probabilidad de que ocurra al menos una colisión ahora es $\approx 10^{-3}$. Y si queremos comparar $10^6$ cadenas diferentes entre sí (por ejemplo, contando cuántas cadenas únicas existen), entonces la probabilidad de que ocurra al menos una colisión ya es $\approx 1$. Está bastante garantizado que la función terminará con una colisión y devolverá el resultado incorrecto.
+
+
+Hay un truco muy fácil para obtener mejores probabilidades. Podemos simplemente calcular dos hashes diferentes para cada cadena (usando dos $p$ diferentes y/o $m$ diferentes, y comparar estos pares en su lugar. Si $m$ es aproximadamente $10^9$ para cada una de las dos funciones hash, entonces esto es más o menos equivalente a teniendo una función hash con $m \approx 10^{18}$. Al comparar $10^6$ cadenas entre sí, la probabilidad de que ocurra al menos una colisión ahora se reduce a $\approx 10^{-6}$.
+
+
+
+

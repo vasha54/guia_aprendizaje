@@ -1,0 +1,142 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+#include <math.h>
+#define EPS 1e-9
+#define LL long long
+using namespace std;
+
+struct Point {
+   int X, Y;
+   Point(int _x = 0, int _y = 0) : X(_x), Y(_y) {}
+};
+
+struct Vector {
+   double x, y;
+   Vector(double _x = 0, double _y = 0) : x(_x), y(_y) {}
+};
+
+Vector toVec(Point a, Point b){ return Vector(b.X-a.X, b.Y-a.Y); }
+double dist(Point p1, Point p2){ return hypot(p1.X-p2.X, p1.Y-p2.Y); }
+double dot(Vector a, Vector b) { return (a.x * b.x + a.y * b.y); }
+double norm_sq(Vector v) { return v.x * v.x + v.y * v.y; }
+double cross(Vector a, Vector b) { return a.x * b.y - a.y * b.x; }
+bool ccw(Point p, Point q, Point r) { return cross(toVec(p, q), toVec(p, r)) > 0; }
+
+double angle(Point a, Point o, Point b) {
+   Vector oa = toVec(o,a), ob =toVec(o, b);
+   return acos(dot(oa, ob) / sqrt( norm_sq(oa) * norm_sq(ob) ));
+}
+
+struct Polygon {
+   vector<Point> points;
+	
+   Polygon(vector<Point> _points) { this->points = _points;}
+	
+   double perimeter() {
+   	  int sz = (int) points.size();
+      double result = 0.0;
+      for(int i=0;i<sz;i++)
+         result+=dist(points[i],points[(i+1)%sz]);
+      return result;
+   }
+   
+   double area() {
+      double res = 0;
+      for (unsigned i = 0; i < points.size(); i++) {
+      	Point p = i ? points[i - 1] : points.back();
+      	Point q = points[i];
+      	res += (p.X - q.X) * (p.Y + q.Y);
+      }
+      return fabs(res) / 2;
+   }
+	
+   bool isConvex() {
+      int sz = (int) points.size();
+      if (sz < 3) return false;
+      bool isLeft = ccw(points[0], points[1], points[2]);
+      for(int i=1;i<sz;i++)
+		if(ccw(points[i],points[(i+1)%sz],points[(i+2)%sz])!=isLeft)
+		   return false;
+      return true;
+   }
+	
+   bool inPolygon(Point pt) {
+     if ((int) points.size() == 0) return false;
+     double sum = 0;
+     for (int i = 0; i < (int) points.size() - 1; i++) {
+       if(ccw(pt,points[i],points[i+1])) sum+=angle(points[i],pt,points[i+1]);
+       else sum-=angle(points[i],pt,points[i+1]);
+     }
+     return fabs(fabs(sum) - 2 * M_PI) < EPS;
+   }
+};
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+private class Point {
+   int X, Y;
+   public Point(int _x, int _y) { X = _x; Y = _y;}
+}
+
+private class Vector {
+   double x, y;
+   public Vector(double _x, double _y) { x = _x; y = _y;}
+}
+	
+public Vector toVec(Point a, Point b){return new Vector(b.X-a.X,b.Y-a.Y);}
+public double dist(Point p1, Point p2){return Math.hypot(p1.X-p2.X,p1.Y-p2.Y);}
+public double dot(Vector a, Vector b){return (a.x*b.x+a.y*b.y);}
+public double norm_sq(Vector v){return v.x*v.x+v.y*v.y;}
+public double cross(Vector a, Vector b){return a.x * b.y - a.y * b.x;}
+public boolean ccw(Point p, Point q, Point r){return cross(toVec(p,q),toVec(p,r))>0;}
+public double angle(Point a, Point o, Point b){
+   Vector oa = toVec(o, a), ob = toVec(o, b);
+   return Math.acos(dot(oa,ob)/Math.sqrt(norm_sq(oa)*norm_sq(ob)));
+}
+	
+private class Polygon {
+   List<Point> points;
+   private final double EPS = 1e-9;
+		
+   public Polygon(List<Point> _points){this.points = _points;}
+		
+   public double perimeter() {
+      int sz = (int) points.size(); double result = 0.0;
+      for(int i = 0; i < sz; i++)
+         result += dist(points.get(i), points.get((i + 1) % sz));
+      return result;
+   }
+   
+   public double area() {
+      double res = 0;
+      for(int i=0;i<points.size();i++) {
+         Point p = i==0 ? points.get(i-1):points.get(points.size()-1);
+         Point q = points.get(i);
+         res+=(p.X-q.X)*(p.Y+q.Y);
+      }
+      return Math.abs(res)/2;
+   }
+		
+   public boolean isConvex() {
+      int sz =(int)points.size();
+      if (sz < 3) return false;
+      boolean isLeft = ccw(points.get(0), points.get(1), points.get(2));
+      for(int i = 1; i < sz; i++)
+         if(ccw(points.get(i), points.get((i + 1) % sz), points.get((i + 2) % sz)) != isLeft)
+            return false;
+      return true;
+   }
+		
+   public boolean inPolygon(Point pt) {
+      if ((int) points.size() == 0) return false;
+	  double sum = 0;
+      for (int i = 0; i < (int) points.size() - 1; i++) {
+         if(ccw(pt,points.get(i),points.get(i+1)))
+            sum+=angle(points.get(i),pt,points.get(i+1));
+         else sum-=angle(points.get(i),pt,points.get(i+1));
+      }
+      return Math.abs(Math.abs(sum) - 2 * Math.PI) < EPS;
+   }
+}
+\end{lstlisting}	

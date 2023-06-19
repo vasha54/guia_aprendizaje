@@ -1,0 +1,16 @@
+Una cola de prioridad es una estructura de datos en la que los elementos se atienden en el ordenindicado por una prioridad asociada a cada uno. Si varios elementos tienen la misma prioridad, seatenderán de modo convencional según la posición que ocupen, puede llegar a ofrecer la extracciónconstante de tiempo del elemento más grande (por defecto), a expensas de la inserción logarítmica, outilizando una sobrecarga de operadores causaría que el menor elemento aparezca como la parte superior.Trabajar con una cola de prioridad es similar a la gestión de un \emph{Heap}.
+
+\subsubsection{C++}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{\#include
+<queue>}, gracias a esto ya podemos utilizar la estructura de otro modo no.
+
+\begin{itemize}
+	\item \textbf{priority\_queue::top():} En una cola de prioridad solo podemos acceder a la raíz del \emph{heap} con esta función. Es como obtener el primer elemento de la cola. Está funciónsi es constante ya que siempre se sabe dónde está la raíz del \emph{heap}.
+	\item \textbf{priority\_queue::empty():} Está función retorna verdad si la cola de prioridad está vacía y retorna falso en otrocaso.
+	\item \textbf{priority\_queue::size():} Está función retorna cuantos elementos tiene la cola de prioridad.
+	\item \textbf{priority\_queue::push(valor):} Está función inserta un elemento (valor) a la cola de prioridad, valor debe ser untipo de dato aceptado por la cola de prioridad. Está función tiene complejidadlogarítmica O($\log_2 N$).
+	\item \textbf{priority\_queue::pop():} Está función elimina el valor que esta en el tope o frente de la cola de prioridad. Está función tiene complejidad logarítmica O($\log_2 N$).
+\end{itemize}
+
+\subsubsection{Java}

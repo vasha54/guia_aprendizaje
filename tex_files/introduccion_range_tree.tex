@@ -1,0 +1,9 @@
+En múltiples problemas nos podemos encontrar en la que tenemos una colección de datos cuya cantidad ronda los $10^{5}$ elementos. Sobre dicha colección sea realiza dos tipos de operaciónes la cuales se pueden clasificar como:
+\begin{itemize}
+	\item \textbf{Actualización:} Consiste dada una posición dentro de la colección actualizar el valor de esa posición por un nuevo valor. (Tipo I)
+	\item \textbf{Consulta:} Consiste en dado un rango de posiciones dentro de la colección ver cuales de los elementos de la colección ubicados en posiciones dentro del rango definido cumple con una determinada cualidad. (Tipo II)
+\end{itemize}
+
+La cantidad de operaciones que se pueden realizar sobre la colección ronda la cantidad de $10^{5}$. Una idea trivial para solucionar este tipo de problema es resolverlo aplicando un poco de fuerza bruta pero esto en el  peor de los casos pudiera arrojar una complejidad  de O($N*M$) siendo $N$ la candidad de elementos de la colección y $M$ la cantidad de operaciones a realizar. En caso de las complejidades de las operaciones es facil ver como las operaciones de Tipo I su complejidad es de O($1$) mientras las del tipo II en el peor caso pudiera ser de O($N$) (se tenga que analizar todo el rango de la colección). Por tanto asumiendo un caso que todas las operaciones a realizar sean de tipo de II nuestro algoritmo tendría una complejidad de O($N*M$) como ya se menciono anteriormente lo que sustituyendo los valores podriamos tener un algoritmo de hasta $10^{10}$ operaciones.
+
+En la guía de hoy veremos como con el uso de una estructura de datos y sacrificando tiempo en la operación de tipo I y memoria se logra reducir la complejidad para solucionar este problema con una complejidad no mayor que O($M\log N$).

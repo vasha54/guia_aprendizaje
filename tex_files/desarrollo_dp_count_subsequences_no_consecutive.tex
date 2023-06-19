@@ -1,0 +1,12 @@
+Una idea para resolver este problema es utilizar la recursividad. Si comparamos los últimos carácteres de la cadena donde vamos a buscar( a partir de ahora vamos a nombrarla {\em X}) y del patrón que queremos encontrar (a partir de ahora la nombraremos {\em Y}) siendo {\em m} y {\em n} las longitudes de las cadenas {\em X} y {\em Y} respectivamente podemos encontrar dos posibilidades.
+
+\begin{itemize}
+	\item Si el último cáracter de la cadena es el mismo que el último cáracter del patrón, recursamos para analizar ahora para las subcadenas X[0 ... m-1] y Y[0 ... n-1]. Como queremos hallar todas las posibles soluciones debemos considerar el caso que el último cáracter de la cadena no sea igual al último cáracter del patrón, en ese caso recursamos para analizar las subcadenas  X[0 ... m-1] y Y[0 ... n]. 
+	\item Si el último cáracter de la cadena no es el mismo que el último cáracter del patrón entonces recursamos para analizar las subcadenas  X[0 ... m-1] y Y[0 ... n]. 
+\end{itemize}
+
+El único problema de esta solución es que su complejidad temporal es exponencial pero por el lado bueno su complejidad en cuanto a uso de memoria es {\em O(1)}.
+
+La idea es utilizar a Programación Dinámica para solucionar este problema. El problema tiene una subestructura óptima. Por encima de la solución también exhibe subproblemas que se superponen . Si dibujamos el árbol del recursion de la solución, podemos ver que los mismos subproblemas son calculados una y otra vez.
+
+Sabemos que los problemas que tienen subestructura óptima  y los subproblemas implicados pueden ser solucionados usando programación dinámica, en cuál los subproblemas solucionados y memorizados  en vez de calculados una y otra vez. La versión Memorización sigue el acercamiento de arriba a abajo, desde que primero quebrantamos el problema en los subproblemas y luego calculamos y almacenamos valores. También podemos solucionar este problema en la manera de abajo hacia arriba. En el acercamiento de abajo hacia arriba, solucionamos subproblema más pequeño primero, entonces solucionan mayores subproblemas de ellos.

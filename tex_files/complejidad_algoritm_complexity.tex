@@ -1,0 +1,44 @@
+Para calcular la complejidad de un algoritmo es posible chequear que el algoritmo es eficiente para el problema antes implementarlo. Podemos realizar una estimación basado en el factor que las computadoras del 2020 pueden realizar 100 millones ($10^{8}$) de operaciones en un segundo. 
+
+Por ejemplo asumamos que el tiempo limite del problema es un segundo y el tamaño de la entrada es $N=10^5$. Si diseñamos un algoritmo cuya complejidad es O($N^2$), el algoritmo para una entrada de $10^5$ realizará $10^{10}$ operaciones. Esto podría hacer que el algoritmo se demore al menos un segundo y fracción. Entonces el algoritmo es lento para resolver el problema.
+
+Basado en lo anterior vamos a mostrar una tabla donde a partir del tamaño de la entrada podemos definir la maxima complejidad que podría tener nuestro algoritmo para que pueda ejecutarse en menos de un segundo.
+
+{\centering
+
+\begin{tabular}{|c|c|}
+	\hline
+\textbf{Tamaño de la entrada}	&  \textbf{Complejidad} \\
+	\hline
+$N \le [10 \dots 11]$	& O($N!$), O($N^6$) \\
+	\hline
+$N \le [17\dots 19]$	& O($2^N\times N^2$) \\
+	\hline
+$N \le [18 \dots  22]$	& O($2^N \times N$)  \\
+	\hline
+$N \le [24 \dots  26]$	& O($2^N $)  \\
+\hline	
+$N \le 100$	& O($N^4 $)  \\
+\hline
+$N \le 450$	& O($N^3$)  \\
+	\hline
+$N \le 1.5\times 10^3$	& O($N^{2.5} $)  \\
+\hline
+$N \le 2.5\times 10^3$	& O($N^{2}\log N $)  \\
+\hline
+$N \le 10\times 10^3$	& O($N^2$)  \\
+	\hline
+$N \le 200\times 10^3$	& O($N^{1.5}$)  \\
+\hline
+$N \le 4.5\times 10^6$	& O($N\log N$) \\
+\hline
+$N \le 10\times 10^6 $	& O($N \log \log N$) \\
+	\hline
+$N \le 100\times 10^6$	& O($1$), O($\log N$), O($N$) \\
+	\hline
+\end{tabular}
+
+}
+
+Por ejemplo si el tamaño de la entrada es $N=10^6$, es probable que el algoritmo solución al problema no supere una complejidad de O($N$) o O($N \log N$). Esta información a veces pasada por alto hace que sea más fácil el diseño de un algoritmo solución o que seleccionemos entre algunos posibles candidatos de algoritmo solución aquel que sea más idonéo. 
+

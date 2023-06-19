@@ -1,0 +1,68 @@
+El algoritmo descrito fue sugerido de forma independiente por Kosaraju y Sharir en 1979. Este es un algoritmo fácil de implementar basado en dos series de búsqueda en profundidad.
+
+En el primer paso del algoritmo estamos haciendo una secuencia de primeras búsquedas en profundidad, visitando todo el grafo. Comenzamos en cada vértice del grafo y ejecutamos una búsqueda en profundidad desde cada vértice no visitado. Para cada vértice estamos haciendo un seguimiento del tiempo de salida $tout[v]$. Estos tiempos de salida tienen un papel clave en un algoritmo y este papel se expresa en el siguiente teorema.
+
+Primero, hagamos anotaciones: definamos el tiempo de salida $tout[C]$ de la componente fuertemente conexa $C$ como máximo de valores $tout[v]$ Por todos $v \in C$. Además, durante la demostración del teorema mencionaremos los tiempos de entrada $in[v]$ en cada vértice y de la misma manera considerar $tin[C]$ para cada componente fuertemente conectado $C$ como mínimo de valores $tin[v]$ Por todos $v \in C$.
+
+\textbf{teorema:} Dejar $C$ y $C'$ son dos componentes diferentes fuertemente conexa y hay una arista $(C, C')$ en un grafo de condensación entre estos dos vértices. Entonces $out[C] > out[C']$.
+
+Hay dos casos diferentes principales en la prueba, dependiendo de qué componente visitará primero la 
+búsqueda en profundidad primero, es decir, dependiendo de la diferencia entre $tin[C]$ y $tin[C']$ :
+
+\begin{itemize}
+	\item El componente $C$ se alcanzó primero. Significa que la búsqueda en profundidad primero viene 
+	en algún vértice $v$ de componente $C$ en algún momento, pero todos los demás vértices de los 
+	componentes $C$ y $C'$ no fueron visitados todavía. Por condición hay una arista $(C, C')$ en un 
+	grafo de condensación, por lo que no solo el componente completo $C$ es accesible desde $v$ pero 
+	todo el componente $C'$ es accesible también. Significa que la primera búsqueda en profundidad se 
+	ejecuta desde el vértice $v$ visitará todos los vértices de los componentes $C$ y $C'$, así serán 
+	descendientes para $v$ en un primer árbol de búsqueda en profundidad, es decir, para cada vértice $u \in C \cup C', u \ne v$ tenemos eso $tout[v] > tout[u]$, como decíamos.
+	
+	\item Suponga que ese componente $C'$ fue visitado primero. De manera similar, la primera búsqueda 
+	en profundidad llega en algún vértice $v$ de componente $C'$ en algún momento, pero todos los demás 
+	vértices de los componentes $C$ y $C'$ no fueron visitados todavía. Pero por condición hay una 
+	ventaja. $(C, C')$ en el grafo de condensación, por lo tanto, debido a la propiedad acíclica del 
+	grafo de condensación, no hay un camino de regreso desde $C'$ a $C$ , es decir, búsqueda en 
+	profundidad desde el vértice $v$ no llegará a los vértices de $C$. Significa que los vértices de $C$ será visitado por profundidad primera búsqueda más tarde, por lo que $tout[C] > tout[C']$. Esto completa la prueba.
+\end{itemize}
+
+El teorema probado es la base del algoritmo para encontrar componentes fuertemente conectados. De ello 
+se deduce que cualquier arista $(C, C')$ en el gráfico de condensación proviene de un componente con un 
+valor mayor de $tout$ al componente con un valor menor.
+
+Si ordenamos todos los vértices $v \in V$ en orden decreciente de su tiempo de salida $tout[v]$ entonces el primer vértice $u$ va a ser un vértice que pertenece al componente \emph{raiz} fuertemente 
+conectado, es decir, un vértice que no tiene aristas entrantes en el gráfico de condensación. Ahora 
+queremos ejecutar dicha búsqueda desde este vértice $u$ de modo que visitará todos los vértices en 
+este componente fuertemente conectado, pero no en otros; al hacerlo, podemos seleccionar gradualmente 
+todos los componentes fuertemente conectados: eliminemos todos los vértices correspondientes al primer 
+componente seleccionado, y luego encontremos un vértice con el mayor valor de $tout$ y ejecutar esta 
+búsqueda desde allí, y así sucesivamente.
+
+Consideremos el grafo transpuesto $G^T$ , es decir, grafo recibido de $G$ invirtiendo la dirección 
+de cada arista. Obviamente, este grafo tendrá las mismas componentes fuertemente conexa que el
+grafo inicial. Además, el grafo de condensación $G^{SCC}$ también se transpondrá. Significa que no 
+habrá aristas desde nuestro componente \emph{raíz} a otros componentes.
+
+Por lo tanto, para visitar todo el componente \emph{raíz} fuertemente conexo, que contiene el vértice $v$, es suficiente para ejecutar la búsqueda desde el vértice $v$ en grafo $G^T$. Esta búsqueda visitará todos los vértices de esta componente fuertemente conexa y solo ellos. Como se mencionó 
+anteriormente, podemos eliminar estos vértices del grafo y encontrar el siguiente vértice con un 
+valor máximo de $tout[v]$ y ejecutar la búsqueda en el grafo transpuesto desde él, y así 
+sucesivamente.
+
+Por lo tanto, construimos el siguiente algoritmo para seleccionar componentes fuertemente conexa:
+
+\begin{enumerate}
+	\item Ejecutar secuencia de profundidad primera búsqueda de grafo $G$ que devolverá vértices con 
+	el aumento del tiempo de salida $tout$, es decir, alguna lista $order$.
+	
+	\item Construir grafo transpuesto $G^T$ . Ejecute una serie de primeras búsquedas en profundidad 
+	(amplitud) en el orden determinado por la lista $order$ (para ser exactos en orden inverso, es 
+	decir, en orden decreciente de tiempos de salida). Cada conjunto de vértices, alcanzado después de 
+	la siguiente búsqueda, será el próximo componente fuertemente conectado.
+\end{enumerate}
+
+
+Finalmente, es apropiado mencionar aquí la ordenación topológica. En primer lugar, el paso 1 del 
+algoritmo representa un tipo de grafo topológico inverso $G$ (en realidad, esto es exactamente lo que 
+significa ordenar los vértices por tiempo de salida). En segundo lugar, el esquema del algoritmo genera 
+componentes fuertemente conectados por orden decreciente de sus tiempos de salida, por lo que genera 
+componentes (vértices del grafo de condensación) en orden de clasificación topológico.

@@ -1,0 +1,84 @@
+\subsection{C++}
+
+\subsubsection{Pila}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <stack>
+using namespace std ;
+int main (){
+   stack<int> stc;
+   stc.push(100) ;
+   stc.push (200) ;
+   stc.push(300) ;
+   cout<<stc.top()<<"\n";//resultado 300
+   stc.pop();
+   cout<<stc.top()<<"\n";//resultado 200
+}
+\end{lstlisting}
+
+\subsubsection{Cola}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <queue>
+	
+using namespace std;
+	
+void showq(queue<int> gq){
+   queue<int> g = gq;
+   while (!g.empty()) {
+      cout << '\t' << g.front();
+      g.pop();
+   }
+   cout << '\n';
+}
+	
+int main(){
+   queue<int> gquiz;
+   gquiz.push(10);
+   gquiz.push(20);
+   gquiz.push(30);
+   cout << "The queue gquiz is : ";
+   showq(gquiz);
+   cout << "\ngquiz.size() : " << gquiz.size();
+   cout << "\ngquiz.front() : " << gquiz.front();
+   cout << "\ngquiz.back() : " << gquiz.back();
+   cout << "\ngquiz.pop() : ";
+   gquiz.pop();
+   showq(gquiz);
+   return 0;
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Pila}
+\begin{lstlisting}[language=Java]
+import java.util.*;
+public class Main {
+   public static void main(String[] args) {
+      Stack<String> pila =new Stack<String> ();
+      pila.push("Matanzas");
+      String tope=pila.peek();
+      int position=pila.search("Matanzas");
+      String tope=pila.pop();
+      boolean isEmpty=pila.empty();
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Cola}
+\begin{lstlisting}[language=Java]
+import java.util.*;
+	
+public class Main {
+   public static void main(String[] args) {
+      Queue<String> str_queue = new LinkedList<>();
+      str_queue.add("one");
+      str_queue.add("two");
+      str_queue.add("three");
+      str_queue.add("four");
+      System.out.println("The Queue contents:" + str_queue);
+   }
+}
+\end{lstlisting}

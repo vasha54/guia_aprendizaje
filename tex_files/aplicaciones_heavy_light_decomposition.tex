@@ -1,0 +1,64 @@
+A continuación, veremos algunas tareas típicas que se pueden resolver con la ayuda de la descomposición pesada-ligera.
+
+Por separado, vale la pena prestar atención al problema de la \textbf{suma de números en el camino} , ya que este es un ejemplo de un problema que puede resolverse con técnicas más simples.
+
+\subsection{Valor máximo en el camino entre dos vértices}
+
+Dado un árbol, a cada vértice se le asigna un valor. Hay consultas de la forma $(a,b)$, dónde $a$ y $b$ son dos vértices en el árbol, y se requiere encontrar el valor máximo en el camino entre los vértices $a$ y $b$.
+
+Construimos de antemano una descomposición pesada-ligera del árbol. Sobre cada ruta pesada construiremos un árbol de segmentos, que nos permitirá buscar un vértice con el valor máximo asignado en el segmento especificado de la ruta pesada especificada en $\mathcal{O}(\log n)$. Aunque el número de caminos pesados en la descomposición pesado-ligero puede alcanzar $n-1$, el tamaño total de todos los caminos está limitado por $\mathcal{O}(n)$ , por lo tanto, el tamaño total de los árboles de segmento también será lineal.
+
+Para responder una consulta $(a,b)$, encontramos el ancestro común más bajo de $a$ y $b$ como $l$, por cualquier método preferido. Ahora la tarea se ha reducido a dos consultas. $(a,l)$ y $(b,l)$, para cada uno de los cuales podemos hacer lo siguiente: encontrar el camino pesado en el que se encuentra el vértice inferior, hacer una consulta sobre este camino, movernos a la parte superior de este camino, nuevamente determinar en qué camino pesado estamos y hacer una consulta sobre y así sucesivamente, hasta llegar a la ruta que contiene $l$.
+
+Se debe tener cuidado con el caso cuando, por ejemplo, $a$ y $l$ están en la misma ruta pesada; entonces, la consulta máxima en esta ruta no debe realizarse en ningún prefijo, sino en la sección interna entre $a$ y $l$.
+
+Respondiendo a las subconsultas $(a,l)$ y $(b,l)$ cada uno requiere pasar por $\mathcal{O}(\log n)$ 
+rutas pesadas y para cada ruta se realiza una consulta máxima en alguna sección de la ruta, lo que 
+nuevamente requiere $\mathcal{O}(\log n)$ operaciones en el árbol de rangos. Por lo tanto, una consulta 
+$(a,b)$ acepta $\mathcal{O}(\log^2 n)$ tiempo.
+
+Si adicionalmente calcula y almacena los máximos de todos los prefijos para cada ruta pesada, entonces obtiene un $\mathcal{O}(\log n)$ solución porque todas las consultas máximas son sobre prefijos, excepto como máximo una vez cuando llegamos al antepasado $l$.
+
+Para responder consultas sobre rutas, por ejemplo, la consulta máxima discutida, podemos hacer algo como esto:
+\begin{lstlisting}[language=C++]
+int query(int a, int b) {
+   int res = 0;
+   for (; head[a] != head[b]; b = parent[head[b]]) {
+      if (depth[head[a]] > depth[head[b]]){
+         int t = a; a = b; b =t;
+  	  }
+      int cur_heavy_path_max = segment_tree_query(pos[head[b]], pos[b]);
+      res = max(res, cur_heavy_path_max);
+   }
+   if (depth[a] > depth[b]){
+      int t = a; a = b; b =t;
+   }
+   int last_heavy_path_max = segment_tree_query(pos[a], pos[b]);
+   res = max(res, last_heavy_path_max); return res;
+}
+\end{lstlisting}
+\subsection{Suma de los números en el camino entre dos vértices}
+
+Dado un árbol, a cada vértice se le asigna un valor. Hay consultas de la forma $(a,b)$, dónde $a$ y $b$ 
+son dos vértices en el árbol, y se requiere encontrar la suma de los valores en el camino entre los vértices $a$ y $b$. Es posible una variante de esta tarea donde adicionalmente hay operaciones de actualización que cambian el número asignado a uno o más vértices.
+
+Esta tarea se puede resolver de manera similar al problema anterior de máximos con la ayuda de la descomposición pesada-ligera mediante la construcción de árboles de segmentos en caminos pesados. En su lugar, se pueden usar sumas de prefijos si no hay actualizaciones. Sin embargo, este problema también se puede resolver con técnicas más simples.
+
+Si no hay actualizaciones, entonces es posible averiguar la suma en el camino entre dos vértices en paralelo con la búsqueda LCA de dos vértices por elevación binaria ; para esto, junto con el $2^k$-th ancestros de cada vértice también es necesario almacenar la suma en los caminos hasta esos ancestros durante el preprocesamiento.
+
+Hay un enfoque fundamentalmente diferente para este problema: considerar el recorrido de Euler por el árbol y construir un árbol de segmentos sobre él. Nuevamente, si no hay actualizaciones, almacenar sumas de prefijos es suficiente y no se requiere un árbol de segmentos.
+
+Ambos métodos proporcionan soluciones relativamente simples que toman $\mathcal{O}(\log n)$ para una consulta.
+
+\subsection{Repintar los bordes del camino entre dos vértices}
+
+Dado un árbol, cada arista se pinta inicialmente de blanco. Hay actualizaciones de la forma $(a,b,c)$, dónde $a$ y $b$ son dos vértices y $c$ es un color, que indica que todos las aristas en el camino desde $a$ a $b$ debe ser repintado con color $c$. Después de todos los repintados, se requiere informar cuántos aristas de cada color se obtuvieron.
+
+Similar a los problemas anteriores, la solución es simplemente aplicar la descomposición pesada-ligera y hacer un árbol de segmentos sobre cada camino pesado.
+
+Cada repintado en el camino $(a,b)$ se convertirá en dos actualizaciones $(a,l)$ y $(b,l)$, dónde $l$ 
+es el ancestro común más bajo de los vértices $a$ y $b$ $\mathcal{O}(\log n)$ por camino para 
+$\mathcal{O}(\log n)$ caminos conduce a una complejidad de $\mathcal{O}(\log^2 n)$ por actualización.
+
+
+

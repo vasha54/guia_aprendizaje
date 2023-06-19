@@ -1,0 +1,10 @@
+Veamos en el peor caso, es decir, que se descartaron varias veces partes de la coleción para finalmente llegar a una coleción vacía y porque el valor buscado no se encontraba en la coleción.
+
+En cada paso la coleción se divide por la mitad y se desecha una de esas mitades, y en cada paso se hace una comparación con el valor buscado. Por lo tanto, la cantidad de comparaciones que hacen con el valor buscado es aproximadamente igual a la cantidad de pasos necesarios para llegar a un segmento de tamaño 1. Veamos el caso más sencillo para razonar, y supongamos que la longitud de la coleción es una potencia de 2.
+
+Por lo tanto este programa hace aproximadamente k comparaciones con el valor buscado cuando la cantidad de elementos de la coleción es $2^k$. Pero si despejamos $k$ de la ecuación anterior, podemos ver que este programa realiza aproximadamente $\log(N)$ de comparaciones donde $N$ es la cantidad de elementos de la coleción.
+
+Cuando la cantidad de elementos de la coleción no es una potencia de 2 el razonamiento es menos prolijo, pero también vale que este programa realiza aproximadamente $\log(N)$ comparaciones.
+
+Vemos entonces que si la coleción esta ordenada, la búsqueda binaria es muchísimo más eficiente que la búsqueda lineal.
+

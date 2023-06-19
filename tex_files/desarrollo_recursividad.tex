@@ -1,0 +1,49 @@
+Lo primero que debemos entender las diferencias de como funciona un metodo lineal o tradicional a uno recursivo. 
+
+Cuando llamamos a una función (o método) el proceso es el siguiente:
+
+\begin{enumerate}
+	\item Se reserva espacio en la pila para los parámetros de la función y sus variables locales.
+	\item Se guarda en la pila la dirección de la línea del código desde donde se ha llamado al método.
+	\item Se almacenan los parámetros de la función y sus valores en la pila.
+	\item Finalmente se libera la memora asignada en la pila cuando la función termina y se vuelve a la llamada de código original.
+\end{enumerate}
+
+En cambio, cuando la función es recursiva:
+
+\begin{itemize}
+	\item Cada llamada genera una nueva llamada a una función con los correspondientes objetos locales
+	\item Volviéndose a ejecutar completamente, hasta la llamada a si misma. Donde vuelve a crear en la pila los nuevos parámetros y variables locales. Tantos como llamadas recursivas generemos.
+	\item Al terminar, se van liberando la memoria en la pila, empezando desde la última función creada hasta la primera, la cual será la ultima en liberarse.
+\end{itemize}
+
+En la implementación de un algoritmo recursivo consta de dos partes:
+\begin{itemize}
+	\item Caso base: Es la resolución del problema de maneradirecta
+	\item Caso Recursivo: Caso en el que el problema se divide enversiones más pequeñas de si mismo.
+\end{itemize}
+
+Es importante hacer notar que en la implementación de los algoritmos recursivos puede existir más de un caso base y más de un caso recursivo lo que siempre debe existir uno de cada tipo porque la ausencia de uno de estos casos significa que o tenemos un algoritmo no recursivo (si falta el caso recursivo) o un algortimo que provoca un bucle sin fin (si falta el caso base)
+
+\subsection{Cómo diseñar un algoritmo recursivo}
+
+\begin{enumerate}
+	\item Reconocer el caso base y proporcionar una soluciónpara él.
+	\item Diseñar una estrategia para dividir el problema enversiones más pequeñas del mismo considerandoavanzar hacia el caso base.
+	\item Combine las soluciones de los problemas máspequeños para obtener la solución del problemaoriginal.
+\end{enumerate}
+
+
+Según el modo en que se realiza la llamada recursiva se puede clasificar o agrupar como:
+
+\begin{itemize}
+	\item \textbf{Directa:} Cuando un método/función se invoca asímismo.
+	\item \textbf{Indirecta o mutua :} Cuando un método/función puedeinvocar a una segunda función/método que a suvez invoca a la primera
+	\item \textbf{Recursión lineal no final:} En la recursión lineal no final el resultado de la llamada recursiva se combina en una
+	expresión para dar lugar al resultado de la función que llama.
+	\item \textbf{Recursión lineal final:} En la recursión lineal final el resultado que es devuelto es el resultado de ejecución de la
+	última llamada recursiva.
+	\item \textbf{Recursión múltiple:} Alguna llamada recursiva puede generar más de una llamada a la función.
+\end{itemize}
+
+

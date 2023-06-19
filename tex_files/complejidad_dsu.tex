@@ -1,0 +1,17 @@
+La estructura de datos le permite realizar cada una de estas operaciones en casi $O(1)$ tiempo en promedio.
+
+También en una de las subsecciones se explica una estructura alternativa de un DSU, que logra una complejidad promedio más lenta de $O(\log n)$ , pero puede ser más potente que la estructura DSU normal.
+
+\subsection{Implementación sencilla}
+Sin embargo, esta implementación es ineficiente. Es fácil construir un ejemplo, de modo que los árboles degeneren en largas cadenas. En ese caso, cada llamada $find\_set(v)$ puede tomar $O(n)$ tiempo. Esto está muy lejos de la complejidad que queremos tener (tiempo casi constante). 
+
+\subsection{Optimización de la compresión de rutas}
+Esta simple modificación de la operación ya logra la complejidad del tiempo. $O(\log n)$ por llamada en promedio (aquí sin prueba). Hay una segunda modificación, que lo hará aún más rápido.
+
+Si combinamos ambas optimizaciones (compresión de ruta con unión por  tamaño / rango), alcanzaremos consultas de tiempo casi constante. Resulta que la complejidad del tiempo  amortizado final es $O(f(x))$, dónde $f(x)$ es la función de Ackerman, que crece muy lentamente. De hecho crece tan lentamente, que no excede $4$ por todo lo razonable $n$ (aproximadamente $n < 10^{600}$)
+
+La complejidad amortizada es el tiempo total por operación, evaluado sobre una secuencia de múltiples operaciones. La idea es garantizar el tiempo total de toda la secuencia, permitiendo que las operaciones individuales sean mucho más lentas que el tiempo amortizado. Por ejemplo, en nuestro caso, una sola llamada podría tomar $O(\log n )$ en el peor de los casos, pero si lo hacemos $m$ tales llamadas consecutivas terminaremos con un tiempo promedio de $O(f(n))$
+
+Tampoco presentaremos una prueba para esta complejidad de tiempo, ya que es bastante larga y complicada.
+
+Además, vale la pena mencionar que DSU con unión por tamaño / rango, pero sin compresión de ruta funciona en $O(\log n)$ tiempo por consulta.

@@ -1,0 +1,24 @@
+\subsection{Recorrido de Euler}
+El recorrido de Euler se define como una forma de atravesar el árbol de modo que cada vértice se agrega al recorrido cuando lo visitamos (ya sea moviéndose hacia abajo desde el vértice principal o regresando desde el vértice secundario). Comenzamos desde la raíz y volvemos a la raíz después de visitar todos los vértices. Requiere exactamente $2N-1$ vértices para almacenar el recorrido de Euler.
+
+\subsection{Árbol de Rango (\emph{Range Tree})}
+Un árbol de rangos es una estructura de datos que almacena información sobre intervalos de un arreglo como 
+un árbol. Esto permite responder consultas de rango sobre un arreglo de manera eficiente, mientras sigue 
+siendo lo suficientemente flexible como para permitir una modificación rápida del arreglo. Esto incluye 
+encontrar la suma de elementos del arreglo consecutivos $a[l \dots r]$, o encontrar el elemento mínimo en 
+tal rango en $O(\log n)$ tiempo. Entre las respuestas a tales consultas, el árbol de rango permite 
+modificar el arreglo reemplazando un elemento, o incluso cambiando los elementos de un subrango completo 
+(por ejemplo, asignando todos los elementos $a[l \dots r]$ a cualquier valor, o agregando un valor a todos 
+los elementos en el subrango).
+
+\subsection{Descomposición Sqrt (\emph{Sqrt Decomposition})}
+
+Descomposición Sqrt es un método (o una estructura de datos) que le permite realizar algunas operaciones comunes (encontrar la suma de los elementos del subarreglo, encontrar el elemento mínimo/máximo, etc.) en $O(\sqrt n)$ operaciones, que es mucho más rápido que $O(n)$ para el algoritmo trivial.
+
+\subsection{Tabla dispersa (\emph{Sparse Table})}
+
+Tabla dispersa es una estructura de datos que permite responder consultas de rango. Puede responder a la mayoría de las consultas de rango en $O(\log n)$, pero su verdadero poder es responder consultas de rango mínimo (o consultas de rango máximo equivalente). Para esas consultas, puede calcular la respuesta en $O(1)$ tiempo.
+
+\subsection{Unión de conjuntos disjuntos (\emph{Disjoint Set Union o DSU})}
+
+Esta estructura de datos proporciona las siguientes capacidades. Se nos dan varios elementos, cada uno de los cuales es un conjunto separado. Una DSU tendrá una operación para combinar dos conjuntos y podrá decir en qué conjunto se encuentra un elemento específico. La versión clásica también introduce una tercera operación, puede crear un conjunto a partir de un nuevo elemento.

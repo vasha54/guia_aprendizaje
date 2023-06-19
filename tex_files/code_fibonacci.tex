@@ -1,0 +1,111 @@
+\subsection{C++}
+
+\subsubsection{Variante recursiva}
+
+\begin{lstlisting}[language=C++]
+int fibonacci(int n){
+   if(n<2) return n;
+   else return fibonacci(n-1)+fibonacci(n-2);	
+}
+\end{lstlisting}
+
+\subsubsection{Variante iterativa}
+
+\begin{lstlisting}[language=C++]
+	
+int fibonacci[1000];
+
+// Complejidad temporal y espacial O(n)
+void buildFibonacci(){ 
+   fibonacci[0]=0; fibonacci[1]=1;
+   for(int i=2;i<1000;i++) fibonacci[i]=fibonacci[i-1]+fibonacci[i-2];	
+}
+
+// Complejidad temporal y espacial O(n) y O(1) respectivamente
+int fibonacci(int n){ 
+   int a=0, b=1,c=n;
+   for(int i=2;i<=n;i++){ c=a+b; a=b; b=c; }
+   return c;
+}
+\end{lstlisting}
+
+\subsubsection{Variante matricial}
+
+\begin{lstlisting}[language=C++]
+int fibonacci(int n){
+   int h,i,j,k,aux; h=i=1; j=k=0;
+   while(n>0){
+      if(n%2!=0){
+         aux=h*j; j=h*i+j*k+aux; i=i*k+aux; 
+      }
+      aux=h*h; h=2*h*k+aux; k=k*k+aux; n=n/2;
+    }
+    return j;
+}
+\end{lstlisting}
+
+\subsubsection{Función}
+
+\begin{lstlisting}[language=C++]
+double fibonacci(int n){
+   double root=sqrt(5);
+   double fib=((1/root)*(pow((1+root)/2,n))- (1/root)*(pow((1-root)/2,n)));
+   return fib;
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Variante recursiva}
+
+\begin{lstlisting}[language=Java]
+public int fibonacci(int n){
+   if(n<2) return n;
+   else return fibonacci(n-1)+fibonacci(n-2);	
+}
+\end{lstlisting}
+
+\subsubsection{Variante iterativa}
+
+\begin{lstlisting}[language=Java]
+	
+int [] fibonacci = new int[1000];
+	
+// Complejidad temporal y espacial O(n)
+public void buildFibonacci(){ 
+   fibonacci[0]=0; fibonacci[1]=1;
+   for(int i=2;i<1000;i++) fibonacci[i]=fibonacci[i-1]+fibonacci[i-2];	
+}
+	
+// Complejidad temporal y espacial O(n) y O(1) respectivamente
+public int fibonacci(int n){ 
+   int a=0, b=1,c=n;
+   for(int i=2;i<n;i++){ c=a+b; a=b; b=c; }
+   return c;
+}
+\end{lstlisting}
+
+\subsubsection{Variante matricial}
+
+\begin{lstlisting}[language=C++]
+public int fibonacci(int n){
+   int h,i,j,k,aux; h=i=1; j=k=0;
+   while(n>0){
+      if(n%2!=0){
+         aux=h*j; j=h*i+j*k+aux;i=i*k+aux; 
+      }
+      aux=h*h; h=2*h*k+aux; k=k*k+aux; n=n/2;
+   }
+   return j;
+}
+\end{lstlisting}
+
+\subsubsection{Función}
+
+\begin{lstlisting}[language=C++]
+public double fibonacci(int n){
+   double root=Math.sqrt(5);
+   double fib=((1/root)*(Math.pow((1+root)/2,n))- (1/root)*(Math.pow((1-root)/2,n)));
+   return fib;
+}
+\end{lstlisting}

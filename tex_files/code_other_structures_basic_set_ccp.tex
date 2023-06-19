@@ -1,0 +1,70 @@
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <set>
+#include <vector>
+using namespace std ;
+
+bool comvec(vector<int> v1 ,vector<int> v2){//Esta es el comparador
+   return v1.size()<v2.size();
+}
+
+int main() {
+   //Creacion de un conjunto con 'vector<int>' como Tipo de Dato
+   set<vector<int>, bool(*)( vector<int>, vector<int>)> conjvec (comvec);
+	
+   set<int> conj ;
+   //Adicionamos al conjunto los elementos
+   conj.insert(69); conj.insert(80); conj.insert(77); 
+   conj.insert(82); conj.insert(75); conj.insert(81);
+   conj.insert(78);
+   if(conj.empty()){cout<<" El conjunto esta vacio\n" ;} 
+   else{
+      cout<<" El conjunto lleva " ;
+      cout<<conj.size()<<" elementos\n " ;
+   }//Salida : El conjunto lleva 7 elementos
+   for(set<int>::iterator it = conj.begin(); it!=conj.end(); it++){
+      cout <<*it<<" ";
+   } 
+   cout<<"\n" ;//Resultado: 69 75 77 80 81 82
+   
+   if(conj.count(77)==1) cout<<" 77 esta en el conjunto\n";
+   else cout<<"77 no esta en el conjunto\n";
+   //Resultado: 77 esta en el conjunto
+   
+   if(conj.find(100)!=conj.end()) cout<<"100 esta en el conjunto\n";
+   else cout<<" 100 no esta en el conjunto\n";
+   //Resultado: 100 no esta en el conjunto
+
+   if(conj.lower_bound(80)!=conj.upper_bound(80))
+      cout<<" 80 esta en el conjunto\n";
+   else cout<<" 80 no esta en el conjunto\n" ;
+   //Resultado: 80 esta en el conjunto
+   
+   if(conj.lower_bound(70)==conj.upper_bound(70))
+      cout<<" 70 no esta en el conjunto\n";
+   else cout<<" 70 esta en el conjunto \n" ;
+   //Resultado: 70 no esta en el conjunto
+   
+   set<int> c1, c2;
+   vector<int> unionc, difc, interc;
+   
+   c1.insert(1);c1.insert(2);c1.insert(3);c1.insert(4);
+   c1.insert(5);c1.insert(6);c1.insert(7);
+   
+   c2.insert(4);c2.insert(3);c2.insert(6);c2.insert(1);
+   c2.insert(9);c2.insert(10);c2.insert(7);
+   
+   set_union(c1.begin(),c1.end(),c2.begin(),c2.end(),back_inserter(unionc));
+   set_difference(c1.begin(),c1.end(),c2.begin(),c2.end(),back_inserter(difc));
+   set_union(c1.begin(),c1.end(),c2.begin(),c2.end(),back_inserter(interc));
+   
+   cout<<"Union :";for(auto x : unionc) cout<<x<<" "; cout<<endl;
+   cout<<"Diferencia :";for(auto x : difc) cout<<x<<" "; cout<<endl;
+   cout<<"Interseccion :";for(auto x : interc)cout<<x<<" ";cout<<endl;
+   //Union :1 2 3 4 5 6 7 9 10 
+   //Diferencia :2 5 
+   //Interseccion :1 2 3 4 5 6 7 9 10
+   
+   return 0;
+}
+\end{lstlisting}

@@ -1,0 +1,9 @@
+El algoritmo Manacher permite dentro de una cadena de carácteres hallar la longitud de la subsecuencia máxima concecutiva que es palíndrome. En caso de que queramos extraer la cadena se hace el siguiente el procedimiento:
+
+\begin{itemize}
+	\item Se tiene rad[i] donde rad[i] es la longitud del palíndrome encontrado en la cadena y {\em i} la posición en el arreglo {\em rad}.
+	
+	\item Si {\em i} es par entonces el principio de la cadena palíndrome empieza en i/2 - rad[i]/2 y termina en la posición i/2 + rad[i]/2 de la cadena original.
+	
+	\item Si {\em i} es impar entonces el principio de la cadena palíndrome empieza en i/2 - rad[i]/2 +1 y termina en la posición i/2 + rad[i]/2 de la cadena original.
+\end{itemize}

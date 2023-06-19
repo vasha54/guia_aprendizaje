@@ -1,0 +1,37 @@
+\subsection{AND lógico \& (palabra clave bitand)}
+
+Este operador binario compara ambos operandos bit a bit, y como resultado devuelve un valor construido de tal forma, que cada bits es 1 si los bits correspondientes de los operandos están a 1. En caso contrario, el bit es 0.
+
+Sintaxis:
+
+$ AND-expresion \& equality-expresion $ 
+
+Ejemplo:
+
+\lstset{language=C++, breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[language=C++]
+int x = 10, y = 20;//x en binario es 01010, y en binario 10100
+	
+int z = x & y;//equivale a: int z = x bitand y; z toma el valor 00000 es decir 0
+\end{lstlisting}
+
+\subsection{Desplazamiento a izquierda $ << $ }
+Este operador binario realiza un desplazamiento de bits a la izquierda. El bit más significativo (más a la izquierda) se pierde, y se le asigna un 0 al menos significativo (el de la derecha). El operando derecho indica el número de desplazamientos que se realizarán. Los desplazamientos no son rotaciones; los bits que salen por la izquierda se pierden, los que entran por la derecha se rellenan con ceros. Este tipo de desplazamientos se denominan lógicos en contraposición a los cíclicos o rotacionales.
+
+Sintaxis:
+
+$ expr-desplazada << expr-desplazamiento $ 
+
+El patrón de bits de expr-desplazada sufre un desplazamiento izquierda del valor indicado por la expr-desplazamiento. Ambos operandos deben ser números enteros o enumeraciones. En caso contrario, el compilador realiza una conversión automática de tipo. El resultado es del tipo del primer operando. expr-desplazamiento, una vez promovido a entero, debe ser un entero positivo y menor que la longitud del primer operando. En caso contrario el resultado es indefinido (depende de la implementación).
+
+Ejemplo:
+
+\lstset{language=C++, breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[language=C++]
+unsigned long x = 10; // En binario el 10 es 1010
+	
+int y = 2;
+	
+unsigned long z = x << y;  
+/* z tienen el valor 40 que en binario es 101000 vea que se adiciono dos ceros al final que son los desplazamientos.*/
+\end{lstlisting} 

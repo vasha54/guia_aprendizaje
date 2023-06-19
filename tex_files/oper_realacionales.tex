@@ -1,0 +1,33 @@
+Los operadores relacionales sirven para realizar comparaciones de igualdad, desigualdad y relación de menor o mayor.El resultado de estos operadores essiempre un valor boolean (true o false) según se cumpla o no la relaciónconsiderada.
+
+\begin{tabular}{|c|p{3cm}|p{9cm}|}
+	\hline
+	\textbf{Operador}	& \textbf{Utilización} &  \textbf{El resultado es verdadero (true)} \\
+	\hline
+	> & op1 > op2 & si op1 es mayor que op2 \\
+	\hline
+	>= & op1 >= op2 & si op1 es mayor o igual que op2 \\
+	\hline
+	< & op1 < op2 & si op1 es menor que op2 \\
+	\hline
+	<= & op1 <= op2 & si op1 es menor o igual que op2 \\
+	\hline
+	== & op1 == op2 & si op1 y op2 son iguales \\
+	\hline
+	!= & op1 != op2 & si op1 y op2 son diferentes \\
+	\hline
+\end{tabular}
+
+Todos los operadores relacionales son operadores binarios (tienen dos operandos), y su
+forma general es la siguiente:
+
+\begin{lstlisting}[language=C++]
+expresion1 op expresion2
+\end{lstlisting}
+
+donde \textbf{op} es uno de los operadores (==, <, >, <=, >=, !=). El funcionamiento de
+estos operadores es el siguiente: se evalúan \textbf{expresion1} y \textbf{expresion2}, y se comparan losvalores resultantes. Si la condición representada por el operador relacional se cumple, el
+resultado es verdadero (true,1); si la condición no se cumple, el resultado es falso (false,0).
+
+\subsubsection{Prioridad de los Operadores Relacionales}
+Todos los operadores relacionales tienen el mismo nivel de prioridad en su evaluación. En general, los operadores relacionales tienen menor prioridad que los aritméticos. 

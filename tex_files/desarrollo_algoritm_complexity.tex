@@ -1,0 +1,56 @@
+La complejidad de un algoritmo es un estimado de tiempo de acuerdo a la entrada. La idea es representar la eficiencia del algoritmo como una función parametrizada donde los parámetros son el tamaño de las entradas del problema.
+
+El tiempo de complejidad de un algoritmo se denota como O($\dots$) donde los tres puntos representan alguna función que usualmente utiliza variables para denominar cada una de los tamaños de las entradas. Por ejemplo $N$ donde dicha variable pueda representar la cantidad de elementos de un arreglo.
+
+A la hora de medir el tiempo, siempre lo haremos en función del número deoperaciones elementales que realiza dicho algoritmo, entendiendo por operacioneselementales (en adelante OE) aquellas que el ordenador realiza en tiempo acotadopor una constante. Así, consideraremos OE las operaciones aritméticas básicas,
+asignaciones a variables de tipo predefinido por el compilador, los saltos (llamadasa funciones y procedimientos, retorno desde ellos, etc.), las comparaciones lógicasy el acceso a estructuras indexadas básicas, como son los vectores y matrices. Cadauna de ellas contabilizará como 1 OE.
+
+Resumiendo, el tiempo de ejecución de un algoritmo va a ser una función quemide el número de operaciones elementales que realiza el algoritmo para untamaño de entrada dado.
+
+También es importante hacer notar que el comportamiento de un algoritmopuede cambiar notablemente para diferentes entradas (por ejemplo, lo ordenadosque se encuentren ya los datos a ordenar). De hecho, para muchos programas eltiempo de ejecución es en realidad una función de la entrada específica, y no sólodel tamaño de ésta. Así suelen estudiarse tres casos para un mismo algoritmo:\emph{caso peor}, \emph{caso mejor} y \emph{caso medio}.
+
+El caso mejor corresponde a la traza (secuencia de sentencias) del algoritmo que realiza menos instrucciones. Análogamente, el caso peor corresponde a la traza del algoritmo que realiza más instrucciones. Respecto al caso medio, corresponde a latraza del algoritmo que realiza un número de instrucciones igual a la esperanzamatemática de la variable aleatoria definida por todas las posibles trazas delalgoritmo para un tamaño de la entrada dado, con las probabilidades de que éstasocurran para esa entrada.
+
+\subsection{Reglas generales para el cálculo del número de OE}
+
+La siguiente lista presenta un conjunto de reglas generales para el cálculo delnúmero de OE, siempre considerando el peor caso. Estas reglas definen el númerode OE de cada estructura básica del lenguaje, por lo que el número de OE de unalgoritmo puede hacerse por inducción sobre ellas.
+
+\begin{enumerate}
+	\item Vamos a considerar que el tiempo de una OE es, por definición, de orden 1. Laconstante c que menciona el Principio de Invarianza dependerá de laimplementación particular, pero nosotros supondremos que vale 1.
+	\item El tiempo de ejecución de una secuencia consecutiva de instrucciones se calculasumando los tiempos de ejecución de cada una de las instrucciones.
+	\item El tiempo de ejecución de la sentencia  $\text{CASE C OF} v1:S1|v2:S2|\dots|vn:Sn\quad
+	 \text{END};$ es $T = T(C) + \max\{T(S_1 ),T(S_2 ),\dots,T(S_n)\}$. Obsérvese que $T(C)$ incluye el
+	tiempo de comparación con $v_1 , v_2 ,\dots, v_n$ 
+	\item El tiempo de ejecución de la sentencia $\text{IF C THEN S1 ELSE S2 END;}$ es \\
+	$T = T(C) + \max\{T(S 1 ),T(S 2 )\}$.
+	\item El tiempo de ejecución de un bucle de sentencias $\text{WHILE C DO S END;}$ es
+	$T = T(C) + (n^o \quad iteraciones)\times(T(S) + T(C))$. Obsérvese que tanto $T(C)$ como $T(S)$pueden variar en cada iteración, y por tanto habrá que tenerlo en cuenta para sucálculo.
+	\item Para calcular el tiempo de ejecución del resto de sentencias iterativas (FOR,
+	REPEAT, LOOP) basta expresarlas como un bucle WHILE.
+	\item El tiempo de ejecución de una llamada a un procedimiento o función
+	$F(P_1 , P_2 ,\dots, P_n )$ es 1 (por la llamada), más el tiempo de evaluación de los
+	parámetros $P_1$ , $P_2$ ,$\dots$, $P_n$ , más el tiempo que tarde en ejecutarse $F$, esto es,
+	$T = 1 + T(P_1 ) + T(P_2 ) + \dots + T(P_n ) + T(F)$. No contabilizamos la copia de losargumentos a la pila de ejecución, salvo que se trate de estructuras complejas(registros o vectores) que se pasan por valor. En este caso contabilizaremostantas OE como valores simples contenga la estructura. El paso de parámetrospor referencia, por tratarse simplemente de punteros, no contabiliza tampoco.
+	\item El tiempo de ejecución de las llamadas a procedimientos recursivos va a darlugar a ecuaciones en recurrencia, que veremos posteriormente no en esta guía.
+	\item También es necesario tener en cuenta, cuando el compilador las incorpore, lasoptimizaciones del código y la forma de evaluación de las expresiones, quepueden ocasionar \emph{cortocircuitos} o realizarse de forma \emph{perezosa} (lazy). En elpresente trabajo supondremos que no se realizan optimizaciones, que existe elcortocircuito y que no existe evaluación perezosa.
+\end{enumerate}
+
+\subsection{Clases o tipos de complejidades}
+
+A continuciación una lista de las complejidades mas comunes que nos podemos encontrar en el diseño de algoritmos:
+
+\begin{itemize}
+	\item O($1$): Complejidad \textbf{constante} que significa que el algoritmo no de depende del tamaño de la entrada. Por lo general esta complejidad se ve en algoritmos con fórmula que directamente calcula la respuesta.
+	\item O($\log N$): Complejidad \textbf{logarítmica} que implica que el algoritmo en el próximo o iteración descarta la mitad del tamaño de la entrada del paso o iteracción actual. Ejemplo de esto es la búsqueda binaria.
+	\item O($\sqrt{N}$): Una complejidad \textbf{raiz cuadrádica} es mas lenta que una O($\log N$) pero más rápida que O($N$). Una especial propiedad de la raíz cuadrada es que $\sqrt{N}=N/\sqrt{N}$, entonces la raíz de $\sqrt{N}$ miente, en algunos casos es la mitad del tamaño de la entrada.
+	\item O($N$): Una complejidad \textbf{linear} en un algoritmo implica que se tuvo que recorrer todos los elementos de la entrada para dar la respuesta.
+	\item O($N \log N$): Esta complejidad indica que el algoritmo ordeno la entrada porque es la complejidad de los algoritmos de ordenamiento eficientes. Otra posibilidad es que el algoritmo utiliza alguna estructura de datos que por cada operación tiene una complejidad de O($\log N$).
+	\item O($N^2$): Complejidad \textbf{cuadrática} en un algoritmo a menudo indica que este presenta dos ciclo anidado como pudiera ser el caso de generar todos los pares de las entradas. 
+	\item O($N^3$): Complejidad \textbf{cúbica} en un algoritmo a menudo indica que este presenta tres ciclo anidado como es el caso del algoritmo Floyd-Warshall
+	\item O($2^N$): Esta complejidad indica a menudo que el algoritmo itera sobre todos los subconjuntos de los elementos de la entrada
+	\item O($N!$): Esta complejidad indica a menudo que el algoritmo itera sobre todas las permutaciones  de los elementos de la entrada
+\end{itemize}
+
+Un algoritmo tiene complejidad polinomial si se expresa como O($n^k$) donde $k$ es una constante. Todas las complejidades vistas anteriormente son polinomiales excepto O($2^N$) y O($N!$). Lo que sucede es que en la práctica el valor de $k$ es usualemente pequeño lo que hace que esas complejidades polinomiales para un algoritmo sean eficientes.
+
+

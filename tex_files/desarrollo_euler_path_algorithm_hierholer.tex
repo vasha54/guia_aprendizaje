@@ -1,0 +1,54 @@
+El artículo de 1873 de Hierholzer proporciona un método diferente para encontrar ciclos de Euler que sea más eficiente que el algoritmo de Fleury:
+
+\begin{itemize}
+	\item Elija cualquier vértice de inicio $v$ , y siga un rastro de aristas desde ese vértice hasta volver a $v$ . No es posible atascarse en ningún vértice que no sea $v$ , porque el grado par de todos los vértices asegura que, cuando el camino entre en otro vértice $w$ , debe haber una arista sin usar que salga de $w$ . El recorrido así formado es un recorrido cerrado, pero puede que no cubra todos los vértices y aristas del grafo inicial.
+	\item Siempre que exista un vértice $u$ que pertenezca al recorrido actual pero que tenga aristas adyacentes que no formen parte del recorrido, se inicia otro recorrido desde $u$ , siguiendo aristas no utilizadas hasta volver a $u$ , y se une el recorrido así formado al anterior recorrido.
+	\item Dado que asumimos que el grafo original está conectado , repetir el paso anterior agotará todos las aristas del grafo.
+\end{itemize}
+
+Mediante el uso de una estructura de datos como una lista doblemente enlazada para mantener el conjunto de aristas no utilizadas que inciden en cada vértice, para mantener la lista de vértices en el recorrido actual que tienen aristas no utilizadas y para mantener el recorrido en sí, las operaciones individuales del algoritmo (encontrar bordes no utilizados que salen de cada vértice, encontrar un nuevo vértice de inicio para un recorrido y conectar dos recorridos que comparten un vértice) se puede realizar en tiempo constante cada uno, por lo que el algoritmo general toma un tiempo lineal, O($E$).
+
+Este algoritmo también se puede implementar con un deque. Debido a que solo es posible atascarse cuando el deque representa un recorrido cerrado, se debe rotar el deque eliminando los bordes de la cola y agregándolos a la cabeza hasta que se despegue, y luego continuar hasta que se tengan en cuenta todos los bordes. Esto también lleva un tiempo lineal, ya que el número de rotaciones realizadas nunca es mayor que  (Intuitivamente, cualquier mala arista se mueve a la cabeza, mientras que las aristas nuevas se agregan a la cola)
+
+Para encontrar el camino euleriano/ciclo euleriano, podemos usar la siguiente estrategia: encontramos todos los ciclos simples y los combinamos en uno: este será el ciclo euleriano. Si el grafo es tal que la ruta euleriana no es un ciclo, agregue la arista que falta, encuentre el ciclo euleriano y luego elimine la arista adicional.
+
+Buscar todos los ciclos y combinarlos se puede hacer con un procedimiento recursivo simple:
+
+\begin{lstlisting}[language=C++]
+procedimiento FindEulerPath(V)
+  1. iterar a traves de todas las aristas que salen del vertice V;
+	eliminar esta arista del grafo,
+	y llame a FindEulerPath desde el segundo extremo de esta arista;
+  2. agregue el vertice V a la respuesta.
+	
+\end{lstlisting}
+
+Pero podemos escribir el mismo algoritmo en la versión no recursiva:
+
+\begin{lstlisting}[language=C++]
+pila St;
+ponga el vertice inicial en St;
+hasta que St este vacio
+  sea V el valor en la parte superior de St;
+  si grado(V) = 0, entonces
+    suma V a la respuesta;
+    quitar V de la parte superior de St;
+  sino
+    encuentre cualquier arista que salga de V;
+    eliminarla del grafo;
+    ponga el segundo extremo de esta arista en St;
+\end{lstlisting}
+
+Es fácil comprobar la equivalencia de estas dos formas del algoritmo. Sin embargo, la segunda forma es obviamente más rápida y el código será mucho más eficiente.
+
+Primero, el función verifica el grado de los vértices: si no hay vértices con un grado impar, entonces 
+el grafo tiene un ciclo de Euler, si hay $2$ vértices con un grado impar, entonces en el grafo solo hay 
+un camino de Euler (pero no un ciclo de Euler), si hay más de $2$ tales vértices, entonces en el grafo 
+no hay ciclo de Euler o camino de Euler. Para encontrar el camino de Euler (no un ciclo), hagamos esto: 
+si $V1$ y $V2$ son dos vértices de grado impar, luego solo agregue una arista $(V1,V2)$, en el grafo 
+resultante encontramos el ciclo de Euler (obviamente existirá), y luego eliminamos la arista 
+\emph{ficticia} $(V1, V2)$ de la respuesta Buscaremos el ciclo de Euler exactamente como se describe 
+arriba (versión no recursiva), y al mismo tiempo al final de este algoritmo verificaremos si el grafo 
+estaba conectado o no (si el grafo no estaba conectado, entonces al final del algoritmo algunas aristas 
+permanecerán en el grafo, y en este caso necesitamos imprimir $-1$). Finalmente, la función tiene en 
+cuenta que pueden existir vértices aislados en el grafo.

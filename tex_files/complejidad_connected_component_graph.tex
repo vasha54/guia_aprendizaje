@@ -1,0 +1,13 @@
+Como sabemos la complejidad del DFS es igual {\em O(V + E)} siendo {\em V} y {\em E} los nodos y aristas respectivamente del grafo, y como es llamado dentro de un ciclo que se ejecuta {\em n} la complejidad es igual a {\em O( n(V+E))} donde {\em n} es igual a {\em V}. Por lo que la complejidad del algoritmo es {\em O( N(V+E))}. Pero no se alarmen por esta complejidad, veremos que no es alta como parece.
+
+Vamos analizar los dos casos extremos:
+
+\begin{itemize}
+	\item {\bf Un grafo con {\em V} vértices con una sola componente conexa:} En un grafo con una sola componente conexa el DFS solo se ejecutará en la primera iteración del ciclo y en el resto de la iteraciones no será así porque ya los nodos estarán visitados y el tiempo será constante {\em O(1)}. Por lo que para ese caso la complejidad es {\em O(V+E)}.
+	
+	\item {\bf Un grafo con {\em V} vértices con {\em V} componentes conexa:} En un grafo con {\em V} vértices y con {\em V} componentes conexa significa que es un grafo sin aristas esto significa que realizar un DFS sobre cualquier nodo de ese grafo va ser en tiempo constante O{\em O(1)} porque es un solo nodo de esa supuesta componente conexas que no tiene arista y dada que este procedimiento se va repetir para los {\em V} vértices del grafo la complejidad para este caso es {\em O(V)}.
+	
+\end{itemize}
+
+Cualquier otro caso va oscilar en este rango definido por estos dos casos explicados anteriormenente. Es por eso que en el peor de los casos este algoritmo va tener una complejidad
+de {\em O(V+E)}.

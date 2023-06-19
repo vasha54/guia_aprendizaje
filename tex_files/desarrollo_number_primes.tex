@@ -1,0 +1,33 @@
+\subsection{Saber si un número es primo o no}
+
+En lo primero que vamos analizar es como demostra si dado un número $N$ este es primo o no. Partiendo de la misma definción se podría idear un algoritmo que itere por todos los numeros naturales en el rango de $2$ a $N-1$ incluyendo los extremos del intervalo si en dicho rango se encuentra al menos un número $X$ que sea divisor exacto de $N$ entonces se podría decir que $N$ no es primo mientras si despues de iterar por todo el rango no se encuentra ningún valor que sea divisor exacto entonces se puede tener la seguridad de que $N$ es primo.
+
+Ahora podemos mejorar o acotar el rango de búsqueda de los supuestos divisores exacto de $N$. Una primera idea pudiera ser hasta $N/2$ ya que cualquier par $(a,b)$ tal que $a * b == N$ unos de esos dos valores va ser menor o igual a $N/2$ mientras el otro va ser mayor. Pero pudieramos acotar aún mas ese rango ?. Pues si lo podemos acotar hasta $\sqrt{N}$ de esta forma si $N$ no tiene divisores exacto en el rango de $2$ a $\sqrt{N}$ podemos afirmar con seguridad  que $N$ es primo.
+
+ Lo anterior nos permite tener un algoritmo para chequear si un número no mayor que $10^{12}$ sea primo. Pero que hacer cuando el número es mayor ?.
+ 
+\subsection{Test de primalidad}   
+
+La cuestión de la determinación de si un número $N$ dado es primo es conocida como el problema de la primalidad. Un test de primalidad (o chequeo de primalidad) es un algoritmo que, dado un número de entrada {\em n}, no consigue verificar la hipótesis de un teorema cuya conclusión es que {\em n} es compuesto.
+
+Esto es, un test de primalidad sólo conjetura que \emph{ante la falta de certificación sobre la hipótesis de que {\em n} es compuesto podemos tener cierta confianza en que se trata de un número primo}. Esta definición supone un grado menor de confianza que lo que se denomina prueba de primalidad (o test verdadero de primalidad), que ofrece una seguridad matemática al respecto.
+
+\subsubsection{Test de primalidad de Miller-Rabin}
+\input{tex_files/test_primalidad_miller_rabin.tex}
+
+\subsubsection{Prueba de primalidad de Fermat}
+\input{tex_files/test_primalidad_fermat}
+
+\subsection{Calcular todos los primos hasta $N$}
+La idea es lograr calcular todos los primos comprendidos en el rango de 1 a $N$, para lograr esto vamos a ver algunos algoritmos de como lograrlo
+
+\subsubsection{Cibra de Eratóstenes}
+\input{tex_files/criba_erastones}
+
+\subsubsection{Cibra de Atkin}
+\input{tex_files/criba_aktin}
+
+\subsubsection{Cibra de lineal}
+\input{tex_files/criba_lineal}
+
+

@@ -1,0 +1,11 @@
+Para calcular el tiempo de ejecución del resto de sentencias iterativas (FOR,
+REPEAT, LOOP) basta expresarlas como un bucle WHILE. Por tanto una vez expresado el for como while para calcular la complejidad basta con recordar que la misma se calcula como:
+
+El tiempo de ejecución de un bucle de sentencias WHILE C DO S END; es T = T(C) + (no iteraciones)*(T(S) + T(C)). Obsérvese que tanto T(C) como T(S)
+pueden variar en cada iteración, y por tanto habrá que tenerlo en cuenta para su
+cálculo. Donde:
+
+\begin{enumerate}
+	\item \textbf{T(C) :} Es la complejidad de la expresión de control que se define dentro de los parentisís del while.
+	\item \textbf{T(S) :} Es la complejidad del bloque de instrucciones que conforman las instrcciones que serán ejecutadas si la expresión de control del while es verdadera. 
+\end{enumerate}

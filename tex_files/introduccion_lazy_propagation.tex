@@ -1,0 +1,6 @@
+Cuando se abordaron el trabajo con árbol de rango (\emph{Range Tree}) siempre discutieron con la operación de consultas de modificación que solo afectaron a un solo elemento en el arreglo. Pero que hacer cuando la operación de consulta de modificación ya no afecta solamente a un elemento sino a varios elementos del arreglo definidos por un rango $[l \dots r]$. 
+
+Una primera idea trivial sería llamar a la función de actualización del árbol de rango por cada posición 
+dentro del rango $[l \dots r]$ pero esto sería demasiado costoso en tiempo. Sin embargo, el árbol de 
+rango permite aplicar consultas de modificación a un rango completo de elementos contiguos y realizar la 
+consulta al mismo tiempo $O(\log n)$ dicha modificación se conoce como propagación peresoza (\emph{lazy propagation}).

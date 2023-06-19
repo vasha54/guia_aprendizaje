@@ -1,0 +1,126 @@
+\subsection{C++}
+
+\subsubsection{Saber si dos numeros son comprimos}
+\begin{lstlisting}[language=C++]
+// En versiones modernas de C++ puede utilizar la funcion __gcd(a,b)
+int gcd(int a,int b){
+   while (b > 0){
+      a=a%b; a^=b; 
+      b^=a;  a^=b; 
+   } 
+   return a;
+}
+
+bool isCoprime(int a,int b){
+   return 1==gcd(a,b)
+}
+\end{lstlisting}
+
+\subsubsection{Calcular la cantidad de comprimos de N menores que este}
+
+\begin{lstlisting}[language=C++]
+int phi(int n) {
+   int result = n;
+   for (int i = 2; i * i <= n; i++) {
+      if(n % i == 0) {
+         while (n % i == 0) n /= i;
+         result -= result / i;
+      }
+   }
+   if (n > 1) result -= result / n;
+   return result;
+}
+\end{lstlisting}
+
+\subsubsection{Calcular la cantidad de comprimos de todos los valores hasta N}
+
+\begin{lstlisting}[language=C++]
+	
+// Idea de la criba de Eratostenes
+vector<int> phi_1_to_n(int n) {
+   vector<int> phi(n + 1);
+   for (int i = 0; i <= n; i++) phi[i] = i;
+   for (int i = 2; i <= n; i++) {
+      if (phi[i] == i) {
+         for (int j = i; j <= n; j += i)
+            phi[j] -= phi[j] / i;
+      }
+   }
+   return phi;
+}
+
+// Idea suma del divisor
+vector<int> phi_1_to_n(int n) {
+   vector<int> phi(n + 1);
+   phi[0] = 0;
+   phi[1] = 1;
+   for (int i = 2; i <= n; i++) phi[i] = i - 1;
+   for (int i = 2; i <= n; i++)
+      for (int j = 2 * i; j <= n; j += i)
+         phi[j] -= phi[i];
+   return phi
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Saber si dos numeros son comprimos}
+
+\begin{lstlisting}[language=Java]
+public int gcd(int a,int b){
+   while (b > 0){
+      a=a%b; a^=b; 
+      b^=a;  a^=b; 
+   } 
+   return a;
+}
+
+public boolean isCoprime(int a,int b){
+   return 1==gcd(a,b)
+}
+\end{lstlisting}
+
+\subsubsection{Calcular la cantidad de comprimos de N menores que este}
+
+\begin{lstlisting}[language=Java]
+public int phi(int n) {
+   int result = n;
+   for (int i = 2; i * i <= n; i++) {
+      if(n % i == 0) {
+         while (n % i == 0) n /= i;
+         result -= result / i;
+      }
+   }
+   if (n > 1) result -= result / n;
+   return result;
+}
+\end{lstlisting}
+
+\subsubsection{Calcular la cantidad de comprimos de todos los valores hasta N}
+
+\begin{lstlisting}[language=Java]
+// Idea de la criba de Eratostenes
+public int [] phi_1_to_n(int n) {
+   int [] phi =new int [n + 1];
+   for (int i = 0; i <= n; i++) phi[i] = i;
+   for (int i = 2; i <= n; i++) {
+      if (phi[i] == i) {
+         for (int j = i; j <= n; j += i)
+            phi[j] -= phi[j] / i;
+      }
+   }
+   return phi;
+}
+
+// Idea suma del divisor
+public int [] phi_1_to_n(int n) {
+   int [] phi =new int [n + 1];
+   phi[0] = 0;
+   phi[1] = 1;
+   for (int i = 2; i <= n; i++) phi[i] = i - 1;
+   for (int i = 2; i <= n; i++)
+      for (int j = 2 * i; j <= n; j += i)
+         phi[j] -= phi[i];
+   return phi
+}
+\end{lstlisting}

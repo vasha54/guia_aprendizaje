@@ -1,0 +1,40 @@
+\begin{lstlisting}[language=Java]
+private class Graph {
+   int nnodes;
+   List<Integer>[] adj;
+   List<List<Integer>> components;
+   int[] I;
+   Stack<Integer> S, B;
+	
+   public Graph(int nnodes) {
+      adj = new List[nnodes]; this.nnodes =nnodes;
+      for (int i = 0; i < nnodes; i++) adj[i] = new ArrayList<>();
+   }
+	
+   public List<List<Integer>> scc() {
+      components = new ArrayList<>(); 
+      int n = adj.length; I = new int[n];
+      S = new Stack<Integer>(); B = new Stack<Integer>();
+      for (int u = 0; u < n; ++u) if (I[u] == 0) dfs(u);
+      return components;
+   }
+	
+   private void dfs(int u) {
+      B.add(I[u] = S.size()); S.add(u);
+      for (int v: adj[u]) {
+         if (I[v]==0) dfs(v);
+         else while (I[v] < B.peek()) B.pop();
+      }
+      if (I[u] == B.peek()) {
+         components.add(new ArrayList<Integer>());
+         B.pop();
+         for (; I[u] < S.size(); S.pop()) {
+            components.get(components.size()-1).add(S.peek());
+            I[S.peek()] = this.nnodes + components.size();
+         }
+      }
+   }
+	
+   public void addEdge(int i, int j) { adj[i].add(j);}
+}
+\end{lstlisting}

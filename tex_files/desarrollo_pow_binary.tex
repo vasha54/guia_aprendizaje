@@ -1,0 +1,11 @@
+La generalización más obvia: los restos de un determinado módulo (obviamente, la asociatividad se conserva). Lo siguiente en la \emph{popularidad} es una generalización del producto matricial (es una asociatividad bien conocida).
+
+Tenga en cuenta que para cualquier número de una identidad obvia factible de un número par (que se deduce de la asociatividad de la multiplicación):
+
+$a^{n}=(a^{n/2})^{2}=a^{n/2} *a^{n/2} $
+
+Es el principal método de exponenciación binaria. De hecho, incluso para n Hemos demostrado cómo, después de realizar solo una operación de multiplicación, podemos reducir el problema a menos de la mitad de la potencia. Queda por entender qué hacer si el grado de n es impar. Aquí lo que hacemos es muy simple: ve en la medida n-1 Eso tendrá incluso:
+
+$a^{n}=a^{n-1}*a$
+
+Entonces, en realidad encontramos una fórmula recursiva: el grado de n que vamos, si es igual a n/2 y de lo contrario, a n-1. Está claro que no habrá más transiciones 2 $\log( n)$ antes de que lleguemos a n = 0 (basado en la fórmula recursiva).

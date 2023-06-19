@@ -1,0 +1,7 @@
+\subsection{Grafos densos}
+
+La versión del algoritmo de Prim para este tipo de grafos tendría una complejidad $O(n^2)$.
+
+\subsection{Grafos dispersos}
+
+Como consideramos que solo necesitamos actualizar $O(m)$ veces en total, y realizar $O(n)$ busca el borde mínimo, entonces la complejidad total será $O(m \log n)$. Para grafos dispersos esto es mejor que el algoritmo anterior, pero para grafos densos será más lento.

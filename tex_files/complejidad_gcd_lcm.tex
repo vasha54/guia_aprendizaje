@@ -1,0 +1,9 @@
+El tiempo de ejecución del algoritmo de Euclides del GCD se estima mediante el teorema de Lamé, que establece una conexión sorprendente entre el algoritmo de Euclides y la sucesión de Fibonacci:
+
+Si $a > b \geq 1$ y $b < F_n$ para algunos $n$, el algoritmo de Euclides realiza como máximo $n-2$ llamadas recursivas.
+
+Además, es posible demostrar que el límite superior de este teorema es óptimo. Cuando $a = F_n$ y $b = F_{n-1}$, $gcd(a, b)$ funcionará exactamente $n-2$ llamadas recursivas. En otras palabras, los números de Fibonacci consecutivos son la entrada del peor de los casos para el algoritmo de Euclides.
+
+Dado que los números de Fibonacci crecen exponencialmente, obtenemos que el algoritmo de Euclides funciona en $O(\log \min(a, b))$.
+
+Otra forma de estimar la complejidad es notar que $a \bmod b$ para el caso $a \geq b$ Por lo menos $2$ veces menor que $a$, por lo que el número mayor se reduce al menos a la mitad en cada iteración del algoritmo.

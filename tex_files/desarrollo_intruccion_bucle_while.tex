@@ -1,0 +1,21 @@
+Esta es una de las instrucciones de bucles más simples de comprender. Como su
+significado en inglés lo indica (mientras), la repetición del bloque de instrucciones asociado se realizará "mientras" se cumple una condición determinada. Obviamente, es muy importante que, dentro del bloque de instrucciones, exista la posibilidad de que
+esa condición varíe y deje de cumplirse; de lo contrario, entraríamos en un ciclo de repetición infinito. La forma general es como sigue:
+
+\begin{lstlisting}[language=C++]
+while (expresion_de_control){
+   sentencia;
+}
+	
+\end{lstlisting}
+
+Se evalúa \textbf{expresion\_de\_control} y si el resultado es \textbf{false} se salta sentencia y
+se prosigue la ejecución. Si el resultado es \textbf{true} se ejecuta sentencia y se vuelve a evaluar
+\textbf{expresion\_de\_control} (evidentemente alguna variable de las que intervienen en
+\textbf{expresion\_de\_control} habrá tenido que ser modificada, pues si no el bucle continuaría
+indefinidamente, se produciría lo que se conoce como un ciclo infinito). La ejecución de sentencia prosigue hasta que \textbf{expresion\_de\_control} se
+hace \textbf{false}, en cuyo caso la ejecución continúa en la línea siguiente a sentencia. En otras
+palabras, sentencia se ejecuta repetidamente mientras \textbf{expresion\_de\_control} sea \textbf{true}, y se
+deja de ejecutar cuando \textbf{expresion\_de\_control} se hace false. Obsérvese que en este caso el
+control para decidir si se sale o no del bucle está antes de sentencia, por lo que es posible que
+sentencia no se llegue a ejecutar ni una sola vez.

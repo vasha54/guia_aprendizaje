@@ -1,0 +1,110 @@
+\subsection{Primitivos de C++}
+\begin{lstlisting}[language=C++]
+#include <iostream.h>
+#include <math.h>
+using namespace std ;
+int main(){
+   cout << "Hola mundo"; // imprimir mensaje (en la pantalla)
+   char nombre [80];
+   cout << " Entre su nombre : " ;
+   cin >> nombre ;
+   cout << " Hola , " << nombre ;
+   int A,B,C;
+   cin >> A >> B >> C ;
+   // Ejemplo con una unica linea, se muestra el uso de cout y endl
+   cout << "Bienvenido. Soy un programa. Estoy en una linea decodigo ." <<endl ;
+   // Ejemplo con una unica linea de codigo que se puede fraccionar
+   // mediante el uso de '<<'
+   cout << "Ahora "
+   << "estoy fraccionado en el codigo , pero en la consola me
+   muestro como una unica frase ."
+   << endl ;
+   
+   // Uso de un codigo largo, que cuesta leer para un programador,
+   // y que se ejecutara sin problemas.
+   // *** No se recomienda hacer lineas de esta manera,
+   // esta forma de programar no es apropiada ***
+   cout << " Un gran texto puede ocupar muchas lineas . "
+   << endl
+   << " Pero eso no frena al programador a que todo se pueda
+   poner en una unica linea de codigo y que "
+   << endl
+   << " el programa , al ejecutarse , lo situe como el
+   programador quiso "
+   << endl ;
+   
+   double raiz2 = sqrt( 2.0 ); // calcula la raiz cuadrada de 2
+   int posiciones; // precision, varia de 0 a 9
+   cout << "Raiz cuadrada de 2 con precisiones de 0 a 9." << endl
+   << "Precision establecida mediante la funcion miembro precision "
+   << "de ios_base:" << endl;
+   cout << fixed; // usa el formato de punto fijo
+   // muestra la raiz cuadrada usando la funcion precision de ios_base
+   for ( posiciones = 0; posiciones <= 9; posiciones++ ){
+   	cout.precision( posiciones );
+   	cout << raiz2 << endl;
+   } // fin de for
+
+
+   int valorAnchura = 4;
+   char enunciado[ 10 ];
+   cout << "Escriba un enunciado:" << endl;
+   cin.width( 5 ); // introduce solo 5 caracteres de enunciado
+   // establece la anchura de campo y despues muestra los caracteres con base en esa anchura
+   while ( cin >> enunciado ){
+   	cout.width( valorAnchura++ );
+   	cout << enunciado << endl;
+   	cin.width( 5 ); // introduce 5 caracteres mas de enunciado
+   } // fin de while
+   return 0;
+}	
+\end{lstlisting}
+
+
+\subsection{Primitivos de C}
+\begin{lstlisting}[language=C]
+#include <cstdio>
+#define PI 3.14159
+using namespace std ;
+int main (){
+   int numero = 5;
+   int coste = 50;
+   // No olvidar que '\n' es fin de linea
+   printf("Los %d jovenes tomaron %d helados .\ n ", numero, numero *2);
+   printf("El valor de PI es %f.\n");
+   printf("Esta es una linea sin variables.") ;
+   printf("%c %d ",'$ ',coste) ;
+   
+   printf("Modificador'-'\n");
+   printf("/%-10d/\n",365);
+   printf("/%-6d/\n",365);
+   printf("/%-2d/",365);
+   printf("en este caso no sirve de nada el modificador\n");
+   printf("Modificador 'numero'\n");
+   printf("/%2d/",365);
+   printf("en este caso tampoco hace efecto el modificador\n");
+   printf("/%6d/\n",365);
+   printf("/%10d/\n" , 365);
+   printf("Modificador'.numero'\n");
+   printf("/%.1f/\n",365.897) ;
+   printf("/%.6f/\n",365.897) ;
+   printf("/%.3s/\n","AsDfGhJkL") ;
+   printf("/%.100s/","AsDfGhJkL");
+   printf("No se rellena con 0's como en los ejemplos anteriores \n");
+   
+   int edad ;
+   char nombre [30];
+   printf("Ingrese su edad y nombre\n") ;
+   scanf("%d%s",&edad,nombre);//Note que & no es necesario en nombre
+   printf("Nombre :%s , Edad :%d",nombre,edad);
+   
+   putchar('a');
+   
+   char c = getchar();
+   
+   scanf("%[^\n]", nombre); // Leer todo hasta un salto de linea
+   
+   return 0;
+}
+\end{lstlisting}
+

@@ -1,0 +1,16 @@
+Entre las aplicaciones que podemos encontrar al \emph{Trie} está la sustitución de otras estructuras de datos:
+
+\begin{itemize}
+	\item \textbf{Como representación de diccionarios:}  Una aplicación frecuente de los \emph{Tries} es el almacenamiento de diccionarios, como los que se encuentran en los teléfonos móviles. Estas aplicaciones se aprovechan de la capacidad de los \emph{Tries} para hacer búsquedas, inserciones y borrados rápidos. Sin embargo, si sólo se necesita el almacenamiento de las palabras (p.ej. no se necesita almacenar información auxiliar de las palabras del diccionario) un autómata finito determinista acíclico mínimo usa menos espacio que un \emph{Trie}. Autocompletar (o completar palabras) es una función en la que una aplicación predice el resto de una palabra que el usuario está escribiendo.
+	
+	\item \textbf{Corrector ortográfico:} El corrector ortográfico marca las palabras de un documento que pueden no estar escritas correctamente. Los correctores ortográficos se usan comúnmente en procesadores de texto, clientes de correo electrónico, motores de búsqueda, etc.
+	
+	\item \textbf{Como reemplazo de otras estructuras de datos:} \emph{Trie} tiene varias ventajas sobre árbol de búsqueda binaria. También puede reemplazar una tabla hash ya que la búsqueda es generalmente más rápida en \emph{Trie}, incluso en el peor de los casos. Además, no hay colisiones de diferentes claves en un \emph{Trie}, y un \emph{Trie} puede proporcionar un orden alfabético de las entradas por clave.
+	
+	\item \textbf{Ordenación lexicográfico de un juego de llaves:} Ordenación lexicográfico de un juego de llaves se puede lograr con un algoritmo simple basado en \emph{Trie}. Inicialmente insertamos todas las claves en un \emph{Trie} y luego imprimimos todas las claves en el \emph{Trie} realizando recorrido de pedido anticipado (primer recorrido en profundidad), lo que da como resultado un orden lexicográficamente creciente.
+	
+	\item \textbf{Coincidencia de prefijo más largo:}Los enrutadores utilizan el prefijo más largo algoritmo de coincidencia en redes de protocolo de Internet (IP) para seleccionar una entrada de una tabla de reenvío.
+\end{itemize}
+
+
+Es muy útil para conseguir búsquedas eficientes en repositorios de datos muy voluminosos. La forma en la que se almacena la información permite hacer búsquedas eficientes de cadenas que comparten prefijos. También son útiles en la implementación de algoritmos de correspondencia aproximada, como los usados en el software de corrección ortográfica.  

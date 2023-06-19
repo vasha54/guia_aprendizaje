@@ -1,0 +1,68 @@
+\subsection{Entrada simple}
+
+Es la entrada mas sencilla que existe donde tu algoritmo deberá solo recibir una vez una determinada entrada y dar la solución a esa entrada.
+
+\textbf{Ejemplo}
+
+\emph{La primera y única línea de entrada contiene dos números enteros aa y bb, la cantidad de hijos y de hijas que tiene el ogro Ork.(\href{https://dmoj.uclv.edu.cu/problem/ogroork}{DMOJ - El Ogro Ork})}
+
+Para ser capaces de leer los datos en una entrada con este formato basta con leer los datos en el orden explicado en el formato de entrada.
+
+\subsection{Entrada basado en casos de pruebas}
+
+Quizás sea el tipo de entrada más común que existe en los problemas o ejercicios de concurso. Se caracteriza porque siempre el primer dato de entrada es un entero que va indicar cuantas instancias diferentes del problema tu algoritmo debe ser capaz de resolver. Acto y seguido viene las entradas de valores para cada una de las instancias del problema debemos ser capaz de resolver con el mismo algoritmo. 
+
+\textbf{Ejemplo}
+
+\emph{Una línea que contiene el número de casos T (1 <= T <= 100). Cada una de las siguientes líneas T contendrá el tamaño del lado (1 <= L <= 100) del cuadrado.(\href{https://dmoj.uclv.edu.cu/problem/calculandoareas}{DMOJ - Calculando áreas})}
+
+La solución a este tipo de entrada es bastante sencilla solo debemos auxiliarnos de una estructura de control ciclica o de bucle dentro de la cual vamos a desarrollar la entrada de datos de una entrada simple para una instancia del problema aplicamos el algoritmo e imprimimos solución. Antes de caer en la estructura repetitiva debemos leer el valor que indicará la cantidad de instancias diferentes del problema.
+
+\begin{lstlisting}[language=C++]
+Leer cantidad de casos de pruebas
+Mientras la cantidad de casos de prueba sea mayor que 0:
+   Leer entrada para una instancia del problema
+   Algoritmo solucion
+   Imprimir solucion para la instancia del problema
+   Decrementar la cantidad de casos de prueba
+
+\end{lstlisting}
+
+\subsection{Entrada hasta determinada condición}
+
+Similar al caso anterior nos van a proporcionar varias entradas a para diferentes instancias del problema aqui la diferencia radica en que no nos dicen previamente cuantas instancias del problema sino que cuando la entrada para una determinada instancia del problema cumpla con una determinada condición siginifica que se termino la entrada y nuestro programa debe detenerse.
+
+\textbf{Ejemplo}
+
+\emph{La entrada contiene uno o más casos de prueba. Cada caso consiste de un entero N par con 6<=N<1000000. La entrada temina con un 0.(\href{https://dmoj.uclv.edu.cu/problem/goldbach}{DMOJ - Conjeturas de Goldbach})}
+
+La solución a este tipo de entrada es parecida a la anterior con la diferencia que voy a estar leyendo datos de entrada para una instancia del problema mientras dicha entrada cumpla no determinada condicion. 
+
+\begin{lstlisting}[language=C++]
+Leer entrada para una instancia del problema
+Mientras la entrada leida cumpla con determinada condicion:
+   Algoritmo solucion
+   Imprimir solucion para la instancia del problema
+   Leer entrada para una instancia del problema
+	
+\end{lstlisting}
+
+\subsection{Entrada hasta fin de fichero}
+
+Similar al caso anterior nos van a proporcionar varias entradas para diferentes instancias del problema aqui la diferencia radica en que no existe una determinada condición en la entrada de datos de una instancia del problema que cuando cumpla siginifica que se termino la entrada y nuestro programa debe detenerse. En nuestro caso el programa debe terminar cuando no exista mas datos de entradas.
+
+\textbf{Ejemplo}
+
+\emph{La entrada tiene varios casos de prueba:\\La primera línea de cada caso de prueba contiene dos números enteros N ($1\leq N\leq 1000000$) y M ($1\leq M\leq 10000$), la cantidad de elementos de la secuencia y el número de consultas respectivamente. M líneas siguen con consultas de uno de los dos tipos explicados.\begin{itemize}
+		\item En caso de que sea una consulta de tipo 1, la línea será de la forma 0\ x\ y\ k, donde x,y,k son enteros,($1\leq x\leq y\leq N$,$1\leq k\leq 10^{9}$).
+		\item En caso de que sea una consulta de tipo 2, la línea será de la forma y1\ x\ y, donde x,y son enteros, ($1\leq x\leq y\leq N$).
+	\end{itemize}(\href{https://dmoj.uclv.edu.cu/problem/rangem}{DMOJ - Multiplicación en Rango})}
+
+Existen multiples ejercicios donde no se especifican el fin de la entrada de datos. Este tipo de ejercicios son los que se conocen que su entrada de datos es hasta fin de fichero. Para solucionar este problema vamos auxiliarnos en que las funciones de captura de datos cuando son invocadas devuelven sin pudieron o no leer información. Conociendo lo anterior podemos elaborar la siguiente solución.
+
+\begin{lstlisting}[language=C++]
+Mientras se pueda leer el primer dato de la entrada de una instancia del problema:
+   Leer el resto de los datos de entradas de la instancia del problema
+   Algoritmo solucion
+   Imprimir solucion para la instancia del problema
+\end{lstlisting}

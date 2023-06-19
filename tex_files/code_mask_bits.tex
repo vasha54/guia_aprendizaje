@@ -1,0 +1,50 @@
+\subsection{C++}
+\lstset{language=C++, breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[language=C++]
+	vector<char> s('a','b','c');
+	int n= s.size();
+	for (int i=0; i< (1<<n); i++)
+	{
+		int number=i;
+		vector<char> k;
+		for (int e=0; e< n; e++)
+		{
+			if( number & (1<< e) )
+			{
+				k.push_back(s[e]);
+			}
+		}
+		/*Ya  k tiene los elementos que conforma el subconjunto i-nesimo*/
+		cout<< "El sub-conjunto "<<e+1<<"es:"<<endl;
+		
+		cout<<"{ ";
+		for(int h=0; h<k.size(); h++)
+		    cout<<k[h]<<" ";	
+		cout<<"}"<<endl;	
+	}
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=C++]
+	char [] s= {'a','b','c'};
+	int n= s.length;
+	for (int i=0; i< (1<<n); i++)
+	{
+		int number=i;
+		ArrayList<Character> k =new ArrayList<Character>() ;
+		for (int e=0; e< n; e++)
+		{
+			if( (number & (1<< e))!=0 )
+			{
+				k.add(s[e]);
+			}
+		}
+		/*Ya  k tiene los elementos que conforma el subconjunto i-nesimo*/
+		System.out.println("El sub-conjunto "+(e+1)+"es:");
+		
+		System.out.print("{ ");
+		for(int h=0; h<k.size(); h++)
+			System.out.print(k.get(h)+" ");	
+		System.out.println("}");	
+	}
+\end{lstlisting}

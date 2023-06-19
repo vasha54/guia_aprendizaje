@@ -1,0 +1,150 @@
+Veamos la implementación de este algoritmo en ambos lenguajes
+
+\subsection{C++}
+
+\begin{lstlisting}[language=C++]
+#include <vector>
+#include <algorithm>
+#include <queue>
+#include <stack>
+#define MAX_N 100001
+#define INF 987654321
+using namespace std;
+
+int nnodes;
+
+struct Node{
+   int dist;
+   vector<int> adj;
+   vector<int> weight;
+};
+Node graf[MAX_N];
+bool mark[MAX_N];
+
+
+struct pq_entry{
+   int node, dist;
+   bool operator <(const pq_entry &a) const{
+      if (dist != a.dist) return (dist > a.dist);
+         return (node > a.node);
+   }
+};
+
+inline void dijkstra(int source){
+   priority_queue<pq_entry> pq;
+   pq_entry P;
+   for (int i=0;i<nnodes;i++){
+      if (i == source){
+         graf[i].dist = 0;
+         P.node = i;
+         P.dist = 0;
+         pq.push(P);
+      }
+      else graf[i].dist = INF;
+   }
+   while (!pq.empty()){
+      pq_entry curr = pq.top();
+      pq.pop();
+      int nod = curr.node;
+      int dis = curr.dist;
+      for(int i=0;i<graf[nod].adj.size();i++){
+         if(!mark[graf[nod].adj[i]]){
+            int nextNode = graf[nod].adj[i];
+            if(dis + graf[nod].weight[i] < graf[nextNode].dist){
+               graf[nextNode].dist = dis + graf[nod].weight[i];
+               P.node = nextNode;
+               P.dist = graf[nextNode].dist;
+               pq.push(P);
+            }
+         }
+      }
+      mark[nod] = true;
+   }
+}
+
+int main(){
+   n = 4;
+   graf[0].adj.push_back(1);
+   graf[0].weight.push_back(5);
+   graf[1].adj.push_back(0);
+   graf[1].weight.push_back(5);
+	
+   graf[1].adj.push_back(2);
+   graf[1].weight.push_back(5);
+   graf[2].adj.push_back(1);
+   graf[2].weight.push_back(5);
+	
+   graf[2].adj.push_back(3);
+   graf[2].weight.push_back(5);
+   graf[3].adj.push_back(2);
+   graf[3].weight.push_back(5);
+	
+   graf[3].adj.push_back(1);
+   graf[3].weight.push_back(6);
+   graf[1].adj.push_back(3);
+   graf[1].weight.push_back(6);
+	
+   dijkstra(0);
+	
+   cout<<graf[3].dist<<endl;
+   return 0;
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+public class Main {
+	
+   public static void shortestPaths(List<Edge>[] edges, int s, int[] prio, int[] pred){
+      Arrays.fill(pred, -1);
+      Arrays.fill(prio, Integer.MAX_VALUE);
+      prio[s] = 0;
+      PriorityQueue<Long> q = new PriorityQueue<>();
+      q.add((long) s);
+      while (!q.isEmpty()) {
+      	long cur = q.remove();
+      	int curu = (int) cur;
+        if (cur >>> 32 != prio[curu])
+        continue;
+        for(Edge e : edges[curu]){
+           int v = e.t;
+           int nprio = prio[curu]+e.cost;
+           if(prio[v] > nprio){
+              prio[v] = nprio;
+              pred[v] = curu;
+              q.add(((long) nprio << 32) + v);
+           }
+        }
+      }
+   }
+	
+   static class Edge{
+      int t, cost;
+      public Edge(int t, int cost){
+         this.t = t;
+         this.cost = cost;
+      }
+   }
+	
+   // Ejemplo de uso
+   public static void main(String[] args) {
+      int[][] cost = { { 0, 3, 2 }, { 0, 0, -2 }, { 0, 0, 0 } };
+      int n = cost.length;
+      List<Edge>[] edges = new List[n];
+      for(int i = 0; i < n; i++) {
+         edges[i] = new ArrayList<>();
+         for(int j = 0; j < n; j++) {
+            if(cost[i][j] != 0) {
+               edges[i].add(new Edge(j, cost[i][j]));
+            }
+         }
+      }
+      int[] dist = new int[n];
+      int[] pred = new int[n];
+      shortestPaths(edges, 0, dist, pred);
+   }
+}
+\end{lstlisting}
+
+En ambas implementaciones se asume que el grafo en ponderado no dirigido.

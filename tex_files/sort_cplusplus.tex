@@ -1,0 +1,28 @@
+Para ordenar el lenguaje de programación C++ cuenta con la biblioteca {\em algorithm} la cual posee las siguientes funcionalidades
+
+\begin{itemize}
+	\item {\em sort()}. Esta función ordena los elementos de una colección de manera ascedente. Como detalle de la función es que no garantiza el orden inicial entre elementos de igual valor. Su complejidad es O(N log (N))  tanto en el caso promedio como en el peor de los casos. Una segunda variante de esta funcionalidad se le pasa un función para comparar los elementos de la colección. Esta variante es utilizada cuando se desea ordenar tipos de datos creados por el programador.
+\begin{lstlisting}[language=C++]
+#include <algorithm>
+void sort( iterator start, iterator end );
+void sort( iterator start, iterator end, StrictWeakOrdering cmp );
+\end{lstlisting} 
+
+\item {\em stable\_sort}. Esta función es similar a la anterior con la diferencia que si mantiene el orden inicial de los elementos cuando estos tienen similar valor. Otra diferencia es el tiempo de ejecucción el cual puede alcanzar N $(log N)^{2}$ en el peor de los casos.
+\begin{lstlisting}[language=C++]
+#include <algorithm>
+void stable_sort( iterator start, iterator end );
+void stable_sort( iterator start, iterator end, StrictWeakOrdering cmp );
+\end{lstlisting} 
+
+\item Para realizar el ordenamiento Heap Sort se cuenta con las funcionalidades {\em sort\_heap}, {\em is\_heap},{\em make\_heap}, {\em pop\_heap}, {\em push\_heap}
+
+\item {\em partial\_sort} Es una función que permite ordenar los primeros N elementos de una colección. N elementos es definido por la cantidad de elementos en rango comprendido [start,end).  
+
+\begin{lstlisting}[language=C++]
+#include <algorithm>
+void partial_sort( iterator start, iterator middle, iterator end );
+void partial_sort( iterator start, iterator middle, iterator end, StrictWeakOrdering cmp );
+\end{lstlisting}
+
+\end{itemize}

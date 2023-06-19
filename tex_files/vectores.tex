@@ -1,0 +1,55 @@
+Es un modelo basado en un modelo de arreglo dinámico que permite el trabajo y gestión con los elementos almacenados en un arreglo dinámico. Pero a diferencia de los arreglos regulares, el almacenamiento en vectores se maneja automáticamente, lo que permite que se amplíe y se contrate según sea necesario. Para utilizar un vector en C++ se debe incluir en la cabecera del archivo el siguiente fragmento:
+
+\begin{lstlisting}[language=Java]
+#include <vector>
+\end{lstlisting} 
+
+Para declarar un vector solo basta con poner algo como lo que sigue:
+
+\begin{lstlisting}[language=Java]
+vector<T> nombre_del_vector;
+\end{lstlisting}
+
+Donde {\em T} debe ser uno de los tipos de datos definidos por el lenguaje de progrmación o por el propio programador. El vector es muy útil cuando se va acceder a los elementos conocidos su posición dentro de la estructura y se va añadir o eliminar elementos de última posición. No presenta igual desempeño cuando las inserciones y eliminaciones se producen en otras posiciones. Una forma muy eficiente de utilizar el vector es una vez creado inicializarlo con la cantidad máxima de elementos que puede alamcenar siempre y cuando se conozca este valor.
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <vector>
+using namespace std;
+	
+int main (){
+   unsigned int i;
+   // variantes para constuir un vector:
+   // un vector de enteros vacios
+   vector<int> first;
+		
+   /*un vector con cuatro elementos, cada elementos con el valor 100*/
+   vector<int> second (4,100);
+		
+   /*creando un vector iterando sobre otro*/                                           
+   vector<int> third (second.begin(),second.end()); 
+		
+   /*creando un vector copia del tercer vector*/
+   vector<int> fourth (third);
+		
+   /*creando un vector a partir de un vector*/
+   int myints[] = {16,2,77,29};
+   vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+		
+   /*adicionando un elemento al vector*/
+   first.push_back(2);
+		
+   /*limpiar un vector*/
+   second.clear();
+		
+   /*saber si un vector no tiene elemento*/
+   if(fourth.empty()) cout<<"Vector empty"<<endl;
+   else cout<<"Vector not empty"<<endl;
+   
+   cout << "The contents of fifth are:";
+   for (i=0; i < fifth.size(); i++)
+      cout << " " << fifth[i];
+   cout << endl;
+   return 0;
+}
+\end{lstlisting}

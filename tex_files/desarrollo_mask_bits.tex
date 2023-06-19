@@ -1,0 +1,21 @@
+La técnica de la máscara de bit se encarga de combinar los dos temas abordados en esta presentación anteriormente para eso tomemos como caso de estudio tomemos el conjunto S= \{a, b, c\} del cual conformaremos todos los posibles subconjunto aplicando la técnica máscara de bit.
+
+Bien como sabemos el conjunto S tiene 8 subconjuntos, pues bien vamos a construir una pequeña tabla con tres columnas en la primera columna estarán todos los números desde el 0 hasta el 7, en la segunda la representación binaria del número a la izquierda mientras en la tercera estarán los elementos del conjunto S que su posición en la representación binario su bit este activo (valor 1). Recuerde que en binario el bit más a la derecha es el primero.
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+			\textbf{Número } & \textbf{Binario } & \textbf{Elementos seleccionados} \\ \hline 
+			0 &  000&  \\ \hline 
+			1 &  001&  a\\ \hline 
+			2 &  010&  b\\ \hline 
+			3 &  011&  a,b\\ \hline 
+			4 &  100&  c\\ \hline 
+			5 &  101&  a,c\\ \hline 
+			6 &  110&  b,c\\ \hline 
+			7 &  111&  a,b,c\\ \hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+La idea de la técnica es iterar desde 0 hasta $ 2^{ n }-1 $ donde n es la cantidad de elementos del conjunto inicial y para cada número ver cuáles son sus bit activos y seleccionar del conjunto aquellos elementos que sus posiciones se corresponde con las posiciones del bits activos. Ahora duda que puede surgir es como sé que bit del número está activo, sencillo a priori sabemos que el número va estar conformado por n bits donde n es cantidad de elementos del conjunto pues haremos una operación and entre el número y 1 desplazado hacia la izquierda x lugares donde x va ser un número entre 0 y n.

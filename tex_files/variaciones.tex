@@ -1,0 +1,63 @@
+Se llama {\bf variación} de los $n$ objetos tomados $p$ a $p$, a todo conjunto ordenado formado
+por $p$ objetos escogidos de cualquier modo entre los $n$ objetos considerando distintas
+dos variaciones cuando difieran en algún objeto o en el orden.
+
+Ejemplo: Con los cuatro objetos a, b, c, d las variaciones dos a dos son:
+
+ab ba ca da
+
+ac bc cb db
+
+ad bd cd dc
+
+El número de estas variaciones lo denotaremos por $V_{n,p}$
+
+Las variaciones con cierto número de objetos dados a, b, c, d, e se pueden ir
+formando sucesivamente (primero las monarias, luego las binarias, después las
+ternarias, etc.) por un método uniforme que consiste en agregar a cada variación de
+cierto orden cada una de las letras (objetos) que no están en ellas.
+Las variaciones monarias (de primer orden) o variaciones tomadas uno a uno con las
+cinco letras a, b, c, d, e son evidentemente:
+
+a b c d e
+
+Para formar las binarias agregamos a cada una las letras restantes y se obtiene el
+cuadro:
+
+ab ba ca da ea
+
+ac bc cb db eb
+
+ad bd cd cd ec
+
+ae be ce de ed
+
+Se forman ahora las ternarias agregando sucesivamente a cada binaria las letras que
+no están en ella, como hay 20 binarias y a cada una se le puede agregar 5 - 2 = 3
+letras, resultarán 60 variaciones ternarias. Siguiendo el mismo proceso se forman las variaciones de cuarto orden y las de quinto
+orden.
+
+Sea $V_{n,p}$ el número de variaciones de orden p y $V_{n,p-1}$ el número de variaciones de orden $p-1$.
+
+Una vez formado el cuadro de variaciones de orden $p-1$, para formar el de orden p se
+le agrega a cada una los $n - (p - 1) = n – p + 1$ elementos que no están en ella: por
+lo tanto cada variación de orden $p - 1$ produce $n – p + 1$ variaciones de orden $p$ y
+como hay $V_{n,p-1}$  variaciones de orden $p-1$ el número total de variaciones de orden $p$ será:
+
+$V_{n,p-1}=n*(n-1)*(n-2)* ... * (n–p+1)$ 
+
+\subsubsection{Variación con repetición}
+
+En cuanto a las variaciones de $n$ objetos tomado p a p tratado anteriormente podemos
+ver que p $\leq$ n. Si agrupamos k obetos de los $n$ disponibles, siendo $k>n$, lógicamente habrá repeticiones.
+
+Todas las posibles distribuciones con $k$ objetos en cada una donde en cada repetición
+pueden aparecer objetos repetidos y se diferencian por su orden recibe el nombre de
+variaciones con repetición.
+
+El número de variaciones con repetición lo denotaremos por $W_{n,p}$. Si el número de objetos es igual a $n$ y en cada variación aparecen $k$ objetos se pueden formar $n^{k}$ variaciones con repetición.
+
+$W_{n,p}=n^{k}$
+
+Así, por ejemplo, con dos objetos (los dígitos cero y uno), las variaciones con
+repetición de tamaño ocho es $W_{2,8}=256$.

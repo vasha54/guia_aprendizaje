@@ -1,0 +1,38 @@
+Como lo abordado no es un algoritmo sino una técnica de progrmación veamos algunos ejemplos de la implementación de esta técnica para resolver determinados problemas.
+
+\begin{lstlisting}[language=C++]
+
+/* Ejemplo de recursividad de indirecta o mutua para determinar si un numero positivo es
+par o impar */
+
+int par(int n){
+  if (n==0) return 1;
+  else return (impar(n-1));
+}
+int impar(int n){
+  if (n==0) return 0; 
+  else return(par(n-1));
+}
+
+/* Calcular el ensismo termino de Fibanacci*/
+long fibonacci(int n){
+  if(1 == n || 2 == n) {
+    return 1;
+  } else {
+    return (fibonacci(n-1) + fibonacci(n-2));
+  }
+}
+
+/*Calcular el maximo comun divisor*/
+long mcd(long a, long b){
+  if (a==b) return a;
+  else if (a<b) return mcd(a,b-a);
+  else return mcd(a-b,b);
+}
+
+/*Calcular el factorial*/
+int factorial(int numero){
+   if (numero > 1) return numero*factorial(numero-1);
+   else return 1;
+}
+\end{lstlisting} 

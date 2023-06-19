@@ -1,0 +1,28 @@
+El \textbf{for} es quizás el tipo de bucle mas versátil y utilizado en la programación. Su forma general es lasiguiente:
+
+\begin{lstlisting}[language=C++]
+for (inicializacion; expresion_de_control; actualizacion){
+   sentencia;
+}
+\end{lstlisting}
+
+Posiblemente la forma más sencilla de explicar la sentencia \textbf{for} sea utilizando
+la construcción \textbf{while} que sería equivalente. Dicha construcción es la siguiente:
+
+\begin{lstlisting}[language=C++]
+inicializacion;
+while (expresion_de_control){
+  sentencia;
+  actualizacion;
+}
+\end{lstlisting}
+
+donde \textbf{sentencia} puede ser una única sentencia terminada con (;), otra sentencia de controlocupando varias líneas (\textbf{if, while, for}, ...), o una sentencia compuesta o un bloque encerradoentre llaves \{...\}. Antes de iniciarse el bucle se ejecuta \textbf{inicializacion}, que es una o mássentencias que asignan valores iniciales a ciertas variables o contadores. A continuación seevalúa \textbf{expresion\_de\_control} y si es \textbf{false} se prosigue en la sentencia siguiente a laconstrucción \textbf{for}; si es \textbf{true} se ejecutan sentencia y actualizacion, y se vuelve a evaluar\textbf{expresion\_de\_control}. El proceso prosigue hasta que \textbf{expresion\_de\_control} sea \textbf{false}. Laparte de \textbf{actualizacion} sirve para actualizar variables o incrementar contadores. Un ejemplotípico puede ser el producto escalar de dos vectores a y b de dimensión n:
+
+\begin{lstlisting}[language=C++]
+for(int pe =0, i=1; i<=n; i++){
+   pe+=a[i]*b[i];
+}
+\end{lstlisting}
+
+Primeramente se inicializa la variable \textbf{pe} a cero y la variable \textbf{i} a 1; el ciclo se repetirá mientras que \textbf{i} sea menor o igual que \textbf{n}, y al final de cada ciclo el valor de \textbf{i} se incrementará enuna unidad. En total, el bucle se repetirá \textbf{n} veces. Obsérvese que la \textbf{inicializacion} consta de dos sentencias separadas por el operador (,). Cualquiera de las tres partes puede estar vacía. La\textbf{inicializacion} y la \textbf{actualizacion} pueden tener varias expresiones separadas por comas.

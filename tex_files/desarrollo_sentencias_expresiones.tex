@@ -1,0 +1,155 @@
+\subsection{Sentencias y expresiones}
+
+Una \textbf{expresión} es un conjunto variables unidos por operadores. Son órdenes que se le dan al
+computador para que realice una tarea determinada.
+
+Una \textbf{sentencia} es una \textbf{expresión} que acaba en \textbf{punto y coma} (;). Se permite incluir varias sentencias en una línea, aunque lo habitual es utilizar una línea para cada sentencia.
+
+Las \textbf{expresiones} de C++ y Java son unidades o componentes elementales de unas entidades de rangosuperior que son las \textbf{sentencias}. Las \textbf{sentencias} son unidades completas, ejecutables en sí
+mismas. Ya se verá que muchos tipos de \textbf{sentencias} incorporan \textbf{expresiones} aritméticas,
+lógicas o generales como componentes de dichas \textbf{sentencias}.
+
+\subsection{Expresiones Aritméticas}
+
+Están formadas por variables y/o constantes, y distintos operadores aritméticos eincrementales (+, -, *, /, \%, ++, - -). Como se ha dicho, también se pueden emplear paréntesis de tantos niveles como se desee, y su interpretación sigue las normasaritméticas convencionales. Por ejemplo, la solución de la ecuación de segundo grado:
+
+$$ x = \frac{-b+\sqrt{b^2-4ac}}{2a} $$
+
+se escribe, en C++ en la forma:
+\begin{lstlisting}[language=C++]
+x=(-b+sqrt((b*b)-(4*a*c)))/(2*a);
+\end{lstlisting}
+
+donde, estrictamente hablando, sólo lo que está a la derecha del operador de asignación (=) es
+una expresión aritmética. El conjunto de la variable que está a la izquierda del signo (=), el
+operador de asignación, la expresión aritmética y el carácter (;) constituyen una sentencia. En
+la expresión anterior aparece la llamada a la función de librería sqrt(), que tiene como valor
+de retorno la raíz cuadrada de su único argumento. En las expresiones se pueden introducir
+espacios en blanco entre operandos y operadores; por ejemplo, la expresión anterior se puede
+escribir también de la forma:
+
+\begin{lstlisting}[language=C++]
+x = (-b + sqrt((b * b) - (4 * a * c)))/(2 * a);
+\end{lstlisting}
+
+\subsection{Expresiones Lógicas}
+Los elementos con los que se forman estas expresiones son \textbf{valores lógicos}; verdaderos (\textbf{true},o distintos de 0) y falsos (\textbf{false}, o iguales a 0), y los operadores lógicos ||, \&\& y !. Tambiénse pueden emplear los \textbf{operadores relacionales} (<, >, <=, >=, ==, !=) para producir
+estos valores lógicos a partir de valores numéricos. Estas expresiones equivalen siempre a un
+valor 1 (\textbf{true}) o a un valor 0 (\textbf{false}). Por ejemplo:
+
+\begin{lstlisting}[language=C++]
+a = ((b>c)&&(c>d))||((c==e)||(e==b));
+\end{lstlisting}
+
+donde de nuevo la expresión lógica es lo que está entre el operador de asignación (=) y el (;).
+La variable \textbf{a} valdrá (1,true) si \textbf{b} es mayor que \textbf{c} y \textbf{c} mayor que \textbf{d}, ó si \textbf{c} es igual a \textbf{e} ó \textbf{e} es igual a \textbf{b}.
+
+\subsection{Expresiones generales}
+Una de las características más importantes (y en ocasiones más difíciles de manejar) del C++ o Java es
+su flexibilidad para combinar expresiones y operadores de distintos tipos en una expresión que
+se podría llamar general, aunque es una expresión absolutamente ordinaria.
+
+Recuérdese que el resultado de una expresión lógica es siempre un valor numérico (un 1
+ó un 0); esto permite que cualquier expresión lógica pueda aparecer como sub-expresión en
+una expresión aritmética. Recíprocamente, cualquier valor numérico puede ser considerado
+como un valor lógico: \textbf{true} si es distinto de 0 y \text{false} si es igual a 0. Esto permite introducircualquier expresión aritmética como sub-expresión de una expresión lógica. Por ejemplo:
+
+\begin{lstlisting}[language=C++]
+(a - b*2.0) && (c != d)
+\end{lstlisting}
+
+A su vez, el operador de asignación (=), además de introducir un nuevo valor en la
+variable que figura a su izda, deja también este valor disponible para ser utilizado en una
+expresión más general. Por ejemplo, supóngase el siguiente código que inicializa a 1 las tres
+variables \textbf{a}, \textbf{b} y \textbf{c}:
+
+\begin{lstlisting}[language=C++]
+a = b = c = 1;
+\end{lstlisting}
+
+que equivale a:
+
+\begin{lstlisting}[language=C++]
+a = (b = (c = 1));
+\end{lstlisting}	
+
+En realidad, lo que se ha hecho ha sido lo siguiente. En primer lugar se ha asignado un
+valor unidad a \textbf{c}; el resultado de esta asignación es también un valor unidad, que está
+disponible para ser asignado a \textbf{b}; a su vez el resultado de esta segunda asignación vuelve a
+quedar disponible y se puede asignar a la variable \textbf{a}.
+
+\subsection{Reglas de precedencia y asociatividad}
+El resultado de una expresión depende del orden en que se ejecutan las operaciones. El
+siguiente ejemplo ilustra claramente la importancia del orden. Considérese la expresión:
+
+\begin{lstlisting}[language=C++]
+3 + 4 * 2
+\end{lstlisting}
+
+Si se realiza primero la suma (3+4) y después el producto (7*2), el resultado es 14; si se
+realiza primero el producto (4*2) y luego la suma (3+8), el resultado es 11. Con objeto de que
+el resultado de cada expresión quede claro e inequívoco, es necesario definir las reglas que
+definen el orden con el que se ejecutan las expresiones de C++ y Java. Existe dos tipos de reglas para
+determinar este orden de evaluación: las reglas de \textbf{precedencia} y de \textbf{asociatividad}. Además, elorden de evaluación puede modificarse por medio de paréntesis, pues siempre se realizan
+primero las operaciones encerradas en los paréntesis más interiores. Los distintos operadores
+de C++ y Java se ordenan según su distinta precedencia o prioridad; para operadores de la misma
+precedencia o prioridad, en algunos el orden de ejecución es de izquierda a derecha, y otros de
+derecha a izquierda (se dice que se asocian de izda a dcha, o de dcha a izda). A este orden se
+le llama \textbf{asociatividad}.
+
+\subsection{Sentencias simples}
+Una sentencia simple es una expresión de algún tipo terminada con un carácter (;). Un caso
+típico son las declaraciones o las sentencias aritméticas. Por ejemplo:
+
+\begin{lstlisting}[language=C++]
+float real;
+espacio = espacio_inicial + velocidad * tiempo;
+\end{lstlisting}
+
+\subsection{Sentencias nulas o vacías}
+
+En algunas ocasiones es necesario introducir en el programa una sentencia que ocupe un
+lugar, pero que no realice ninguna tarea. A esta sentencia se le denomina sentencia vacía y
+consta de un simple carácter (;). Por ejemplo:
+
+\begin{lstlisting}[language=C++]
+;
+\end{lstlisting}
+
+\subsection{Sentencias compuestas o bloques}
+Muchas veces es necesario poner varias sentencias en un lugar del programa donde debería
+haber una sola. Esto se realiza por medio de sentencias compuestas. Una sentencia compuesta
+es un conjunto de declaraciones y de sentencias agrupadas dentro de llaves {...}. También
+se conocen con el nombre de bloques. Una sentencia compuesta puede incluir otras
+sentencias, simples y compuestas. Un ejemplo de sentencia compuesta es el siguiente:
+
+\begin{lstlisting}[language=C++]
+{
+   int i = 1, j = 3, k;
+   double masa;
+   masa = 3.0;
+   k = y + j;
+}
+\end{lstlisting}
+
+Las sentencias compuestas se utilizarán con mucha frecuencia en al
+introducir las sentencias que permiten modificar el flujo de control del programa o cuando se programa de forma modular o funcional.
+
+\subsection{Comentarios}
+Existen dos formas diferentes de introducir comentarios entre el código de Java o C++. Loscomentarios son tremendamente útiles para poder entender el código utilizado, facilitando de esemodo futuras revisiones y correcciones. Además permite que cualquier persona distinta alprogramador original pueda comprender el código escrito de una forma más rápida. Se recomiendaacostumbrarse a comentar el código desarrollado. De esta forma se simplifica también la tarea deestudio y revisión posteriores.
+
+Java y C++ interpreta que todo lo que aparece a la derecha de dos barras “//” en una línea cualquiera
+del código es un comentario del programador y no lo tiene en cuenta. El comentario puede empezar
+al comienzo de la línea o a continuación de una instrucción que debe ser ejecutada. La segunda
+forma de incluir comentarios consiste en escribir el texto entre los símbolos /*...*/. Este segundo
+método es válido para comentar más de una línea de código. Por ejemplo:
+
+\begin{lstlisting}[language=C++]
+// Esta linea es un comentario
+int a=1; // Comentario a la derecha de una sentencia
+
+// Esta es la forma de comentar mas de una linea utilizando
+// las dos barras. Requiere incluir dos barras al comienzo de cada linea
+
+/* Esta segunda forma es mucho mas comoda para comentar un numero elevado de lineas ya que solo requiere modificar el comienzo y el final. */
+\end{lstlisting}

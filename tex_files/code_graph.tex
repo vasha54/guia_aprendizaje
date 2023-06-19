@@ -1,0 +1,66 @@
+\subsection{C++}
+
+\begin{lstlisting}[language=C++]
+/*
+Esta variante es quizas la mas sencilla. Un grafo va ser un arreglo de una estructura llamada Node la cual tiene como atributo un vector con los indices de los nodos adyacentes al nodo almacenado en la posicion inesima del arreglo. La definicion de MAX\_N debe ser un valor igual o mayor que la cantidad de nodos del grafo que vas a representar con esta variante. Es muy utilizada cuando realizamos BFS y DFS.
+*/
+struct Node{
+   vector<int> adj;
+};
+Node graf[MAX_N];
+
+/*Es una extension de la primera en esta incorporamos un vector de los pesos de las aristas de los nodos adyacentes. Otra adecuacion es la variable dist que almacenara la distancia minima existen entre un nodo X y el que ocupa la posicion inesima. Esta variante es muy utilizada para un Dijkstra.*/
+struct Node{
+   int dist;
+   vector<int> adj;
+   vector<int> weight;
+};
+Node graf[MAX_N];
+
+/*En determinados algoritmos de grafos se hace necesario trabajar con las aristas del grafo y para este elemento tambien podemos representarlo mediante la siguiente estructura. En este caso las variables a y b de la estructura son los nodos que componen la aristas mientras la variable weight contiene el valor de la aristas. E es el arreglo de las aristas del grafo mientras MAX\_N tiene que ser definida con valor igual o mayor a la cantidad de aristas del grafos.*/
+struct Edge{
+	int a, b;
+	int weight;
+};
+Edge E[MAX_N];
+
+
+/*Aqui cuando las aristas son dirigidas src es e origen y dst el destino*/
+typedef int Weight;
+
+struct Edge {
+	int src, dst;
+	Weight weight;
+	Edge (int src, int dst, Weight weight):
+	src (src), dst (dst), weight (weight) {}
+};
+
+bool operator <(const Edge & e , const Edge & f) {
+	return e.weight != f.weight ? e.weight > f.weight : //!!INVERSE!!
+	e.src != f.src ? e.src < f.src : e.dst < f.dst;
+}
+typedef vector <Edge> Edges;
+typedef vector <Edges> Graph;
+\end{lstlisting}
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+class Graph {
+	
+  private int V;
+  private LinkedList<Integer> adj[];
+	
+  public Graph(int v) {
+     V = v;
+     adj = new LinkedList[v];
+     for(int i = 0; i < v; ++i) {
+        adj[i] = new LinkedList();
+     }
+  }
+	
+  void addEdge(int v, int w) {
+     adj[v].add(w);
+  }
+}
+\end{lstlisting}

@@ -1,0 +1,7 @@
+Es obvio que la complejidad de ambos \emph{sum} y \emph{increase (add)} depende de la función $g$. Hay 
+muchas maneras de elegir la función. $g$, mientras $0\le g(i)\le i$ para todos $i$. Por ejemplo la 
+función $g(i)=i$ funciona, lo que da como resultado $T=A$ y, por lo tanto, las consultas de suma 
+son lentas. También podemos tomar la función $g(i)=0$. Esto corresponderá a matrices de suma de 
+prefijos, lo que significa que encontrar la suma del rango $[0,i]$ solo tomará un tiempo constante, 
+pero las actualizaciones son lentas. La parte inteligente del algoritmo de Fenwick es que utiliza una 
+definición especial de la función $g$ que puede manejar ambas operaciones en tiempo $O(\log N)$ .

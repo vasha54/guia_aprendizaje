@@ -1,0 +1,38 @@
+\subsection{Operadores relacionales}
+Los operadores relacionales sirven para
+ realizar comparaciones de igualdad,
+ desigualdad y relación de menor o mayor.
+ El resultado de estos operadores es
+siempre un valor boolean (true o false)
+según se cumpla o no la relación
+ considerada.
+
+\begin{tabular}{|c|p{4cm}|c|p{6cm}|}
+	\hline
+	\textbf{Operador} & \textbf{Significado} & \textbf{Utilización} & \textbf{Es verdadero } \\ \hline
+	\textbf{$<$} &  Menor que. & op1 $<$ op2 & si op1 es menor que op2 \\ \hline 
+	\textbf{$<=$} & Menor o igual que. & op1 $<=$ op2 & si op1 es menor o igual que op2 \\ \hline 
+	\textbf{==} &  Igual a. & op1 $==$ op2 & si op1 y op2 son iguales \\ \hline
+	\textbf{$>$} &  Mayor que. & op1 $>$ op2 & si op1 es mayor que op2 \\ \hline
+	\textbf{$>=$} & Mayor o igual que. & op1 $>=$ op2 & si op1 es mayor o igual que op2 \\ \hline
+	\textbf{$!=$} & Distinto que & op1 $!=$ op2 & si op1 y op2 son diferentes \\ \hline
+\end{tabular}
+
+\subsection{Operadores lógicos}
+
+Los operadores lógicos \&\& (and), || (or) y ! (not) son utilizados cuando evaluamos expresiones que poseen varios operandos relacionales para obtener un
+resultado simple (verdadero o falso) que las relaciona. El operador \&\& es
+el operador and de la lógica booleana. Esta operación resulta verdadera si
+todos los operandos son verdaderos y falsos en caso contrario. El operador || es el operador or de la lógica booleana y resulta verdadera si
+al menos uno de los operandos es verdadero. Por último el operador ! es el operador not de la lógica booleana que niega(si es verdadero lo convierte en falso y viceversa) el resultado de la expresión que le sucede.
+
+\begin{tabular}{|c|c|c|p{7cm}|}
+	\hline
+	\textbf{Operador} & \textbf{Nombre} & \textbf{Utilización} & \textbf{Resultado } \\ \hline
+	\textbf{ \&\&} & AND  &  op1 \&\& op2 & true si op1 y op2 son true. Si op1 es false ya no se evalúa op2 \\ \hline 
+	\textbf{$||$} & OR & op1 || op2 & true si op1 u op2 son true. Si op1 es true ya no se evalúa op2 \\ \hline 
+	\textbf{!} & NOT & !op & true si op es false y false si op es true \\ \hline
+	\textbf{\&} & AND & op1 \& op2 & true si op1 y op2 son true. Siempre se evalúa op2\\ \hline
+	\textbf{|} & OR & op1 | op2 & true si op1 u op2 son true. Siempre se evalúa op2 \\ \hline
+	
+\end{tabular}

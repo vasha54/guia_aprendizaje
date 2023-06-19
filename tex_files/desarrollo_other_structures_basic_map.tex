@@ -1,0 +1,74 @@
+Diccionario o mapa es un contenedor asociativo que contiene pares de llaves y valores, las llave son únicas más no
+así los valores. La ordenación se realiza utilizando la función de comparación. Las aplicaciones se
+implementan normalmente como árboles rojo-negro, por lo que sus funciones principales (búsqueda,
+eliminación e inserción) tienen complejidad logarítmica O($log_2 N$). Para la creación de un mapa se debe mandar el tipo de dato de las llaves y el tipo de dato de los
+valores, siempre y cuando el tipo de dato de las llaves tenga un comparador por defecto, los datos
+primitivos sí llevan comparadores definidos por defecto. Si se desearía crear un mapa de otro tipo de datos que no sean primitivos del lenguaje se debe implementar una función booleana o entera que acepta dos variables del tipo de dato deseado y las compares según determinados criterios. Un mapa tiene la ventaja de acceder a los valores directamente mediante los corchetes [llave] y
+llaves, como si fuera un vector. Si se accede a un elemento mediante la llave y el corchete que no
+existe, se crea automáticamente asignando 0’s como valores. También se puede acceder a las llaves y valores mediante iteradores.
+
+
+Tanto C++ como Java contiene dos implementaciones de esta estructura: 
+
+\begin{itemize}
+	\item Una estructura de datos conjuntos cuya implementación esta basada en un árbol binario balanceado cuyas operaciones tienen una complejidad O($\log N$). En C++ está el $map$ mientras en Java $TreeMap$ responde a esta implementación.
+	\item Una estructura de datos conjuntos cuya implementación esta basada en \emph{hashing} cuyas operaciones tienen una complejidad o trabajan O($1$) como promedio. En C++ está el $unordered_map$ mientras en Java $HashMap$ responde a esta implementación.
+\end{itemize}
+
+La elección de cual implementación utilizar a menudo depende del uso que deseas darle a la estructura, si te es beneficioso mantener el orden la implementación basada en árbol binario balanceado te será útil además de proveerte de un grupo de funcionalidades no disponibles en la implementación basada en \emph{hashing}. Aunque a favor de esta implementación se puede decir que es mucho más eficiente que la otra. 
+
+En las implementaciones en esta guía utilizaremos la implementación basada en árbol binario balanceado pero utilizar el otro modelo de implementación no requiere gran cambio, en C++ sustituir $map$ por $unordered_map$ mientras en Java sería cambiar $TreeMap$ por $HashMap$. Lo que si es importante recalcar que al hacer este cambio no vamos a poder utilizar algunas funcionales sobre todo aquellas que tienen que ver con el orden de como se organizan los elementos dentro de la estructura. 
+
+\subsubsection{C++}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{\#include <map>}, gracias a esto ya podemos utilizar la estructura de otro modo no.
+
+\begin{itemize}
+	\item \textbf{map::empty():} Está función retorna verdad si el diccionario está vacío y retorna falso en otro caso.
+	\item \textbf{map::size():} Está función retorna cuantos elementos tiene el diccionario.
+	\item \textbf{map::clear():} Está función elimina todos los elemtos de la aplicación logrando así
+	que el tamaño (.size()) sea 0
+	\item \textbf{map::insert(make\_pair(llave,
+valor)):} Está función inserta un par de elementos la llave y el valor designado
+a la llave, llave y valor debe ser un tipo de dato aceptado por el diccionario. La complejidad de está función es O($log_2 N$).
+	\item \textbf{map::erase(inicio, fin):} Está función elimina elemtos desde una posición inicial (inicio) hasta
+otra posición (fin), inicio y fin deben ser iteradores. La complejidad
+es lineal
+	\item \textbf{map::erase(llave):} Está función busca el elemnto y lo elimina, llave debe ser un tipo de
+dato aceptado por la aplicación. La complejidad de está función es
+O($log_2 N$).
+	\item \textbf{map::count(llave):} Está función retorna la cantidad de llaves coincidentes con llave lo cual
+está entre 0 y 1 ya que no existen llaves dobles o repetidos, llave debe
+ser un tipo de dato aceptado por la aplicación. La complejidad de está
+función es O($\log_2 N$).
+	\item \textbf{map::find(llave):} Está función retorna el iterador apuntando a la llave si existe y si no
+retorna .end(), llave debe ser un tipo de dato aceptado por el diccionario.
+La complejidad de está función es O($log_2 N$).
+	\item \textbf{map::lower\_bound(llave):} Está función retorna un iterador apuntando a la primera llave no menos
+que llave, llave debe ser un tipo de dato aceptado por el diccionario. La
+complejidad de está función es O($log_2 N$).
+	\item \textbf{map::upper\_bound(llave):} Está función retorna un iterador apuntando a la primera llave mas grande
+que llave, llave debe ser un tipo de dato aceptado por el diccionario. La complejidad de está función es O($log_2 N$).
+\end{itemize}
+
+\paragraph{Multidiccionario:}En el caso específico de C++ existe adicionalemente la estructura $multimap$ cuyo funcionamiento, implementación y operaciones es idéntico al $map$ con la única variación que esta estructura si la existencia de varios valores para una misma clave o llave. 
+
+\subsubsection{Java}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{import java.util.*;}, gracias a esto ya podemos utilizar la estructura de otro modo no. Los métodos disponibles para la clase set son los siguientes:
+
+\begin{itemize}
+	\item \textbf{put(Clave,Valor):} Agrega un elemento al diccionario.
+	\item \textbf{get(Clave):} Devuelve el elemento del diccionario con la clave especificada.
+	\item \textbf{clear():} Borra el conjunto Map.
+	\item \textbf{remove(Object objeto):} Elimina el objeto del diccionario
+con la clave especificada.
+Devuelve verdadero si es eliminado.
+	\item \textbf{isEmpty():} Devuelve verdadero si el diccionario esta vacío.
+	\item \textbf{containsValue(Object elemento):} Devuelve verdadero si el diccionario
+contiene el valor.
+	\item \textbf{containsKey(Object elemento):} Devuelve verdadero si el diccionario
+contiene la clave.
+	\item \textbf{size():} Devuelve el numero de elementos
+del diccionario.
+\end{itemize}

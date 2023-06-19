@@ -1,0 +1,187 @@
+\subsection{C++}
+
+\subsubsection{Declaración y creación de arreglos}
+El arreglo se puede declarar según la situación. Ahora veremos cada una de ellas:
+
+\begin{lstlisting}[language=C++]
+  /* Sabemos la cantidad de elementos a priori,  
+  <tipo_de _dato> <nombre_arreglo> [<cantidad>];*/
+  bool isPimes[100];
+	
+  /*La cantidad de elementos puede variar y depende del 
+    valor de una variable.Es la mas usada
+    <tipo_de _dato> * <nombre_arreglo>= new <tipo_de _dato> [<variable>];
+    <tipo_de _dato> * <nombre_arreglo>= new <tipo_de _dato> [<cantidad>];
+  */
+  int cantidadMaxima=100;
+  int * notas;
+  notas=new int [cantidadMaxima]; 
+  double * promedio=new double [100];
+	
+  /*Cuando conocemos los valores que integran el arreglo*/
+  string nombres []={ "Luis", "Ernesto", "Susana" };
+\end{lstlisting}
+
+\subsubsection{Almacenar valor en el arreglo}
+Para almacenar un valor en el arreglo solo debemos inidicar la posición en el arreglo en que se va almacenar dicha posición debe ser un valor o variable entera y debe estar en rango $[0,capacidad-1]$.
+
+\begin{lstlisting}[language=C++]
+   /* <nombre arreglo>[<posicion>] = <valor>; donde:
+    <posicion> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero 
+    <valor> puede ser una variable entera , valor entero literal, expresion cuyo resultado sea entero */
+   notas[23]=cantidadMaxima;
+   notas[cantidadMaxima-50]=34;
+   notas[10+5]=2*cantidadMaxima;
+\end{lstlisting}
+
+\subsubsection{Obtener valor en el arreglo}
+
+Para obtener un valor en el arreglo solo debemos inidicar la posición en el arreglo en que se va obtener dicha posición debe ser un valor o variable entera y debe estar en rango $[0,capacidad-1]$ .
+
+\begin{lstlisting}[language=C++]
+   /* <variable> = <nombre arreglo>[<posicion>]; donde:
+    <posicion> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero 
+    <variable> va ser la el lugar donde se almacenara una copia del valor solicitado al arreglo, debe ser del mismo tipo de dato del arreglo */
+   int a =notas[23];
+   int b;
+   b = notas[cantidadMaxima-50];
+\end{lstlisting}
+
+\subsubsection{Recorrer todos los elementos del arreglo}
+
+Para recorrer todos los elementos o parte de los elementos almacenados en el arreglo vamos utilizar la instrucción \textbf{for}
+
+\begin{lstlisting}[language=C++]
+   /* for( int i=<posicion_inicial>; i < <posicion_final>; i++ ) 
+      i++ si <posicion_inicial> <= <posicion_final>
+      i-- si <posicion_inicial> > <posicion_final>
+      i <= <posicion_final> si deseo incluir en el rango la ultima posicion pero tiene que ser una posicion valida del arreglo
+   */	
+	
+   for(int i=0;i<cantidadMaxima;i++){
+      //notas[i] accedo al valor almacenado en la inesima posicion del arreglo
+   }
+\end{lstlisting}
+
+Noten que acuerdo como hagan el \textbf{for} pueden recorrer del principio al final o en sentido contrario
+
+\subsubsection{Leer los valores y almacenarlos en el arreglo}
+
+Para leer los valores consola y almacernalos directamente en el arreglo vamos a utilizar una combinación de recorrer todos los elementos y almacenar en arreglo visto anteriormente
+
+\begin{lstlisting}[language=C++]
+   /* En cada iteracion del for el cin lee un valor y dicho valor es almacenado en el arreglo en la posicion que indique el valor de la variable i en esa iteracion, en la primera el valor seria 0, en la segunda 1 y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas del arreglo */
+   for(int i=0;i<cantidadMaxima;i++){
+      cin>>notas[i];
+   }
+\end{lstlisting}
+
+\subsubsection{Imprimir los valores almacenados en el arreglo}
+
+Para imprimir los valores en consola del arreglo vamos a utilizar una combinación de recorrer todos los elementos y obtener en arreglo visto anteriormente
+
+\begin{lstlisting}[language=C++]
+   /* En cada iteracion del for el cin imprimir un valor que se corresponde con el almacenado en el arreglo en la posicion que indique el valor de la variable i en esa iteracion, en la primera el valor seria 0, en la segunda 1 y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas del arreglo */
+   for(int i=0;i<cantidadMaxima;i++){
+      cout<<notas[i]<<" ";
+   }
+   cout<<endl;
+   for(int i=0;i<cantidadMaxima;i++){
+      cout<<notas[i]<<endl;
+   } 
+\end{lstlisting}
+
+En primer \textbf{for} se imprime todos los valores del arreglo en una sola linea separados por espacios, mientras en el segundo cada valor almacenado en el arreglo se imprime por linea.
+
+\subsection{Java}
+
+\subsubsection{Declaración y creación de arreglos}
+
+El arreglo se puede declarar según la situación. Ahora veremos cada una de ellas:
+
+\begin{lstlisting}[language=C++]
+   /*La cantidad de elementos puede variar y depende del 
+    valor de una variable.Es la mas usada
+   <tipo_de _dato> [] <nombre_arreglo>= new <tipo_de _dato> [<variable>];
+   <tipo_de _dato> [] <nombre_arreglo>= new <tipo_de _dato> [<cantidad>];*/
+   int cantidadMaxima=100;
+   int [] notas;
+   notas=new int [cantidadMaxima]; 
+   double [] promedio=new double [100];
+   
+   /*Cuando conocemos los valores que integran el arreglo*/
+   String [] nombres ={ "Luis", "Ernesto", "Susana" };
+\end{lstlisting}
+
+\subsubsection{Almacenar valor en el arreglo}
+
+Para almacenar un valor en el arreglo solo debemos inidicar la posición en el arreglo en que se va almacenar dicha posición debe ser un valor o variable entera y debe estar en rango $[0,capacidad-1]$.
+
+\begin{lstlisting}[language=Java]
+   /* <nombre arreglo>[<posicion>] = <valor>; donde:
+    <posicion> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero 
+    <valor> puede ser una variable entera , valor entero literal, expresion cuyo resultado sea entero*/
+   notas[23]=cantidadMaxima;
+   notas[cantidadMaxima-50]=34;
+   notas[10+5]=2*cantidadMaxima;
+\end{lstlisting}
+
+
+\subsubsection{Obtener valor en el arreglo}
+
+Para obtener un valor en el arreglo solo debemos inidicar la posición en el arreglo en que se va obtener dicha posición debe ser un valor o variable entera y debe estar en rango $[0,capacidad-1]$ .
+
+\begin{lstlisting}[language=Java]
+   /* <variable> = <nombre arreglo>[<posicion>]; donde:
+   <posicion> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero 
+   <variable> va ser la el lugar donde se almacenara una copia del valor solicitado al arreglo, debe ser del mismo tipo de dato del arreglo */
+   int a =notas[23];
+   int b;
+   b = notas[cantidadMaxima-50];
+\end{lstlisting}
+
+\subsubsection{Recorrer todos los elementos del arreglo}
+
+Para recorrer todos los elementos o parte de los elementos almacenados en el arreglo vamos utilizar la instrucción \textbf{for}
+
+\begin{lstlisting}[language=Java]
+   /* for( int i=<posicion_inicial>; i < <posicion_final>; i++ ) 
+    i++ si <posicion_inicial> <= <posicion_final>
+    i-- si <posicion_inicial> > <posicion_final>
+    i <= <posicion_final> si deseo incluir en el rango la ultima posicion pero tiene que ser una posicion valida del arreglo
+   */	
+	
+   for(int i=0;i<cantidadMaxima;i++){
+      //notas[i] accedo al valor almacenado en la inesima posicion del arreglo
+   }
+\end{lstlisting}
+
+Noten que acuerdo como hagan el \textbf{for} pueden recorrer del principio al final o en sentido contrario
+
+\subsubsection{Leer los valores y almacenarlos en el arreglo}
+Para leer los valores consola y almacernalos directamente en el arreglo vamos a utilizar una combinación de recorrer todos los elementos y almacenar en arreglo visto anteriormente
+
+\begin{lstlisting}[language=C++]
+   /* En cada iteracion del for el cin lee un valor y dicho valor es almacenado en el arreglo en la posicion que indique el valor de la variable i en esa iteracion, en la primera el valor seria 0, en la segunda 1 y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas del arreglo */
+   Scanner in =new Scanner(System.in);
+   for(int i=0;i<cantidadMaxima;i++){
+      notas[i] = in.nextInt();
+   }
+\end{lstlisting}
+
+\subsubsection{Imprimir los valores almacenados en el arreglo}
+
+Para imprimir los valores en consola del arreglo vamos a utilizar una combinación de recorrer todos los elementos y obtener en arreglo visto anteriormente
+
+\begin{lstlisting}[language=Java]
+   /* En cada iteracion del for el cin imprimir un valor que se corresponde con el almacenado en el arreglo en la posicion que indique el valor de la variable i en esa iteracion, en la primera el valor seria 0, en la segunda 1 y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas del arreglo */
+   for(int i=0;i<cantidadMaxima;i++){
+      System.out.print( notas[i]+" ");
+   }
+   System.out.println();
+   for(int i=0;i<cantidadMaxima;i++){
+      System.out.println(notas[i]);
+   } 
+\end{lstlisting}
+
+En primer \textbf{for} se imprime todos los valores del arreglo en una sola linea separados por espacios, mientras en el segundo cada valor almacenado en el arreglo se imprime por linea.

@@ -1,0 +1,39 @@
+Lo que vamos abordar no es una estructura de datos nuevas ni un algoritmo nuevo sino una modificación a una estructura ya existente a la cual le vamos a realizar algunas modificaciones es por eso que vamos a ver dicha modificación en algunos de los usos tipicos de la estructura que sirven de base para otros casos.
+
+\subsection{Suma en rangos}
+
+Comenzamos considerando problemas de la forma más simple: la consulta de modificación debe agregar un número $x$ a todos los números del rango $a[l \dots r]$. La segunda consulta, que se supone que debemos responder, preguntaba simplemente por el valor de $a[i]$.
+
+Para que la consulta de suma sea eficiente, almacenamos en cada vértice del árbol de rangos cuántos debemos sumar a todos los números en el rango correspondiente. Por ejemplo, si la consulta agrega 3 a todo el arreglo $a[0 \dots n-1]$ viene, luego colocamos el número 3 en la raíz del árbol. En general, tenemos que colocar este número en varios rangos, que forman una partición del rango de consulta. Por lo tanto, no tenemos que cambiar todo $O(n)$ valores, pero sólo a lo mucho $O(\log n)$.
+
+Si ahora surge una consulta que solicita el valor actual de una posición del arreglo en particular, es suficiente con bajar el árbol y sumar todos los valores encontrados en el camino.
+
+\subsection{Asignación en rangos}
+
+Supongamos ahora que la consulta de modificación pide asignar cada elemento de un determinado rango $a[l \dots r]$ a algún valor $p$. Como segunda consulta, consideraremos nuevamente leer el valor de la matriz $a[i]$.
+
+Para realizar esta consulta de modificación en un rango completo, debe almacenar en cada vértice del árbol de rangos si el rango correspondiente está cubierto por completo con el mismo valor o no. Esto nos permite hacer una actualización perezosa: en lugar de cambiar todos los rangos en el árbol que cubre el rango de consulta, solo cambiamos algunos y dejamos otros sin cambios. Un vértice marcado significará que cada elemento del rango correspondiente está asignado a ese valor, y en realidad también el subárbol completo solo debe contener este valor. En cierto sentido, somos perezosos y demoramos en escribir el nuevo valor en todos esos vértices. Podemos hacer esta tediosa tarea más tarde, si es necesario.
+
+Entonces, después de que se ejecuta la consulta de modificación, algunas partes del árbol se vuelven irrelevantes; algunas modificaciones permanecen sin cumplir en él.
+
+Por ejemplo, si una consulta de modificación asigne un número a toda el arreglo $a[0 \dots n-1]$ se ejecuta, en el árbol de rangos solo se realiza un único cambio: el número se coloca en la raíz del árbol y este vértice se marca. Los rangos restantes permanecen sin cambios, aunque de hecho el número debe colocarse en todo el árbol.
+
+Supongamos ahora que la segunda consulta de modificación dice que la primera mitad del arreglo $a[0 \dots n/2]$ debe ser asignado con algún otro número. Para procesar esta consulta debemos asignar a cada elemento del hijo izquierdo completo del vértice raíz con ese número. Pero antes de hacer esto, primero debemos clasificar el vértice de la raíz. La sutileza aquí es que la mitad derecha del arreglo aún debe asignarse al valor de la primera consulta, y en este momento no hay información almacenada para la mitad derecha.
+
+La forma de resolver esto es \emph{empujar} la información de la raíz a sus hijos, es decir, si a la raíz del árbol se le asignó algún número, entonces asignamos los vértices secundarios izquierdo y derecho con este número y eliminamos la marca de la raíz. Después de eso, podemos asignar al hijo izquierdo el nuevo valor, sin perder la información necesaria.
+
+Resumiendo, obtenemos: para cualquier consulta (una consulta de modificación o lectura) durante el descenso a lo largo del árbol, siempre debemos empujar la información del vértice actual a sus dos hijos. Esto lo podemos entender de tal forma, que cuando descendemos del árbol aplicamos modificaciones retrasadas, pero exactamente las necesarias (para no degradar la complejidad de $O(\log n)$.
+
+Para la implementación necesitamos hacer una función $\text{push}$, que recibirá el vértice actual, y enviará la información de su vértice a sus dos hijos. Llamaremos a esta función al comienzo de las funciones de consulta (pero no la llamaremos desde las hojas, porque no hay necesidad de extraer más información de ellas).
+
+\subsection{Agregando rangos, consultando el máximo}
+
+Ahora la consulta de modificación es agregar un número a todos los elementos en un rango, y la consulta de lectura es encontrar el máximo en un rango.
+
+Así que para cada vértice del árbol del rango tenemos que almacenar el máximo del subrango correspondiente. La parte interesante es cómo volver a calcular estos valores durante una solicitud de modificación.
+
+Para ello mantenemos almacenado un valor adicional para cada vértice. En este valor almacenamos los 
+sumandos que no hemos propagado a los vértices secundarios. Antes de atravesar a un vértice hijo, 
+llamamos $\text{push}$ y propagar el valor a ambos hijos. Tenemos que hacer esto tanto en la función 
+$\text{actualizar}$ y la función $\text{consulta}$.
+

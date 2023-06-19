@@ -1,0 +1,47 @@
+\subsection{Bifurcación if}
+Esta estructura permite ejecutar un conjunto de sentencias en función del valor que tenga la
+expresión de comparación (se ejecuta si la expresión de comparación tiene valor true). Tiene la
+forma siguiente:
+
+\begin{lstlisting}[language=C++]
+if (booleanExpression) {
+   statements;
+}
+	
+\end{lstlisting}
+
+Las llaves \{\} sirven para agrupar en un bloque las sentencias que se han de ejecutar, y no son
+necesarias si sólo hay una sentencia dentro del if.
+
+\subsection{Bifurcación if else}
+
+Análoga a la anterior, de la cual es una ampliación. Las sentencias incluidas en el else se ejecutan en
+el caso de no cumplirse la expresión de comparación (false),
+
+\begin{lstlisting}[language=C++]
+if (booleanExpression) {
+   statements1;
+} else {
+   statements2;
+}	
+\end{lstlisting}
+
+\subsection{Bifurcación if elseif else}
+
+Permite introducir más de una expresión de comparación. Si la primera condición no se cumple, se
+compara la segunda y así sucesivamente. En el caso de que no se cumpla ninguna de las
+comparaciones se ejecutan las sentencias correspondientes al else.
+
+\begin{lstlisting}[language=C++]
+if (booleanExpression1) {
+   statements1;
+} else if (booleanExpression2) {
+   statements2;
+} else if (booleanExpression3) {
+   statements3;
+} else {
+   statements4;
+}	
+\end{lstlisting}
+
+En esta estructura se puede omitir del bloque \textbf{else} de ser necesario. 

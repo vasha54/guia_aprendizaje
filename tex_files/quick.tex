@@ -1,0 +1,11 @@
+El ordenamiento rápido (quicksort en inglés) es un algoritmo creado por el científico británico en computación C. A. R. Hoare, basado en la técnica de divide y vencerás, que permite, en promedio, ordenar n elementos en un tiempo proporcional a $N \log N$.
+
+El algoritmo trabaja de la siguiente forma:
+\begin{itemize}
+	\item Elegir un elemento de la lista de elementos a ordenar, al que llamaremos pivote. 
+	\item Resituar los demás elementos de la lista a cada lado del pivote, de manera que a un lado queden todos los menores que él, y al otro los mayores. Los elementos iguales al pivote pueden ser colocados tanto a su derecha como a su izquierda, dependiendo de la implementación deseada. En este momento, el pivote ocupa exactamente el lugar que le corresponderá en la lista ordenada.
+	\item La lista queda separada en dos sublistas, una formada por los elementos a la izquierda del pivote, y otra por los elementos a su derecha. 
+	\item Repetir este proceso de forma recursiva para cada sublista mientras éstas contengan más de un elemento. Una vez terminado este proceso todos los elementos estarán ordenados. 
+\end{itemize}
+
+Como se puede suponer, la eficiencia del algoritmo depende de la posición en la que termine el pivote elegido.

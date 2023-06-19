@@ -1,0 +1,9 @@
+Para cada nodo precomputaremos su antepasado por encima de él, su antepasado dos nodos por encima, su antepasado cuatro por encima, etc. Almacenémoslos en la matriz, es decir, up es up[i][j] el $2^j-ésimo$ antepasado por encima del nodo i con $i=1 \dots N, j=0 \dots ceil(\log N)$. Podemos calcular esta matriz utilizando un recorrido DFS del árbol.
+
+Para cada nodo, también recordaremos la hora de la primera visita de este nodo (es decir, la hora en que el DFS descubre el nodo) y la hora en que lo dejamos (es decir, después de que visitamos a todos los hijos y salimos de la función DFS). Podemos usar esta información para determinar en tiempo constante si un nodo es antepasado de otro nodo.
+
+Supongamos ahora que recibimos una consulta ($u$, $v$). Podemos comprobar inmediatamente si un nodo es el antepasado del otro. En este caso este nodo ya es el LCA. Si $u$ es el ancestro de $v$, $v$ no es el ancestro de $u$, escalamos los ancestros de $u$ hasta encontrar el nodo más alto (es decir, el más cercano a la raíz), que no es un ancestro de $v$ (es decir, un nodo $x$, tal que $x$ no es un ancestro de $v$, pero up[x][0] lo es). Podemos encontrar este nodo $x$ en $O(\log N)$ tiempo usando la matriz up.
+
+Describiremos este proceso con más detalle. Deja que L = ceil($\log N$). Supongamos primero que $i = L$. Si $up[u][i]$ no es antepasado de $v$, entonces podemos asignar $u = up[u][i]$ y decrementar $i$. Si $up[u][i]$ es un ancestro, entonces simplemente decrementamos $i$. Claramente, después de hacer esto para todos los no negativos $i$ del nodo $u$ no será el nodo deseado, es decir, $u$ todavía no es un ancestro de $v$, pero $up[u][0]$ lo es.
+
+Ahora, obviamente, la respuesta a LCA será $up[u][0]$, es decir, el nodo más pequeño entre los ancestros del nodo $u$, que también es un ancestro de $v$. Por lo tanto, responder a una consulta LCA iterará $i$ de ceil($\log N$) a 0 y verificará en cada iteración si un nodo es el ancestro del otro.

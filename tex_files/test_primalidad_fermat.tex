@@ -1,0 +1,30 @@
+El pequeño teorema de Fermat  establece que para un número primo p y un entero coprimo a se cumple la siguiente ecuación:
+
+$$a^{p-1} \equiv 1 \bmod p$$
+
+En general, este teorema no se cumple para números compuestos. 
+
+Esto se puede utilizar para crear una prueba de primalidad.
+Elegimos un entero $2 \le a \le p - 2$, y verificamos si la ecuación se cumple o no.
+Si no se sostiene, p. $a^{p-1} \not\equiv 1 \bmod p$, sabemos que $p$ no puede ser un número primo.
+En este caso llamamos a la base $a$ un testigo de Fermat para la composición de $p$. 
+
+Sin embargo, también es posible que la ecuación se cumpla para un número compuesto.
+Entonces, si la ecuación se cumple, no tenemos una prueba de primalidad.
+Solo podemos decir que $p$ es probablemente primo.
+Si resulta que el número es realmente compuesto, llamamos a la base $a$ un mentiroso de Fermat. 
+
+Al ejecutar la prueba para todas las bases posibles $a$, podemos demostrar que un número es primo.
+Sin embargo, esto no se hace en la práctica, ya que requiere mucho más esfuerzo que solo hacer \emph{división de prueba}.
+En su lugar, la prueba se repetirá varias veces con opciones aleatorias para $a$.
+Si no encontramos ningún testigo de la composición, es muy probable que el número sea primo.
+
+
+
+Sin embargo, hay una mala noticia:
+existen algunos números compuestos donde $a^{n-1} \equiv 1 \bmod n$ vale para todos los $a$ coprimos a $n$, por ejemplo para el número $561 = 3 \cdot 11 \cdot 17$.
+Tales números se llaman números de Carmichael.
+La prueba de primalidad de Fermat solo puede identificar estos números, si tenemos mucha suerte y elegimos una base $a$ con $\gcd(a, n) \ne 1$.</p>
+
+La prueba de Fermat todavía se usa en la práctica, ya que es muy rápida y los números de Carmichael son muy raros.
+P.ej. solo existen 646 de esos números por debajo de $10^9$.

@@ -1,0 +1,133 @@
+\subsection{Variable}
+
+Una variable es un nombre que contiene un valor que puede cambiar a lo largo del programa. De
+ acuerdo con el tipo de información que contienen, en C++ y Java hay dos tipos principales de variables:
+
+\begin{enumerate}
+	\item Variables de tipos primitivos. Están definidas mediante un valor único que puede ser
+entero, de punto flotante, carácter o booleano.
+	\item Variables referencia. Las variables referencia son referencias o nombres de una
+información más compleja: arrays u objetos de una determinada clase.
+\end{enumerate}
+
+Desde el punto de vista del papel o misión en el programa, las variables pueden ser:
+
+\begin{enumerate}
+	\item Variables \textbf{miembro} de una clase: Se definen en una clase, fuera de cualquier método;
+pueden ser tipos primitivos o referencias.
+	\item Variables \textbf{locales}: Se definen dentro de un método o más en general dentro de cualquier
+bloque entre llaves {}. Se crean en el interior del bloque y se destruyen al finalizar dicho
+bloque. Pueden ser también tipos primitivos o referencias.
+	
+	\item Variables \textbf{globales}: Caso especial para el tipo de estructura de solución en C++, se define  fuera de cualquier método y siempre por encima de cualquiera de ellos; pueden ser tipos primitivos o referencias.
+\end{enumerate}
+
+Los nombres de variables se pueden crear con mucha libertad. Pueden ser cualquier
+conjunto de caracteres numéricos y alfanuméricos, sin algunos caracteres especiales utilizados por los lenguajes de programación como lo operadores aritméticos. 
+
+Existe una serie de palabras reservadas las cuales tienen un significado especial tanto para C++ como para Java y
+por lo tanto no se pueden utilizar como nombres de variables.
+
+\subsection{Tipos Primitivos de Variable}
+
+Se llaman tipos primitivos de variables de Java a aquellas variables sencillas que contienen los tipos
+de información más habituales: valores boolean, caracteres y valores numéricos enteros o de punto
+flotante.
+
+Java dispone de ocho tipos primitivos de variables: un tipo para almacenar valores true y
+false (boolean); un tipo para almacenar caracteres (char), y 6 tipos para guardar valores numéricos,
+cuatro tipos para enteros (byte, short, int y long) y dos para valores reales de punto flotante (float y
+double). Los rangos y la memoria que ocupa cada uno de estos tipos se muestran en la la siguiente tabla
+
+\begin{tabular}{|p{2.5cm}|p{12.3cm}|}
+	\hline 
+	\textbf{Declaración}  & \textbf{Rango}  \\ 
+	\hline 
+	\textbf{boolean} & true - false   \\ 
+	\hline	
+	\textbf{byte} & [-128 .. 127]   \\ 
+	\hline 
+	\textbf{short} & [-32,768 .. 32,767]  \\ 
+	\hline 
+	\textbf{int} & [-2$^{31}$ .. 2$^{31}$-1]   \\ 
+	\hline	
+	\textbf{long} & [-2$^{63}$ .. 2$^{63}$-1]    \\ 
+	\hline	
+	\textbf{float} & [$\pm3.4*10^{-38}$ .. $\pm3.4*10^{38}$]   \\ 
+	\hline	
+	\textbf{double} & [$\pm1.7*10^{-308}$ .. $\pm1.7*10^{308}$]  \\ 
+	\hline	
+	\textbf{char} & ['u0000' .. 'uffff'] o [0 .. 65.535]  \\ 
+	\hline
+	\textbf{String} & Para almacenar una secuencia de caracteres  \\ 
+	\hline	
+\end{tabular}
+
+En caso de C++ la tabla quedaría de la siguiente manera:
+
+\begin{tabular}{|p{2.5cm}|p{12.3cm}|}
+	\hline 
+	\textbf{Declaración}  & \textbf{Rango}   \\ 	
+	\hline 
+	\textbf{bool}  & true - false   \\ 
+	\hline	
+	\textbf{short}     & [-2$^{15}$ .. 2$^{15}$-1]   \\ 
+	\hline	
+	\textbf{int}    & [-2$^{31}$ .. 2$^{31}$-1]   \\ 
+	\hline	
+	\textbf{long long}  & [-2$^{63}$ .. 2$^{63}$-1]    \\ 
+	\hline	
+	\textbf{float}   & [$\pm1.18e-38 $ .. $\pm3.40e38$] Precisión científica ( 7-dígitos)  \\ 
+	\hline	
+	\textbf{double}     & [$\pm2.23e-308$ .. $\pm1.79e308$] Precisión científica (15-dígitos)  \\ 
+	\hline	
+	\textbf{long double}     & [$\pm3.37e-4932$ .. $\pm1.18e4932$]  Precisión científica (18-dígitos) \\ 
+	\hline	
+	\textbf{char} & [-128 ... 127]  \\ 
+	\hline	
+	\textbf{unsigned char} & [0 ... 255]  \\ 
+	\hline
+	\textbf{string} & Para almacenar una secuencia de caracteres  \\ 
+	\hline
+\end{tabular}
+\vspace*{1em}
+
+En casos de los tipos de datos que soportan datos númericos de tipo entero si se coloca delante del tipo dato el modificador \textbf{unsigned} indica que la variable solo soportará enteros neutros y positivos desplazando el rango de 0 a 2$^{16}$-1 , 2$^{32}$-1 o 2$^{64}$-1  según sea el caso.
+
+\subsection{Cómo se definen e inicializan las variables}
+
+Una variable se define especificando el tipo y el nombre de dicha variable. Estas variables pueden
+ser tanto de tipos primitivos como referencias a objetos de alguna clase perteneciente al lenaguaje de programación o generada por el usuario. Si no se especifica un valor en su declaración, las variable
+primitivas se inicializan a cero (salvo boolean y char, que se inicializan a false y $'\0'$).
+Análogamente las variables de tipo referencia son inicializadas por defecto a un valor especial:
+null.
+
+\begin{lstlisting}[language=C++]
+int x; //Declaracion de la variable x. Se inicializa a 0
+int y = 5; //Declaracion de la variable y. Se inicializa a 5
+\end{lstlisting} 
+
+\subsection{Constante}
+
+Contrario a una variable, una constante es un determinado objetocuyo valor no puede ser alterado durante el proceso de una tarea específica. En C, C++ para declararvariables no existe una palabra especial, es decir, las variables se declaran escribiendo el tipo seguidode uno o más identificadores o nombres de variables. Por otro lado, para declarar constantes existela palabra reservada const, así como la directiva #define. A continuación se muestran ejemplos de declaración de variables y constantes.
+
+\begin{lstlisting}[language=C++]
+//Constante primera variante
+#define A 100
+
+//Constante segunda variante
+const double b = 100;
+
+//Variables 
+int a,c;
+\end{lstlisting}
+
+A diferencia de las constantes declaradas con la palabra const los símbolos definidos con #define noocupan espacio en la memoria del código ejecutable resultante.El tipo de la variable o constante puede ser cualquiera de los listados en Tipos primitivos, o bien de un tipo definido por el usuario.
+
+En el caso de Java para definir una constante basta con usar la palabra reservada \textbf{final}
+
+\begin{lstlisting}[language=C++]
+final double PI=3.14159265358979323846;
+\end{lstlisting}
+
+Las constantes son usadas a menudo con un doble propósito, el primero es con el fin de hacer más legible el código del programa

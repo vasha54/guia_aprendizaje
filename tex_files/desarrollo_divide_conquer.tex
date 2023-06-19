@@ -1,0 +1,91 @@
+En nuestro contexto, Divide y Vencerás es una técnica de diseño de algoritmos
+que consiste en resolver un problema a partir de la solución de subproblemas del
+mismo tipo, pero de menor tamaño. Si los subproblemas son todavía relativamente
+grandes se aplicará de nuevo esta técnica hasta alcanzar subproblemas lo
+suficientemente pequeños para ser solucionados directamente. Ello naturalmente
+sugiere el uso de la recursión en las implementaciones de estos algoritmos.
+
+La resolución de un problema mediante esta técnica consta fundamentalmente
+de los siguientes pasos:
+
+\begin{enumerate}
+	\item En primer lugar ha de plantearse el problema de forma que pueda ser
+	descompuesto en $k$ subproblemas del mismo tipo, pero de menor tamaño. Es
+	decir, si el tamaño de la entrada es $n$, hemos de conseguir dividir el problema en
+	$k$ subproblemas (donde $1 \le  k \le n$) cada uno con una entrada de tamaño $n_k$ y
+	donde $0 \le n_k \le n$. A esta tarea se le conoce como \emph{división}.
+	\item En segundo lugar han de resolverse independientemente todos los
+	subproblemas, bien directamente si son elementales o bien de forma recursiva.
+	El hecho de que el tamaño de los subproblemas sea estrictamente menor que el
+	tamaño original del problema nos garantiza la convergencia hacia los casos
+	elementales, también denominados casos \emph{base}.
+	\item Por último, \emph{combinar} las soluciones obtenidas en el paso anterior para construir
+	la solución del problema original.
+\end{enumerate}
+
+Hemos de hacer unas apreciaciones en este esquema sobre el procedimiento
+Divide, sobre el número $k$ que representa el número de subproblemas, y sobre el
+tamaño de los subproblemas, ya que de todo ello va a depender la eficiencia del
+algoritmo resultante.
+
+En primer lugar, el número $k$ debe ser pequeño e independiente de una entrada
+determinada. En el caso particular de los algoritmos Divide y Vencerás que
+contienen sólo una llamada recursiva, es decir $k = 1$, hablaremos de algoritmos de
+\emph{simplificación}. Tal es el caso del algoritmo recursivo que resuelve el cálculo del
+factorial de un número, que sencillamente reduce el problema a otro subproblema
+del mismo tipo de tamaño más pequeño. También son algoritmos de simplificación
+el de búsqueda binaria en un vector o el que resuelve el problema del k-ésimo
+elemento.
+
+La ventaja de los algoritmos de simplificación es que consiguen reducir el
+tamaño del problema en cada paso, por lo que sus tiempos de ejecución suelen ser
+muy buenos (normalmente de orden logarítmico o lineal). Además pueden admitir
+una mejora adicional, puesto que en ellos suele poder eliminarse fácilmente la
+recursión mediante el uso de un bucle iterativo, lo que conlleva menores tiempos
+de ejecución y menor complejidad espacial al no utilizar la pila de recursión,
+aunque por contra, también en detrimento de la legibilidad del código resultante.
+
+Por el hecho de usar un diseño recursivo, los algoritmos diseñados mediante la
+técnica de Divide y Vencerás van a heredar las ventajas e inconvenientes que la
+recursión plantea:
+
+\begin{itemize}
+	\item Por un lado el diseño que se obtiene suele ser simple, claro, robusto y elegante,
+	lo que da lugar a una mayor legibilidad y facilidad de depuración y
+	mantenimiento del código obtenido.
+	
+	\item Sin embargo, los diseños recursivos conllevan normalmente un mayor tiempo
+	de ejecución que los iterativos, además de la complejidad espacial que puede
+	representar el uso de la pila de recursión.
+\end{itemize}
+
+Desde un punto de vista de la eficiencia de los algoritmos Divide y Vencerás, es
+muy importante conseguir que los subproblemas sean independientes, es decir, que
+no exista solapamiento entre ellos. De lo contrario el tiempo de ejecución de estos
+algoritmos será exponencial. Como ejemplo pensemos en el cálculo de la sucesión
+de Fibonacci, el cual, a pesar de ajustarse al esquema general y de tener sólo dos
+llamadas recursivas, tan sólo se puede considerar un algoritmo recursivo pero no
+clasificarlo como diseño Divide y Vencerás. Esta técnica está concebida para
+resolver problemas de manera eficiente y evidentemente este algoritmo, con tiempo
+de ejecución exponencial, no lo es.
+
+En cuanto a la eficiencia hay que tener en también en consideración un factor
+importante durante el diseño del algoritmo: el número de subproblemas y su
+tamaño, pues esto influye de forma notable en la complejidad del algoritmo
+resultante.
+
+Otra consideración importante a la hora de diseñar algoritmos Divide y
+Vencerás es el reparto de la carga entre los subproblemas, puesto que es importante
+que la división en subproblemas se haga de la forma más equilibrada posible. En
+caso contrario nos podemos encontrar con \emph{anomalías de funcionamiento} como le
+ocurre al algoritmo de ordenación \emph{Quicksort}. Éste es un representante claro de los
+algoritmos Divide y Vencerás, y su caso peor aparece cuando existe un
+desequilibrio total en los subproblemas al descomponer el vector original en dos
+subvectores de tamaño $0$ y $n-1$. En este caso su
+orden es O($n^2$), frente a la buena complejidad, O($n\log n$), que consigue cuando
+descompone el vector en dos subvectores de igual tamaño.
+También es interesante tener presente la dificultad y es esfuerzo requerido en
+cada una de estas fases va a depender del planteamiento del algoritmo concreto.
+Por ejemplo, los métodos de ordenación por Mezcla y Quicksort son dos
+representantes claros de esta técnica pues ambos están diseñados siguiendo el
+esquema presentado: dividir y combinar.

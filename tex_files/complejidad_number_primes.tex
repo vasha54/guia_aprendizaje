@@ -1,0 +1,7 @@
+Para la primera idea de chequear si un numero es primo o la complejidad es $O\sqrt{N}$
+
+En el caso del test Miller-Rabin asumiendo correcta la hipótesis generalizada de Riemann, se puede demostrar que, si todo valor de $a$ hasta $2(\ln n)^{2}$ ha sido verificado y $n$ todavía es clasificado como probable primo, entonces $n$ es en realidad un número primo. Con esto se tiene un test de primalidad de costo O($(\ln n)^{4}$).
+
+La complejidad del algoritmo de la criba de Eratóstenes es O($N \log \log N$) lo que hace que sea un algoritmo bastante rapido. El problema del algoritmo radica en el costo de memoria ya que necesita un arreglo de N+1 elementos siendo N el máximo número hasta donde deseamos conocer todos los números primos. Por lo que el algoritmo solo es aconsejable usarlo cuando N no es mayor de $10^{6}$, para un intervalo mayor se puede este algoritmo junto con otras tecnicas como los test de Primalidad.
+
+En cuanto a la complejidad de la criba de Atkin la primera implementación tiene una complejidad  de O (n / log log n). Mientras en la segunda variante la complejidad es de O(n)

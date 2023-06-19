@@ -1,0 +1,49 @@
+\begin{lstlisting}[language=Java]
+private class Graph {
+   List<Integer>[] adj;
+   List<List<Integer>> components ;
+   
+   public Graph(int nnodes) {
+      adj = new List[nnodes];
+      for (int i = 0; i < nnodes; i++) adj[i] = new ArrayList<>();
+   }
+	
+   public List<Integer>[] sccGraph() {
+      int[] comp = new int[adj.length];
+      for (int i = 0; i < components.size(); i++)
+      for (int u : components.get(i)) comp[u] = i;
+      List<Integer>[] g =Stream.generate(ArrayList::new).limit(components.size()).toArray(List[]::new);
+      Set<Long> edges = new HashSet<>();
+      for (int u = 0; u < adj.length; u++)
+         for (int v : adj[u])
+            if (comp[u] != comp[v] && edges.add(((long) comp[u] << 32) + comp[v]))
+               g[comp[u]].add(comp[v]);
+      return g;
+   }
+	
+   public List<List<Integer>> scc() {
+      int n = adj.length; boolean[] used = new boolean[n];
+      List<Integer> order = new ArrayList<>();
+      for (int i = 0; i < n; i++) if(!used[i])dfs(adj,used,order,i);
+      List<Integer>[] reverseGraph = Stream.generate(ArrayList::new).limit(n).toArray(List[]::new);
+      for (int i = 0; i < n; i++)
+         for (int j : adj[i]) reverseGraph[j].add(i);
+      components = new ArrayList<>();
+      Arrays.fill(used, false); Collections.reverse(order);
+      for (int u : order)
+      if (!used[u]) {
+         List<Integer> component = new ArrayList<>();
+         dfs(reverseGraph, used, component, u); components.add(component);
+      }
+      return components;
+   }
+	
+   private void dfs(List<Integer>[] graph, boolean[] used, List<Integer> res, int u) {
+      used[u] = true;
+      for (int v : graph[u]) if (!used[v]) dfs(graph, used, res, v);
+      res.add(u);
+   }
+	
+   public void addEdge(int i, int j) { adj[i].add(j);}
+}
+\end{lstlisting}

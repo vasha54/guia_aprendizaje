@@ -1,0 +1,6 @@
+La variación de esta técnica es buscar la máxima función, no la mínima. Esto se resuelve realizando una sencilla modificación, en está solamente nos concentramos en la mínima, ya que una vez entendido es fácil extrapolar a la máxima.
+
+Este enfoque es útil cuando las consultas de suma de funciones lineales son monótonas en términos de $k$ o si trabajamos fuera de línea, es decir, podemos agregar primero todas las funciones lineales y responder las consultas después. Eso requeriría manejar consultas en línea. Sin embargo, cuando se trata de consultas en línea, las cosas se pondrán difíciles y habrá que usar algún tipo de estructura de datos establecida para implementar una envoltura convexa adecuado. Sin embargo, el enfoque en línea no se considerará en esta guía debido a su dificultad y porque el segundo enfoque (que es el árbol de Li Chao) permite resolver el problema de manera más simple. Vale la pena mencionar que todavía se puede usar este enfoque en línea sin complicaciones por la descomposición de la raíz cuadrada. Es decir, reconstruir la envoltura convexa desde cero cada $\sqrt n$ nuevas lineas.
+
+Esta técnica es aplicada para optimizar problemas de programación dinámica cuando la recurrencia tiene la
+forma $dp[i] = min_{j<i}{dp[j] + b[j]\times a[i]}$ y se cumple que $b[j] \ge b[j + 1]$ y $a[i] \le a[i + 1]$, logrando una complejidad temporal O($N$)

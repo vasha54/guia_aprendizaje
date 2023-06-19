@@ -1,0 +1,51 @@
+Aquí las  implementaciones que asume que el grafo es acíclico, es decir, existe el ordenamiento topológico deseado. 
+
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+int n; // numero de vertices
+vector< vector<int> > adj; //lista de adyacencia del grafo
+vector<bool> visited;
+vector<int> ans;
+
+void dfs(int v){
+   visited[v] = true;
+   for (int u : adj[v]) {
+      if (!visited[u]) dfs(u);
+   }
+   ans.push_back(v);
+}
+
+void topological_sort() {
+   visited.assign(n, false);
+   ans.clear();
+   for (int i = 0; i < n; ++i) {
+      if (!visited[i]) dfs(i);
+   }
+   reverse(ans.begin(), ans.end());
+}
+\end{lstlisting}
+
+La función principal de la solución es \emph{topological\_sort}, que inicializa las variables DFS, inicia DFS y recibe la respuesta en el vector \emph{ans}.
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public void dfs(List<Integer>[] graph, boolean[] used,
+                List<Integer> order, int u){
+   used[u] = true;
+   for (int v : graph[u])
+      if (!used[v])
+         dfs(graph, used, order, v);
+   order.add(u);
+}
+
+public List<Integer> topologicalSort(List<Integer>[] graph) {
+   int n = graph.length;
+   boolean[] used = new boolean[n];
+   List<Integer> order = new ArrayList<>();
+   for(int i = 0; i < n; i++)
+      if(!used[i])
+         dfs(graph, used, order, i);
+   Collections.reverse(order);
+   return order;
+}
+\end{lstlisting}

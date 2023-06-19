@@ -1,0 +1,7 @@
+La solución recursiva es un algoritmo de orden exponencial, mas exactamente  $\phi^n$. Esto significa que es terriblemente lento, pues tendrá que hacer excesivas operaciones para valores altos de n.
+
+La solución iterativa tiene una complejidad tanto espacial como temporal de $O(n)$ siendo $n$ el término enésimo de fibonacci a calcular.
+
+La solución matricial su complejidad es $O(log_{2}n)$. Para hacernos una idea, para calcular el Fib(200) con el algoritmo exponencial, ocuparíamos $6.2737x10^{41}$ cálculos (interminable). Con el algoritmo de orden $n$ ocuparíamos 200 cálculos, y con este algoritmo, 8 operaciones (Por supuesto estos datos son aproximados, pero muestran claramente las diferencias abismales).
+
+En cuanto a la función es muy eficiente, pero su orden depende de la manera de implementar la potenciación. Una potenciación por cuadrados como en el caso anterior, arroja un costo de $O(log_{2}n)$. Pero se debe tener mucho cuidado en su implementación, pues cada lenguaje tiene diferentes maneras de implementar las funciones matemáticas, y muy posiblemente sea necesario redondear el número para dar la respuesta exacta.

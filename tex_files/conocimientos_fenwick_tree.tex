@@ -1,0 +1,58 @@
+\subsection{Función asociativa binaria}
+Sea A un conjunto no vacío y * una operación binaria en A. Se dice que * es asociativa si, solo si: (a*b)*c = a*(b*c). Por ejemplo la adición y la multiplicación con números pares son asociativas
+
+\subsection{Vector}
+Vector es una clasegenérica y está pensada para operar con arreglos unidimensionales de datos del mismo tipo.
+
+\subsection{Operador AND (\emph{ $\&$ })}
+
+El AND bit a bit, toma dos números enteros y realiza la operación AND lógica en cada par
+correspondiente de bits. El resultado en cada posición es 1 si el bit correspondiente de los dos
+operandos es 1, y 0 de lo contrario. La operacion AND se representa con el signo \&.
+
+\begin{tabular}{c|c|c}
+a	& b &  a \& b \\
+	\hline
+0	& 0 & 0 \\
+
+0	& 1 & 0 \\
+
+1	& 0 & 0  \\
+
+1	& 1 & 1 \\
+\end{tabular} 
+
+Ejemplo 21 ($10101_2$) \& 11 ($01011_2$) :
+
+\begin{tabular}{c|c|}
+	\&	& 10101  \\
+		& 01011 \\
+	\hline
+		& 00001  \\
+\end{tabular} 
+
+\subsection{Operador OR (\emph{ $|$ })}
+
+Una operación OR de bit a bit, toma dos números enteros y realiza la operación OR inclusivo en
+cada par correspondiente de bits. El resultado en cada posición es 0 si el bit correspondiente de losdos operandos es 0, y 1 de lo contrario. La operacion OR se representa con el signo $|$. 
+
+\begin{tabular}{c|c|c}
+	a	& b &  a $|$ b \\
+	\hline
+	0	& 0 & 0 \\
+	
+	0	& 1 & 1 \\
+	
+	1	& 0 & 1  \\
+	
+	1	& 1 & 1 \\
+\end{tabular}
+
+Ejemplo 21 ($10101_2$) \& 11 ($01011_2$) :
+
+\begin{tabular}{c|c|}
+	$|$	& 10101  \\
+	    & 01011 \\
+	\hline
+	    & 11111  \\
+\end{tabular} 

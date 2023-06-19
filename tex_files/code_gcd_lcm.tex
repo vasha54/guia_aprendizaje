@@ -1,0 +1,77 @@
+\subsection{C++}
+
+\subsubsection{GCD}
+\begin{lstlisting}[language=C++]
+int gcdRecursiveEcluid (int a, int b) {
+   if (b == 0) return a;
+   else return gcdRecursiveEcluid (b, a % b);
+}
+
+int gcdTernaryEcluid (int a, int b) {
+   return b ? gcdTernaryEcluid (b, a % b) : a;
+}
+
+int gcdNotRecursiveEcluid (int a, int b) {
+   while (b) { a %= b; int t = a; a = b; b = t; }
+   return a;
+}
+
+int gcdNotRecursiveEcluidOptimed(int a,int b) {
+   while (b > 0){a = a % b;a ^= b; b ^= a; a ^= b; } 
+   return a;
+}
+
+int gcdBinary(int a, int b) {
+   if (!a || !b) return a | b;
+   unsigned shift = __builtin_ctz(a | b);
+   a >>= __builtin_ctz(a);
+   do{
+      b >>= __builtin_ctz(b);
+      if (a > b){int t = a; a = b; b = t;}
+      b -= a;
+   }while (b);
+   return a << shift;
+}	
+\end{lstlisting}
+
+Tenga en cuenta que la optimización de gcd binaria generalmente no es necesaria, y la mayoría de los lenguajes de programación ya tienen una función GCD en sus bibliotecas estándar. Por ejemplo, C++17 tiene una función de este tipo $std::gcd$ en el $numeric$ encabezado.
+
+\subsubsection{LCM}
+\begin{lstlisting}[language=C++]
+int lcm (int a, int b) { return a / gcd(a, b) * b; }
+\end{lstlisting}
+Tenga en cuenta que la implemantación generalmente no es necesaria, y la mayoría de los lenguajes de programación ya tienen una función LCM en sus bibliotecas estándar. Por ejemplo, C++17 tiene una función de este tipo $std::lcm$ en el $numeric$ encabezado.
+
+\subsection{Java}
+
+\subsubsection{GCD}
+
+\begin{lstlisting}[language=Java]
+public int gcdRecursiveEcluid(int a, int b) {
+   if (b == 0) return a;
+   else return gcdRecursiveEcluid(b, a % b);
+}
+
+public int gcdTernaryEcluid(int a, int b) {
+   return b != 0 ? gcdTernaryEcluid(b, a % b) : a;
+}
+
+public int gcdNotRecursiveEcluid(int a, int b) {
+   while (b != 0) {
+      a %= b; int t = a; a = b; b = t;
+   }
+   return a;
+}
+
+public int gcdNotRecursiveEcluidOptimed(int a, int b) {
+   while (b > 0) {
+      a = a % b; a ^= b; b ^= a; a ^= b;
+   }
+   return a;
+}	
+\end{lstlisting}
+
+\subsubsection{LCM}
+\begin{lstlisting}[language=Java]
+public int lcm (int a, int b) { return a / gcd(a, b) * b; }
+\end{lstlisting}

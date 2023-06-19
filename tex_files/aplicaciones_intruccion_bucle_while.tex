@@ -1,0 +1,26 @@
+El uso de la estructura de control de tipo bucle especificamente la estructura while dentro de los ejercicios de concursos es muy utilizada no solo en algoritmos clásicos sino tambíen como parte de la estructura de solución de muchos ejercicios donde el juego de datos de entrada comienza especificando la cantidad de casos de pruebas a probar por tu algoritmo. Por ejemplo veamos la siguiente especificación de entrada de datos de un ejercicio:
+
+\emph{La primera línea contendrá un número entero N (1$\leq N \leq 100\,000$), el número de problemas de suma que Tudor necesita resolver. Las siguientes líneas N contendrán cada una dos números enteros separados por espacios cuyo valor absoluto es menor que 1\,000\,000\,000, los dos números enteros que Tudor necesita sumar.}
+
+Veamos la estructura solución de este problema utilizando el \textbf{while} con C++
+
+\begin{lstlisting}[language=C++]
+/*La variable casos es de tipo entera y previamente se leyo de consola su valor y almacena el valor de la cantidad de casos a probar*/
+while (casos > 0){
+   /*Decremento la cantidad de casos de pruebas que me queda por resolver*/
+   casos= casos -1;
+   
+   /*Declaro las variables donde voy alamcenar los valores a sumar, podria poner esta linea arriba del while sin porblema y me ahorarria memoria*/
+   long log a,b;
+   
+   /*Leo los valores para el caso en cuestion*/    
+   cin>>a>>b; 
+   
+   /*Sumo e imprimo los valores*/
+   cout<<(a+b)<<endl;
+}
+\end{lstlisting}
+
+En el código anterior lo importante es ver como el algoritmo principal del problema (sumar dos numeros ) lo encapsulamos dentro de un while el cual nos va servir para controlar la cantidad de instancias del mismo problema que nuestro algoritmo debe ser capaz de resolver. 
+
+Cualquiera de las otras estructuras de control de tipo bucle puede ser convertidas o representadas utilizando la estructura while siempre con un menor o mayor grado de complejidad de implementación dependiendo de la situación. 

@@ -1,0 +1,23 @@
+El funcionamiento de los algoritmos que siguen la técnica de Divide y Vencerás
+descrita anteriormente se refleja en el esquema general que presentamos a
+continuación:
+
+\begin{lstlisting}[language=Pascal]
+PROCEDURE DyV(x:TipoProblema):TipoSolucion;
+   VAR i,k,:CARDINAL;
+      s:TipoSolucion;
+      subproblemas: ARRAY OF TipoProblema;
+      subsoluciones:ARRAY OF TipoSolucion;
+BEGIN
+   IF EsCasobase(x) THEN
+      s:=ResuelveCasoBase(x)
+   ELSE
+      k:=Divide(x,subproblemas);
+      FOR i:=1 TO k DO
+         subsoluciones[i]:=DyV(subproblemas[i])
+      END;
+      s:=Combina(subsoluciones)
+   END;
+   RETURN s
+END DyV;
+\end{lstlisting} 

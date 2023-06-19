@@ -1,0 +1,13 @@
+Vamos analizar la complejidad la complejidad de esta estructura de datos acorde a cada una de las operaciones que la misma presenta:
+
+\paragraph{Construción}
+Un árbol de rango en un conjunto de $n$ elementos es un árbol de búsqueda binario, que se puede construir en el tiempo O ( $n\log n$ )
+
+\paragraph{Actualización} Un árbol de rango en un conjunto de $n$ elementos es un árbol de búsqueda binario, que se puede realizar una actualización  en un tiempo de  O($\log n$)
+
+\paragraph{Intervalo de consultas}
+Árboles de rango se puede utilizar para encontrar el conjunto de elementos que se encuentran dentro de un intervalo dado. Para informar los puntos que se encuentran en el intervalo [ x$_{1}$ , x$_{2}$ ], comenzamos por buscar x$_{1}$ y x$_{2}$ . En algún vértice del árbol, las rutas de búsqueda a x$_{1}$ y x$_{2}$ divergirán. Sea $v$ split el último vértice que estos dos caminos de búsqueda tienen en común. Continúe buscando x$_{1}$ en el árbol de rangos. Para cada vértice v en la ruta de búsqueda de $v$ dividida a x$_{1}$ , si el valor almacenado en v es mayor que x$_{1}$ , reporte cada elemento en el subárbol derecho de $v$ . Si $v$ es una hoja, informe el valor almacenado en $v$ si está dentro del intervalo de consulta. Del mismo modo, reportar todos los puntos almacenados en los subárboles izquierdos de los vértices con valores menores que x$_{2}$ a lo largo de la ruta de búsqueda de v dividida a x$_{2}$ e informar la hoja de esta ruta si se encuentra dentro del intervalo de consulta.
+
+Dado que el árbol de rango es un árbol binario balanceado, las rutas de búsqueda a x$_{1}$ y x$_{2}$ tienen longitud O ($\log n$ ). La generación de informes de todos los elementos almacenados en el subárbol de un vértice se puede hacer en tiempo lineal utilizando cualquier algoritmo de recorrido de árbol. Se deduce que el tiempo para realizar una consulta de rango es O ($\log n+k$ ), donde $k$ es el número de elementos en el intervalo de consulta.
+
+Una propiedad importante de los árboles de rangos es que solo requieren una cantidad lineal de memoria. El árbol de segmentos estándar requiere $4n$ vértices para trabajar en una matriz de tamaño $n$.

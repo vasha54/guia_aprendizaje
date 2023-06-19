@@ -1,0 +1,142 @@
+\subsection{Struct}
+Las estructuras (también llamadas \textbf{struct}) son una forma de agrupar varias variables relacionadas en un solo lugar. Cada variable en la estructura se conoce como un miembro de la estructura.
+
+A diferencia de una matriz, una estructura puede contener muchos tipos de datos diferentes (int, string, bool, etc.). 
+
+Para crear una estructura, use la palabra clave \textbf{struct} y declare cada uno de sus miembros entre llaves.
+
+Después de la declaración, especifique el nombre de la variable de estructura (myStructure en el ejemplo siguiente): 
+
+\begin{lstlisting}[language=C++]
+struct{             // Declaracion de la estructura
+   int myNum;         // Miembro (int variable)
+   string myString;   // Miembro (string variable)
+} myStructure;       // variable de tipo estructura
+\end{lstlisting}
+
+Para acceder a los miembros de una estructura, use la sintaxis de punto (.): 
+
+\begin{lstlisting}[language=C++]
+// Crear estructura variable llamada myStructure
+struct {
+   int myNum;
+   string myString;
+} myStructure;
+	
+// Asignar los valores a los miembros de myStructure
+myStructure.myNum = 1;
+myStructure.myString = "Hello World!";
+	
+// Imprimir los miembros myStructure
+cout << myStructure.myNum << "\n";
+cout << myStructure.myString << "\n";
+\end{lstlisting}
+
+\subsubsection{Estructuras con nombre}
+
+Al darle un nombre a la estructura, puede tratarla como un tipo de datos. Esto significa que puede crear variables con esta estructura en cualquier parte del programa en cualquier momento.
+
+Para crear una estructura con nombre, coloque el nombre de la estructura justo después de la palabra clave \textbf{struct}: 
+
+\begin{lstlisting}[language=C++]
+struct myDataType { // Esta estructura es llamada "myDataType"
+   int myNum;
+   string myString;
+};
+\end{lstlisting}
+
+Para declarar una variable que usa la estructura, use el nombre de la estructura como el tipo de datos de la variable:
+
+\begin{lstlisting}[language=C++]
+// Declarar una estructura llamada "car"
+struct car {
+   string brand;
+   string model;
+   int year;
+};
+	
+int main(){
+   //Crear una estructura de tipo carro y almacenar en la variable myCar
+   car myCar1;
+   myCar1.brand = "BMW";
+   myCar1.model = "X5";
+   myCar1.year = 1999;
+		
+   //Crear otra estructura de tipo carro y almacenar en la variable myCar2;
+   car myCar2;
+   myCar2.brand = "Ford";
+   myCar2.model = "Mustang";
+   myCar2.year = 1969;
+		
+   //Imprimir los miembros de una estructuras
+   cout << myCar1.brand << " " << myCar1.model << " " << myCar1.year << "\n";
+   cout << myCar2.brand << " " << myCar2.model << " " << myCar2.year << "\n";
+		
+   return 0;
+}
+\end{lstlisting}
+
+\subsection{Matrices}
+
+Una matriz es un arreglo de areglos fila, o más en concreto un arreglo de referencias a los arreglos fila. Con este esquema, cada fila podría tener un número de elementos diferente.
+\subsubsection{C++}
+Los arreglos bidimensionales o matrices en C++ se pude declarar similar a como se hace un arreglo unidimensional.
+\begin{lstlisting}[language=C++]
+/*Se conoce de antemano las dimensiones esta manera es 
+estatica se recomienda que sea dinamica*/
+int mat [3][4];
+	
+/*De forma dinamica*/
+int ** mat;
+mat = new int * [ncolumns];
+for(int i=0;i<ncolumns;i++)
+   mat[i]=new int [nfilas];
+	
+/*Con los valores conocidos*/
+double carrots[3][4] {{2.5, 3.2, 3.7, 4.1},// primera fila
+   {4.1, 3.9, 1.6, 3.5},// segunda fila
+   {2.8, 2.3, 0.9, 1.1} // tercera fila
+};
+	
+\end{lstlisting}
+\subsubsection{Java}
+Los arrays bidimensionales de Java se crean de un modo muy similar al de C++ (con reserva dinámica de memoria). En Java una matriz se puede crear directamente en la forma,
+\begin{lstlisting}[language=Java]
+int [][] mat = new int[3][4];
+\end{lstlisting}
+
+o bien se puede crear de modo dinámico dando los siguientes pasos:
+
+\begin{enumerate}
+	\item Crear la referencia indicando con un doble corchete que es una referencia a matriz,
+	\begin{lstlisting}[language=Java]
+int[][] mat;
+	\end{lstlisting}
+	
+	\item Crear el vector de referencias a las filas,
+	
+	\begin{lstlisting}[language=Java]
+mat = new int[nfilas][];
+	\end{lstlisting}
+	
+	\item Reservar memoria para los vectores correspondientes a las filas,
+	
+	\begin{lstlisting}[language=Java]
+for(int i=0; i<nfilas; i++);
+   mat[i] = new int[ncols];
+	\end{lstlisting}
+\end{enumerate}
+
+A continuación se presentan algunos ejemplos de creación de arrays bidimensionales:
+\begin{lstlisting}[language=Java]
+// crear una matriz 3x3
+// se inicializan a cero
+double mat[][] = new double[3][3];
+int [][] b = {{1, 2, 3},
+   {4, 5, 6}, // esta coma es permitida
+};
+int c = new[3][]; // se crea el array de referencias a arrays
+c[0] = new int[5];
+c[1] = new int[4];
+c[2] = new int[8];
+\end{lstlisting}

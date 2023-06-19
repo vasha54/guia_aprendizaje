@@ -1,0 +1,37 @@
+Se llama {\bf permutación} de los $n$ objetos a todo conjunto ordenado formado por dichos $n$
+elementos. Dos permutaciones se distinguen una de otra solamente por el orden de
+colocación de sus elementos.
+
+Las permutaciones son un caso particular de las variaciones, cuando $p = n$. Es decir,
+son las variaciones de $n$ objetos tomados $n$ a $n$.
+
+Denotaremos por $P_{n}$ al número de permutaciones de $n$ objetos.
+
+$P_{n}=V_{n,n}$ 
+
+Como las permutaciones de $n$ objetos son las variaciones de orden n, pueden formarse
+de igual modo que las variaciones.
+
+
+$P_{n}=V_{n,n}= n*(n-1)*(n-2)* ... * (n–n+1)$
+
+$P_{n}=n*(n-1)*(n-2)* ... * 1$
+
+$P_{n}=n!$
+
+Como de cada una de las $P_{n-1}$ permutaciones se originan $n$ permutaciones nuevas, se
+tiene la relación: $P_{n}=n*P_{n-1}$
+
+\subsubsection{Permutación con repetición}
+Hasta ahora las permutaciones que hemos formado ha sido a base de un conjunto donde
+todos los objetos son diferentes. Sin embargo, si algunos de los objetos son iguales
+se obtendrán menos permutaciones (algunas serán iguales). Por ejemplo, permutando
+abcd obtenemos 24 permutaciones diferentes, si en lugar de abcd tenemos que permutar
+las letras abab ya no son 24 porque algunas se repetirán.
+
+El problema general se anuncia así: Se tienen $k$ objetos diferentes. ¿Cuántas permutaciones se pueden hacer tomando $n_{1} $ elementos del primer tipo, $n_{2}$ del segundo, ..., $n_{k}$ del k–ésimo?
+
+El número total de elementos de cada permutación es igual a n.Los elementos del tipo $n_{1} $ pueden ser permutados de $n_{1}$! formas, pero como son iguales, estas permutaciones no cambian nada, de forma análoga no cambian nada las $n_{2} $! permutaciones de los elementos del segundo tipo, etc.
+Las permutaciones anteriores se pueden permutar de $n_{1} $! * $n_{2}$! * ... * $n_{k} $! maneras de forma que no varíe, por eso el conjunto de las $n!$ permutaciones se separa en partes formadas por $n_{1} $! * $n_{2}$! * ... * $n_{k} $! permutaciones iguales. El número de permutaciones con repetición diferentes se puede escribir:
+
+$P_{n}(n_{1},n_{2}, ...,n_{k})=\frac{n!}{n_{1}!*n_{2}!* ... * n_{k}! }$

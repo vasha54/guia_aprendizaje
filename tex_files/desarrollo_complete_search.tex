@@ -1,0 +1,87 @@
+La búsqueda completa es un método general que se puede utilizar para resolver casi cualquier problema de algoritmo. La idea es generar todas las posibles soluciones al problema utilizando la fuerza bruta, y luego seleccionar la mejor solución o contar el número de soluciones, dependiendo del problema.
+
+La técnica de búsqueda completa, también conocida como fuerza bruta o retroceso (\emph{backtracking}) recursivo , es un método para resolver un problema atravesando todo (o parte del) espacio de búsqueda para obtener la solución requerida. Durante la búsqueda, se nos permite podar (es decir, elegir no explorar) partes del espacio de búsqueda si hemos determinado que estas partes no tienen posibilidad de contener la solución requerida. De esta manera, la búsqueda completa debe devolver la respuesta mejor/óptima (si existe) al finalizar.
+
+En ICPC, la búsqueda completa debe ser la primera solución considerada, ya que generalmente es fácil encontrar una solución de este tipo y codificarla/depurarla. Recuerda el principio \emph{KISS}: Mantenlo breve y simple (\emph{Keep ItShort and Simple}). Una solución de búsqueda completa libre de errores nunca debería recibir una respuesta incorrecta (WA) respuesta en concursos de programación ya que explora todo el espacio de búsqueda que puede contener la respuesta. Sin embargo, muchos problemas de programación tienen soluciones mejores que la Búsqueda completa. Por lo tanto, una solución de búsqueda completa puede recibir un veredicto de límite de tiempo excedido (TLE). Con un análisis adecuado, puede determinar el resultado probable (TLE vs AC) antes de intentar codificar nada 
+es un buen punto de partida. Si una búsqueda completa es fácil de implementar y es probable que no supere el límite de tiempo, continúe e implemente una. Esto le dará más tiempo (concurso) para trabajar en problemas más difíciles en los que la búsqueda completa será demasiado lenta.
+
+En IOI, normalmente necesitará mejores técnicas de resolución de problemas, ya que las soluciones de búsqueda completa normalmente solo se recompensan con una fracción muy pequeña de la puntuación total en el esquema de puntuación de las subtareas. Sin embargo, la búsqueda completa debe usarse cuando no pueda encontrar una mejor solución; al menos le permitirá obtener puntuación.
+
+A veces, ejecutar la búsqueda completa en instancias pequeñas de un problema desafiante puede
+ayudarnos a comprender su estructura a través de patrones en la salida (es posible visualizar
+el patrón para algunos problemas) que pueden ser explotados para diseñar un algoritmo más rápido. Ejemplo de estos son algunos problemas combinatorios que se pueden resolver de esta manera. Por tanto, la búsqueda completa también puede actuar como un verificador para instancias pequeñas, proporcionando una verificación adicional para el algoritmo más rápido pero no trivial que desarrolle.
+
+Se puede tener la impresión de que la búsqueda completa solo funciona para \emph{problemas fáciles} y, por lo general, no es la solución prevista para \emph{problemas más difíciles}. Esto no es enteramente verdad. Existen problemas difíciles que solo se pueden resolver con algoritmos creativos de búsqueda completa. 
+
+Finalmente, se pueden usar algunas reglas empíricas a continuación para ayudar a identificar problemas que se pueden resolver. con búsqueda completa. Un problema es posiblemente un problema de búsqueda completa si el problema:
+
+\begin{itemize}
+\item Pide imprimir todas las respuestas y el espacio de solución puede ser tan grande como el espacio de búsqueda.
+\item Tiene un espacio de búsqueda pequeño (el total de operaciones en el peor de los casos es < 100M )
+\item Tiene una restricción de tiempo sospechosamente grande y tiene muchos potenciales de poda (temprana)
+\item  Puede calcularse previamente
+\item Es un problema NP-difícil/completo conocido sin ninguna propiedad especial.
+\end{itemize}
+
+
+\subsection{Consejos para implementar una búsqueda completa}
+
+La mayor apuesta al escribir una solución de búsqueda completa es si podrá o no pasar el límite de tiempo. Si el límite de tiempo es de 1 segundo (los jueces en línea no suelen utilizar grandes límites de tiempo para una evaluación eficiente) y su programa actualmente se ejecuta en más de 1 segundo
+en varios (puede haber más de uno) casos de prueba con el tamaño de entrada más grande como se especifica en la descripción del problema, pero aún se considera que su código es TLE, es posible que desee modificar el código crítico en su programa en lugar de volver a resolver el problema con un algoritmo más rápido que puede no ser fácil de diseñar o puede no existir.
+
+\subsubsection{Filtrar vs generar}
+
+Algoritmos que examinan muchas (si no todas) posibles soluciones y eligen las que son
+correctos (o eliminar los incorrectos) se denominan \emph{filtros}. Por lo general, los algoritmos de \emph{filtros} se escriben iterativamente.
+
+Los algoritmos que construyen gradualmente las soluciones e inmediatamente eliminan las soluciones parciales inválidas se denominan \emph{generadores}. Por lo general, los algoritmos \emph{generadores} son más fáciles de implementar cuando escrito recursivamente ya que nos da mayor flexibilidad para podar el espacio de búsqueda.
+
+En general, los filtros son más fáciles de codificar pero se ejecutan más lentamente, dado que suele ser mucho más difícil eliminar una mayor parte del espacio de búsqueda de forma iterativa. Haga los cálculos (análisis de complejidad) para ver si un filtro es lo suficientemente bueno o si necesita crear un generador.
+
+\subsubsection{Eliminación temprana del espacio de búsqueda no viable }
+
+Al generar soluciones utilizando el retroceso (\emph{backtracking}) recursivo, podemos encontrar una solución parcial que nunca conducirá a una solución completa. Podemos podar la búsqueda allí y explorar otras partes del espacio de búsqueda. Continuar desde cualquiera de estas soluciones parciales no viables nunca va a conducir a una solución válida. Por lo tanto, podemos podar estas soluciones parciales aquí y concentrarnos en las otras posiciones válidas, reduciendo así el tiempo de ejecución general. Como regla general, cuanto antes pueda podar el espacio de búsqueda, mejor.
+
+\subsubsection{Utilizar simetrías}
+
+¡Algunos problemas tienen simetrías y deberíamos intentar explotar las simetrías para reducir el tiempo de ejecución!.  Sin embargo, debemos señalar que es cierto que, a veces, considerar las simetrías puede complicar el código. En la programación competitiva, esta no suele ser la mejor manera (queremos un código más corto para minimizar los errores). Si la ganancia obtenida al tratar con simetría es
+no es significativo para resolver el problema, simplemente ignore este consejo.
+
+\subsubsection{Precálculo}
+
+A veces es útil generar tablas u otras estructuras de datos que aceleren la búsqueda de un resultado antes de la ejecución del programa en sí. Esto se llama Precálculo, en el que uno intercambia memoria/espacio por tiempo. Sin embargo, esta técnica rara vez se puede utilizar para problemas de concursos de programación recientes.
+
+Aunque este consejo no se puede utilizar para la mayoría de los problemas de búsqueda completa, puede encontrar una lista de algunos ejercicios de programación donde se puede utilizar este consejo.
+
+\subsubsection{Intenta resolver el problema al revés}
+
+Algunos problemas de concurso parecen mucho más fáciles cuando se resuelven \emph{hacia atrás} (desde una perspectiva menos ángulo obvio) que cuando se resuelven usando un ataque frontal (desde el ángulo más obvio como se describe en la descripción del problema). Esté preparado para intentar enfoques no convencionales a los problemas.
+
+\subsubsection{Compresión de datos}
+
+La restricción de entrada en algunos problemas creativos en los que la solución esperada por el autor del problema es la búsqueda completa puede estar \emph{disfrazada} para parecer demasiado grande para que una solución normal de búsqueda completa funcione dentro del límite de tiempo. Pero luego de una inspección más cuidadosa, algunos comentarios, generalmente sutiles, en la descripción del problema en realidad reduce el espacio de búsqueda (significativamente) lo que luego hace factible una solución de búsqueda completa.
+
+\subsubsection{Optimización de su código}
+
+Existen muchas técnicas que puede utilizar para optimizar su código. Entendiendo la computadora
+hardware y cómo está organizado, especialmente el comportamiento de E/S, memoria y caché, puede ayudar
+diseñas mejor código.
+
+\begin{enumerate}
+	\item  Use C++ en lugar de Java (más lento que C++) o Python (más lento
+	que Java). Un algoritmo implementado usando C++ generalmente se ejecuta más rápido que el
+	implementado en Java o Python en muchos jueces en línea. Algunos concursos de programación, pero no todos, dan a los usuarios de Java/Python más tiempo para dar cuenta de la diferencia en el rendimiento (pero esto nunca es 100\% justo).
+	\item La manipulación de bits en los tipos de datos enteros incorporados (hasta el entero de 64 bits) es (mucho) más eficiente que la manipulación de índices en una matriz de valores booleanos. Si necesitamos más de 64 bits, use el conjunto de bits STL de C++ en lugar de vector<bool>.
+	\item Para usuarios de C/C++, use el estilo C más rápido scanf/printf en lugar de cin/cout (o
+	al menos configure ios::sync con stdio(false); cin.tie(NULL); aunque todavía más lento que scanf/printf).
+	\item Para usuarios de Java, use las clases \emph{BufferedReader/BufferedWriter} más rápidas para la lectura e impresión de datos
+	\item Acceda a una matriz 2D en forma de fila principal (fila por fila) en lugar de columna principal forma como las matrices multidimensionales se almacenan en un orden de fila principal en la memoria. Este aumentará la probabilidad de acierto de caché.
+	\item Utilice estructuras/tipos de datos de nivel inferior en todo momento si no necesita la funcionalidad adicional en los de nivel superior (o más grandes). Por ejemplo, use una matriz con un tamaño ligeramente mayor que el tamaño máximo de entrada en lugar de usar vectores de tamaño variable.
+	\item Declare la mayoría de las estructuras de datos (especialmente las voluminosas, por ejemplo, matrices grandes) una vez colocándolas en el ámbito global. Asigne suficiente memoria para manejar la entrada más grande del problema. De esta manera, no tenemos que pasar (o peor aún, copiar) las estructuras de datos como argumentos de función. Para problemas con múltiples casos de prueba, simplemente borrar/restablecer el contenido de la estructura de datos antes de tratar con cada caso de prueba.
+	\item Cuando tenga la opción de escribir su código de forma iterativa o recursiva, elija el
+	versión iterativa.
+	\item El acceso a la matriz en bucles (anidados) puede ser lento. Si tiene una matriz A y accede con frecuencia al valor de A[i] (sin cambiarlo) en bucles (anidados), puede ser beneficioso usar una variable local temp = A[i] y trabajar con temp en su lugar.
+	\item Para usuarios de C++: el uso de matrices de caracteres de estilo C producirá una ejecución más rápida que cuando utilizando string STL de C++. En el caso de Java utilizar \emph{StringBuilder} 
+\end{enumerate}
+
+

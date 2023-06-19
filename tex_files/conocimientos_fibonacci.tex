@@ -1,0 +1,44 @@
+\subsection{Sucesión númerica}
+Una \textbf{sucesión númerica} es un conjunto ordenado de números, que se llaman \textbf{términos} de la sucesión. Cada término se representa por una letra y un subíndice que indica el lugar que ocupa dentro de ella. De acuerdo a la cantidad de términos la msma se puede clasificar como \textbf{sucesión finita} cuando la cantidad de términos es finito mientras cuando ocurre lo contrario se dice que estamos en presencia de una \textbf{sucesión infinita}. El \textbf{término general} ó \textbf{término n-ésimo}, $a_{n}$, de una sucesión es una fórmula que nos permite calcular cualquier término de la sucesión en función del lugar que ocupa.
+
+\subsection{Exponenciación Binaria}
+La exponenciaión binaria es una técnica que permite generar cualquier cantidad de potencia $n^{th}$ para multiplicaciones O ($\log N$) (en lugar de $n$ multiplicaciones en el método habitual).
+
+
+\subsection{Multiplicación de matrices}
+En matemática, la multiplicación o producto de matrices es la operación de composición efectuada entre dos matrices, o bien la multiplicación entre una matriz y un escalar según unas determinadas reglas.
+
+Vamos a considerar dos matrices:
+
+\begin{itemize}
+	\item La matriz $A$ con $n$ filas y $k$ columnas.
+	\item La matriz $B$ con $k$ filas y $m$ columnas.
+\end{itemize}
+
+Para poder efectuar una multiplicacion entre dos matrices la cantidad de columnas de una debe coincidir con la cantidad de filas de la otra matriz. Si se cumple eso la operación se puede definir como $C=A*B$ 
+\vspace*{0.3in}
+
+$\begin{bmatrix}
+	a_{11} & a_{12} & ... & a_{1k} \\ 
+	a_{21} & a_{22} & ... & a_{2k} \\ 
+	... & ... & ... & ... \\ 
+	a_{n1} & ... & ... & a_{nk}
+\end{bmatrix} * \begin{bmatrix}
+	b_{11} & b_{12} & ... & b_{1m} \\ 
+	b_{21} & b_{22} & ... & b_{2m} \\ 
+	... & ... & ... & ... \\ 
+	b_{k1} & ... & ... & b_{km}
+\end{bmatrix} = \begin{bmatrix}
+	c_{11} & c_{12} & ... & c_{1m} \\ 
+	c_{21} & c_{22} & ... & c_{2m} \\ 
+	... & ... & ... & ... \\ 
+	c_{n1} & ... & ... & c_{nm}
+\end{bmatrix} $ 
+
+\vspace*{0.3in}
+
+Tal que $C$ es una matriz con $n$ filas y $m$ columnas y cada elemento de $C$ se puede calcular con la siguiente fórmula:
+
+$$
+C_{ij} = \sum_{r=1}^k A_{ir} *B_{rj}.
+$$

@@ -1,0 +1,18 @@
+Para conformar una plantilla que sirva de base para la codificación de cualquier algoritmo solución a un problema utilizando C++ vamos a dividir o seccionar dicha plantilla en seis secciones la cual vamos a describir cada una a continuación:
+
+\begin{enumerate}
+	\item \textbf{Declaración de bibliotecas:} Lo primero que debemos definir en nuestro código son las bibliotecas o librerías que va utilizar nuestro código. Para incluirlas basta con utilizar la directiva \#include seguido con el nombre de la biblioteca o libreria entre los operadores de menor que y mayor que. Cada inclusión se debe hacer por línea. El incluir biblioteca o librería que no es utilizada luego por el código no afecta en nada, ni en tiempo y memoria. En la versiones modernas de C++ con la siguiente inclusión:
+	\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+	\end{lstlisting}
+es más que suficiente ya que esta biblioteca contiene a gran parte de las bibliotecas que usaremos para desarrollar soluciones a problemas o ejercicios de concursos.
+	\item \textbf{Declaración de macros:} La definición de macros mejora la legibilidad de nuestras soluciones y aumenta la reutilización de las mismas. No son de uso obiligatorio es solo una sugerencias que damos. Entre las macros que podemos citar su utilización están la del salto de linea (ENDL) que sustituye a la función \textbf{endl} por el alto costo computacional de esta última. Para definir una macro usamos la 
+	\item \textbf{Inclusión de la std:} Esta definida por la siguiente instrucción:
+	\begin{lstlisting}[language=C++]
+using namespace std;
+	\end{lstlisting}
+	El motivo es el de dar acceso al espacio de nombres (namespace) std, donde se encuentra encerrada toda la librería estándar. El motivo de encerrar la librería estándar en un espacio de nombres no es otro que el de hacer más sencilla la creación de proyectos muy grandes, de manera que el proyecto no deje de compilar debido a que se han escogido los mismos nombres para dos funciones, clases, constantes o variables. Es decir, las funciones que normalmente llamarías como \textbf{std::cout} solo tendrías que usar \textbf{cout}.
+	\item \textbf{Declaración de las variables globales:} Posterior a la inclusión de la std puede venir la declaración de las variables globales que necesitemos en nuestra solución. Esto tampoco es obligatorio pues podemos tener soluciones que no requieren variables globales.
+	\item \textbf{Declaración e implementación métodos auxiliares:} Como mismo nos puede suceder con las variables globales nos puede suceder que nuestra solución necesitemos la implementación y utilización de métodos auxiliares los cuales invocaremos en el método \emph{main} por tanto la definición e implementación de estos métodos auxiliares deben hacerse previamente a la del método \emph{main}.
+	\item \textbf{Declaración e implementación del método main:} Es elemento que junto con la inclusión de la bibliotecas y el std no pueden faltar en la solución. Es el método por el cual comienza la ejecución de nuestro algoritmo. Las principales instruccciones y las llamadas a funciones o métodos auxiliares deben hacerse desde él. Siempre todo por encima de la instrucción \textbf{return 0;} 
+\end{enumerate}

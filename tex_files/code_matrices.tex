@@ -1,0 +1,229 @@
+\subsection{C++}
+
+\subsubsection{Declaración y creación de arreglos}
+Las matrices se pueden declarar según la situación. Ahora veremos cada una de ellas:
+
+\begin{lstlisting}[language=C++]
+/* Sabemos la cantidad de elementos a priori, esta manera es estatica 
+<tipo_de _dato> <nombre_matriz> [<cantidadFila>][<cantidadColumna>];*/
+bool mark[100][50];
+	
+/*La cantidad de elementos puede variar y depende del valor de una 
+variable.Es la mas usada y esta se conoce como dinamica
+<tipo_de _dato> ** <nombre_matriz>= new * <tipo_de _dato> [<cantidadColumna>];
+for(int i=0;i<cantidadColumna;i++){
+   <nombre_matriz>[i] = new [nfilas]; 
+}
+*/
+int ncolumns = 100;
+int nfilas = 50;
+int ** mat;
+mat = new int * [ncolumns];
+for(int i=0;i<ncolumns;i++)
+   mat[i]=new int [nfilas];
+	
+/*Cuando conocemos los valores que integran la matriz*/
+double carrots[3][4] {{2.5, 3.2, 3.7, 4.1},// primera fila
+                      {4.1, 3.9, 1.6, 3.5},// segunda fila
+                      {2.8, 2.3, 0.9, 1.1} // tercera fila
+                     };
+	
+\end{lstlisting}
+
+\subsubsection{Almacenar valor en la matriz}
+Para almacenar un valor en la matriz solo debemos inidicar la posición en la matriz en que se va almacenar dicha posición esta definida por una fila y una columna debe ser un valor o variable entera y debe estar en rango $[0,fila-1][0,columna-1]$.
+
+\begin{lstlisting}[language=C++]
+/* <nombre matriz>[<fila>][<columna>] = <valor>; donde:
+<fila> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la fila a la que quiero acceder en la matriz
+<columna> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la columna a la que quiero acceder en la matriz 
+<valor> puede ser una variable entera , valor entero literal, expresion cuyo resultado sea entero */
+notas[2][3]=cantidadMaxima;
+notas[cantidadMaxima-50][23+cantidadMaxima]=34;
+notas[10+5][3]=2*cantidadMaxima;
+\end{lstlisting}
+
+\subsubsection{Obtener valor en la matriz}
+
+Para obtener un valor en una matriz solo debemos inidicar la posición en la matriz en que se va almacenar dicha posición esta definida por una fila y una columna debe ser un valor o variable entera y debe estar en rango $[0,fila-1][0,columna-1]$ .
+
+\begin{lstlisting}[language=C++]
+/* <variable> = <nombre matriz>[<fila>][<columna>]; donde:
+<fila> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la fila a la que quiero acceder en la matriz
+<columna> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la columna a la que quiero acceder en la matriz 
+<variable> va ser la el lugar donde se almacenara una copia del valor solicitado al arreglo, debe ser del mismo tipo de dato del arreglo */
+int a =notas[2][3];
+int b;
+b = notas[cantidadMaxima-50][a+1];
+\end{lstlisting}
+
+\subsubsection{Recorrer todos los elementos de la matriz}
+
+Para recorrer todos los elementos o parte de los elementos almacenados en la matriz vamos utilizar dos instrucciones \textbf{for} de forma anidada cada una asociada a una de las dimensiones de la matriz es importante hacer notar que dependiendo de como se definan dichas intrucciones el orden y sentido de recorrido dentro de la matriz puede variar lo cual puede ser útil o engorroso dependiendo de la situación
+
+\begin{lstlisting}[language=C++]
+/*for( int i=<fila_inicial>; i < <fila_final>; i++ ){
+     for( int j=<columna_inicial>; j < <columna_final>; j++ ){
+  	
+     } 
+} 
+i++ si <fila_inicial> <= <fila_final>
+i-- si <fila_inicial> > <fila_final>
+i <= <fila_final> si deseo incluir en el rango la ultima fila pero tiene que ser una fila valida de la matriz
+j++ si <columna_inicial> <= <columna_final>
+j-- si <columna_inicial> > <columna_final>
+j <= <columna_final> si deseo incluir en el rango la ultima columna pero tiene que ser una columna valida de la matriz
+*/	
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      //notas[i][j] accedo al valor almacenado en la i-nesima fila y j-nesima de la matriz
+   }
+}
+
+\end{lstlisting}
+
+
+
+\subsubsection{Leer los valores y almacenarlos en la matriz}
+
+Para leer los valores consola y almacernalos directamente en la matriz vamos a utilizar una combinación de recorrer todos los elementos y almacenar en la matriz visto anteriormente
+
+\begin{lstlisting}[language=C++]
+/* En cada iteracion de los fors el cin lee un valor y dicho valor es almacenado en la matriz en la posicion que indique el valor de las variable i y j en esa iteracion, en la primera el valor seria (0;0), en la segunda (0;1) y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas de la filas y la j en el rango de posiciones validas de la columnas de la matriz */
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      cin>>matriz[i][j];
+   }		
+}
+\end{lstlisting}
+
+\subsubsection{Imprimir los valores almacenados en el matriz}
+
+Para imprimir los valores en consola de la matriz vamos a utilizar una combinación de recorrer todos los elementos y obtener en una matriz visto anteriormente
+
+\begin{lstlisting}[language=C++]
+/* En cada iteracion de los for el cout imprime un valor que se corresponde con el almacenado en la matriz en la posicion que indique el valor de las variables i (fila) y j (columna)  en esa iteracion, en la primera el valor seria (0;0), en la segunda (0;1) y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas de la filas y la j en el rango de posiciones validas de la columnas de la matriz*/
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      cout<<matriz[i][j]<<" ";
+   }
+} 
+cout<<endl;
+for(int i=0;i<cFilas;i++){
+	for(int j=0;j<cColumnas;j++){
+		cout<<matriz[i][j]<<" ";
+	}
+    cout<<endl;
+}
+\end{lstlisting}
+
+En primer bucle anidado se imprime todos los valores de la matriz en una sola linea separados por espacios, mientras en el segundo bucle anidado cada valor almacenado en la matriz  se imprime acorde a la fila y columna que le corresponde en la matriz.
+
+\subsection{Java}
+
+\subsubsection{Declaración y creación de matrices}
+
+La matriz se puede declarar según la situación. Ahora veremos cada una de ellas:
+
+\begin{lstlisting}[language=Java]
+/*La cantidad de elementos puede variar y depende del 
+valor de dos variables (una para fila y la otra para columna).Es la mas usada
+<tipo_de _dato> [] <nombre_matriz>= new <tipo_de _dato> [<cant_fila>][<cant_columna>];*/
+int cantidadEvaluaciones=15;
+int cantidadEstudiantes=35;
+int [][] notas;
+notas=new int [cantidadEstudiantes][cantidadEvaluaciones]; 
+double [][] temperaturas=new double [12][31];
+	
+/*Cuando conocemos los valores que integran la matriz*/
+String [][] nombres ={ {"Luis", "Ernesto", "Susana"}, //primera fila
+                       {"Luisa", "Yinela", "Rosa"}, //segunda fila
+                     };
+\end{lstlisting}
+
+\subsubsection{Almacenar valor en la matriz}
+
+Para almacenar un valor en la matriz solo debemos inidicar la posición en la matriz en que se va almacenar dicha posición esta definida por una fila y una columna debe ser un valor o variable entera y debe estar en rango $[0,fila-1][0,columna-1]$.
+
+\begin{lstlisting}[language=Java]
+/* <nombre matriz>[<fila>][<columna>] = <valor>; donde:
+<fila> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la fila a la que quiero acceder en la matriz
+<columna> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la columna a la que quiero acceder en la matriz 
+<valor> puede ser una variable entera , valor entero literal, expresion cuyo resultado sea entero */
+notas[2][3]=cantidadMaxima;
+notas[cantidadMaxima-50][23+cantidadMaxima]=34;
+notas[10+5][3]=2*cantidadMaxima;
+\end{lstlisting}
+
+\subsubsection{Obtener valor en la matriz}
+
+Para obtener un valor en una matriz solo debemos inidicar la posición en la matriz en que se va almacenar dicha posición esta definida por una fila y una columna debe ser un valor o variable entera y debe estar en rango $[0,fila-1][0,columna-1]$ .
+
+\begin{lstlisting}[language=Java]
+/* <variable> = <nombre matriz>[<fila>][<columna>]; donde:
+<fila> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la fila a la que quiero acceder en la matriz
+<columna> puede ser una variable entera, valor entero literal, expresion cuyo resultado sea entero e indicada la columna a la que quiero acceder en la matriz 
+<variable> va ser la el lugar donde se almacenara una copia del valor solicitado al arreglo, debe ser del mismo tipo de dato del arreglo */
+int a =notas[2][3];
+int b;
+b = notas[cantidadMaxima-50][a+1];
+\end{lstlisting}
+
+\subsubsection{Recorrer todos los elementos de la matriz}
+
+Para recorrer todos los elementos o parte de los elementos almacenados en la matriz vamos utilizar dos instrucciones \textbf{for} de forma anidada cada una asociada a una de las dimensiones de la matriz es importante hacer notar que dependiendo de como se definan dichas intrucciones el orden y sentido de recorrido dentro de la matriz puede variar lo cual puede ser útil o engorroso dependiendo de la situación
+
+\begin{lstlisting}[language=Java]
+/*for( int i=<fila_inicial>; i < <fila_final>; i++ ){
+     for( int j=<columna_inicial>; j < <columna_final>; j++ ){
+     } 
+  } 
+i++ si <fila_inicial> <= <fila_final>
+i-- si <fila_inicial> > <fila_final>
+i <= <fila_final> si deseo incluir en el rango la ultima fila pero tiene que ser una fila valida de la matriz
+j++ si <columna_inicial> <= <columna_final>
+j-- si <columna_inicial> > <columna_final>
+j <= <columna_final> si deseo incluir en el rango la ultima columna pero tiene que ser una columna valida de la matriz
+*/	
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      //notas[i][j] accedo al valor almacenado en la i-nesima fila y j-nesima de la matriz
+   }
+}
+	
+\end{lstlisting}
+
+\subsubsection{Leer los valores y almacenarlos en la matriz}
+Para leer los valores consola y almacernalos directamente en la matriz vamos a utilizar una combinación de recorrer todos los elementos y almacenar en la matriz visto anteriormente
+
+\begin{lstlisting}[language=Java]
+/* En cada iteracion de los fors el cin lee un valor y dicho valor es almacenado en la matriz en la posicion que indique el valor de las variable i y j en esa iteracion, en la primera el valor seria (0;0), en la segunda (0;1) y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas de la filas y la j en el rango de posiciones validas de la columnas de la matriz */
+Scanner in = new Scanner(System.in);
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      matriz[i][j] = in.nextInt();
+   }		
+}
+\end{lstlisting}
+
+\subsubsection{Imprimir los valores almacenados en la matriz}
+
+Para imprimir los valores en consola de la matriz vamos a utilizar una combinación de recorrer todos los elementos y obtener en una matriz visto anteriormente
+
+\begin{lstlisting}[language=Java]
+/* En cada iteracion de los for el cout imprime un valor que se corresponde con el almacenado en la matriz en la posicion que indique el valor de las variables i (fila) y j (columna)  en esa iteracion, en la primera el valor seria (0;0), en la segunda (0;1) y asi sucesivamente. Tener en cuenta que los valores de i esten en rango de posiciones validas de la filas y la j en el rango de posiciones validas de la columnas de la matriz*/
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      System.out.print(matriz[i][j]+" ");
+   }
+} 
+System.out.println();
+for(int i=0;i<cFilas;i++){
+   for(int j=0;j<cColumnas;j++){
+      System.out.print(matriz[i][j]+" ");
+   }
+   System.out.println();
+}
+\end{lstlisting}
+
+En primer bucle anidado se imprime todos los valores de la matriz en una sola linea separados por espacios, mientras en el segundo bucle anidado cada valor almacenado en la matriz  se imprime acorde a la fila y columna que le corresponde en la matriz.

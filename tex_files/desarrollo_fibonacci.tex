@@ -1,0 +1,212 @@
+En este orden de ideas, es fácil descubrir los primeros términos de la sucesión:\\ $0,1,1,2,3,5,8,13,21,34,55,89,144, \dots$ 
+
+Del mismo modo podemos expresar cada término en base a su función:\\ Fib(0)=0, Fib(1)=1, Fib(2)=1, Fib(3)=2, Fib(4)=3, Fib(5)=5, $\dots$
+
+Dada esta definición formal, no es nada difícil crear una primera solución recursiva para obtener un término n de la sucesión de Fibonacci. Pero analicemos a fondo lo que hace esta función. Recursivamente, estará llamando a sus dos anteriores. Cada una de estas llamadas, si es mayor que 1, de nuevo estará llamando a sus dos anteriores. Analicemos el árbol de llamadas para un fibonacci de orden 6:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.50]{img/arbol-fibonacci.png}
+	\label{fig:generalizacion-fibonacci-2}
+\end{figure}
+
+Pero es eficiente? Volvamos al árbol. Para calcular 1 vez Fib(6), es necesario calcular 1 vez Fib(5), 2 veces Fib(4), 3 veces Fib(3), 5 veces Fib(2), 8 veces Fib(1) y cinco veces Fib(0) (Como el algoritmo considera constante Fib(1), solo tenemos 5 llamadas a Fib(0). Si Fib(1) se calculara con su antecesor, tendríamos 13 llamadas). ¡Estamos repitiendo operaciones! Y lo peor, estas operaciones se repiten justamente siguiendo la secuencia de Fibonacci como se puede ver en los números en negrilla (1,1,2,3,5,8,13).
+
+Si eliminamos los cálculos repetidos, fácilmente podemos tener un algoritmo de iterativo. Para hacer esto, utilizaremos un array que guarde los valores calculados de forma que en la posición $i$  estará la suma de los valores presentes en $i-1$ y $i-2$ partitiendo que para $i$ igual 0 y 1 esos serán sus valores respectivamente. 
+
+Ahora el algoritmo es mucho mas eficiente, reduciendo enormemente el número de operaciones innecesarias para valores altos de $n$. Pero surge un nuevo problema. La complejidad espacial es de $O(n)$ también. Hemos sacrificado espacio por tiempo, ahora tenemos un array de $n$ posiciones cuando en realidad solo necesitábamos la posición $n$ y las demás podemos desecharlas. Como el algoritmo únicamente necesita de los dos valores anteriores para obtener el siguiente podemos remplazar el array por un grupo de tres variables. Ahora la complejidad temporal sigue siendo de orden $O(n)$ pero la complejidad espacial se reduce a un orden $O(1)$.
+
+Volviendo al inicio, sabemos que:
+
+$Fib(n)=Fib(n-1)+Fib(n-2)$
+
+Partiendo de aquí, podemos fácilmente desarrollar un sistema de ecuaciones:
+
+\[ 0Fib(n-2)+1Fib(n-1)=1Fib(n-1) \]
+\[ 1Fib(n-2)+1Fib(n-1)=1Fib(n-1) \]
+
+Y por supuesto, lo reescribiremos en notación matricial:
+
+
+$
+\begin{bmatrix}
+	0 & 1 \\ 
+	1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	f(n-2)  \\ 
+	f(n-2)
+\end{bmatrix}
+=
+\begin{bmatrix}
+	f(n-1)  \\ 
+	f(n)
+\end{bmatrix} 
+$
+
+
+Verificando estos valores para n = 2
+
+
+$
+\begin{bmatrix}
+	0 & 1 \\ 
+	1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	f(0)  \\ 
+	f(1)
+\end{bmatrix}
+=
+\begin{bmatrix}
+	f(1)  \\ 
+	f(2)
+\end{bmatrix} 
+$
+
+
+Conociendo que Fib(0)=0 y Fib(1)=1:
+
+
+$
+\begin{bmatrix}
+	0 & 1 \\ 
+	1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+	0  \\ 
+	1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	1  \\ 
+	1
+\end{bmatrix} 
+$
+
+
+Y efectivamente, Fib(2)=1. Ahora bien, generalizando para diferentes valores de $n$.
+
+
+$
+\begin{bmatrix}
+	0 & 1 \\ 
+	1 & 1
+\end{bmatrix}
+^{n-1}
+\begin{bmatrix}
+	0  \\ 
+	1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	f(n-1) \\ 
+	f(n)
+\end{bmatrix} 
+$
+
+$
+\begin{bmatrix}
+	0 & 1 \\ 
+	1 & 1
+\end{bmatrix}
+^{n-1}
+=
+\begin{bmatrix}
+	f(n-2) & f(n-1) \\ 
+	f(n-1) & f(n)
+\end{bmatrix} 
+$
+
+
+
+Ahora recordemos 3 propiedades de la potenciación:
+
+\begin{enumerate}
+	\item $A^{1}=A$
+	\item $A^{m^{n}}=A^{mn}$ 
+	\item $A^{n}=A^{i}A^{j}$ si $i+j=n$
+\end{enumerate}
+
+Los cuales nos permitirán hacer un “divide y vencerás” para resolver la potencia de una manera eficiente.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.3\linewidth]{img/potencias}
+	\label{fig:potencias}
+\end{figure}
+
+¿Que demonios he hecho? Básicamente, partir el problema. Para explicarlo, miremos paso a paso el proceso para hallar el Fib(11):
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.3\linewidth]{img/sola}
+	\label{fig:solucion3}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.3\linewidth]{img/solucion2}
+	\label{fig:solucion4}
+\end{figure}
+
+Y así llegamos a la respuesta de manera mas rápida.
+
+Esto no es una última mejora, en realidad es un cambio total. Hasta ahora hemos manejado cada término de la sucesión en base a sus términos anteriores. Pero existe también una formula explicita creada por Lucas para hallar directamente un término sin necesidad de iterar.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.3\linewidth]{img/formula-explicita-fibonacci}
+	\label{fig:formula-explicita-fibonacci}
+\end{figure}
+
+
+\subsection{Propiedades de la sucesión de Fibonacci}
+
+\begin{enumerate}
+	\item Tan sólo un término de cada tres es par, uno de cada cuatro es múltiplo de 3, uno de cada cinco es múltiplo de 5, etc. Esto se puede generalizar, de forma que la sucesión de Fibonacci es periódica en las congruencias módulo m, para cualquier m.
+	
+	
+	\item Cualquier número natural se puede escribir mediante la suma de un número limitado de términos de la sucesión de Fibonacci, cada uno de ellos distinto a los demás. Por ejemplo, 17=13+3+1, 65=55+8+2.
+	
+	\item Cada número de Fibonacci es el promedio del término que se encuentra dos posiciones antes y el término que se encuentra una posición después. Es decir:
+	
+	$ F_{n} = { F_{n-2} + F_{n+1}  \over 2}$
+	
+	\item Lo anterior también puede expresarse así: calcular el siguiente número a uno dado es 2 veces éste número menos el número 2 posiciones más atrás.
+	
+	$F_{n+1} = F_{n} * 2 F_{n-2}$
+	
+	\item El último dígito de cada número se repite periódicamente cada 60 números. Los dos últimos, cada 300; a partir de ahí, se repiten cada $15\times10^{n-1}$ números.
+	
+	\item La suma de los $n$ primeros números es igual al número que ocupa la posición $n+2$ menos uno. Es decir
+	
+	$F_{n+2}-1 = F_{n} ... +F_{2}+F_{1}$
+	
+	\item  La suma de diez números Fibonacci consecutivos es siempre 11 veces superior al séptimo número de la serie.
+	
+	\item  El máximo común divisor de dos números de Fibonacci es otro número de Fibonacci. Más específicamente
+	
+	$mcd(F_{n},F_{m}) = F_{mcd(n,m)}$
+	
+	\item Otras identidades interesantes incluyen las siguientes:
+	
+	$f_0-f_1+f_2-\cdots+(-1)^nf_n=(-1)^nf_{n-1}-1$
+	
+	$f_1+f_3+f_5+\cdots+f_{2n-1}=f_{2n}$
+	
+	$f_0+f_2+f_4+\cdots+f_{2n}=f_{2n+1}-1$
+	
+	$f_0^2+f_1^2+f_2^2+\cdots+f_n^2=f_nf_{n+1}$
+	
+	$f_1f_2+f_2f_3+f_3f_4+\cdots+f_{2n-1}f_{2n}=f_{2n}^2$
+	
+	
+	$f_{n+2}^2-f_n^2=f_{2n+2}$
+	
+	$f_{n+2}^3+f_{n+1}^3-f_n^3=f_{3n+3}$
+	
+	
+	
+\end{enumerate}

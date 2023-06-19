@@ -1,0 +1,39 @@
+Un arreglo es una serie de elementos del mismo tipo ubicados en zonas de memoria
+continuas que pueden ser referenciados por un índice y un único identificador, esto quiere
+decir que podemos almacenar 10 valores enteros en un arreglo sin tener que declarar 10
+variables diferentes.
+
+Los arreglos unidimensionales son estructuras de datos caracterizadas por:
+
+\begin{itemize}
+	\item Una colección de datos del mismo tipo.
+	\item Son referenciados mediante un mismo nombre.
+	\item Almacenados en posiciones de memoria físicamente contiguas, de ahí que la posición más
+	baja corresponde al primer elemento y la mas alta al del ultimo elemento.
+	\item El formato general de la declaración de una variable de este tipo en C++ puede ser estática:
+	
+	\begin{lstlisting}[language=C++]
+   Tipo_de_datos Nombre_de_la_variable [capacidad]
+	\end{lstlisting}
+	
+	o dinámica:
+	
+	\begin{lstlisting}[language=C++]
+   Tipo_de_datos * Nombre_de_la_variable = new Tipo_de_datos [capacidad]
+	\end{lstlisting}
+    
+    En caso de Java existe una sola forma de declaración y tiene la siguiente sintaxis
+
+    \begin{lstlisting}[language=Java]
+   Tipo_de_datos [] Nombre_de_la_variable = new Tipo_de_datos [capacidad]
+    \end{lstlisting}
+ 
+\end{itemize}
+
+Todo arreglo se compone de un determinado número de elementos. Cada elemento es referenciado por la posición que ocupa dentro del vector. Dichas posiciones son llamadas índice y siempre son correlativos. Existen tres formas de indexar los elementos de un arreglo:
+
+\begin{itemize}
+	\item Indexación base-cero (0): En este modo el primer elemento del vector será la componente cero (\textquoteleft0\textquoteright) del mismo, es decir, tendrá el índice \textquoteleft0\textquoteright. En consecuencia, si el vector tiene \textquoteleft n\textquoteright componentes la última tendrá como índice el valor \textquoteleft n-1\textquoteright. La mayoría de los lenguajes de programación asumen esta forma  de indexar los elementos de un arreglo.
+	\item Indexación base-uno (1): En esta forma de indexación, el primer elemento de la elemento tiene el índice \textquoteleft1\textquoteright y el último tiene el índice \textquoteleft n\textquoteright (para un arreglo de \textquoteleft n' componentes). En varios problemas es conveniente utilizar este en ves de usar la indexación que propone los lenguajes de programación. El detalle con este proceder es que a la hora de definir el tamaño del arreglo no pude ser de n sino de n+$<$una cantidad mayor que cero$>$. 
+	\item Indexación base-n (n): Este es un modo versátil de indexación en la que el índice del primer elemento puede ser elegido libremente, en algunos lenguajes de programación se permite que los índices puedan ser negativos e incluso de cualquier tipo escalar (también cadenas de caracteres).
+\end{itemize}

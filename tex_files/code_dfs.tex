@@ -1,0 +1,129 @@
+\subsection{C++}
+
+Variante no recursiva
+
+\begin{lstlisting}[language=C++]
+#include <stack>
+#include <vector>
+#define MAX_N 5001
+using namespace std;
+	
+struct Node{
+   vector<int> adj;
+};
+Node graf[MAX_N];
+bool mark[MAX_N];
+	
+inline void DFS(int start){
+   stack<int> dfs_stek;
+   dfs_stek.push(start);
+   while(!dfs_stek.empty()){
+      int xt = dfs_stek.top();
+	  dfs_stek.pop();
+      mark[xt] = true;
+      for (int i=0;i<graf[xt].adj.size();i++){
+         if (!mark[graf[xt].adj[i]]){
+            dfs_stek.push(graf[xt].adj[i]);
+            mark[graf[xt].adj[i]] = true;
+         }
+      }
+    }
+}
+\end{lstlisting} 
+
+Variante recursiva
+
+\begin{lstlisting}[language=C++]
+vector< vector<int> > adj; // el grafo representado como una lista de adyacencia
+int n; // numeros de vertices
+
+vector<bool> visited;
+
+void dfs(int v){
+  visited[v] = true;
+  for (int u : adj[v]){
+     if (!visited[u])
+       dfs(u);
+  }
+}
+\end{lstlisting}
+
+Esta es la implementación más simple de DFS. Como se describe en las aplicaciones, también podría ser útil calcular los tiempos de entrada y salida y el color del vértice. Colorearemos todos los vértices con el color 0, si no los hemos visitado, con el color 1 si los visitamos, y con el color 2, si ya salimos del vértice.
+
+Aquí hay una implementación genérica que además los calcula:
+
+\begin{lstlisting}[language=C++]
+vector< vector<int> > adj; // el grafo representado como una lista de adyacencia
+int n; // numeros de vertices
+
+vector<int> color;
+
+vector<int> time_in, time_out;
+int dfs_timer = 0;
+
+void dfs(int v){
+   time_in[v] = dfs_timer++;
+   color[v] = 1;
+   for (int u : adj[v])
+      if (color[u] == 0)
+         dfs(u);
+   color[v] = 2;
+   time_out[v] = dfs_timer++;
+}
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+private class Graph{
+   public List<ArrayList<Integer> > lAdyancencia;
+   public int nodes;
+   
+   public Graph(int _nodes){
+      this.nodes =_nodes;
+      lAdyancencia =new ArrayList<ArrayList<Integer> >(this.nodes+1);
+      for(int i=0;i<this.nodes+1;i++) {
+         lAdyancencia.add(new ArrayList<Integer>());
+      }
+      boolean [] visited = new boolean [this.nodes+1];
+      Arrays.fill(visited,false);
+   }
+   
+   private void dfsRecursive(int node){
+      visited[node]=true;
+      int nvecinos = lAdyancencia.get(node).size(),vecino;
+      for(int i=0;i<nvecinos;i++){
+         vecino = lAdyancencia.get(node).get(i);
+         if(visited[vecino]==false){
+            dfsRecursive(vecino, access, visited);
+         }
+      }
+   }
+
+   private void dfsStack(int node){
+      Stack<Integer> dfsStack =new Stack<Integer>();
+      boolean [] visited =new boolean [this.nodes+1];
+      
+      Arrays.fill(visited, false);
+      int nvecinos,vecino;
+      
+      dfsStack.add(node);
+	
+      while(dfsStack.empty()==false){
+        node = dfsStack.pop();
+        visited[node] =true;
+        nvecinos = lAdyancencia.get(node).size();
+        for(int i=0;i<nvecinos;i++) {
+           vecino = lAdyancencia.get(node).get(i);
+           if(visited[vecino] == false) {
+              dfsStack.add(vecino);
+              visited[vecino] = true;
+           }
+         }
+       }
+   }
+
+   public void addEgde(int a,int b) {
+      lAdyancencia.get(a).add(b);
+   }
+}	
+\end{lstlisting}

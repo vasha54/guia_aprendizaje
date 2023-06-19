@@ -1,0 +1,61 @@
+La idea básica es utilizar la idea del algoritmo de \emph{QuickSort}. En realidad, el algoritmo es simple.
+
+La selección rápida (\emph{QuickSelect}) es un algoritmo de selección para encontrar el k- ésimo elemento más pequeño en una lista desordenada, también conocida como estadística de k- ésimo orden . Al igual que el algoritmo de clasificación Quicksort relacionado , fue desarrollado por Tony Hoare y, por lo tanto, también se conoce como algoritmo de selección de Hoare.
+
+\emph{QuickSelect} utiliza el mismo enfoque general que quicksort, eligiendo un elemento como pivote y dividiendo los datos en dos según el pivote, según corresponda, como menor o mayor que el pivote. Sin embargo, en lugar de recurrir a ambos lados, como en la ordenación rápida, la selección rápida solo recurre a un lado: el lado con el elemento que está buscando.
+
+En \emph{QuickSort}, hay un subprocedimiento llamado partitionque puede, en tiempo lineal, agrupar una lista (desde índices lefthasta right) en dos partes: las menores que cierto elemento y las mayores o iguales que el elemento. Aquí hay un pseudocódigo que realiza una partición sobre el elemento list[pivotIndex]
+
+\begin{lstlisting}[language=C++]
+function partition(list, left, right, pivotIndex) is
+   pivotValue := list[pivotIndex]
+   swap list[pivotIndex] and list[right]//Mueve el pivote hasta el final
+   storeIndex := left
+   for i from left to right-1 do
+      if list[i] < pivotValue then
+         swap list[storeIndex] and list[i]
+         increment storeIndex
+   swap list[right] and list[storeIndex]// Mover el pivote a su lugar final 
+   return storeIndex
+\end{lstlisting}
+
+Esto se conoce como el esquema de partición de Lomuto , que es más simple pero menos eficiente que el esquema de partición original de Hoare .
+
+En \emph{QuickSort}, ordenamos recursivamente ambas ramas, lo que lleva al mejor de los casos O($n\log n$) tiempo. Sin embargo, al hacer la selección, ya sabemos en qué partición se encuentra nuestro elemento deseado, ya que el pivote está en su posición final ordenada, con todos los que le preceden en un orden no ordenado y todos los que le siguen en un orden no ordenado. Por lo tanto, una única llamada recursiva localiza el elemento deseado en la partición correcta y nos basamos en esto para la selección rápida:
+
+\begin{lstlisting}[language=C++]
+// Devuelve el k-esimo elemento menor de la lista dentro de left..right inclusivo 
+// (es decir, left <= k <= right)
+function select(list, left, right, k) is
+   if left = right then // Si la lista contiene solo un elemento,
+      return list[left] // retorno ese elemento
+   pivotIndex  := ...   // selecciona un pivotIndex entre la izquierda y derecha
+                        // p. ej., izquierda + piso(rand() % (derecha - izquierda + 1))
+   pivotIndex  := partition(list, left, right, pivotIndex)
+   // El pivote esta en su posicion ordenada final
+   if k = pivotIndex then
+      return list[k]
+   else if k < pivotIndex then
+      return select(list, left, pivotIndex - 1,k)
+   else
+      return select(list, pivotIndex + 1, right, k) 
+\end{lstlisting}
+
+Tenga en cuenta la similitud con la ordenación rápida: así como el algoritmo de selección basado en mínimos es una ordenación de selección parcial, esta es una ordenación rápida parcial, que solo genera y divide  O($\log n$)de su O($n$)particiones Este procedimiento simple tiene un rendimiento lineal esperado y, al igual que la ordenación rápida, tiene un rendimiento bastante bueno en la práctica. También es un algoritmo en el lugar , que solo requiere una sobrecarga de memoria constante si la optimización de llamadas de cola está disponible, o si se elimina la recursividad de cola con un bucle:
+
+\begin{lstlisting}[language=C++]
+function select(list, left, right, k) is
+   loop
+      if left = right then
+         return list[left]
+      pivotIndex := ... // selecciona pivotIndex entre izquierda y derecha
+      pivotIndex := partition(list, left, right, pivotIndex)
+      if k = pivotIndex then
+         return list[k]
+      else if k < pivotIndex then
+         right := pivotIndex - 1
+      else
+         left := pivotIndex + 1
+\end{lstlisting}
+
+

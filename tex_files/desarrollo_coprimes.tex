@@ -1,0 +1,79 @@
+\subsection{Numeros comprimos}
+
+Dos números son coprimos si su máximo común divisor es igual $1$ ( $1$ se considera coprimo de cualquier número).
+
+\subsection{Saber si dos numeros son comprimos}
+
+Basados en la propia definición no sería dificil implementar un algoritmo que permita conocer si dos números $a$ y $b$ son coprimos basta con verificar si el maximo común entre ello es 1 para que sean coprimos cualquier otro valor significaría que no lo son. 
+
+\subsection{Calcular la cantidad de comprimos de N menores que este}
+
+Para calcular la cantidad de números menores que $N$ que sean coprimos con $N$ podemos realizar una iteración de desde 1 hasta $N$ y comprobar con cada número pero esta idea tendría una complejidad de $O(N\log(\min(i,N))$.
+
+Otra idea sería asumir que en el rango de 1 a $N$ todos los valores son coprimos con $N$ y por tanto vamos a buscar aquellos que no lo son con la factorización en números primos de $N$ y viendo por cada uno de ellos cuantos multiplos tienen menores que $N$ que serían los numeros que no son coprimos con $N$. De esto último se encarga la Función totient de Euler
+
+\subsubsection{Función totient de Euler}
+
+
+Función totient de Euler, también conocida como función phi $\phi(n)$, cuenta el 
+número de enteros entre 1 y $n$ inclusive, que son coprimos de $n$. Dos números 
+son coprimos si su máximo común divisor es igual $1$ ( $1$ se considera coprimo 
+de cualquier número). Aquí están los valores de $\phi(n)$ para los primeros 
+enteros positivos:
+
+
+$
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	n & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 \\ \hline
+	\phi(n) & 1 & 1 & 2 & 2 & 4 & 2 & 6 & 4 & 6 & 4 & 10 & 4 & 12 & 6 & 8 & 8 & 16 & 6 & 18 & 8 & 12 \\ \hline
+\end{array}
+$
+
+\textbf{Propiedades}
+
+Las siguientes propiedades de la función totient de Euler son suficientes para calcularla para cualquier número:
+\begin{itemize}
+	\item Si $p$ es un número primo, entonces $\gcd(p,q) = 1$ para todos $1 \leq < p$. Por lo tanto tenemos:
+	
+	$$\phi (p) = p - 1.$$
+	
+	\item Si $p$ es un número primo y $k\ge 1$ , entonces hay exactamente $p^k / p$ números entre $1$ y $p^k$ que son divisibles por $p$. Lo que nos da:
+	
+	$$\phi(p^k) = p^k - p^{k-1}.$$
+	
+	\item Si $a$ y $b$ son relativamente primos, entonces:
+	
+	$$\phi(a b) = \phi(a) \cdot \phi(b).$$
+	
+	
+	Esta relación no es trivial de ver. Se sigue del teorema chino del resto . 
+	El teorema chino del resto garantiza que para cada $0 \ le x < a$ y cada $0 
+	\le y < b$, existe un único $0 \le z < ab$ con $z \equiv x \pmod{a}$ y $z \equiv y \pmod{b}$. No es difícil demostrar que $z$ es coprimo de $ab$ si y 
+	solo si $x$ es coprimo de $a$ y $y$ es coprimo de $b$. Por lo tanto, la 
+	cantidad de números enteros coprimos a $ab$ es igual al producto de las 
+	cantidades de $a$ y $b$.
+	
+	\item En general, para no coprime $a$ y $b$ , la ecuacion:
+	
+	$$\phi(a b) = \phi(a) \cdot \phi(b).$$
+	
+	con $d = \gcd(a, b)$ se  sostiene
+	
+	
+\end{itemize}
+
+	Por lo tanto, usando las primeras tres propiedades, podemos calcular $\phi(n)$ a través de la factorización de $n$ (descomposición de $n$ en un producto de sus factores primos). Si $n = {p_1}^{a_1} \cdot {p_2}^{a_2} \cdots {p_k}^{a_k}$ , dónde $p_i$ son factores primos de $n$ ,
+	
+	\begin{align}
+		\phi (n) &= \phi ({p_1}^{a_1}) \cdot \phi ({p_2}^{a_2}) \cdots  \phi ({p_k}^{a_k}) \\\\
+		&= \left({p_1}^{a_1} - {p_1}^{a_1 - 1}\right) \cdot \left({p_2}^{a_2} - {p_2}^{a_2 - 1}\right) \cdots \left({p_k}^{a_k} - {p_k}^{a_k - 1}\right) \\\\
+		&= p_1^{a_1} \cdot \left(1 - \frac{1}{p_1}\right) \cdot p_2^{a_2} \cdot \left(1 - \frac{1}{p_2}\right) \cdots p_k^{a_k} \cdot \left(1 - \frac{1}{p_k}\right) \\\\
+		&= n \cdot \left(1 - \frac{1}{p_1}\right) \cdot \left(1 - \frac{1}{p_2}\right) \cdots \left(1 - \frac{1}{p_k}\right)
+	\end{align}
+
+Y con esto ya tendriamos un algoritmo mas eficiente que el anterior
+
+\subsection{Calcular la cantidad de comprimos de todos los valores hasta N}
+
+Si necesitamos todo todo el totient de todos los números entre $1$ y $n$ , luego factorizando todo $n$ números no es eficiente. Podemos utilizar la misma idea que el Criba de Eratóstenes . Todavía se basa en la propiedad que se muestra arriba, pero en lugar de actualizar el resultado temporal de cada factor primo para cada número, buscamos todos los números primos y para cada uno actualizamos los resultados temporales de todos los números que son divisibles por ese número primo.

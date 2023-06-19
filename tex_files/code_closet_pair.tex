@@ -1,0 +1,284 @@
+\subsection{C++}
+
+\subsubsection{Solución iterativa}
+\begin{lstlisting}[language=C++]
+#include <float.h>
+#include <stdlib.h>
+#include <math.h>
+#include <algorithm>
+
+struct Point {
+   double X,Y;
+};
+	
+double dist(Point p1, Point p2){
+   return sqrt( (p1.x - p2.x)*(p1.x - p2.x) +(p1.y - p2.y)*(p1.y - p2.y));
+}
+	
+double closestPair(Point P[], int n){
+   double minDistance = FLT_MAX;
+   for (int i = 0; i < n; ++i)
+      for (int j = i+1; j < n; ++j)
+         if (dist(P[i], P[j]) < minDistance)
+            minDistance = dist(P[i], P[j]);
+   return minDistance;
+}
+\end{lstlisting} 
+
+\subsubsection{Divide y Conquista}
+
+\begin{lstlisting}[language=C++]
+#include <float.h>
+#include <stdlib.h>
+#include <math.h>
+#include <algorithm>
+	
+struct Point {
+   double X,Y;
+};
+	
+int compareX(const void* a, const void* b){
+   Point *p1 = (Point *)a, *p2 = (Point *)b;
+   return (p1->X - p2->X);
+}
+	
+int compareY(const void* a, const void* b){
+   Point *p1 = (Point *)a,*p2 = (Point *)b;
+   return (p1->Y - p2->Y);
+}
+	
+double dist(Point p1, Point p2){
+   return sqrt( (p1.X - p2.X)*(p1.X - p2.X) +(p1.Y - p2.Y)*(p1.Y - p2.Y));
+}
+	
+double closestPair(Point P[], int n){
+   double minDistance = FLT_MAX;
+   for (int i = 0; i < n; ++i)
+      for (int j = i+1; j < n; ++j)
+         if (dist(P[i], P[j]) < minDistance)
+            minDistance = dist(P[i], P[j]);
+   return minDistance;
+}
+	
+double stripClosest(Point strip[], int size, double d){
+   double minDistance = d; 
+   qsort(strip, size, sizeof(Point), compareY);
+   for (int i = 0; i < size; ++i)
+      for (int j = i+1; j < size && (strip[j].Y - strip[i].Y) < minDistance; ++j)
+         if (dist(strip[i],strip[j]) < minDistance)
+            minDistance = dist(strip[i], strip[j]);
+    return minDistance;
+}
+	
+double closestUtil(Point P[], int n){
+   if(n <= 3)
+     return closestPairV1(P, n);
+   int mid = n/2;
+   Point midPoint = P[mid];
+   double dl = closestUtil(P, mid);
+   double dr = closestUtil(P + mid, n-mid);
+		
+   double d = min(dl, dr); Point strip[n]; int j = 0;
+   for (int i = 0; i < n; i++)
+      if (abs(P[i].X - midPoint.X) < d){
+      	strip[j] = P[i];
+        j++;
+      }
+   return min(d, stripClosest(strip, j, d) );
+}
+	
+double closestPairV2(Point P[], int n){
+   qsort(P, n, sizeof(Point), compareX);
+   return closestUtil(P, n);
+}
+	
+\end{lstlisting}
+
+\subsubsection{Línea de barrido}
+
+\begin{lstlisting}[language=C++]
+#include <float.h>
+#include <stdlib.h>
+#include <math.h>
+#include <algorithm>
+	
+struct Point {
+   double X,Y;
+   Point (double _X=0,double _Y=0){
+      X=_X; Y=_Y;
+   }
+		
+   bool operator<(const Point &P) const{
+      if(X < P.X) return true;
+      if(X > P.X) return false;
+      return Y < P.Y;
+   }
+};
+	
+double distancePointToPoint(Point _a,Point _b){
+   double dist=(_a.X-_b.X)*(_a.X-_b.X)+(_a.Y-_b.Y)*(_a.Y-_b.Y);
+   return sqrt(dist);
+}
+
+/*Los puntos deben ser almacenados a partir de la posicion 1 en adelante y no en la posicion 0 como de costumbre*/	
+double closestPair(Point _points [], int _npoint){
+   sort(_points+1,_points+_npoint+1); 
+   if(_points == 0) return 0;
+   /* INF debe ser un valor que sea mayor que la distancia maxima en que se pueda encontrar dos puntos segun el problema. Si dicen que las coordenadas de los puntos va estar entre -10^9 a 10^9 entonces: INF= distancePointToPoint( Point(-10^9,-10^9),Point(10^9,10^9) )+100 */ 
+   double dist = INF;
+   int tBegin = 1, tEnd = 1, tot = 1;
+   for(int i=2;i<=_npoint;i++){
+      while(tot > 0 && 0.0+_points[i].X-_points[tBegin].X > dist){ 
+          tBegin++; tot--; 
+      }
+      for(int j=tBegin;j<=tEnd;j++)
+          dist = min(dist, distancePointToPoint(_points[i], _points[j]));
+      tEnd++; tot++;
+   }
+   return dist;
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Solución iterativa}
+\begin{lstlisting}[language=Java]
+private class Point{
+   public double x;
+   public double y;
+   
+   public Point(int _x,int _y) {
+      this.x =_x; this.y =_y;
+   }
+}
+
+private double closestPair(Point P[], int n){
+   double minDistance = Double.MAX_VALUE;
+   for (int i = 0; i < n; ++i)
+      for (int j = i+1; j < n; ++j)
+         minDistance = Math.min(minDistance,dist(P[i], P[j]));
+   return minDistance;
+}
+
+private double dist(Point p1, Point p2) {
+   return Math.hypot(p1.x-p2.x, p1.y-p2.y);
+}
+\end{lstlisting}
+
+\subsubsection{Divide y Conquista}
+\begin{lstlisting}[language=Java]
+class Point {
+   public int x;
+   public int y;
+	
+   Point(int x, int y) {
+      this.x = x;this.y = y;
+   }
+	
+   public static float dist(Point p1, Point p2){
+      return (float) Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+   }
+	
+   public static float bruteForce(Point[] P, int n) {
+      float minD = Float.MAX_VALUE;float currMin = 0;
+      for (int i = 0; i < n; ++i) {
+         for (int j = i + 1; j < n; ++j) {
+            minD = Math.min(minD, dist(P[i], P[j]));
+         }
+      }
+      return min;
+   }
+	
+   public static float stripClosest(Point[] strip, int size, float d) {
+      float minD = d;
+      Arrays.sort(strip, 0, size, new PointYComparator());
+      for (int i = 0; i < size; ++i) {
+         for (int j = i + 1; j < size && (strip[j].y - strip[i].y) < min; ++j) {
+            minD = Math.min(minD, dist(strip[i], strip[j]));
+         }
+      }
+      return min;
+   }
+	
+   public static float closestUtil(Point[] P,int startIndex, int endIndex){
+      if ((endIndex - startIndex) <= 3) { return bruteForce(P, endIndex); }
+      int mid = startIndex + (endIndex - startIndex) / 2;
+      Point midPoint = P[mid];
+      float dl = closestUtil(P, startIndex, mid);
+      float dr = closestUtil(P, mid, endIndex);
+      float d = Math.min(dl, dr);
+		
+      Point[] strip = new Point[endIndex];
+      int j = 0;
+      for (int i = 0; i < endIndex; i++) {
+         if (Math.abs(P[i].x - midPoint.x) < d) {
+            strip[j] = P[i];j++;
+         }
+      }
+      return Math.min(d, stripClosest(strip, j, d));
+   }
+   
+   public static float closest(Point[] P, int n) {
+      Arrays.sort(P, 0, n, new PointXComparator());
+      return closestUtil(P, 0, n);
+   }
+}
+
+class PointXComparator implements Comparator<Point> {
+   @Override
+   public int compare(Point pointA, Point pointB) {
+      return Integer.compare(pointA.x, pointB.x);
+   }
+}
+
+class PointYComparator implements Comparator<Point> {
+   @Override
+   public int compare(Point pointA, Point pointB) {
+      return Integer.compare(pointA.y, pointB.y);
+   }	
+}
+\end{lstlisting}
+
+\subsubsection{Línea de barrido}
+\begin{lstlisting}[language=Java]
+private double distance(Point p1, Point p2) {           
+   return Math.sqrt((p1.x-p2.x)*(p1.x-p2.x)+(p1.y-p2.y)*(p1.y-p2.y)); 
+}
+
+/*Los puntos deben ser almacenados a partir de la posicion 1 en adelante y no en la posicion 0 como de costumbre*/
+private double closestPair(Point [] _points, int _npoints) {
+   Arrays.sort(_points,1,_npoints+1);
+   if(_npoints!=0) {
+      double dist = Double.MAX_VALUE;
+      int tBegin = 1 , tEnd = 1 , tot = 1;
+      for(int i=2;i<=_npoints;i++){
+         while(tot > 0 && 0.0+_points[i].x-_points[tBegin].x > dist){ 
+            tBegin++; tot--;
+         }
+         for(int j=tBegin;j<=tEnd;j++) 
+            dist = Math.min(dist,distance(_points[i], _points[j])); 
+         tEnd++;tot++;
+       }
+       return dist;
+    }
+    return 0;
+}
+
+private class Point implements Comparable<Point>{
+   public double x;
+   public double y;
+   public Point(int _x,int _y) {
+      this.x =_x;
+      this.y =_y;
+   }
+   @Override
+   public int compareTo(Point p1) {
+      if(this.x < p1.x) return -1;
+      else if (this.x > p1.x) return 1;
+      else{ 
+         if(this.y < p1.y) return -1;
+         else if(this.y > p1.y) return 1;
+         else return 0; }
+   }
+}	
+\end{lstlisting}

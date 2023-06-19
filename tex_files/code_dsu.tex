@@ -1,0 +1,197 @@
+\subsection{C++}
+
+\subsubsection{Implementación sencilla}
+
+\begin{lstlisting}[language=C++]
+void make_set(int v) {
+   parent[v] = v;
+}
+
+int find_set(int v) {
+   if (v == parent[v]) return v;
+   return find_set(parent[v]);
+}
+
+void union_sets(int a, int b) {
+   a = find_set(a); b = find_set(b);
+   if (a != b) parent[b] = a;
+}
+\end{lstlisting}
+
+\subsubsection{Optimización de la compresión de rutas}
+
+\begin{lstlisting}[language=C++]
+int find_set(int v) {
+   if (v == parent[v]) return v;
+   return parent[v] = find_set(parent[v]);
+}
+\end{lstlisting}
+
+\subsubsection{Unión por tamaño / rango}
+
+Aquí está la implementación de la unión por tamaño:
+
+\begin{lstlisting}[language=C++]
+void make_set(int v) {
+   parent[v] = v; size[v] = 1;
+}
+
+void union_sets(int a, int b) {
+   a = find_set(a); b = find_set(b);
+   if (a != b) {
+     if (size[a] < size[b]) swap(a, b);
+     parent[b] = a;
+     size[a] += size[b];
+   }
+}
+\end{lstlisting}
+
+Y aquí está la implementación de la unión por rango basada en la profundidad de los árboles:
+
+\begin{lstlisting}[language=C++]
+void make_set(int v) {
+   parent[v] = v; rank[v] = 0;
+}
+
+void union_sets(int a, int b) {
+   a = find_set(a); b = find_set(b);
+   if (a != b) {
+     if (rank[a] < rank[b]) swap(a, b);
+     parent[b] = a;
+     if (rank[a] == rank[b]) rank[a]++;
+   }
+}
+\end{lstlisting}
+
+Aqui una implementación completa con estructura
+
+\begin{lstlisting}[language=C++]
+struct DisjoinSet{
+   vector<int> parent,sizes;
+   int ncomponents; // cantidad de conjuntos disjuntos
+   
+   DisjoinSet(int n) : parent(n),sizes(n){
+      for(int i = 0; i < n; i++) sizes[parent[i] = i] = 1;
+      ncomponents = n;
+   }
+	
+   int root(int x){
+      if( x == parent[x] ) return x;
+      else{
+         parent[x] = root(parent[x])
+         return parent[x]
+      }
+   }
+	
+   void join(int a,int b){
+      int x = root(a); int y = root(b);
+      if(x == y) return;
+      if(sizes[x] < sizes[y]) swap(x,y);
+      parent[y] = x;
+      sizes[x] += sizes[y];
+      ncomponents--;
+   }
+};
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Implementación sencilla}
+
+\begin{lstlisting}[language=C++]
+public void make_set(int v) {
+    parent[v] = v;
+}
+	
+public int find_set(int v) {
+   if (v == parent[v]) return v;
+   return find_set(parent[v]);
+}
+	
+public void union_sets(int a, int b) {
+   a = find_set(a); b = find_set(b);
+   if (a != b) parent[b] = a;
+}
+\end{lstlisting}
+
+\subsubsection{Optimización de la compresión de rutas}
+
+\begin{lstlisting}[language=C++]
+public int find_set(int v) {
+   if (v == parent[v]) return v;
+   return parent[v] = find_set(parent[v]);
+}
+\end{lstlisting}
+
+\subsubsection{Unión por tamaño / rango}
+
+Aquí está la implementación de la unión por tamaño:
+
+\begin{lstlisting}[language=C++]
+public void make_set(int v) {
+   parent[v] = v; size[v] = 1;
+}
+	
+public void union_sets(int a, int b) {
+   a = find_set(a); b = find_set(b);
+   if (a != b) {
+     if (size[a] < size[b]) swap(a, b);
+     parent[b] = a;
+     size[a] += size[b];
+   }
+}
+\end{lstlisting}
+
+Y aquí está la implementación de la unión por rango basada en la profundidad de los árboles:
+
+\begin{lstlisting}[language=C++]
+public void make_set(int v) {
+   parent[v] = v; rank[v] = 0;
+}
+	
+public void union_sets(int a, int b) {
+   a = find_set(a); b = find_set(b);
+   if (a != b) {
+     if (rank[a] < rank[b]) swap(a, b);
+     parent[b] = a;
+     if (rank[a] == rank[b]) rank[a]++;
+   }
+}
+\end{lstlisting}
+
+Aqui una implementación completa con clases
+
+\begin{lstlisting}[language=Java]
+private class DisJoinSet{
+   public int [] parent;
+   public int [] sizes ;
+   public int ncomponents;
+	
+   public DisJoinSet(int n) {
+      this.ncomponents = n;
+      parent = new int [this.ncomponents+1];
+      sizes = new int [this.ncomponents+1];
+      for(int i=0;i<this.ncomponents+1;i++) sizes[parent[i]=i]=1;
+   }
+   
+   public int root(int x){
+      if (x == parent[x]) return x;
+      else{
+         parent[x] = root(parent[x]);
+         return parent[x];
+      }
+   }
+	
+   void join(int a,int b){
+      int x = root(a); int y = root(b);
+      if(x != y) {
+         if(sizes[x] < sizes[y]) {
+            int tmp = x; x = y; y =tmp;
+         }
+         parent[y] = x;
+         sizes[x] += sizes[y];
+         this.ncomponents--;
+      }
+   }
+}
+\end{lstlisting}

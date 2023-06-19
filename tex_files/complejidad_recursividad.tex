@@ -1,0 +1,127 @@
+La complejidad de algoritmos recursivos involucra la solución de una ecuación diferencial. El método mas simple es adivinar una solución y verificar si esta bien la adivinanza.
+
+\textbf{Recurrencia matemática:} Define una función en f términos de ella misma. En el ejemplo del factorial de un numero natural, tenemos: $n! = n(n-1)$.
+
+En el ejemplo de los números Fibonacci
+
+$F_{n} = F_{n-1} + F_{n-2}  ;   n >= 2$  
+
+$F_{0} = 0$
+
+$F_{1} = 1$
+
+
+(Donde n, 1, 0 son las bases de F).
+
+Algoritmo factorial recursivo
+
+Dado n
+Factorial n*F(n-1) devolver factorial
+
+
+Procedimiento F(k)
+Si k=0 o 1 entonces devolver 1 caso contrario devolver k*F(k-1)
+
+
+La complejidad de un algoritmo recursivo se expresa a través de una ecuación de recurrencia:
+
+
+Sea T(n) = tiempo para calcular n!, entonces:
+
+
+$T(n) = T(n-1) + 1 ;  si n >= 1$
+
+$T(1) = 1$
+
+
+Si resolvemos de una manera mas sencilla esta ecuación tenemos:
+
+
+$T(n) = T(n-1) + 1$
+
+$T(n) = (T(n-2)+1)+1   =   T(n-2) + 2$
+
+$T(n) = ((T(n-3)+1)+1)+1   =   T(n-3) + 3$
+
+$...$
+
+$T(n) = T(n-k) + k$
+
+$...$
+
+$T(n) = T(1) + n-1$
+
+$T(n) = T(0) + n = n$
+
+
+Luego la complejidad del algoritmo factorial recursivo es $~O(n)$.
+
+\subsection{Reducción por sustracción}
+
+Si el tamaño  $n$ del problema decrece en una cantidad constante $b$ en cada llamada, se realizan a  llamadas recursivas y las operaciones correspondientes a la parte no recursiva del algoritmo toman un tiempo $O(n^k)$ entonces:
+
+$T(n) = a T(n-b) + O(n^k)  ;  si \quad  n >= b$
+
+
+La solución de esta ecuación de recurrencia es de la forma: 
+
+
+\begin{math}
+	T(n)=\left\{
+	\begin{array}{ll}
+		n^k, & si \quad a < 1\\
+		n^k+1, & si \quad a = 1\\
+		a^n/b, & si \quad a > 1
+	\end{array}
+	\right.
+\end{math}
+
+
+
+\subsection{Reducción por división}
+
+Si el algoritmo con un problema de tamaño $n$ realiza a llamadas recursivas con subproblemas de tamaño $n/b$ y las operaciones correspondientes a la parte no recursiva, que corresponde a descomponer el problema en los subproblemas y luego combinarlas soluciones de estos, toman un tiempo O($n^k$) entonces: 
+
+$T(n) = aT(n/b) + O(n^k)   ;   si \quad n >= b$
+
+La solución de esta ecuación de recurrencia es de la forma:
+
+\begin{math}
+	T(n)=\left\{
+	\begin{array}{ll}
+		n^k, & si \quad  a < b^k\\
+	    n^k \log n , & si \quad a = b^k\\
+	   n^{\log_{b} a}, & si \quad a > b^k
+	\end{array}
+	\right.
+\end{math}
+
+\subsection{Complejidad para los algoritmos recursivos del tipo divide y venceras}
+Estos algoritmos recursivos tienen asociada una ecuación de recurrencia tipo, cuya resoluciónes lo que se conoce como el \emph{Teorema Maestro}.
+
+A continuación se explica cómo interpretar dicho teorema maestro.
+
+Aplicar el teorema maestro implica identificar diversos parámetros de un algoritmo recursivotipo divide y vencerás. Dichos parámetros son:
+
+\begin{itemize}
+	\item \textbf{a}: Número de llamadas recursivas que se realizan en el caso recursivo
+	\item \textbf{b}: Factor por el cual se divide el tamaño del problema en cada llamada recursiva
+	\item \textbf{k}: Mayor exponente de las polinomios asociados a las complejidades del caso base y de la
+	parte no recursiva de la rama recursiva del algoritmo, asumiendo que en ambos casos
+	se trata de complejidades polinómicas
+\end{itemize}
+
+
+Por tanto, el procedimiento para aplicar el teorema maestro es tal como sigue:
+
+\begin{enumerate}
+	\item Identificar cuáles son las ramas recursivas del algoritmo y cuáles corresponden al caso base.
+    \item Identificar el número de llamadas recursivas (parámetro a) que se realizan en el casorecursivo.
+    \item Identificar la razón (parámetro b) por la cual se divide el tamaño del problema en cada llamada recursiva.
+    \item Calcular la complejidad del caso base, como si se tratase un algoritmo iterativo normal. Lacomplejidad resultante, para aplicar el teorema maestro, debe ser polinómica. Sea $k$ elgrado de dicho polinomio. Si el algoritmo tiene complejidad constante, es decir, O(1), k=0, ya que $n^{0} = 1$.
+    \item El teorema maestro asume que las complejidades del caso base y de la parte iterativa delcaso recursivo son polinómicas y poseen el mismo grado. Por tanto, tomaremos comodicho grado al mayor de los grados de los polinomios asociados a las complejidades delcaso base y de la parte iterativa del caso recursivo. Es decir, $k = max(caso base^k,caso recurrente^k)$. Esto es posiblegracias a que un algoritmo de complejidad O$(n^a)$ se puede siempre convertir en otro
+    equivalente de complejidad O$(n^b)$, siempre que $b > a$. Pensad que bastaría con anidar el algoritmo de complejidad O$(n^a )$ en tantos bucles sin sentido como hiciese falta para incrementarle la complejidad hasta que llegase a $b$.
+    \item A continuación se calcula la relación entre $a$ y $b^k$ y se aplica el teorema maestro, sustituyendo los valores de $k$ y $a$ tal como corresponda.
+\end{enumerate}
+
+

@@ -1,0 +1,21 @@
+\subsection{Árbol}
+En ciencias de la computación y en informática, un árbol es un tipo abstracto de datos (TAD) ampliamente usado que imita la estructura jerárquica de un árbol, con un valor en la raíz y subárboles con un nodo padre, representado como un conjunto de nodos enlazados.
+
+Una estructura de datos de árbol se puede definir de forma recursiva (localmente) como una colección de nodos (a partir de un nodo raíz), donde cada nodo es una estructura de datos con un valor, junto con una lista de referencias a los nodos (los hijos), con la condición de que ninguna referencia esté duplicada ni que ningún nodo apunte a la raíz. 
+
+
+\subsection{Recorrido en profundidad}
+La búsqueda en profundidad (DFS) es un algoritmo para atravesar o buscar estructuras de datos de árboles o grafos. El algoritmo comienza en el nodo raíz (seleccionando algún nodo arbitrario como nodo raíz en el caso de un grafo) y explora lo más lejos posible a lo largo de cada rama antes de retroceder. Se necesita memoria adicional, generalmente una pila, para realizar un seguimiento de los nodos descubiertos hasta el momento a lo largo de una rama específica, lo que ayuda a retroceder en el grafo.
+
+\subsection{Ancestro Común más Bajo ({\em Lowest Common Ancestor} (LCA))}
+El ancestro común más bajo ({\em Lowest Common Ancestor} (LCA)) es un concepto dentro de la Teoría de grafos y Ciencias de la computación. Sea {\em T} un árbol con raíz y {\em n} nodos. El ancestro común más bajo entre dos nodos {\em v} y {\em w} se define como el nodo más bajo en {\em T} que tiene a {\em v} y {\em w} como descendientes (donde se permite a un nodo ser descendiente de él mismo).
+
+\subsection{Árbol de Rango (\emph{Range Tree})}
+Un árbol de rangos es una estructura de datos que almacena información sobre intervalos de un arreglo como 
+un árbol. Esto permite responder consultas de rango sobre un arreglo de manera eficiente, mientras sigue 
+siendo lo suficientemente flexible como para permitir una modificación rápida del arreglo. Esto incluye 
+encontrar la suma de elementos del arreglo consecutivos $a[l \dots r]$, o encontrar el elemento mínimo en 
+tal rango en $O(\log n)$ tiempo. Entre las respuestas a tales consultas, el árbol de rango permite 
+modificar el arreglo reemplazando un elemento, o incluso cambiando los elementos de un subrango completo 
+(por ejemplo, asignando todos los elementos $a[l \dots r]$ a cualquier valor, o agregando un valor a todos 
+los elementos en el subrango).

@@ -1,0 +1,15 @@
+Las formas formas primitivas de C de leer e imprimir datos son muchas mas rápidas que las formas primitivas de C++ pero lo anterior se puede solventar facilemente colocando las siguientes lineas al principio de nuestra solución:
+
+\begin{lstlisting}[language=C++]
+ios_base::sync_with_stdio(0);
+cin.tie(0);
+cout.tie(0);
+\end{lstlisting}
+
+Lo anterior permite que las funciones de lectura e impresión primitivas de C++ se equiparen en cuanto a tiempo a las funciones primitivas de C de lectura e impresión, aquí importante es conocer que si utilizamos esta variante no podemos combinar las funciones primitivas de C++ con las de C, debemos usar siempre la de C++. El otro detalle a tener en cuenta es la función \textbf{endl} de C++ que imprime un salto de linea en pantalla lo cual es muy útil en varios problemas acorde al formato de salida. Esta función es lenta por tanto se recomienda ser sustituida directamente por su valor '\\n' o creamos una macro:
+\begin{lstlisting}[language=C++]
+#define ENDL '\n'
+\end{lstlisting}
+
+y donde queramos utilizarla podemos la macro ENDL.
+

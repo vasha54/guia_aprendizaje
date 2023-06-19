@@ -1,0 +1,22 @@
+Se trata de una alternativa a la bifurcación if elseif else cuando se compara la misma expresión con
+distintos valores. Su forma general es la siguiente:
+
+\begin{lstlisting}[language=C++]
+switch (expression) {
+   case value1: statements1;
+   case value2: statements2;
+   case value3: statements3;
+   case value4: statements4;
+   case value5: statements5;
+   case value6: statements6;
+   default: statements7;
+}
+\end{lstlisting}
+
+Las características más relevantes de switch son las siguientes:
+
+\begin{enumerate}
+	\item Cada sentencia \textbf{case} se corresponde con un único valor de \textbf{expression}. No se pueden establecer rangos o condiciones sino que se debe comparar con valores concretos.
+	\item Los valores no comprendidos en ninguna sentencia \textbf{case} se pueden gestionar en \textbf{default}, que es opcional.
+	\item En ausencia de \textbf{break}, cuando se ejecuta una sentencia \textbf{case} se ejecutan también todas las \textbf{case} que van a continuación, hasta que se llega a un \textbf{break} o hasta que se termina el \textbf{switch}.
+\end{enumerate}

@@ -1,0 +1,21 @@
+Antes de buscar el camino o ciclo euleriano debemos comprobar que existe el mismo para esto nos vamos apoyar el los siguientes teoremas:
+
+\begin{itemize}
+	\item \textbf{Teorema 1:} Sea G un grafo o multigrafo no dirigido. Entonces G tiene un ciclo de Euler si, y solo si, es conexo y todo vértice tiene grado par. Diremos que es un grafo Euleriano.
+	\item \textbf{Teorema 2:} Sea G un grafo o multigrafo no dirigido. Entonces G tiene un camino de Euler si, y solo si, es conexo y tiene solo dos vértices de grado impar. Diremos que el grafo es semi-Euleriano.
+\end{itemize}
+
+Los resultados obtenidos para grafos no dirigidos pueden extenderse de inmediato para grafos dirigidos. En un grafo dirigido el grado o valencia de entrada de un vértice es el numero de lados incidentes hacia este y el grado de salida es el numero de lados que son incidentes desde este. 
+
+\begin{itemize}
+	\item \textbf{Teorema 4:} Un grafo dirigido tiene un ciclo de Euler si y solo si es conexo y el grado de entrada de cualquier vértice es igual a su salida.
+	\item \textbf{Teorema 5:} Un grafo dirigido tiene un camino de Euler si y solo si es conexo y el grado de entrada de cualquier vértice es igual a su grado de salida con la posible excepción de solo dos vértices. Para estos dos vértices el grado de entrada de uno de ellos es mayor que su grado de salida y el grado de entrada del otro es menor que su grado de salida.
+\end{itemize}
+
+ 
+
+\subsection{Algoritmo de Fleury}
+\input{tex_files/desarrollo_euler_path_algorithm_fleury.tex}
+
+\subsection{Algoritmo de Hierholzer}
+\input{tex_files/desarrollo_euler_path_algorithm_hierholer.tex}

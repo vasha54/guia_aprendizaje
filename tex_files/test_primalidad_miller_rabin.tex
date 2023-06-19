@@ -1,0 +1,16 @@
+El Test de primalidad de Miller-Rabin es un test de primalidad, es decir, un algoritmo para determinar si un número dado es primo, similar al test de primalidad de Fermat. Su versión original fue propuesta por G. L. Miller, se trata de un algoritmo determinista, pero basado en la no demostrada hipótesis generalizada de Riemann; Michael Oser Rabin modificó la propuesta de Miller para obtener un algoritmo probabilístico incondicional.
+
+Supóngase que  $n > 1$ es un número impar del cual queremos saber si es primo o no. Sea $m$ un valor impar tal que $n-1 = 2^{k}m$ y $a$ un entero escogido aleatoriamente entre $2$ y $n-2$.
+
+Cuando se cumple que:
+
+
+$ a^{m} \equiv \pm 1 (mod n) $
+
+o bien
+
+$ a^{2^{r}m} \equiv - 1 (mod n)  $
+
+para al menos un $r$ entero entre $1$ y $k-1$, se considera que $n$ es un probable primo; en caso contrario $n$ no puede ser primo. Si $n$ es un probable primo se escoge un nuevo valor para $a$, y se itera nuevamente reduciendo el margen de error probable. Al utilizar exponenciación binaria las operaciones necesarias se realizan muy rápidamente.
+
+Se puede demostrar que un número compuesto es clasificado \emph{probable primo} en una iteración del algoritmo con una probabilidad inferior a $1/4$; de hecho, en la práctica la probabilidad es mucho menor.

@@ -1,0 +1,35 @@
+\subsection{Sistemas numeración}
+Un sistema de numeración es un conjunto de símbolos y reglas que permiten representar datos numéricos. 
+
+Un sistema de numeración puede representarse como:
+
+$N={S, R}$
+
+Donde:
+\begin{enumerate}
+	\item N es el sistema de numeración considerado (p.ej. decimal, binario, etc.).
+	\item S es el conjunto de símbolos permitidos en el sistema. En el caso del sistema decimal son {0,1,...9}; en el binario son {0,1}; en el octal son {0,1,...7}; en el hexadecimal son {0,1,...9, A, B, C, D, E, F}.
+	\item R son las reglas que nos indican qué números y qué operaciones son válidos en el sistema, y cuáles no. En un sistema de numeración posicional las reglas son bastante simples, mientras que la numeración romana requiere reglas algo más elaboradas.
+\end{enumerate}
+
+Los sistemas de numeración pueden clasificarse en dos grandes grupos: {\em posicionales} y {\em no-posicionales}:
+
+En los {\bf sistemas no-posicionales} los dígitos tienen el valor del símbolo utilizado, que no depende de la posición (columna) que ocupan en el número. Estos son los más antiguos, se usaban por ejemplo los dedos de la mano para representar la cantidad cinco y después se hablaba de cuántas manos se tenía. También se sabe que se usaba cuerdas con nudos para representar cantidad. Tiene mucho que ver con la cardinalidad entre conjuntos. Entre ellos están los sistemas del antiguo Egipto, el sistema de numeración romana, y los usados en Mesoamérica por mayas, aztecas y otros pueblos.
+Al igual que otras civilizaciones mesoamericanas, los mayas utilizaban un sistema de numeración de raíz mixta de base 20 (vigesimal). También los mayas preclásicos desarrollaron independientemente el concepto de cero (existen inscripciones datadas hacia el año 36 a. C. que así lo atestiguan.).
+
+En los {\bf sistemas de numeración ponderados o posicionales} el valor de un dígito depende tanto del símbolo utilizado, como de la posición que ése símbolo ocupa en el número.
+
+El número de símbolos permitidos en un sistema de numeración posicional se conoce como base del sistema de numeración. Si un sistema de numeración posicional tiene base b significa que disponemos de b símbolos diferentes para escribir los números, y que b unidades forman una unidad de orden superior.
+
+Los sistemas de numeración actuales son sistemas posicionales, que se caracterizan porque un símbolo tiene distinto valor según la posición que ocupa en la cifra.
+
+
+\subsection{Función hash}
+A las función \emph{hash}, también se les llama funciones picadillo, funciones resumen o funciones de digest. Una función \emph{hash} es un método para generar claves o llaves que representen de manera casi unívoca a un documento o conjunto de datos. Es una operación matemática que se realiza sobre este conjunto de datos de cualquier longitud, y su salida es una huella digital, de tamaño fijo e independiente de la dimensión del documento original. El contenido es ilegible.
+
+Una función hash H es una función computable mediante un algoritmo, actúa como una proyección del conjunto U sobre el conjunto M.
+
+Observa que M puede ser un conjunto definido de enteros. En este caso podemos considerar que la longitud es fija si el conjunto es un rango de números enteros ya que podemos considerar que la longitud fija es la del número con mayor cantidad de cifras. Todos los números se pueden convertir al número especificado de cifras simplemente anteponiendo ceros.
+
+Normalmente el conjunto U tiene un número elevado de elementos y M es un conjunto de cadenas con un número relativamente pequeño de símbolos. Por esto se dice que estas funciones resumen datos del conjunto dominio.
+

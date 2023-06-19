@@ -1,0 +1,8 @@
+Para determinar la complejidad del algoritmo vamos a definir {\em m} como el número de aristas mientras el número de nodos o vértices será {\em n}. El algoritmo de Kruskal muestra una complejidad O(m log m) o, equivalentemente, O(m log n), cuando se ejecuta sobre estructuras de datos simples. Los tiempos de ejecución son equivalentes porque: 
+
+\begin{itemize}
+	\item {\em m} es a lo sumo {\em n$^{2}$} y $\log n^{2}=2\log n$ es O($\log n$) 
+	\item ignorando los vértices aislados, los cuales forman su propia componente del árbol de expansión mínimo, n $\leq$  2m, así que log n es O(log m).
+\end{itemize}
+
+Se puede conseguir esta complejidad de la siguiente manera: primero se ordenan las aristas por su peso usando una ordenación por comparación (comparison sort) con una complejidad del orden de O(m log m); esto permite que el paso "eliminar una arista de peso mínimo de C" se ejecute en tiempo constante. Lo siguiente es usar una estructura de datos sobre conjuntos disjuntos (disjoint-set data structure) para controlar qué vértices están en qué componentes. Es necesario hacer orden de O(m) operaciones ya que por cada arista hay dos operaciones de búsqueda y posiblemente una unión de conjuntos. Incluso una estructura de datos sobre conjuntos disjuntos simple con uniones por rangos puede ejecutar las operaciones mencionadas en O(m log n). Por tanto, la complejidad total es del orden de O(m log m) = O(m log n)

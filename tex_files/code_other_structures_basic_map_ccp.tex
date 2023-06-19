@@ -1,0 +1,51 @@
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <map>
+#include <vector>
+using namespace std ;
+bool comvec(vector<int> v1 , vector <int> v2 ){//Esta es el comparador
+   return v1.size() < v2.size();
+}
+
+int main (){
+   //Creacion de un diccionario con 'vector<int>' 
+   //como Tipo de Dato de las llaves
+   map<vector<int>,int,bool(*)( vector<int> , vector<int>)> aplvec(comvec);
+   
+   map<char,int> apl;
+   apl.insert(make_pair('a',13)); apl.insert(make_pair('b',98));
+   cout<<apl['a']<<"\n"; cout<<apl['b']<<"\n";
+   //Notese que no existe apl['c] por lo que se creara y pondra como valor 0
+   cout<<apl['c']<<"\n";
+   
+   //Acceso a las llaves y valores mediante iteradores
+   for(map<char,int>::iterator it=apl.begin();it!= apl.end();it++){
+      cout<<it->first<<" "<<it->second<<"\n";
+   }//Resultado: a 13 b 98 c 0
+	
+   if(apl.empty()){ cout<<" La aplicacion esta vacia\n";}
+   else {
+      cout<<" La aplicacion lleva ";
+      cout<<apl.size()<<" elementos\n";
+   }//Salida : La aplicacion lleva 3 elementos
+	
+   if(apl.count('a')==1) cout<<" 'a ' esta en el diccionario\n";
+   else cout<<" 'a ' no esta en el diccionario\n";
+   //Resultado: 'a' esta en el diccionario
+   
+   if(apl.find('d')!=apl.end()) cout<<" 'd ' esta en el diccionario\n";
+   else cout<<" 'd ' no esta en el diccionario\n";
+   //Resultado: 'd' no esta en el diccionario
+	
+   if(apl.lower_bound('c')!=apl.upper_bound('c'))
+      cout<<" 'c ' esta en el diccionario\n";
+   else
+      cout<<" 'c ' no esta en el diccionario\n";
+   //Resultado: 'c' esta en el diccionario
+   
+   if(apl.lower_bound('Z')==apl.upper_bound('Z'))
+      cout<<" 'Z ' no esta en el diccionario\n" ;
+   else cout<<" 'Z ' esta en el diccionario\n";
+   //Resultado: 70 no esta en el diccionario
+   return 0;
+\end{lstlisting}

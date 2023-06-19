@@ -1,0 +1,20 @@
+El algoritmo lleva el nombre de Robert Tarjan, quien lo descubrió en 1979 y también hizo muchas otras contribuciones a la estructura de datos Disjoint Set Union , que se utilizará mucho en este algoritmo. 
+
+El algoritmo responde a todas las consultas con un recorrido DFS del árbol. Es decir, una consulta $(u,v)$ se responde en el nodo $u$, si nodo $v$ ya ha sido visitado anteriormente, o viceversa. Así que supongamos 
+que estamos actualmente en el nodo $v$, ya hemos realizado llamadas DFS recursivas, y también visitamos el 
+segundo nodo $u$ de la consulta $(u,v)$. Aprendamos cómo encontrar el LCA de estos dos nodos.
+
+Tenga en cuenta que $\text{LCA}(u, v)$ es el nodo $v$ o uno de sus antepasados. Entonces necesitamos 
+encontrar el nodo más bajo entre los ancestros de $v$ (incluido $v$ ), para el cual el nodo $u$ es 
+descendiente. También tenga en cuenta que para un fijo $v$ los nodos visitados del árbol se dividen en un 
+conjunto de conjuntos disjuntos. cada antepasado $p$ de nodo $v$ tiene su propio conjunto que contiene este 
+nodo y todos los subárboles con raíces en los de sus hijos que no son parte del camino desde $v$ a la raíz 
+del árbol. El conjunto que contiene el nodo $u$ determina el $\text{LCA}(u,v)$ : el LCA es el 
+representante del conjunto, es decir, el nodo en se encuentra en el camino entre $v$ y la raíz del árbol.
+
+Solo necesitamos aprender a mantener de manera eficiente todos estos conjuntos. Para ello aplicamos la estructura de datos DSU. Para poder aplicar Unión por rango, almacenamos el representante real (el valor en el camino entre $v$ y la raíz del árbol) de cada conjunto en la matriz ancestor.
+
+Analicemos la implementación del DFS. Supongamos que actualmente estamos visitando el nodo $v$. Colocamos el nodo en un nuevo conjunto en la DSU, ancestor[v] = v. Como de costumbre, procesamos a todos los niños de $v$. Para esto primero debemos llamar recursivamente a DFS desde ese nodo, y luego agregar este nodo con todo su subárbol al conjunto de $v$ . Esto se puede hacer con la función union\_sets y la siguiente asignación ancestor[find\_set(v)] = v(esto es necesario, porque union\_sets podría cambiar el representante del conjunto).
+
+Finalmente, después de procesar a todos los hijos, podemos responder todas las consultas del $(u,v)$ para cual $u$ ya ha sido visitado. La respuesta a la consulta, es decir, el LCA de $u$ y $v$, será el nodo ancestor[find\_set(u)]. Es fácil ver que una consulta solo se responderá una vez.
+

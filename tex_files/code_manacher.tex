@@ -1,0 +1,55 @@
+\subsection{C++}
+
+\subsubsection{Algoritmo trivial}
+\begin{lstlisting}[language=C++]
+vector<int> manacher_odd(string s) {
+  int n = s.size();
+  s = "$" + s + "^";
+  vector<int> p(n + 2);
+  for(int i = 1; i <= n; i++) {
+     while(s[i-p[i]]==s[i+p[i]])p[i]++;
+  }
+  return vector<int>(begin(p) + 1, end(p) - 1);
+}
+\end{lstlisting} 
+
+Los caracteres terminales \$ y $\wedge$ se usaron para evitar tratar los extremos de la cadena por separado.
+
+\subsubsection{Algoritmo Manacher}
+
+\begin{lstlisting}[language=C++]
+int manacher(string _text){
+   int n=_text.size();
+   int rad[2*n];
+   int i,j,k;
+   for(i=0,j=0;i<2*n;i+=k, j=max(j-k,0)){
+      while(i-j>=0 && i+j+1<2*n && _text[(i-j)/2]==_text[(i+j+1)/2])
+        ++j;
+      rad[i]=j;
+      for(k=1; i-k>=0 && rad[i]-k>=0 && rad[i-k]!=rad[i]-k ;++k)
+         rad[i+k]=min(rad[i-k],rad[i]-k);
+    }
+    return *max_element(rad,rad+(2*n));
+}
+	
+\end{lstlisting}
+
+\subsection{Java}
+\subsubsection{Algoritmo Manacher}
+
+\begin{lstlisting}[language=C++]
+public int manacher(String _text){
+  int n=_text.length();
+  int [] rad=new int [2*n];
+  int i,j,k;
+  for(i=0,j=0;i<2*n;i+=k, j=Math.max(j-k,0)){
+     while(i-j>=0 && i+j+1<2*n && _text.charAt((i-j)/2)==_text.charAt((i+j+1)/2))
+       ++j;
+     rad[i]=j;
+     for(k=1; i-k>=0 && rad[i]-k>=0 && rad[i-k]!=rad[i]-k ;++k)
+     rad[i+k]=Math.min(rad[i-k],rad[i]-k);
+   }
+   return Arrays.stream(rad).max().getAsInt(); 
+}
+	
+\end{lstlisting}

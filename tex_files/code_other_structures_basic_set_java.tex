@@ -1,0 +1,26 @@
+\begin{lstlisting}[language=Java]
+import java.util.*;
+
+public class Main {
+   public static void main(String[] args) {
+      Set<String> conjA = new TreeSet<String>();
+      conjA.add("aaa"); conjA.add("bbb"); conjA.add("aaa");
+      conjA.add("ccc"); conjA.add("ddd");
+      
+      Set<String> conjB = new TreeSet<String>();
+      conjB.add("aaa"); conjB.add("bbb"); conjB.add("bbb");
+      conjB.add("xxx"); conjB.add("yyy");
+      
+      //hallar conjB interseccion conjA
+      Set<String> conjC = new TreeSet<String>();
+      conjC.addAll(conjA);
+      // para intersectar A y B
+      // hacemos C=A-B y luego A-C
+      conjC.removeAll(conjB);
+      conjA.removeAll(conjC);
+      //listar
+      Iterator<String> iter = conjA.iterator();
+      while (iter.hasNext()) System.out.println(iter.next());
+   }
+}
+\end{lstlisting}

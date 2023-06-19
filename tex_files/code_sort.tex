@@ -1,0 +1,315 @@
+\subsection{C++}
+
+\begin{lstlisting}[language=C++]
+int n;
+int niz[MAX_N],tmp[MAX_N];
+
+inline void bubbleSort(){
+   bool swapped;
+   int it = 0;
+   do{
+      swapped = false;
+      for(int i=0;i<n-it-1;i++){
+         if (niz[i] > niz[i+1]){
+            swap(niz[i], niz[i+1]);
+            swapped = true;
+        }
+     }
+     it++;
+   } while (swapped);
+}
+
+inline void selectionSort(){
+   for (int i=0;i<n-1;i++){
+      int minPos = i;
+      for(int j=i+1;j<n;j++){
+         if(niz[j] < niz[minPos]){
+            minPos = j;
+         }
+      }
+      swap(niz[i], niz[minPos]);
+   }
+}
+
+inline void insertionSort(){
+   for(int i=1;i<n;i++){
+      int j = i - 1;
+      int tmp = niz[i];
+      while (j >= 0 && niz[j] > tmp){
+         niz[j+1] = niz[j];
+         j--;
+      }
+      niz[j+1] = tmp;
+   }
+}
+
+int count[MAX_K];
+
+void countingSort(){
+   for (int i=0;i<n;i++)
+      count[niz[i]]++;
+      int ii = 0;
+   for (int i=0;i<MAX_K;i++){
+      while (count[i] > 0){
+         niz[ii++] = i;
+         count[i]--;
+      }
+   }
+}
+
+
+inline void merge(int left, int mid, int right){
+   int h,i,j,k;
+   h = left;
+   i = left;
+   j = mid+1;
+   while (h <= mid && j <= right){
+      if (niz[h] <= niz[j]){
+         tmp[i] = niz[h];
+         h++;
+      }
+      else{
+         tmp[i] = niz[j];
+         j++;
+      }
+      i++;
+   }
+   if (h > mid){
+      for(k=j;k<=right;k++){
+         tmp[i] = niz[k];
+         i++;
+      }    
+   }
+   else{
+      for(k=h;k<=mid;k++){
+         tmp[i] = niz[k];
+         i++;
+      }
+   }
+   for(k=left;k<=right;k++) niz[k] = tmp[k];
+}
+
+void mergeSort(int left, int right){
+   if (left == right) return;
+   int MID = (left+right)/2;
+   mergeSort(left, MID);
+   mergeSort(MID+1, right);
+   merge(left, MID, right);
+}
+
+//La llamada se realiza de la siguiente manera
+//mergeSort(0,n-1);
+
+void qsort(int left, int right){
+   if (left < right){
+      int i = left;
+      int j = right;
+      int pivot = niz[(i+j)/2];
+      while (i<=j){
+         while (niz[i]<pivot) i++;
+         while (niz[j]>pivot) j--;
+         if (i<=j){
+            swap(niz[i], niz[j]);
+            i++; j--;
+         }
+      }
+      qsort(left,j);
+      qsort(i,right);
+   }
+}
+//La llamada se realiza de la siguiente manera:
+//qsort(0,n-1);
+
+int heap_size;
+
+inline void Heapify(int pos){
+   if (pos > heap_size) return;
+   int ret = pos;
+   int left = pos*2;
+   int right = pos*2+1;
+   if (left <= heap_size && niz[left] > niz[ret]) ret = left;
+   if (right <= heap_size && niz[right] > niz[ret]) ret = right;
+   if (ret != pos){
+      swap(niz[pos], niz[ret]);
+      Heapify(ret);
+   }
+}
+
+inline void Pop(){
+   int pos = 1;
+   swap(niz[pos], niz[heap_size--]);
+   while (pos <= heap_size){
+      int ret = pos;
+      int left = pos*2;
+      int right = pos*2+1;
+      if (left <= heap_size && niz[left] > niz[ret]) 
+         ret = left;
+      if (right <= heap_size && niz[right] > niz[ret]) 
+         ret = right;
+      if (ret != pos){
+         swap(niz[pos], niz[ret]);
+         pos = ret;
+      }
+      else  break;
+   }
+}
+
+int main(){
+   n = 5;
+   niz[1] = 4;
+   niz[2] = 2;
+   niz[3] = 5;
+   niz[4] = 1;
+   niz[5] = 3;
+	
+   heap_size = n;
+	
+   for (int i=n/2;i>=1;i--) 
+      Heapify(i);
+   while (heap_size > 1) 
+      Pop();
+   for (int i=1;i<=n;i++) 
+      printf("%d ",niz[i]);
+      printf("\n");
+   return 0;
+}
+
+\end{lstlisting} 
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+public static void qSort(int[] a, int low, int high) {
+   if (low >= high) return;
+   int separator = a[low + rnd.nextInt(high - low + 1)];
+   int i = low;
+   int j = high;
+   do {
+      while (a[i] < separator) ++i;
+      while (a[j] > separator) --j;
+      if (i > j) break;
+      int t = a[i];
+      a[i] = a[j];
+      a[j] = t;
+      ++i;
+      --j;
+   } while (i <= j);
+   qSort(a, low, j);
+   qSort(a, i, high);
+}
+
+public static void mergeSort(int[] a, int low, int high) {
+   if (high - low < 2)return;
+   int mid = (low + high) >>> 1;
+   mergeSort(a, low, mid);
+   mergeSort(a, mid, high);
+   int[] b = Arrays.copyOfRange(a, low, mid);
+   for (int i = low, j = mid, k = 0; k < b.length; i++) {
+      if (j == high || b[k] <= a[j]) {
+         a[i] = b[k++];
+      } 
+      else{
+         a[i] = a[j++];
+      }
+   }
+}
+
+static void swap(int[] a, int i, int j) {
+   int t = a[j];
+   a[j] = a[i];
+   a[i] = t;
+}
+
+public static void heapSort(int[] a) {
+   int n = a.length;
+   for (int i = n / 2 - 1; i >= 0; i--) pushDown(a, i, n);
+   while (n > 1) {
+      swap(a, 0, n - 1);
+      pushDown(a, 0, --n);
+   }
+}
+
+static void pushDown(int[] h, int pos, int size) {
+   while (true) {
+      int child = 2 * pos + 1;
+      if (child >= size) break;
+      if (child + 1 < size && h[child + 1] > h[child])
+         child++;
+      if (h[pos] >= h[child]) break;
+      swap(h, pos, child);
+      pos = child;
+   }
+}
+
+public static void bubbleSort(int[] a) {
+   for (int i = 0; i + 1 < a.length; i++) {
+      for (int j = 0; j + 1 < a.length; j++) {
+         if (a[j] > a[j + 1]) {
+            swap(a, j, j + 1);
+         }
+      }
+   }
+}
+
+public static void selectionSort(int[] a) {
+   int n = a.length;
+   int[] p = new int[n];
+   for (int i = 0; i < n; i++) p[i] = i;
+      for (int i = 0; i < n - 1; i++) {
+         for (int j = i + 1; j < n; j++) {
+            if (a[p[i]] > a[p[j]]) {
+               swap(p, i, j);
+            }
+         }
+      }
+   int[] b = a.clone();
+   for (int i = 0; i < n; i++) a[i] = b[p[i]];
+}
+
+public static void insertionSort(int[] a) {
+   for (int i = 1; i < a.length; i++) {
+      for (int j = i; j > 0; j--) {
+         if (a[j - 1] > a[j]) {
+            swap(a, j - 1, j);
+         }
+      }
+   }
+}
+
+public static void countingSort(int[] a) {
+   int max = 0;
+   for (int x : a) {
+      max = Math.max(max, x);
+   }
+   int[] cnt = new int[max + 1];
+   for (int x : a) {
+      ++cnt[x];
+   }
+   for (int i = 1; i < cnt.length; i++) {
+      cnt[i] += cnt[i - 1];
+   }
+   int n = a.length;
+   int[] b = new int[n];
+   for (int i = 0; i < n; i++) {
+      b[--cnt[a[i]]] = a[i];
+   }
+   System.arraycopy(b, 0, a, 0, n);
+}
+
+public static void radixSort(int[] a) {
+   final int d = 8;
+   final int w = 32;
+   int[] t = new int[a.length];
+   for (int p = 0; p < w / d; p++) {
+      // counting-sort
+	  int[] cnt = new int[1 << d];
+      for (int i = 0; i < a.length; i++) 
+         ++cnt[((a[i] ^ Integer.MIN_VALUE) >>> (d * p)) & ((1 << d) - 1)];
+      for (int i = 1; i < cnt.length; i++)
+         cnt[i] += cnt[i - 1];
+      for (int i = a.length - 1; i >= 0; i--)
+         t[--cnt[((a[i] ^ Integer.MIN_VALUE) >>> (d * p)) & ((1 << d) - 1)]] = a[i];
+      System.arraycopy(t, 0, a, 0, a.length);
+   }
+}
+\end{lstlisting}

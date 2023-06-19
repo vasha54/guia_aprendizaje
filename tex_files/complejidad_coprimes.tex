@@ -1,0 +1,5 @@
+Es evidente que la complejidad de saber si dos números son comprimos va depender de la complejidad del calculo del máximo común divisor la cual es $O(\log N)$ siendo $N = \min (a,b)$
+
+La utilización de la factorización de $N$ para calcular los coprimos de este menores que él provoca que el algoritmo tenga una complejidad  de $O(\sqrt{N})$ 
+
+En cuanto al cálculo de todos los coprimos para los todos los números de 1 a $n$ el primer enfoque es básicamente idéntico al criba de Eratóstenes, la complejidad también será la misma: $O(n \log \log n)$ mientras para el segundo enfoque utilizando la propiedad de la suma del divisor la complejidad es $O(n \log n)$

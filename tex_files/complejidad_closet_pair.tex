@@ -1,0 +1,5 @@
+Es evidente que la solucion iterativa tanto en peor como en el mejor de los casos compara todos los puntos contra todos por lo que podemos decir que la complejidad de este algoritmo es O($n^{2}$) siendo {\em n} la cantidad de puntos en el plano. Por lo que solo es recomendable usar esta variante en problemas de concursos cuando la cantidad de puntos no superen los 1000.
+
+Debemos analizar cuanto tiempo tarda este algoritmo con la estrategia divide y conquista en su peor caso, en el caso promedio en análisis es muy complejo porque depende de cuantos puntos tiene $P_{k}$ en promedio y esto depende en cual es la distancia mínima esperada en cada sublista. En el peor de los casos podemos suponer que $P_{k}$ tiene a todos los puntos. La fase pre-sort insume O(n$\log$n) igual valor arroja la parte recursiva del algoritmo por lo que obtenemos un algoritmo O(n$\log$n) mas eficiente que el algoritmo de fuerza bruta que era O($n^{2}$).
+
+De forma similar el algoritmo que utiliza la línea de barrido como estrategia su complejidad es O(n$\log$n) y su implementación es mas corta que utilizando que el algoritmo con la estrategia divide y conquista.

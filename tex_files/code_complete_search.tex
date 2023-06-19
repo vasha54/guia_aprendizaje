@@ -1,0 +1,24 @@
+A la hora de implementar una búsqueda completa existen varios enfoques los cuales veremos cada uno de ellos.
+
+\subsection{Búsqueda completa iterativa}
+
+\subsubsection{Búsqueda completa iterativa (Dos bucles anidados)}
+
+
+
+\subsubsection{Búsqueda completa iterativa (Muchos bucles anidados)}
+
+\subsubsection{Búsqueda completa iterativa (Bucles + Poda)}
+
+\subsubsection{Búsqueda completa iterativa (Permutaciones)}
+
+\subsubsection{Búsqueda completa iterativa  (Subconjuntos)}
+
+\subsection{Búsqueda completa recursiva}
+
+\subsubsection{Retroceso simple}
+Un algoritmo de retroceso comienza con una solución vacía y extiende la solución paso a paso. La búsqueda recursivamente pasa por todas las diferentes formas en que se puede construir una solución. 
+
+Si un problema se puede resolver mediante la búsqueda completa, también estará claro cuándo utilizar los enfoques de seguimiento iterativo o recursivo. Los enfoques iterativos se utilizan cuando uno puede derivar fácilmente los diferentes estados con alguna fórmula relativa a un cierto contador y (casi) todos los estados deben verificarse, por ejemplo, escaneando todos los índices de una matriz, enumerando (casi) todos los subconjuntos posibles de un conjunto pequeño, generando (casi) todas las permutaciones, etc. 
+
+El retroceso recursivo (\emph{backtracking}) se usa cuando es difícil derivar los diferentes estados con un índice simple y/o uno también quiere (en gran medida) podar el espacio de búsqueda. Si el espacio de búsqueda de un problema que se puede resolver con la búsqueda completa es grande, generalmente se utilizan enfoques recursivos de retroceso que permiten la poda temprana de secciones no factibles del espacio de búsqueda. La poda en búsquedas completas iterativas no es imposible, pero suele ser difícil.

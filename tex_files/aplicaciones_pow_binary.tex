@@ -1,0 +1,51 @@
+La técnica descrita aquí es aplicable a cualquier operación asociativa, no solo a la multiplicación de números. Recordar que la operación se llama asociativa, si para alguna a, b, c se lleva a cabo: (a*b)*c= a*(b*c). El algoritmo aquí descrito entra entre los ejemplos de que cumplen con la idea algorítmica de divide y vencerás.
+
+A continuación vamos a mencionar algunas aplicaciones de esta técnica:
+
+\begin{itemize}
+	\item \textbf{Cálculo efectivo de grandes exponentes módulo a número:} Calcular $x^n \bmod m$. Esta 
+	es una operación muy común. Por ejemplo, se utiliza para calcular el inverso multiplicativo modular.  
+	Como sabemos que el operador de módulo no interfiere con las multiplicaciones ($a \cdot b \equiv (a 
+	\bmod m) \cdot (b \bmod m) \pmod m$), podemos usar directamente el mismo código y simplemente 
+	reemplazar cada multiplicación con una multiplicación modular.
+	 
+	\item \textbf{Cálculo efectivo de los números de Fibonacci:} Calcular $n$-ésimo número de 
+	Fibonacci $F_n$. Para calcular el siguiente número de Fibonacci, solo se necesitan los dos 
+	anteriores, ya que $F_n = F_{n-1} + F_{n-2}$. Podemos construir un $2 \times 2$ matriz que 
+	describe esta transformación: la transición de $F_i$ y $F_{i+1}$ a $F_{i+1}$ y $F_{i+2}$ . Por 
+	ejemplo, aplicando esta transformación al par $F_0$ y $F_1$ lo cambiaria por $F_1$ y $F_2$. Por lo 
+	tanto, podemos elevar esta matriz de transformación a la $n$-ésima potencia para encontrar $F_n$ en la complejidad del tiempo $O(\log n)$.
+	
+	\item \textbf{Aplicar una permutación $k$ veces:} Te dan una secuencia de longitud $n$. Aplicarle 
+	una permutación dada $k$ veces. Simplemente eleva la permutación a $k$-ésima potencia usando 
+	exponenciación binaria, y luego aplicarla a la secuencia. Esto le dará una complejidad de tiempo de 
+	$O(n \log k)$.
+	
+	
+	\item \textbf{Aplicación rápida de un conjunto de operaciones geométricas a un conjunto de puntos:}
+	Dado $n$ puntos $p_i$ , aplicar $m$ transformaciones a cada uno de estos puntos. Cada transformación puede ser un cambio, una escala o una rotación alrededor de un eje dado por un ángulo dado. También hay una operación de "bucle" que aplica una lista dada de transformaciones $k$ veces (las operaciones de "bucle" se pueden anidar). Debe aplicar todas las transformaciones más rápido que $O(n \cdot longitud)$, dónde $longitud$ es el número total de transformaciones que se aplicarán (después de desenrollar las operaciones de "bucle").
+	
+	\item \textbf{Números de caminos de longitud K en un grafo:} Dada un grafo no ponderada dirigida de 
+	$n$ vértices, encuentre el número de caminos de longitud $k$ desde cualquier vértice $u$ a 
+	cualquier otro vértice $v$.  El algoritmo consiste en elevar la matriz de adyacencia $M$ del grafo 
+	(una matriz donde $m_{ij} = 1$ si hay una arista de $i$ a $j$, o $0$ de lo contrario) a la 
+	$k$-ésima potencia. Ahora $m_{ij}$ será el número de caminos de longitud $k$ de $i$ a $j$. La 
+	complejidad temporal de esta solución es $O(n^3 \log k)$.
+	
+	\item  \textbf{Variación de la exponenciación binaria: multiplicar dos números módulo $m$:} 
+	Multiplicar dos números $a$ y $b$ módulo $m$. $a$ y $b$ caben en los tipos de datos incorporados, 
+	pero su producto es demasiado grande para caber en un entero de 64 bits. La idea es calcular $a 
+	\cdot b \pmod m$ sin usar aritmética bignum. Simplemente aplicamos el algoritmo de construcción 
+	binaria descrito anteriormente, solo realizando sumas en lugar de multiplicaciones. En otras 
+	palabras, hemos "expandido" la multiplicación de dos números a $O (\log m)$ operaciones de suma y 
+	multiplicación por dos (que, en esencia, es una suma).
+	
+$$
+a \cdot b = 
+\begin{cases}
+  0 &\text{si }a = 0 \\ 
+  2 \cdot \frac{a}{2} \cdot b &\text{si }a > 0 \text{ y } a \text{ par} \\ 
+  2 \cdot \frac{a-1}{2} \cdot b + b &\text{si }a > 0 \text{ y }a \text{ impar} 
+\end{cases}
+$$
+\end{itemize}  

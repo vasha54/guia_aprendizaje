@@ -1,0 +1,36 @@
+Los operadores lógicos son operadores binarios que permiten combinar los resultados de los
+operadores relacionales, comprobando que se cumplen simultáneamente varias condiciones,
+que se cumple una u otra, etc. Estos operadores se utilizan para establecer relaciones entre valores lógicos. Los valores lógicos son los valores boleanos: 
+
+\begin{itemize}
+	\item True (verdadero)
+	\item False (falso)
+\end{itemize}
+
+\begin{tabular}{|c|c|c|p{9cm}|}
+	\hline
+	\textbf{Operador}	& \textbf{Nombre} & \textbf{Utilizacion} & \textbf{El resultado es verdadero (true)} \\
+	\hline
+     \&\& & AND & op1 \&\& op2 & true si op1 y op2 son true. Si op1 es false ya no se evalúa op2 \\
+	\hline
+	 || & OR & op1 || op2 & true si op1 u op2 son true. Si op1 es true ya no se evalúa op2 \\
+	\hline
+	 ! & NOT & !op1 & true si op es false y false si op es true \\
+	\hline
+	 \& & AND & op1 \& op2 & true si op1 y op2 son true. Siempre se evalúa op2 \\
+	\hline
+	| & OR & op1 | op2 & true si op1 u op2 son true. Siempre se evalúa op2 \\
+	\hline
+\end{tabular}
+
+Además, dado que los operadores relacionales tienen como resultado un operador lógico, que se deduce mediante la comparación de los operandos, los operadores lógicos pueden tener como operandos el resultado de una expresión relacional.
+
+\subsubsection{Prioridad de los Operadores Lógicos } 
+
+El orden de precedencia de los operadores lógicos entre ellos es el siguiente, de más precedente a menos: 
+
+\begin{enumerate}
+	\item NOT
+	\item AND
+	\item OR
+\end{enumerate}

@@ -1,0 +1,51 @@
+Los algoritmos de ordenamiento se clasifican o se agrupan de acuerdo a dos criterios el primero es estabilidad del algoritmo. Se dice que un algoritmo de ordenamiento es estable cuando en la colección existente valores similares y una vez ordenados estos valores mantienen entre ellos el orden inicial , no cumplirse esto se dice que el algoritmo de ordenamiento no estable.
+
+El otro criterio por el cual se clasifica los algoritmos de ordenamientos es el referido al uso de memoria adicional a la reservada para almacenar los elementos. Para ordenar una secuencia de elementos es necesario tener dichos elementos contenidos dentro una estructura  computacional de almacenamiento como son los arreglos, listas y vectores. Cuando un método utiliza memoria adicional a la  utilizada con el uso de alguna estructura computacional de almacenamiento se dice que el algoritmo es no {\em in-situ} en caso contrario de solo utilizar la memoria relacionada con las estructura computacional de almacenamiento  se dice que el algorimo es in-situ. En otras paralabras si el algoritmo utiliza alguna estructura de datos adicional a la que contiene los elementos de la secuencia es un algoritmo no {\em in-situ} en caso contrario es {\em in-situ}
+
+\subsection{Algoritmos cuadráticos}
+
+\subsubsection{Burble Sort}
+\input{tex_files/burble.tex}
+
+\subsubsection{Selection Sort}
+\input{tex_files/selection.tex}
+
+\subsubsection{Insertion Sort}
+\input{tex_files/insertion.tex}
+\subsection{Algoritmos logaritmico}
+
+\subsubsection{Heap Sort}
+\input{tex_files/heap}
+
+\subsubsection{Merge Sort}
+\input{tex_files/merge.tex}
+
+\subsubsection{Quick Sort}
+\input{tex_files/quick}
+
+\subsection{Otros}
+
+\subsubsection{CountingSort}
+\input{tex_files/counting.tex}
+
+\subsubsection{Radix Sort}
+\input{tex_files/radix}
+
+%\subsubsection{Shell Sort}
+
+
+
+\subsection{Bibliotecas con funciones de ordenamiento}
+Hoy en día la mayoría de los lenguajes de programación poseen un grupo de bibliotecas o funciones que permiten ordenar una colección de elementos sean de un tipo dato primitivo del lenguaje o bien creados por el desarrollador. Este elemento es muy importante por dos motivos:
+\begin{itemize}
+	\item Reduce el esfuerzo. No debemos emplear tiempo en la implementación de un algoritmo que ordene, sino que podemos utilizar alguna función de las definidas en lenguaje de programación escogido.
+	\item Reduce la posibilidad de errores que puede surgir a la hora de implementar por nuestro propios esfuerzos un algoritmo de ordenación. Las funciones o métodos que nos brinda los lenguajes de programación hay seguridad de su funcionamiento correcto y de manera eficiente 
+\end{itemize}
+
+A continuación vamos a ver algunas de esas funciones de los lenguajes de programación C++ y Java
+
+\subsubsection{Bibliotecas de C++}
+\input{tex_files/sort_cplusplus.tex}
+
+\subsubsection{Bibliotecas de Java}
+\input{tex_files/sort_java.tex}

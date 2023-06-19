@@ -1,0 +1,9 @@
+Damos aquí un problema de ciclo euleriano clásico: el problema de Domino.
+
+Hay $N$ fichas de dominó, como se le conoce, en ambos extremos de la ficha de dominó está escrito un número (generalmente del 1 al 6, pero en nuestro caso no es importante). Desea colocar todas las fichas de dominó en una fila de modo que coincidan los números de dos fichas de dominó adyacentes cualesquiera, escritos en su lado común. Las fichas de dominó pueden girar.
+
+Reformular el problema. Sean los números escritos en la parte inferior los vértices del grafo, y las 
+fichas de dominó las aristas grafo (cada ficha de dominó con números $(a,b)$ son las aristas $(a,b)$ y 
+$(b,a)$). Entonces nuestro problema se reduce al problema de encontrar el camino Euleriano en este grafo.
+
+Los caminos eulerianos se utilizan en bioinformática para reconstruir la secuencia de ADN a partir de sus fragmentos. También se utilizan en el diseño de circuitos semiconductor de óxido de metal complementario (\emph{CMOS})   para encontrar un orden óptimo de puertas lógicas. Hay algunos algoritmos para procesar árboles que se basan en un recorrido de Euler por el árbol (donde cada arista se trata como un par de arcos).

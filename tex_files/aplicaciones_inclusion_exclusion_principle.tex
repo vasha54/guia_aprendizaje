@@ -1,0 +1,277 @@
+El principio de inclusión-exclusión es difícil de entender sin estudiar sus aplicaciones.
+
+Primero, veremos las tres tareas más simples \emph{en papel}, que ilustran las aplicaciones del principio, y luego consideraremos problemas más prácticos que son difíciles de resolver sin el principio de inclusión-exclusión.
+
+Cabe destacar las tareas que piden \emph{encontrar el número de formas}, ya que a veces conducen a soluciones polinómicas, no necesariamente exponenciales.
+
+\subsection{Una tarea simple sobre permutaciones}
+
+Tarea: cuenta cuántas permutaciones de números de $0$ a $9$ existen tales que el primer elemento es mayor que $1$ y el ultimo es menor que $8$.
+
+Contemos el número de permutaciones \emph{malas}, es decir, permutaciones en las que el primer elemento es $\leq 1$ y/o el último es $\geq 8$.
+
+Denotaremos por $X$ el conjunto de permutaciones en el que el primer elemento es $\leq 1$ y $Y$ el conjunto de permutaciones en el que el último elemento es $\geq 8$ . Entonces el número de permutaciones \emph{malas}, como en la fórmula de inclusión-exclusión, será:
+
+$$|X \cup Y| = |X| + |Y| - |X \cap Y|$$
+
+Tras un sencillo cálculo combinatorio, llegaremos a:
+
+$$2 \cdot 9! + 2 \cdot 9! - 2 \cdot 2 \cdot 8!$$
+
+Lo único que queda es restar este número del total de $10!$ para obtener el número de permutaciones \emph{buenas}.
+
+\subsection{Una tarea simple en (0, 1, 2) secuencias}
+
+Contar cuántas secuencias de longitud $n$ existen que consisten solo en números $0,1,2$ tal que cada número ocurra al menos una vez.
+
+Volvamos de nuevo al problema inverso, es decir, calculamos el número de secuencias que no \textbf{contienen} al \textbf{menos uno} de los números.
+
+Denotemos por $A_i (i = 0,1,2)$ el conjunto de secuencias en las que el dígito $i$ no ocurre. La fórmula de inclusión-exclusión sobre el número de secuencias \emph{malas} será:
+
+$$|A_0 \cup A_1 \cup A_2| = |A_0| + |A_1| + |A_2| - |A_0 \cap A_1| - |A_0 \cap A_2| - |A_1 \cap A_2| + |A_0 \cap A_1 \cap A_2|$$
+
+\begin{itemize}
+	\item El tamaño de cada $A_i$ es $2^n$, ya que cada secuencia solo puede contener dos de los dígitos.
+	\item El tamaño de cada intersección por pares $A_i \cap A_j$ es igual a $1$ , ya que solo habrá un dígito para construir la secuencia.
+	\item El tamaño de la intersección de los tres conjuntos es igual a $0$ , ya que no habrá dígitos para construir la secuencia.
+\end{itemize}
+
+Como resolvimos el problema inverso, lo restamos del total de $3^n$ secuencias:
+
+$3^n - (3 \cdot 2^n - 3 \cdot 1 + 0)$
+
+\subsection{Número de sumas de enteros con límite superior}
+
+Considere la siguiente ecuación:
+
+$$x_1 + x_2 + x_3 + x_4 + x_5 + x_6 = 20$$
+
+dónde $0 \le x_i \le 8 ~ (i = 1,2,\ldots 6)$ . Contar el número de soluciones a la ecuación. 
+
+Ahora calcularemos el número de soluciones \emph{malas} con el principio de inclusión-exclusión. Las \emph{malas} soluciones serán aquellas en las que uno o más $x_i$ son mayores que $9$.
+
+Denotamos por $A_k ~ (k = 1,2\ldots 6)$ el conjunto de soluciones donde $x_k \ge 9$, y todos los demás $x_i \ge 0 ~ (i \ne k)$ (pueden ser $\ge 9$ o no). Para calcular el tamaño de $A_k$ , tenga en cuenta que tenemos esencialmente el mismo problema combinatorio que se resolvió en los dos párrafos anteriores, pero ahora $9$ de las unidades quedan excluidas de las franjas horarias y pertenecen definitivamente al primer grupo. De este modo:
+
+$$| A_k | = \binom{16}{5}$$
+
+De manera similar, el tamaño de la intersección entre dos conjuntos $A_k$ y $A_p$ (para $k \ne p$ ) es igual a:
+
+$$\left| A_k \cap A_p \right| = \binom{7}{5}$$
+
+El tamaño de cada intersección de tres conjuntos es cero, ya que $20$ unidades no serán suficientes para tres o más variables mayores o iguales a $9$.
+
+Combinando todo esto en la fórmula de inclusiones-exclusiones y dado que resolvimos el problema inverso, finalmente obtenemos la respuesta:
+
+$$\binom{25}{5} - \left(\binom{6}{1} \cdot \binom{16}{5} - \binom{6}{2} \cdot \binom{7}{5}\right)$$
+
+
+\subsection{El número de primos relativos en un intervalo dado}
+
+Dados dos números $n$ y $r$, cuente el número de enteros en el intervalo $[1;r]$ que son primos relativos a n (su máximo común divisor es $1$).
+
+Resolvamos el problema inverso: calcule el número de primos no mutuamente con $n$.
+
+Denotaremos los factores primos de $n$ como $p_i (i = 1\cdots k)$. Cuantos numeros hay en el intervalo $[1;r]$ son divisibles por $p_i$. La respuesta a esta pregunta es:
+
+$$\left\lfloor \frac{ r }{ p_i } \right\rfloor$$
+
+Sin embargo, si simplemente sumamos estos números, algunos números se resumirán varias veces (los que comparten múltiples $p_i$ como sus factores). Por lo tanto, es necesario utilizar el principio de inclusión-exclusión. Iteramos sobre todo $2^k$ subconjuntos de $p_i$ s, calcule su producto y sume o reste el número de múltiplos de su producto.
+
+\subsection{El número de enteros en un intervalo dado que son múltiplos de al menos uno de los números dados}
+
+Dado $n$ números $a_i$ y número $r$. Quiere contar el número de enteros en el intervalo $[1; r]$ que son múltiplos de al menos uno de los $a_i$.
+
+El algoritmo de solución es casi idéntico al de la tarea anterior: construya la fórmula de inclusión-exclusión en los números $a_i$, es decir, cada término en esta fórmula es el número de números divisible por un subconjunto dado de números $a_i$ (en otras palabras, divisible por su mínimo común múltiplo).
+
+Así que ahora vamos a iterar sobre todos $2^n$ subconjuntos de enteros $a_i$ con $O(n \log r)$ operaciones para encontrar su mínimo común múltiplo, sumando o restando el número de múltiplos de él en el intervalo. asintótica es $O(2^n\cdot n\cdot \log r)$.
+
+\subsection{El número de cadenas que satisfacen un patrón dado}
+
+Considerar $n$ patrones de cadenas de la misma longitud, que consisten solo en letras ($a...z$) o signos de interrogación. También te dan un número $k$. Una cadena coincide con un patrón si tiene la misma longitud que el patrón y, en cada posición, los caracteres correspondientes son iguales o el carácter del patrón es un signo de interrogación. La tarea es contar el número de cadenas que coinciden exactamente $k$ de los patrones (primer problema) y al menos $k$ de los patrones (segundo problema).
+
+Observe primero que podemos contar fácilmente el número de cadenas que satisfacen a la vez todos los patrones especificados. Para hacer esto, simplemente \emph{cruce} los patrones: repita las posiciones (\emph{ranuras}) y observe una posición sobre todos los patrones. Si todos los patrones tienen un signo de interrogación en esta posición, el carácter puede ser cualquier letra de $a$ a $z$. De lo contrario, el carácter de esta posición se define únicamente por los patrones que no contienen un signo de interrogación.
+
+Aprenda ahora a resolver la primera versión del problema: cuando la cadena debe satisfacer exactamente $k$ de los patrones
+
+Para resolverlo, itere y corrija un subconjunto específico $X$ del conjunto de patrones formado por $k$ patrones. Luego, tenemos que contar el número de cadenas que satisfacen este conjunto de patrones y solo coinciden, es decir, no coinciden con ningún otro patrón. Usaremos el principio de inclusión-exclusión de una manera ligeramente diferente: sumamos en todos los superconjuntos $Y$ (subconjuntos del conjunto original de cadenas que contienen $X$) y sumar a la respuesta actual o restarla del número de cadenas:
+
+$$ans(X) = \sum_{Y \supseteq X} (-1)^{|Y|-k} \cdot f(Y)$$
+
+Dónde $f(Y)$ es el número de cadenas que coinciden $Y$ (al menos $Y$).
+
+(Si tiene dificultades para resolver esto, puede intentar dibujar diagramas de Venn).
+
+Si sumamos todo $ans(X)$, obtendremos la respuesta final:
+
+$$ans = \sum_{X ~ : ~ |X| = k} ans(X)$$
+
+Sin embargo, la asintótica de esta solución es $O(3^k \cdot k)$. Para mejorarlo, observe que diferentes $ans(X)$ los cálculos muy a menudo comparten $Y$ conjuntos.
+
+Invertiremos la fórmula de inclusión-exclusión y suma en términos de $Y$ conjuntos Ahora queda claro que el mismo conjunto $Y$ se tendrá en cuenta en el cómputo de $ans(X)$ de $\binom{|Y|}{k}$ conjuntos con el mismo signo $(-1)^{|Y| - k}$.
+
+$$ans = \sum_{Y ~ : ~ |Y| \ge k} (-1)^{|Y|-k} \cdot \binom{|Y|}{k} \cdot f(Y)$$
+
+Ahora nuestra solución tiene asintóticas $O(2^k \cdot k)$.
+
+Ahora resolveremos la segunda versión del problema: encuentra el número de cadenas que coinciden \textbf{al menos} $k$ de los patrones.
+
+Por supuesto, podemos simplemente usar la solución a la primera versión del problema y agregar las respuestas para conjuntos con un tamaño mayor que $k$. Sin embargo, puede notar que en este problema, un conjunto |Y| se considera en la fórmula para todos los conjuntos con tamaño $\ge k$ que están contenidos en $Y$. Dicho esto, podemos escribir la parte de la expresión que se está multiplicando por $f(Y)$ como:
+
+$$(-1)^{|Y|-k} \cdot \binom{|Y|}{k} + (-1)^{|Y|-k-1} \cdot \binom{|Y|}{k+1} + (-1)^{|Y|-k-2} \cdot \binom{|Y|}{k+2} + \cdots + (-1)^{|Y|-|Y|} \cdot \binom{|Y|}{|Y|}$$
+
+
+Mirando a Graham (Graham, Knuth, Patashnik. \emph{Matemáticas concretas} 1998), vemos una fórmula bien conocida para los coeficientes binomiales :
+
+
+$$\sum_{k=0}^m (-1)^k \cdot \binom{n}{k} = (-1)^m \cdot \binom{n-1}{m}$$
+
+Aplicándolo aquí, encontramos que la suma total de los coeficientes binomiales se minimiza:
+
+$$(-1)^{|Y|-k} \cdot \binom{|Y|-1}{|Y|-k}$$
+
+Así, para esta tarea también obtuvimos una solución con las asintóticas $O(2^k \cdot k)$:
+
+$$ans = \sum_{Y ~ : ~ |Y| \ge k} (-1)^{|Y|-k} \cdot \binom{|Y|-1}{|Y|-k} \cdot f(Y)$$
+
+\subsection{El número de formas de ir de una celda a otra}
+
+Hay un campo $n \times m$, y $k$ de sus celdas son muros infranqueables. Un robot está inicialmente en
+la celda $(1,1)$ (abajo a la izquierda). El robot solo puede moverse hacia la derecha o hacia arriba, y 
+eventualmente necesita ingresar a la celda $(n,m)$, esquivando todos los obstáculos. Tienes que contar 
+el número de formas en que puede hacerlo.
+
+Suponga que los tamaños $n$ y $m$ son muy grandes (digamos, $10^9$), y el número $k$ es pequeño (alrededor $100$).
+
+Por ahora, ordena los obstáculos por su coordenada $x$, y en caso de igualdad por coordenada $y$.
+
+También acaba de aprender a resolver un problema sin obstáculos: es decir, aprender a contar el número de formas de llegar de una celda a otra. En un eje, tenemos que pasar por $x$ células, y por otro, $y$ células. De la combinatoria simple, obtenemos una fórmula usando coeficientes binomiales :
+
+$$\binom{x+y}{x}$$
+
+Ahora, para contar la cantidad de formas de pasar de una celda a otra, evitando todos los obstáculos, puede usar inclusión-exclusión para resolver el problema inverso: cuente la cantidad de formas de caminar por el tablero pisando un subconjunto de obstáculos (y restar del número total de vías).
+
+Al iterar sobre un subconjunto de los obstáculos que vamos a pisar, para contar la cantidad de formas de hacer esto, simplemente multiplique el número de todas las rutas desde la celda inicial hasta el primero de los obstáculos seleccionados, un primer obstáculo hasta el segundo, y así encendido, y luego sume o reste este número de la respuesta, de acuerdo con la fórmula estándar de inclusión-exclusión.
+
+Sin embargo, esto nuevamente será no polinomial en complejidad $O(2^k \cdot k)$.
+
+Aquí va una solución polinomial:
+
+Usaremos programación dinámica. Para mayor comodidad, presione (1,1) al principio y (n,m) al final de la matriz de obstáculos. Calculemos los números $d[i]$ el número de formas de llegar desde el punto de partida ($0-th$) a $i-ésimo$ , sin pisar ningún otro obstáculo (excepto $i$, por supuesto). Calcularemos este número para todas las celdas de obstáculos, y también para la final.
+
+
+Olvidémonos por un segundo de los obstáculos y solo contemos el número de caminos desde la celda $0$ a $i$. Necesitamos considerar algunos caminos \emph{malos}, los que pasan a través de los obstáculos, y restarlos del número total de caminos para ir de $0$ a $i$.
+
+Al considerar un obstáculo $t$ entre $0$ y $i$ ($0 < t < i$), sobre el que podemos pisar, vemos que el número de caminos desde $0$ a $i$ que pasan $t$ cual tiene $t$ como \textbf{el primer obstáculo entre el inicio} y $i$. Podemos calcular eso como: $d[t]$ multiplicado por el número de caminos arbitrarios desde $t$ a $i$. Podemos contar el número de formas \emph{malas} sumando esto para todos $t$ entre $0$ y $i$. Podemos calcular $d[i]$ en $O(k)$ para $O(k)$ obstáculos, por lo que esta solución tiene complejidad $O(k^2)$.
+
+\subsection{El número de coprimos se cuadriplica}
+
+Te dan $n$ números: $a_1, a_2, \ldots, a_n$. Debe contar la cantidad de formas de elegir cuatro números para que su máximo común divisor combinado sea igual a uno.
+
+Resolveremos el problema inverso: calculamos el número de cuádruples \emph{malos}, es decir, cuádruples en los que todos los números son divisibles por un número $d > 1$.
+
+Usaremos el principio de inclusión-exclusión mientras sumamos todos los grupos posibles de cuatro números divisibles por un divisor $d$.
+
+$$ans = \sum_{d \ge 2} (-1)^{deg(d)-1} \cdot f(d)$$
+
+dónde $deg(d)$ es el número de primos en la factorización del número $d$ y $f(d)$ el número de cuádruples divisible por $d$.
+
+Para calcular la función $f(d)$, solo tienes que contar el número de múltiplos de $d$ (como se mencionó en una tarea anterior) y use coeficientes binomiales para contar el número de formas de elegir cuatro de ellos.
+
+Así, utilizando la fórmula de inclusiones-exclusiones sumamos el número de grupos de cuatro divisibles por un número primo, luego restamos el número de cuádruples que son divisibles por el producto de dos primos, sumamos los cuádruples divisibles por tres primos, etc.
+
+
+\subsection{El número de tripletes armónicos}
+
+Te dan un numero $n \le 10^6$. Tienes que contar el número de triples $2 \le a < b < c \le n$ que cumplan una de las siguientes condiciones:
+
+\begin{itemize}
+	\item ${\rm gcd}(a,b) = {\rm gcd}(a,c) = {\rm gcd}(b,c) = 1$.
+	\item ${\rm gcd}(a,b) > 1, {\rm gcd}(a,c) > 1, {\rm gcd}(b,c) > 1$.
+\end{itemize}
+
+Primero, vaya directamente al problema inverso, es decir, cuente el número de triples no armónicos.
+
+En segundo lugar, tenga en cuenta que cualquier triplete no armónico está formado por un par de coprimos y un tercer número que no es coprimo con al menos uno del par.
+
+Por lo tanto, el número de triples no armónicos que contienen $i$ es igual al número de enteros de $2$ a $n$ que son coprimos con $i$ multiplicado por el número de enteros que no son coprimos con $i$.
+
+Cualquiera $gcd(a,b) = 1 \wedge gcd(a,c) > 1 \wedge gcd(b,c) > 1$ o $gcd(a,b) = 1 \wedge gcd(a,c) = 1 \wedge gcd(b,c) > 1$
+
+En ambos casos, se contará dos veces. El primer caso se contará cuando $i = 1$ y cuando $i = b$. El 
+segundo caso se contará cuando $i = b$ y cuando $i = c$. Por lo tanto, para calcular el número de triples no armónicos, sumamos este cálculo a través de todos $i$ de $2$ a $n$ y dividirlo por $2$.
+
+Ahora todo lo que nos queda por resolver es aprender a contar el número de coprimos a $i$ en el intervalo $[2;n]$. Aunque este problema ya se ha mencionado, la solución anterior no es adecuada aquí; requeriría la factorización de cada uno de los números enteros de $2$ a $n$, y luego iterando a través de todos los subconjuntos de estos números primos.
+
+
+Una solución más rápida es posible con tal modificación de la criba de Eratóstenes:
+
+\begin{enumerate}
+	\item Primero, encontramos todos los números en el intervalo $[2;n]$ tal que su factorización simple no incluye un factor primo dos veces. También necesitaremos saber, para estos números, cuántos factores incluye.
+	
+	\begin{itemize}
+		\item Para ello mantendremos un arreglo $deg[i]$ para almacenar el número de primos en la  
+		factorización de $i$, y un arreglo $good[i]$, para marcar si $i$ contiene cada factor como 
+		máximo una vez ( $good[i] = 1$ ) o no ( $good[i] = 0$ ). Al iterar desde $2$ a $n$, si llegamos 
+		a un número que tiene $deg$ igual a $0$ , entonces es un primo y su $deg$ es $1$.
+		\item Durante la criba de Eratóstenes, iteraremos $i$ de $2$ a $n$. Al procesar un número 
+		primo, repasamos todos sus múltiplos y aumentamos sus $deg[]$. Si uno de estos múltiplos es 
+		múltiplo del cuadrado de $i$, entonces podemos poner $good$ como falso
+	\end{itemize}
+	
+	\item Segundo, necesitamos calcular la respuesta para todos $i$ de $2$ a $n$, es decir, el arreglo $cnt[]$ el número de enteros no coprimos con $i$.
+	\begin{itemize}
+		\item Para hacer esto, recuerda cómo funciona la fórmula de inclusión-exclusión: en realidad aquí implementamos el mismo concepto, pero con lógica invertida: iteramos sobre un componente (un producto de números primos de la factorización) y sumamos o restamos su término en la fórmula de inclusión-exclusión de cada uno de sus múltiplos.
+		\item Entonces, digamos que estamos procesando un número $i$ tal que $good[i] = true$,
+		es decir, está envuelto en la fórmula de inclusión-exclusión. Iterar a través de todos los 
+		números que son múltiplos de $i$, y sumar o restar $\lfloor N/i \rfloor$ de sus $cnt[]$ (la 
+		señal depende de $deg[i]$: si $deg[i]$ es impar, entonces debemos sumar, de lo contrario 
+		restar).
+	\end{itemize}
+\end{enumerate}
+
+\subsection{El número de permutaciones sin puntos fijos (trastornos)}
+Demuestre que el número de permutaciones de longitud $n$ sin puntos fijos (es decir, sin número $i$ está en posición $i$ también llamado trastorno) es igual al siguiente número:
+
+$$n! - \binom{n}{1} \cdot (n-1)! + \binom{n}{2} \cdot (n-2)! - \binom{n}{3} \cdot (n-3)! + \cdots \pm \binom{n}{n} \cdot (n-n)!$$
+
+y aproximadamente igual a:
+
+$$\frac{ n! }{ e }$$
+
+(si redondeas esta expresión al número entero más cercano, obtienes exactamente el número de permutaciones sin puntos fijos)
+
+Denotamos por $A_k$ el conjunto de permutaciones de longitud $n$ con un punto fijo en la posición $k$ ($1 \le k \le n$) (es decir, elemento $k$ está en posición $k$).
+
+Ahora usamos la fórmula de inclusión-exclusión para contar el número de permutaciones con al menos un punto fijo. Para esto necesitamos aprender a contar tamaños de una intersección de conjuntos $A_i$, como sigue:
+
+\begin{eqnarray}
+   \left| A_p \right| &=& (n-1)!\ , \\ 
+   \left| A_p \cap A_q \right| &=& (n-2)!\ , \\ 
+   \left| A_p \cap A_q \cap A_r \right| &=& (n-3)!\ , \\ 
+   \cdots , 
+\end{eqnarray}
+
+
+
+porque si sabemos que el numero de puntos fijos es igual $x$, entonces conocemos la posición de $x$ elementos de la permutación, y todos los demás $(x)$ los elementos se pueden colocar en cualquier lugar.
+
+Sustituyendo esto en la fórmula de inclusión-exclusión, y dado que la cantidad de formas de elegir un 
+subconjunto de tamaño $x$ del conjunto de $n$ elementos es igual a $\binom{n}{x}$, obtenemos una 
+fórmula para el número de permutaciones con al menos un punto fijo:
+
+$$\binom{n}{1} \cdot (n-1)! - \binom{n}{2} \cdot (n-2)! + \binom{n}{3} \cdot (n-3)! - \cdots \pm \binom{n}{n} \cdot (n-n)!$$
+
+Entonces el número de permutaciones sin puntos fijos es igual a:
+
+$$n! - \binom{n}{1} \cdot (n-1)! + \binom{n}{2} \cdot (n-2)! - \binom{n}{3} \cdot (n-3)! + \cdots \pm \binom{n}{n} \cdot (n-n)!$$
+
+Simplificando esta expresión, obtenemos \textbf{expresiones exactas y aproximadas para el número de permutaciones sin puntos fijos} :
+
+$$n! \left( 1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots \pm \frac{1}{n!} \right ) \approx \frac{n!}{e}$$
+
+(porque la suma entre paréntesis son los primeros $n+1$ términos de la expansión en serie de Taylor $e^{-1}$)
+
+Vale la pena señalar que un problema similar se puede resolver de esta manera: cuando necesita los 
+puntos fijos no estaban entre los $m$ primeros elementos de permutaciones (y no entre todos, como 
+acabamos de resolver). La fórmula obtenida es como la fórmula precisa dada anteriormente, pero 
+ascenderá a la suma de $k$, en lugar de $n$.

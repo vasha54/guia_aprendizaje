@@ -1,0 +1,72 @@
+C++ y Java disponen también de un conjunto de operadores que actúan a nivel de bits. Las operaciones de
+bits se utilizan con frecuencia para definir señales o flags, esto es, variables de tipo entero en las que
+cada uno de sus bits indican si una opción está activada o no.
+
+Estos operadores sólo pueden usarse con los tipos int y char y funcionan bit a bit. El operador de desplazamiento se puede utilizar para realizar multiplicaciones o divisiones rápidas, pues cada desplazamiento a la izquierda multiplica por 2, y cada desplazamiento a la derecha divide por 2.
+
+\begin{longtable}{|c|c|p{11cm}|}
+	\hline
+	\textbf{Operador}	& \textbf{Uso} & \textbf{Resultado}  \\
+	\hline
+	$>>$ & op1 $>>$ op2 & Desplaza los bits de op1 a la derecha una distancia op2. El desplazamiento a la derecha es un operador que desplaza los bits del operando
+	situado a su izquierda hacia la derecha el número de sitios marcado por el operando
+	situado a su derecha. Los bits que superan el extremo derecho del byte se pierden.
+	En tipos unsigned, los lugares vacantes a la izquierda se rellenan con ceros. En tipos
+	con signo el resultado depende del ordenador utilizado; los lugares vacantes se pueden
+	rellenar con ceros o bien con copias del signo (bit extremo izquierdo). En un valor sin
+	signo tendremos (10001010)$>>$2 == (00100010) en el que cada bit se ha movido dos lugares hacia la derecha. \\
+	\hline
+	$<<$ & op1 $<<$ op2 & Desplaza los bits de op1 a la izquierda una distancia op2. El desplazamiento a la izquierda es un operador que desplaza los bits del operando
+	izquierdo a la izquierda el número de sitios indicando por el operados de su derecha.
+	Las posiciones vacantes se rellenan con ceros, y los bits que superan el límite del byte
+	se pierden. Así: (10001010)$<<$2 == (1000101000) cada uno de los bits se ha movido dos lugares hacia la izquierda \\
+	\hline
+	$>>>$ & op1 $>>>$ op2 & Desplaza los bits de op1 a la derecha una distancia op2 (positiva) \\
+	\hline
+	\& & op1 \& op2 & Operador AND a nivel de bits. El and de bits es un operador que hace la comparación bit por bit entre dos operandos. Para
+	cada posición de bit, el bit resultante es 1 únicamente cuando ambos bits de los operandos
+	sean 1. En terminología lógica diríamos que el resultado es cierto si, y sólo si, los dos bit
+	que actúan como operandos lo son también. Por tanto (10010011) \& (00111101) == (00010001) ya que únicamente en los bits 4 y 0 existe un 1 en ambos operandos.\\
+	\hline
+	| & op1 | op2 & Operador OR a nivel de bits. El or para bits es un operador binario realiza una comparación bit por bit entre dos operandos.
+	En cada posición de bit, el bit resultante es 1 si alguno de los operandos o ambos contienen
+	un 1. En terminología lógica, el resultado es cierto si uno de los bits de los operandos es
+	cierto, o ambos lo son. Así: (10010011) | (00111101) == (10111111) porque todas las posiciones de bits con excepción del bit número 6 tenían un valor 1 en, por
+	lo menos, uno de los operandos. \\
+	\hline
+	$\wedge$ & op1 $\wedge$ op2 & Operador XOR a nivel de bits (1 si sólo uno de los operandos es 1). El or exclusivo de bits es un operador binario que realiza una comparación bit por bit entre
+	dos operandos. Para cada posición de bit, el resultante es 1 si alguno de los operandos
+	contiene un 1; pero no cuando lo contienen ambos a la vez. En terminología, el resultado es
+	cierto si lo es el bit u otro operando, pero no si lo son ambos. Por ejemplo: (10010011) $\wedge$ (00111101) == (10101110) Observe que el bit de posición 0 tenía valor 1 en ambos operandos; por tanto, el bit resultante
+	ha sido 0. \\
+	\hline
+	$\sim$ & $\sim$op2 & Operador complemento (invierte el valor de cada bit). El complemento a uno o negación en bits es un operador unario, cambia todos los 1 a 0 y
+	los 0 a 1. Así: $\sim$(10011010) == 01100101 \\
+	\hline
+\end{longtable}
+
+En binario, las potencias de dos se representan con un único bit activado. Por ejemplo, los
+números (1, 2, 4, 8, 16, 32, 64, 128) se representan respectivamente de modo binario en la forma
+(00000001, 00000010, 00000100, 00001000, 00010000, 00100000, 01000000, 10000000),
+utilizando sólo 8 bits. La suma de estos números permite construir una variable flags con los bits
+activados que se deseen. Por ejemplo, para construir una variable flags que sea 00010010 bastaría
+hacer flags=2+16.
+
+
+\begin{tabular}{|c|c|c|}
+	\hline
+	\textbf{Operador}	& \textbf{Utilización} &  \textbf{Expresión equivalente} \\
+	\hline
+	\&= & op1 \&= op2 & op1 = op1 \& op2 \\
+	\hline
+	|= & op1 |= op2 & op1 = op1 | op2 \\
+	\hline
+	$\wedge$ = & op1 $\wedge$ = op2 & op1 = op1 $\wedge$  op2 \\
+	\hline
+	$>>$= & op1 $>>$= op2 & op1 = op1 $>>$ op2 \\
+	\hline
+	$<<$= & op1 $<<$= op2 & op1 = op1 $<<$  op2 \\
+	\hline
+	$>>>$= & op1 $>>>$= op2 & op1 = op1 $>>>$  op2 \\
+	\hline
+\end{tabular}

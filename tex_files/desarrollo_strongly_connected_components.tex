@@ -1,0 +1,20 @@
+Es obvio que las componentes fuertemente conexa no se cruzan entre sí, es decir, esta es una partición de 
+todos los vértices del grafo. Por lo tanto, podemos dar una definición de \textbf{grafo de condensación} 
+$G^{SCC}$ como un grafo que contiene todos los componentes fuertemente conectados como un vértice. Cada 
+vértice del grafo de condensación corresponde a la componente fuertemente conexa del grafo $G$. Hay una 
+arista orientada entre dos vértices $C_i$ y $C_j$ del grafo de condensación si y solo si hay dos 
+vértices $u \in C_i, v \in C_j$ tales que hay una arista en el grafo inicial, es decir, $(u, v) \in E$.
+
+La propiedad más importante del grafo de condensación es que es acíclico. De hecho, supongamos que hay 
+una arista entre $C$ y $C'$, demostremos que no hay arista entre $C'$ y $C$. Supongamos que $C' \mapsto 
+C$. Entonces hay dos vértices $u' \in C$ y $v' \in C'$ tal que $v' \mapsto u'$. Pero desde $u$ y $u'$ están en el mismo componente fuertemente conectado, entonces hay un camino entre ellos; lo mismo par $v$ y $v'$. Como resultado, si unimos estos caminos tenemos que $v \mapsto u$ y al mismo tiempo $u 
+\mapsto v$ . Por lo tanto $u$ y $v$ debe estar en la misma componente conectados, por lo que esto es una contradicción. Esto completa la prueba.
+
+\subsection{Algoritmo de Tarjan}
+\input{tex_files/desarrollo_scc_tarjan.tex}
+
+\subsection{Algoritmo de Kosaraju}
+\input{tex_files/desarrollo_scc_kosaraju.tex}
+
+\subsection{Algoritmo Gabow}
+\input{tex_files/desarrollo_scc_gabow.tex}

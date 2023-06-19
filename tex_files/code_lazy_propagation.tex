@@ -1,0 +1,198 @@
+Vamos a utilizar algunas implementaciones de soluciones para comentar las adecuaciones.
+
+\subsection{C++}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <algorithm>
+#include <math.h>
+#define MID (left+right)/2
+#define MOD  1000000007
+#define MAX 1000010
+#define MAXTREE (MAX << 2)
+
+using namespace std;
+
+struct Node{
+   int flowers;
+   bool lazy; /* va indicar si determinado nodo en 
+	el arbol tiene o no propagacion el tipo de dato 
+	puede variar segun la necesidad o el enfoque 
+	que se de la propagacion*/
+};
+
+Node tree[MAXTREE];
+
+void buildRangeTree(int treeIndex, int left, int right){
+	
+  tree[treeIndex].lazy=false; /*inicialmente cada 
+                              nodo no tiene propagacion*/
+  tree[treeIndex].flowers=0;
+	
+  if (left == right) {
+     tree[treeIndex].flowers=0;return;
+  }
+	
+  buildRangeTree(2*treeIndex,left,MID);
+  buildRangeTree(2*treeIndex+1,MID+1,right);
+}
+
+/*Aqui cambia la actualizacion antes era una posicion 
+ahora es un rango (i,j)*/
+void updateLazyRangeTree(int treeIndex, int left, int right, int i, int j){
+   if (left > right || left > j || right < i) return;
+
+   /*Si el rango que representa ese nodo o vertice 
+   en el arbol esta contenido en el rango de la actualizacion(i,j)  
+   detengo la actualizacion y lo marco como que existe una propagacion 
+   pendiente
+   */	
+   if (i <= left && right <= j){  
+     tree[treeIndex].lazy=true; tree[treeIndex].flowers++; return;
+   }
+
+   /*El rango de actualizacion(i,j) es un subrango del rango que 
+   representa el nodo o vertice del arbol donde estoy parado que 
+   tiene propagaciones pendientes por tanto propago primero 
+   dichas actualizaciones pendientes y luego sigo el proceso de
+   actualizacion en rango. Una vez propagado la actualizaciones
+   pendientes ya el nodo o vertice del arbol deja de tener propagaciones
+   pendientes. Funcion push*/	
+   if(tree[treeIndex].lazy==true){
+      tree[2*treeIndex].lazy=tree[treeIndex].lazy;
+      tree[2*treeIndex+1].lazy=tree[treeIndex].lazy;
+      tree[2*treeIndex].flowers+=tree[treeIndex].flowers;
+      tree[2*treeIndex+1].flowers+=tree[treeIndex].flowers;
+      tree[treeIndex].lazy = false;
+      tree[treeIndex].flowers = 0;
+   }
+	
+   updateLazyRangeTree(2 * treeIndex , left, MID, i, j);
+   updateLazyRangeTree(2 * treeIndex + 1, MID + 1, right, i, j);
+}
+
+int queryLazyRangeTree(int treeIndex, int left, int right, int pos){
+	
+   if(left==right){ 
+      int answer = tree[treeIndex].flowers; tree[treeIndex].flowers=0;
+      return answer;
+   }
+	
+   /*El rango de consulta(left,rigth) es un subrango del rango que 
+   representa el nodo o vertice del arbol donde estoy parado que 
+   tiene propagaciones pendientes por tanto propago primero 
+   dichas actualizaciones pendientes y luego sigo el proceso de
+   consulta en rango. Una vez propagado la actualizaciones
+   pendientes ya el nodo o vertice del arbol deja de tener propagaciones
+   pendientes. Funcion push*/	
+   if (tree[treeIndex].lazy == true){
+      tree[2*treeIndex].lazy=tree[treeIndex].lazy;
+      tree[2*treeIndex+1].lazy=tree[treeIndex].lazy;
+      tree[2*treeIndex].flowers+=tree[treeIndex].flowers;
+      tree[2*treeIndex+1].flowers+=tree[treeIndex].flowers;
+      tree[treeIndex].lazy = false;
+      tree[treeIndex].flowers = 0;
+   }
+   if (pos > MID)
+      return queryLazyRangeTree(2*treeIndex+1,MID+1,right,pos);
+   if (pos <= MID)
+      return queryLazyRangeTree(2*treeIndex,left,MID,pos);
+}
+
+\end{lstlisting}
+
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+private class RangeTreeLP {
+   private int[] tree;
+   private boolean[] lz;
+	
+   public RangeTreeLP(int n) {
+      tree = new int[n << 2]; lz = new boolean[n << 2];
+   }
+	
+   public void buildRangeTree(int treeIndex, int left, int right) {
+      /*
+      * inicialmente cada nodo no tiene propagacion
+      */
+      lz[treeIndex] = false; tree[treeIndex] = 0;
+      
+      if (left == right) { tree[treeIndex] = 0; return; }
+      
+      int MID = (left + right) / 2;
+      buildRangeTree(2 * treeIndex, left, MID);
+      buildRangeTree(2 * treeIndex + 1, MID + 1, right);
+   }
+	
+   /*
+   * Aqui cambia la actualizacion antes era una posicion 
+   * ahora es un rango (i,j)
+   */
+   public void updateLazyRangeTree(int treeIndex,int left,int right,int i,int j){
+      if (left > right || left > j || right < i) return;
+		
+      /*
+      * Si el rango que representa ese nodo o vertice en el arbol esta 
+      * contenido en el rango de la actualizacion(i,j) detengo la 
+      * actualizacion y lo marco como que existe una propagacion pendiente
+      */
+      if (i <= left && right <= j) {
+         lz[treeIndex] = true; tree[treeIndex]++; return;
+      }
+		
+      /*
+      * El rango de actualizacion(i,j) es un subrango del rango que 
+      * representa el nodo o vertice del arbol donde estoy parado que 
+      * tiene propagaciones pendientes por tanto propago primero dichas 
+      * actualizaciones pendientes y luego sigo el proceso de 
+      * actualizacion en rango. Una vez propagado la actualizaciones 
+      * pendientes ya el nodo o vertice del arbol deja de tener propagaciones 
+      * pendientes. Funcion push
+      */
+      if (lz[treeIndex] == true) {
+         lz[2 * treeIndex] = lz[treeIndex]; 
+         lz[2 * treeIndex + 1] = lz[treeIndex];
+         tree[2 * treeIndex] += tree[treeIndex]; 
+         tree[2 * treeIndex + 1] += tree[treeIndex];
+         lz[treeIndex] = false; tree[treeIndex] = 0;
+      }
+      int MID = (left + right) / 2;
+      
+      updateLazyRangeTree(2 * treeIndex, left, MID, i, j);
+      updateLazyRangeTree(2 * treeIndex + 1, MID + 1, right, i, j);
+   }
+	
+   public int queryLazyRangeTree(int treeIndex,int left,int right,int pos){
+      if (left == right){
+         int answer = tree[treeIndex];
+         tree[treeIndex] = 0; return answer;
+      }
+      
+      /*
+      * El rango de consulta(left,rigth) es un subrango del rango 
+      * que representa el nodo o vertice del arbol donde estoy 
+      * parado que tiene propagaciones pendientes por tanto propago 
+      * primero dichas actualizaciones pendientes y luego sigo el 
+      * proceso de consulta en rango. Una vez propagado la 
+      * actualizaciones pendientes ya el nodo o vertice del arbol 
+      * deja de tener propagaciones pendientes. Funcion push
+      */
+      if(lz[treeIndex] == true){
+         lz[2 * treeIndex] = lz[treeIndex];
+         lz[2 * treeIndex + 1] = lz[treeIndex];
+         tree[2 * treeIndex] += tree[treeIndex];
+         tree[2 * treeIndex + 1] += tree[treeIndex];
+         lz[treeIndex] = false;
+         tree[treeIndex] = 0;
+      }
+		
+      int MID = (left + right) / 2;
+      if (pos > MID)
+         return queryLazyRangeTree(2 * treeIndex + 1, MID + 1, right, pos);
+      if (pos <= MID)
+         return queryLazyRangeTree(2 * treeIndex, left, MID, pos);
+  }
+}
+\end{lstlisting} 

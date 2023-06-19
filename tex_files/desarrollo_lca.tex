@@ -1,0 +1,34 @@
+Antes de responder a las consultas, debemos preprocesar el árbol. Hacemos un recorrido DFS comenzando en la raíz y construimos una lista que almacena el orden de los vértices que visitamos (se agrega un vértice a la lista cuando lo visitamos por primera vez, y después del retorno de los recorridos DFS a sus hijos) ). Esto también se llama un recorrido de Euler del árbol. Está claro que el tamaño de esta lista será $O(N)$. También debemos crear un arreglo $first[0..N-1]$ que almacene para cada vértice {\em i} su primera aparición en euler. Es decir, la primera posición en euler tal que $euler [first[i]] = i$. También utilizando el DFS podemos encontrar la altura de cada nodo (distancia desde la raíz a ella) y almacenarla en el arreglo $height[0..N-1]$.
+
+Entonces, ¿cómo podemos responder a las consultas utilizando el recorrido de Euler y los dos arreglos adicionales? Supongamos que la consulta es un par de $v1$ y $v2$. Considere los vértices que visitamos en el recorrido de Euler entre la primera visita de $v1$ y la primera visita de $v2$. Es fácil ver que el $LCA (v1, v2)$ es el vértice con la altura más baja en este camino. Ya notamos que el LCA tiene que ser parte de la ruta más corta entre $v1$ y $v2$. Claramente también tiene que ser el vértice con la altura más pequeña. Y en la gira de Euler, esencialmente utilizamos el camino más corto, excepto que además visitamos todos los subárboles que encontramos en el camino. Pero todos los vértices en estos subárboles son más bajos en el árbol que el LCA y, por lo tanto, tienen una altura mayor. Por lo tanto, el LCA ($v1$, $v2$) se puede determinar únicamente al encontrar el vértice con la altura más pequeña en el recorrido de Euler entre la primera ($v1$) y la primera ($v2$).
+
+Vamos a ilustrar esta idea. Considere la anterior imagen y el recorrido de Euler con las alturas correspondientes:
+
+
+
+$\begin{array}{|l|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\hline
+	\textbf{Vertices:}   & 1 & 2 & 5 & 2 & 6 & 2 & 1 & 3 & 1 & 4 & 7 & 4 & 1 \\ \hline
+	\textbf{Alturas:} & 1 & 2 & 3 & 2 & 3 & 2 & 1 & 2 & 1 & 2 & 3 & 2 & 1 \\ \hline
+\end{array}$
+
+
+
+En el recorrido que comienza en el vértice 6 y termina en 4, visitamos los vértices [6,2,1,3,1,4]. Entre esos vértices, el vértice 1 tiene la altura más baja, por lo tanto, $LCA (6, 4) = 1$.
+
+Para responder a una consulta, solo necesitamos encontrar el vértice con la altura más pequeña en el array euler en el rango desde el primer [v1] al primero [v2]. Por lo tanto, el problema de LCA se reduce al problema de RMQ (encontrar el mínimo en un problema de rango).
+
+
+
+\subsection{LCA por elevación binaria}
+\input{tex_files/desarrollo_lca_binary_lifting.tex}
+
+\subsection{Algoritmo de Tarjan's offline para LCA}
+\input{tex_files/desarrollo_lca_tarjan_offline.tex}
+
+\subsection{Algoritmo Farach-Colton y Bender para LCA}
+\input{tex_files/desarrollo_lca_farach_colton_bender.tex}
+
+
+
+ 

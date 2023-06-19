@@ -1,0 +1,66 @@
+Un operador es un carácter o grupo de caracteres que actúa sobre una, dos o más variables
+para realizar una determinada operación con un determinado resultado. Ejemplos típicos de
+operadores son la suma (+), la diferencia (-), el producto (*), etc. Los operadores pueden ser
+unarios, binarios y ternarios, según actúen sobre uno, dos o tres operandos, respectivamente.
+
+\subsection{Operadores Aritméticos}
+\input{tex_files/oper_aritmeticos.tex}
+
+\subsection{Operadores de Asignación}
+\input{tex_files/oper_asignacion.tex}
+
+\subsection{Operadores unarios}
+\input{tex_files/oper_unitarios.tex}
+
+\subsection{Operadores incrementales}
+\input{tex_files/oper_incrementales.tex}
+
+\subsection{Operadores de Relación}
+\input{tex_files/oper_realacionales.tex}
+
+\subsection{Operadores Lógicos}
+\input{tex_files/oper_logicos.tex}
+
+\subsection{Operadores Relacionados con punteros}
+\input{tex_files/oper_punteros.tex}
+
+\subsection{Operadores de Estructuras y Uniones}
+\input{tex_files/oper_struct.tex}
+
+\subsection{Operadores que actúan a nivel de bits}
+\input{tex_files/oper_nivel_bits.tex}
+
+\subsection{Operador ternario}
+\input{tex_files/oper_ternario.tex}
+
+\subsection{Misceláneas}
+\input{tex_files/oper_misc.tex}
+
+\subsection{Precedencia de operadores}
+
+El orden en que se realizan las operaciones es fundamental para determinar el resultado de una
+expresión.La siguiente lista muestra el orden en que se ejecutan los distintos operadores en
+un sentencia, de mayor a menor precedencia:
+
+\begin{enumerate}
+	\item expr++ $\quad$  expr - -
+	\item ++expr $\quad$  - -expr $\quad$  +expr $\quad$  -expr $\quad$  $\sim$ $\quad$ !
+	\item * $\quad$  / $\quad$  \%
+	\item + $\quad$  -
+	\item $<<$ $\quad$  $>>$ $\quad$  $>>>$
+	\item $<$ $\quad$  $>$ $\quad$  $<=$ $\quad$  $>=$
+	\item == $\quad$ !=
+	\item \&
+	\item $\wedge$
+	\item |
+	\item \&\&
+	\item ? :
+	\item = $\quad$ += $\quad$ -=  $\quad$ *= $\quad$ /= $\quad$ \%= $\quad$ \&= $\quad$ $\wedge$= $\quad$ |= $\quad$ $<<$= $\quad$ $>>$=  $\quad$ $>>>$=
+	
+\end{enumerate}
+
+Para priorizar una operación con operador de menor precedencia que otro se debe encerrar dicha operación entre parentisis.
+
+Todos los operadores binarios, excepto los operadores de asignación, se evalúan de
+izquierda a derecha. Los operadores de asignación se evalúan de derecha a izquierda, lo que
+significa que el valor de la derecha se copia sobre la variable de la izquierda.

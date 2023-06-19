@@ -1,0 +1,93 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+int n; //cantidad de nodos del grafo
+vector< vector<int> > adj; // lista de adyacencia para representar el grafo
+vector<bool> used;
+vector<int> comp;
+
+void dfs(int v) {
+   stack<int> st;
+   st.push(v);
+	
+   while (!st.empty()) {
+      int curr = st.top();
+      st.pop();
+      if (!used[curr]) {
+         used[curr] = true;
+         comp.push_back(curr);
+         for(int i = adj[curr].size()-1;i>=0;i--){
+            st.push(adj[curr][i]);
+         }
+      }
+   }
+}
+
+void find_comps() {
+   fill(used.begin(), used.end(), 0);
+   for (int v = 0; v < n ; ++v) {
+      if (!used[v]) {
+         comp.clear();
+         dfs(v);
+         cout << "Los nodos de esta componente son:" ;
+         for (int u : comp)
+            cout << ' ' << u;
+         cout << endl ;
+      }
+   }
+}
+\end{lstlisting}
+
+
+La función más importante que se utiliza es \emph{find\_comps()} la que encuentra y muestra los componentes conectados en el grafo. El grafo se almacena en representación de lista de adyacencia, es decir, $adj[v]$ contiene una lista de vértices que tienen aristas desde el vértice $v$. El vector $comp$ contiene una lista de nodos en el componente conectado actual.
+
+
+
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+private class Graph {
+  private int nodes;
+  private List<List<Integer>> ady;
+	
+  public Graph(int n) {
+     this.nodes = n;
+     this.ady = new ArrayList<List<Integer>>();
+		
+     for (int i = 0; i < this.nodes; i++)
+			this.ady.add(new ArrayList<Integer>());
+  }
+	
+  public void addEdge(int a, int b) {
+     this.ady.get(a).add(b); this.ady.get(b).add(a);
+  }
+	
+  public void dfs(int v, boolean[] used, ArrayList<Integer> comp) {
+     Stack<Integer> st = new Stack<Integer>();
+     st.push(v);
+		
+     while (!st.empty()) {
+        int curr = st.pop();
+        if (!used[curr]) {
+           used[curr] = true; comp.add(curr);
+           for (int i = this.ady.get(curr).size() - 1; i >= 0; i--) 
+              st.push(this.ady.get(curr).get(i));
+        }
+	 }
+  }
+	
+  public void find_comps() {
+     boolean[] used = new boolean[this.nodes];
+     Arrays.fill(used, false);
+     ArrayList<Integer> comp = new ArrayList<Integer>();
+     for (int v = 0; v < this.nodes; ++v) {
+        if (!used[v]) {
+           comp.clear(); dfs(v, used, comp);
+           System.out.printf("Los nodos de esta componente son:\n");
+           for (Integer u : comp) System.out.printf(" %d", u);
+           System.out.printf("\n");
+        }
+      }
+   }
+}
+\end{lstlisting}	

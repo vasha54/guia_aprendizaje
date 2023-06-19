@@ -1,0 +1,25 @@
+\begin{lstlisting}[language=Java]
+import java.util.*;
+	
+public class Main {
+   public static void main(String[] args) {
+      Map<String,String> preferencias=new TreeMap<String,String>();
+      preferencias.put("color","rojo"); preferencias.put("ancho","640");
+      preferencias.put("alto","480");
+      //listar todo
+      System.out.println(preferencias);
+      // Quitar color
+      preferencias.remove("color");
+      // cambiar una entrada
+      preferencias.put("ancho","1024");
+      // recuperar un valor
+      System.out.println("Alto= " + preferencias.get("alto"));
+      // iterar por todos los elementos
+      for(Map.Entry<String,String> datos:preferencias.entrySet()){
+         String clave = datos.getKey();
+         String valor = datos.getValue();
+         System.out.println("clave=" + clave + ", valor=" + valor);
+      }
+   }
+}
+\end{lstlisting}

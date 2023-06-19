@@ -1,0 +1,11 @@
+Esta sentencia funciona de modo análogo a \textbf{while}, con la diferencia de que la evaluación de\textbf{expresion\_de\_control} se realiza al final del bucle, después de haber ejecutado al menos unavez las sentencias entre llaves; éstas se vuelven a ejecutar mientras \textbf{expresion\_de\_control} sea\textbf{true}. La forma general de esta sentencia es:
+
+\begin{lstlisting}[language=C++]
+do{
+   sentencia;
+} while(expresion_de_control);
+\end{lstlisting}
+
+donde \textbf{sentencia} puede ser una única sentencia o un bloque, y en la que debe observarse que\emph{hay que poner (;) a continuación del paréntesis} que encierra a \textbf{expresion\_de\_control}, entreotros motivos para que esa línea se distinga de una sentencia \textbf{while} ordinaria.
+
+La sentencia \textbf{do} es usada generalmente en cooperación con \textbf{while} para garantizar que una o másinstrucciones se ejecuten al menos una vez.

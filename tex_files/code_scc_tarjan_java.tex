@@ -1,0 +1,112 @@
+\begin{lstlisting}[language=C++]
+private class Graph {
+   List<Integer>[] adj;
+   List<List<Integer>> components ;
+   int[] lowlink; boolean[] used;
+   List<Integer> stack; int time;
+   
+   public Graph(int nnodes) {
+      adj = new List[nnodes];
+      for (int i = 0; i < nnodes; i++) adj[i] = new ArrayList<>();
+   }
+   
+   private void dfs(int u) {
+      lowlink[u] = time++; used[u] = true;
+      stack.add(u);
+      boolean isComponentRoot = true;
+		
+      for (int v : adj[u]) {
+         if (!used[v]) dfs(v);
+         if (lowlink[u] > lowlink[v]) {
+            lowlink[u] = lowlink[v];
+            isComponentRoot = false;
+         }
+      }
+		
+      if (isComponentRoot) {
+         List<Integer> component = new ArrayList<>();
+         while (true) {
+            int k = stack.remove(stack.size() - 1);
+            component.add(k); lowlink[k] = Integer.MAX_VALUE;
+            if (k == u) break;
+         }
+         components.add(component);
+      }
+   }
+	
+   public List<List<Integer>> scc() {
+      int n = adj.length; lowlink = new int[n];
+      used = new boolean[n]; stack = new ArrayList<>();
+      components = new ArrayList<>();
+      
+      for (int u = 0; u < n; u++) if (!used[u]) dfs(u);
+      return components;
+   }
+	
+   public void addEdge(int i, int j) { adj[i].add(j);}
+}
+\end{lstlisting}
+
+Una versión del mismo algoritmo pero eliminado la recursividad
+
+\begin{lstlisting}[language=Java]
+private class Graph {
+   List<Integer>[] adj;
+   List<List<Integer>> components ;
+   int[] lowlink; int time;
+	
+   public Graph(int nnodes) {
+      adj = new List[nnodes];
+      for (int i = 0; i < nnodes; i++) adj[i] = new ArrayList<>();
+   }
+	
+   public List<List<Integer>> scc() {
+      int n = adj.length; int[] stack = new int[n];
+      int st = 0; int[] stack_cur = new int[n];
+      int[] stack_pos = new int[n]; int[] stack_prev = new int[n];
+      int[] index = new int[n]; Arrays.fill(index, -1);
+      lowlink = new int[n]; time = 0;
+      components = new ArrayList<>();
+		
+      for (int u = 0; u < n; u++) {
+         if (index[u] == -1) {
+            int top = 0; stack_cur[top] = u;
+            stack_pos[top] = 0; stack_prev[top] = -1;
+            while (top >= 0) {
+               int cur = stack_cur[top]; int pos = stack_pos[top];
+               if (index[cur] == -1) {
+                  index[cur] = time;lowlink[cur] = time;
+                  ++time; stack[st++] = cur;
+               }
+               if (pos < adj[cur].size()) {
+                  int v = adj[cur].get(pos); ++stack_pos[top];
+                  if (index[v] == -1) {
+                     ++top; stack_cur[top] = v;
+                     stack_pos[top] = 0; stack_prev[top] = cur;
+                  } 
+                  else 
+                     lowlink[cur] = Math.min(lowlink[cur], lowlink[v]);
+               } 
+               else {
+                  int prev = stack_prev[top];
+                  if (prev != -1) 
+                     lowlink[prev] = Math.min(lowlink[prev], lowlink[cur]);
+                  if (lowlink[cur] == index[cur]) {
+                     List<Integer> component = new ArrayList<>();
+                     while (true) {
+                        int v = stack[--st]; lowlink[v] = Integer.MAX_VALUE;
+                        component.add(v); if (v == cur) break;
+                     }
+                     components.add(component);
+                  }
+                  --top;
+               }
+            }
+         }
+      }
+	  return components;
+   }
+	
+   public void addEdge(int i, int j) { adj[i].add(j);}
+}
+\end{lstlisting}

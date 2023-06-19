@@ -1,0 +1,64 @@
+Conjunto es un contenedor asociativo que contiene un conjunto ordenado de objetos únicos. La ordenación se realiza utilizando la función de comparación. Los conjuntos se implementan normalmente
+como árboles rojo-negro, por lo que sus funciones principales (búsqueda, eliminación e inserción)
+tienen complejidad logarítmica O($log_2 N)$. El acceso a está estructura se debe hacer con iteradores, o a ciertos datos por medio de funciones. Para la creación de un conjunto se debe mandar el tipo de dato siempre y cuando tenga un comparador por defecto, los datos primitivos si llevan comparadores definidos por defecto. Si se desearía crear un conjunto de otro tipo de datos que no sean primitivos del lenguaje se debe implementar una función booleana o entera que acepta dos variables del tipo de dato deseado y las compares según determinados criterios.
+
+Tanto C++ como Java contiene dos implementaciones de esta estructura: 
+
+\begin{itemize}
+	\item Una estructura de datos conjuntos cuya implementación esta basada en un árbol binario balanceado cuyas operaciones tienen una complejidad O($\log N$). En C++ está el $set$ mientras en Java $TreeSet$ responde a esta implementación.
+	\item Una estructura de datos conjuntos cuya implementación esta basada en \emph{hashing} cuyas operaciones tienen una complejidad o trabajan O($1$) como promedio. En C++ está el $unordered_set$ mientras en Java $HashSet$ responde a esta implementación.
+\end{itemize}
+
+La elección de cual implementación utilizar a menudo depende del uso que deseas darle a la estructura, si te es beneficioso mantener el orden la implementación basada en árbol binario balanceado te será útil además de proveerte de un grupo de funcionalidades no disponibles en la implementación basada en \emph{hashing}. Aunque a favor de esta implementación se puede decir que es mucho más eficiente que la otra. 
+
+En las implementaciones en esta guía utilizaremos la implementación basada en árbol binario balanceado pero utilizar el otro modelo de implementación no requiere gran cambio, en C++ sustituir $set$ por $unordered_set$ mientras en Java sería cambiar $TreeSet$ por $HashSet$. Lo que si es importante recalcar que al hacer este cambio no vamos a poder utilizar algunas funcionales sobre todo aquellas que tienen que ver con el orden de como se organizan los elementos dentro de la estructura. 
+
+\subsubsection{C++}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{\#include <set>}, gracias a esto ya podemos utilizar la estructura de otro modo no.
+
+\begin{itemize}
+	\item \textbf{set::empty():} Está función retorna verdad si el conjunto vacio y retorna falso en otro caso.
+	\item \textbf{set::size():} Está función retorna cuantos elementos tiene el conjunto.
+	\item \textbf{set::clear():} Está función elimina todos los elemtos del conjunto logrando así que el
+	tamaño (.size()) sea 0.
+	\item \textbf{set::insert(pos):} Está función inserta un elemento al conjunto si este ya existe lo ignorara,
+valor debe ser un tipo de dato aceptado por el conjunto. La complejidad de
+está función es O($\log_2 N$).
+	\item \textbf{set::erase(inicio, fin):} Está función elimina elemtos desde una posición inicial (inicio) hasta otra
+posición (fin), inicio y fin deben ser iteradores. La complejidad es lineal.
+	\item \textbf{set::erase(valor):} Está función busca el elemnto y lo elimina, \textbf{valor} debe ser un tipo de dato
+aceptado por el conjunto. La complejidad de está función es O($\log_2 N$).
+	\item \textbf{set::count(valor):} Está función retorna la cantidad de elementos coincidentes con valor
+	lo cual está entre 0 y 1 ya que no existen elementos dobles o repetidos,
+valor debe ser un tipo de dato aceptado por el conjunto. La complejidad
+de está función es O($log_2 N$).
+	\item \textbf{set::find(valor):} Está función retorna el iterador apuntando al elemento valor si existe y si
+no retorna .end(), valor debe ser un tipo de dato aceptado por el conjunto.
+La complejidad de está función es O($log_2 N$).
+	\item \textbf{set::lower\_bound(valor):} Está función retorna un iterador apuntando al primer elemento no menos
+que valor, valor debe ser un tipo de dato aceptado por el conjunto. La
+complejidad de está función es O($log_2 N$).
+	\item \textbf{set::upper\_bound(valor):} Está función retorna un iterador apuntando al primer elemento mas
+grande que valor, valor debe ser un tipo de dato aceptado por el conjunto. La complejidad de está función es O($log_2 N$).
+\end{itemize}
+
+\paragraph{Multiconjunto:}En el caso específico de C++ existe adicionalemente la estructura $multiset$ cuyo funcionamiento, implementación y operaciones es idéntico al $set$ con la única variación que esta estructura si permite la duplicación de valores. 
+
+\subsubsection{Java}
+
+Para la utilización de está estructura es necesario añadir en la cabecera del programa \textbf{import java.util.*;}, gracias a esto ya podemos utilizar la estructura de otro modo no. Los métodos disponibles para la clase set son los siguientes:
+
+\begin{itemize}
+	\item \textbf{add(E elemento):} Agrega un elemento al conjunto.
+	\item \textbf{clear():} Borra el conjunto.
+	\item \textbf{addAll(coleccion):} Agrega toda una colección.
+	\item \textbf{removeAll(coleccion):} Elimina todos los elementos de la
+colección que existan en el conjunto.
+	\item \textbf{remove(Object objeto):} Elimina el objeto del conjunto. Devuelve true si ha sido eliminado
+	\item \textbf{isEmpty():} Devuelve verdadero si el conjunto esta vacío.
+	\item \textbf{contains(E elemento):} Devuelve verdadero si el conjunto contiene el elemento.
+	\item \textbf{size():} Devuelve el número de elementos del
+conjunto.
+\end{itemize}
+

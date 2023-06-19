@@ -1,0 +1,12 @@
+El algoritmo de ordenamiento por mezcla (merge sort en inglés) es un algoritmo de ordenamiento externo estable basado en la técnica divide y vencerás. Conceptualmente, el ordenamiento por mezcla funciona de la siguiente manera:
+\begin{enumerate}
+	\item Si la longitud de la lista es 0 ó 1, entonces ya está ordenada. En otro caso.
+	\item Dividir la lista desordenada en dos sublistas de aproximadamente la mitad del tamaño.
+	\item Ordenar cada sublista recursivamente aplicando el ordenamiento por mezcla. 
+	\item Mezclar las dos sublistas en una sola lista ordenada.
+\end{enumerate}
+El ordenamiento por mezcla incorpora dos ideas principales para mejorar su tiempo de ejecución:
+\begin{enumerate}
+	\item Una lista pequeña necesitará menos pasos para ordenarse que una lista grande.
+	\item Se necesitan menos pasos para construir una lista ordenada a partir de dos listas también ordenadas, que a partir de dos listas desordenadas. Por ejemplo, sólo será necesario entrelazar cada lista una vez que están ordenadas. 
+\end{enumerate}

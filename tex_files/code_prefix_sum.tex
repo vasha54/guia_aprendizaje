@@ -1,0 +1,119 @@
+\subsection{C++}
+\subsubsection{Suma de prefijo en una dimensión}
+\begin{lstlisting}[language=C++]
+#define ENDL '\n'
+#define MAX_N 100010
+using namespace std;
+
+int n,nquerys,a,b;
+int array[MAX_N],ps[MAX_N];
+
+int main() {
+   //leyendo los datos y construyendo la estructura
+   cin>>n; ps[0]=0;
+   for(int i=1;i<=n;i++){
+      cin>>array[i];
+      ps[i]=array[i]+ps[i-1];
+   }
+	
+   //respondiendo la consultas
+   cin>nquerys;
+	
+   for(int i=0;i<nquerys;i++){
+      cin>>a>>b; //siempre a<=b
+      cout<<ps[b]-ps[a-1]<<ENDL;
+   }
+   return 0;
+}
+\end{lstlisting}
+\subsubsection{Suma de prefijo en dos dimensiones}
+\begin{lstlisting}[language=C++]
+#define ENDL '\n'
+#define MAX_N 100010
+using namespace std;
+
+int n,m,nquerys,I1,I2,J1,J2;
+int matrix[MAX_N][MAX_N],ps[MAX_N][MAX_N];
+
+int main() {
+   //leyendo los datos y construyendo la estructura
+   cin>>n>>m;
+	
+   fill(ps[0],ps[0]+MAX_N,0);
+   for(int i=1;i<=n;i++){
+      ps[i][0]=0;
+      for(int j=1;j<=m;j++){
+          cin>>matrix[i][j];
+          ps[i][j]=matrix[i][j]+ps[i][j-1]+ps[i-1][j]-ps[i-1][j-1];
+      }
+   }
+   //respondiendo la consultas
+   cin>nquerys;
+	
+   for(int i=0;i<nquerys;i++){
+      cin>>I1>>J1;//esquina superior izquierda
+      cin>>I2>>J2;//esquina inferior derecha
+      cout<<ps[I2][J2]+ps[I1-1][J1-1]-ps[I2][J1-1]-ps[I1-1][J2]<<ENDL;
+   }
+   return 0;
+}
+\end{lstlisting}
+\subsection{Java}
+\subsubsection{Suma de prefijo en una dimensión}
+\begin{lstlisting}[language=Java]
+public static void main(String[] args) {
+   int n, nquerys, a, b;
+   Scanner in = new Scanner(System.in);
+   // leyendo los datos y construyendo la estructura
+   n = in.nextInt();
+   int[] ps = new int[n + 1];
+   int[] array = new int[n + 1];
+   
+   ps[0] = 0;
+   for (int i = 1; i <= n; i++) {
+      array[i] = in.nextInt();
+      ps[i] = array[i] + ps[i - 1];
+   }
+	
+   // respondiendo la consultas
+   nquerys = in.nextInt();
+	
+   for (int i = 0; i < nquerys; i++) {
+      // siempre a<=b
+      a = in.nextInt();
+      b = in.nextInt();
+      System.out.println(ps[b] - ps[a - 1]);
+   }
+}
+\end{lstlisting}
+\subsubsection{Suma de prefijo en dos dimensiones}
+\begin{lstlisting}[language=Java]
+public static void main(String[] args){
+   int n, m, nquerys, I1, I2, J1, J2;
+   Scanner in = new Scanner(System.in);
+   // leyendo los datos y construyendo la estructura
+   n = in.nextInt();
+   m = in.nextInt();
+   int[][] matrix = new int[n + 1][m + 1];
+   int[][] ps = new int[n + 1][m + 1];
+	
+   Arrays.fill(ps[0], 0);
+   for (int i = 1; i <= n; i++) {
+      ps[i][0] = 0;
+      for (int j = 1; j <= m; j++) {
+         matrix[i][j] = in.nextInt();
+         ps[i][j] = matrix[i][j]+ps[i][j-1]+ps[i-1][j]-ps[i-1][j-1];
+      }
+   }
+   //respondiendo la consultas
+   nquerys = in.nextInt();
+	
+   for (int i = 0; i < nquerys; i++) {
+      // esquina superior izquierda
+      I1 = in.nextInt(); J1 = in.nextInt();
+      // esquina inferior derecha
+      I2 = in.nextInt(); J2 = in.nextInt();
+      System.out.println(ps[I2][J2]+ps[I1-1][J1-1]-ps[I2][J1-1]-ps[I1-1][J2]);
+   }
+}
+\end{lstlisting}

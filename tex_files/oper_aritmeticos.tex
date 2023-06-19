@@ -1,0 +1,54 @@
+Son operadores binarios (requieren siempre dos operandos) que realizan las operaciones aritméticas
+habituales: suma (+), resta (-), multiplicación (*), división (/) y resto de la división (\%).
+
+\begin{tabular}{|c|p{13.5cm}|}
+	\hline
+	\textbf{Operador}	&  \textbf{Descripción} \\
+	\hline
+	+ & Suma los valores situados a su derecha y a su izquierda.  \\
+	\hline
+	- & Resta el valor de su derecha del valor de su izquierda. \\
+	\hline
+	- & Como operador unario, cambia el signo del valor de su izquierda.  \\
+	\hline
+	* & Multiplica el valor de su derecha por el valor de su izquierda. \\
+	\hline
+	/ & Divide el valor situado a su izquierda por el valor situado a su derecha. \\
+	\hline
+	\% & Proporciona el resto de la división del valor de la izquierda por el valor de la derecha (sólo
+	enteros). \\
+	\hline
+\end{tabular}
+
+Todos estos operadores se pueden aplicar a constantes, variables y expresiones númericas. Elresultado es el que se obtiene de aplicar la operación correspondiente entre los dos operandos.
+
+El único operador que requiere una explicación adicional es el operador resto %. En
+realidad su nombre completo es resto de la división entera. Este operador se aplica solamente
+a constantes, variables o expresiones de tipo int. Aclarado esto, su significado es evidente:
+23\%4 es 3, puesto que el resto de dividir 23 por 4 es 3. Si a\%b es cero, a es múltiplo de b.
+
+El operador suma(+) se puede aplicar adicionalmente entre variables del tipo secuencia de caracteres (string) que arroja como resultado la concatenación de los valores de las variables.
+
+\subsubsection{Prioridad de los Operadores Aritméticos}
+Cuando encontramos varios operadores en una misma expresión los lenguajes de programación tendrán que evaluarlos en un orden determinado. Ese orden lo conocemos como prioridad o precendencia de operadores.
+
+Cuando se trata de operadores aritméticos es muy fácil imaginarse la prioridad de unos respecto a otros, dado que funcionan igual que en las matemáticas. Por ejemplo, siempre se evaluará una multiplicación antes que una suma.
+
+Sin embargo, no siempre es tan fácil deducir cómo se va a resolver la asociatividad de los operadores, por lo que hay que aprenderse unas reglas de precedencia que vamos a resumir en este punto.
+
+Dentro de una misma expresión los operadores se evalúan en el siguiente orden: 
+
+\begin{enumerate}
+	\item *, /, \% (Multiplicación, división, resto de la división) 
+	\item +, - (Suma y resta) 
+\end{enumerate}
+
+En el caso en el que en una misma expresión se asocien operadores con igual nivel de prioridad, éstos se evalúan de izquierda a derecha. 
+
+En el caso que quieras romper las reglas de precedencia de los operadores puedes usar los paréntesis. Funcionan con cualquier tipo de operadores y se comportan igual que en las matemáticas. Puedes definir mediante los paréntesis qué operadores se van a relacionar con qué operandos, independientemente de las reglas mencionadas anteriormente. 
+
+\begin{itemize}
+	\item Todas las expresiones entre paréntesis se evalúan primero
+	\item Las expresiones con paréntesis anidados se evalúan de dentro a fuera
+	\item El paréntesis más interno se evalúa primero.
+\end{itemize}

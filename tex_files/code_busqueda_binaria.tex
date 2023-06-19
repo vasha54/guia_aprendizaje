@@ -1,0 +1,55 @@
+La implementación de la búsqueda binaria tiene dos variantes una recursiva y otra iterativa. En este caso vamos a presentar la iterativa por ser mas conveniente para lo que deseamos utilizar.
+
+\subsection{C++}
+\lstset{language=C++, breaklines=true, basicstyle=\footnotesize}
+\begin{lstlisting}[language=C++]
+
+#define MAX_N 1000001
+
+int n, x;
+int niz[MAX_N];
+
+
+inline int b_search(int left, int right, int x){
+   int i = left;
+   int j = right;
+   while (i < j){
+      int mid = (i+j)/2;
+      if (niz[mid] == x) return mid;
+      if (niz[mid] < x) i = mid+1;
+      else j = mid-1;
+   }
+   if (niz[i] == x) return i;
+   return -1;
+}
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+/* Busqueda de un elemento en un arreglo
+* Retorna -1 si el elemento no esta si no la posicion del elemento*/
+
+int binarySearch(int arr[], int x) {
+   int l = 0, r = arr.length - 1;
+   while (l <= r) {
+      int m = l + (r - l) / 2;
+      if (arr[m] == x) {
+         return m;
+      }
+		
+      if (arr[m] < x) {
+         l = m + 1;
+      } else {
+         r = m - 1;
+      }
+   }
+   return -1;
+}
+
+/*las clases Arrays y Colections poseen el metodo busqueda binaria 
+* para buscar un elemento bien sea dentro de un arreglo o coleccion, 
+* en ambos caso devuelve la posicion donde se encuentra el elemento 
+* buscado. En caso de no encontrarse el valor devuelto es -1. El arreglo
+* o colecion debe esta ordenado de forma ascendente  previamente */
+
+\end{lstlisting}

@@ -1,0 +1,3 @@
+Supongamos que nos dan un grafo dirigido ponderado $G$ con $n$ vértices y $m$ aristas y algún vértice especificado $v$. Desea encontrar la longitud de los caminos más cortos desde el vértice $v$ a cada otro vértice. Se conoce que dicho grafo tiene aristas negativas
+
+A diferencia del algoritmo de Dijkstra, este algoritmo también se puede aplicar a gráfos que contienen aristas de peso negativo. Sin embargo, si el grafo contiene un ciclo negativo, entonces, claramente, el camino más corto a algunos vértices puede no existir (debido al hecho de que el peso del camino más corto debe ser igual a menos infinito); sin embargo, este algoritmo puede modificarse para señalar la presencia de un ciclo de peso negativo, o incluso deducir este ciclo.

@@ -1,0 +1,27 @@
+En la teoría de grafos, los componentes fuertemente conexa de un grafo dirigido se pueden encontrar utilizando un algoritmo que usa la búsqueda de profundidad primero en combinación con dos pilas, una para realizar un seguimiento de los vértices en el componente actual y el segundo para realizar un seguimiento de la actual ruta de búsqueda. Purdom (1970), Munro (1971), Dijkstra (1976), Cheriyan y Mehlhorn (1996) y Gabow (2000) han propuesto versiones de este algoritmo (1970), Munro (1971), Dijkstra (1976), Cheriyan y Mehlhorn (1996) y Gabow (2000); De estos, la versión de Dijkstra fue la primera en lograr el tiempo lineal.
+
+El algoritmo realiza una búsqueda de profundidad primero del grafo G dado, manteniendo como hace dos pilas S y P (además de la pila de llamadas normal para una función recursiva). La pila S contiene todos los vértices que aún no se han asignado a una componente fuertemente conexa, en el orden en que la búsqueda de profundidad primero llega a los vértices. La pila P contiene vértices que aún no se ha determinado que pertenezcan a diferentes componentes fuertemente conexa entre sí. También utiliza un contador C del número de vértices alcanzados hasta ahora, que utiliza para calcular los números de pedido de los vértices.
+
+Cuando la búsqueda de profundidad primero llega a un vértice $v$, el algoritmo realiza los siguientes pasos:
+
+\begin{enumerate}
+	\item Establezca el número de orden de $C$ a $v$, e incremento $C$.
+	\item Empuje $v$ en $S$ y también en $P$.
+	\item Para cada arista de $v$ a un vértice vecino $w$:
+	\begin{itemize}
+		\item Si aún no se ha asignado el número de preorden de $w$ (la aristas es una arista de árbol), busque recursivamente $w$;
+		\item De lo contrario, si $w$ aún no se ha asignado a una componente fuertemente conexa (la arista es una aristas hacia adelante/posterior/transversal):
+		\begin{itemize}
+			\item Elimine vertices repetidamente desde $P$ hasta que el elemento superior de $P$ tenga un número de orden por adelantado menor o igual al número de orden de w.
+		\end{itemize}
+	\end{itemize}
+	\item Si $v$ es el elemento superior de $P$:
+	\begin{itemize}
+		\item Elimine vertices de $S$ hasta que $v$ halla sido eleminado y asigne los vértices eliminados a un nuevo componente.
+		\item Elimine $v$ de $P$
+	\end{itemize}
+\end{enumerate}
+
+El algoritmo general consiste en un bucle a través de los vértices del grafo, llamando a esta búsqueda recursiva en cada vértice que aún no tiene un número de pedido asignado.
+
+Al igual que este algoritmo, el algoritmo de componentes fuertemente conectados de Tarjan también usa la primera búsqueda de profundidad junto con una pila para realizar un seguimiento de los vértices que aún no se han asignado a un componente, y mueve estos vértices a un nuevo componente cuando termina expandiendo el vértice final de su componente. Sin embargo, en lugar de la pila P, el algoritmo de Tarjan utiliza un arreglo de números de orden por vértice, asignado en el orden en que los vértices se visitan por primera vez en la búsqueda de profundidad primero. El arreglo de orden se utiliza para realizar un seguimiento de cuándo formar un nuevo componente.
