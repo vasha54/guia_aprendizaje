@@ -2,22 +2,53 @@ A la hora de implementar una búsqueda completa existen varios enfoques los cual
 
 \subsection{Búsqueda completa iterativa}
 
+Este enfoque tiene como característica realizar la búsqueda completa con la iteración por todos los elementos que pueden componer el campo de búsqueda. 
+
 \subsubsection{Búsqueda completa iterativa (Dos bucles anidados)}
 
+Como bien su nombre lo indica este enfoque se caracteriza por la utilización de dos estructuras repetitivas anidadas las cuales permiten bien combinar en pares todos los elementos del campo de búsqueda para ver cuales pares forma una solución deseable. 
 
+\emph{Ejemplo: Encuentre y muestre todos los pares de números de 5 dígitos que en conjunto usen los dígitos del 0 al 9 una vez cada uno, de modo que el primer número dividido por el segundo sea igual a un número entero N, donde $2 \le N \le 79$. Eso es , abcde/fghij = N, donde cada letra representa un dígito diferente. Se permite que el primer dígito de uno de los números sea cero, por ejemplo, para N = 62, tenemos 79546/01283 = 62; 94736/01528 = 62. \href{https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=666}{UVa - 00725 - Division}}
 
 \subsubsection{Búsqueda completa iterativa (Muchos bucles anidados)}
 
+Enfoque similar al anterior pero con la diferencia que la utilización  de la cantidad de estructuras repetitivas anidadas no está limitada a una cantidad en específica.
+
+\emph{Ejemplo: Dado 6 < k < 13 enteros (que ya están ordenados), enumere todos los subconjuntos posibles de tamaño 6 de estos enteros en orden ordenado. \href{https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=382}{UVa - 00441 - Lotto}}
+
 \subsubsection{Búsqueda completa iterativa (Bucles + Poda)}
+
+Este enfoque es una optimización de los dos anteriores ya que podemos establecer cortes o podas en las iteraciones a realizar cuando estamos en una subregión del campo de búsqueda del cual no se obtendrá ninguna solución factible.
+
+\emph{Ejemplo: Dados tres enteros A, B y C ($1 \le A, B, C \le 10 000$), encuentre otros tres enteros distintos x, y y z tales que $x + y + z = A$, $x \times y \times z = B$, y $x^2 + y^2 + z^2 = C$. \href{https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2612}{UVa - 11565 - Simple Equations}}
 
 \subsubsection{Búsqueda completa iterativa (Permutaciones)}
 
+Este enfoque tiene como campo de búsqueda todas las permutaciones que pueden generar un grupo de elementos y de ellas ver cuales cumple con determinada condición. Aunque existe una solución recursiva la variante iterativa es mucho mas eficiente a la hora de realizar una búsqueda completa.
+
+\emph{Ejemplo: Hay $0 < n \le 8$ asistentes al cine. Se sentarán al frente
+	fila en $n$ asientos abiertos consecutivos. Hay $0 \le m \le 20$ restricciones de asientos entre ellos, donde cada restricción especifica dos asistentes al cine $a$ y $b$ que deben ser como máximo (o al menos) $c$ asientos separados. La pregunta: ¿Cuántas disposiciones de asientos posibles hay ?. \href{https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2842}{UVa - 11742 - Social Constraints} }
+
 \subsubsection{Búsqueda completa iterativa  (Subconjuntos)}
+
+Este enfoque tiene como campo de búsqueda todos los subconjuntos que pueden generar un grupo de elementos y de ellas ver cuales cumple con determinada condición. Aunque existe una solución recursiva la variante iterativa es mucho mas eficiente a la hora de realizar una búsqueda completa.
+
+\emph{Ejemplo: Dada una lista $l$ que contiene $1 \le n \le 20$ enteros, ¿existe un subconjunto de la lista $l$ que suma a otro entero dado $X$?. \href{https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&category=24&problem=3886}{UVa - 12455 - Bars} }
 
 \subsection{Búsqueda completa recursiva}
 
-\subsubsection{Retroceso simple}
-Un algoritmo de retroceso comienza con una solución vacía y extiende la solución paso a paso. La búsqueda recursivamente pasa por todas las diferentes formas en que se puede construir una solución. 
+Este enfoque tiene como característica realizar la búsqueda completa con la ayuda de la recursividad ya que la forma iterativa no asegura explorar todo el campo de búsqueda o se hace demasiado engorroso hacerlo mientras la variante recursiva propone una solaución simple y limpia.
+
+\subsubsection{Retroceso simple (\emph{Backtracking})}
+Un algoritmo de retroceso comienza con una solución vacía y extiende la solución paso a paso. La búsqueda recursivamente pasa por todas las diferentes formas en que se puede construir una solución. Este enfoque va construyendo un árbol con todos los posibles estados o variantes de solución donde cada nodo representa un estado o variante y partir de el se pueden generar nuevos estados o variantes. Los nodos que pueden generar nuevos estados o variantes tendrán una solución parcial al problema mientras los nodos los cuales ya no generaron nuevos estados o variantes serán nodos hojas en el árbol. Los nodos hojas del árbol tendrán una solución completa lo cual podrá ser tomada o no en dependencia del problema. 
+
+\emph{Ejemplo: En el ajedrez estándar (con un tablero de $8 \times 8$), es posible colocar 8-Reinas en el tablero de manera que no haya dos Reinas que se ataquen entre sí. Determinar todo eso posibles arreglos dada la posición de una de las Reinas (es decir, la coordenada (a, b) debe contienen una Reina). Muestra las posibilidades en orden lexicográfico (ordenado). \href{https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=691}{UVa - 00750 - 8-Queens Chess Problem}}
+
+\subsubsection{Retroceso simple (\emph{Backtracking}) + Poda}
+Nosostros podemos optimizar la búsqueda completa con retroceso si aplicamos poda en el árbol de búsqueda que está idea genera. La idea es no seguir explorando aquellos subárboles de búsqueda que se pueden generar a partir de un nodo del árbol que la solución parcial que propone ese nodo ya no es factible, esto hace que los subárboles que se generan a partir de este nodo propondan soluciones parciales o completas no factibles. Aplicación de la poda puede tener excelentes efectos en la eficiencia de la búsqueda  
+
+\emph{Ejemplo: Dado un tablero de ajedrez $n \times n$ ($3 \le n \le 15$) donde algunas de las las celdas son malas (las reinas no se pueden colocar allí), ¿de cuántas maneras se pueden colocar N-reinas en el tablero de ajedrez para que no haya dos reinas que se ataquen entre sí? Las celdas malas no se pueden usar para bloquear el ataque de las reinas. \href{https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=2136}{UVa - 11195 - Another N-Queens Problem}}
+
 
 Si un problema se puede resolver mediante la búsqueda completa, también estará claro cuándo utilizar los enfoques de seguimiento iterativo o recursivo. Los enfoques iterativos se utilizan cuando uno puede derivar fácilmente los diferentes estados con alguna fórmula relativa a un cierto contador y (casi) todos los estados deben verificarse, por ejemplo, escaneando todos los índices de una matriz, enumerando (casi) todos los subconjuntos posibles de un conjunto pequeño, generando (casi) todas las permutaciones, etc. 
 

@@ -1,6 +1,10 @@
 \subsection{Fuerza Bruta}
+Los algoritmos de Fuerza Bruta son capaces de encontrar la solución a cualquier problema por complicado que sea. Su fundamento es muy simple, probar todas las posibles combinaciones, recorrer todos los caminos hasta dar con la situación que es igual que la solución. No le importa iniciar caminos malos o muy malos, al llegar a su final y ver que su destino no es la solución, se iniciará otro camino en busca del que conduzca a ella.
 
 \subsection{Retroceso (\emph{Backtracking})}
-
+Backtracking (o vuelta atrás) es una técnica algorítmica para encontrar soluciones a problemas que tienen una solución completa, en los que el orden de los elementos no importa, y en los que existen una serie de variables, a cada una de las cuales, debemos asignarle un valor teniendo en cuenta unas restricciones dadas.
+O lo que es lo mismo, es una estrategia algorítmica que busca todas las posibles soluciones dado un conjunto de variables inicial para encontrar el resultado definido por el problema.
 
 \subsection{Problema NP-difícil/completo (\emph{NP-hard/complete})}
+
+En teoría de la complejidad computacional, la clase de complejidad NP-hard (o NP-complejo, o NP-difícil) es el conjunto de los problemas de decisión que contiene los problemas H tales que todo problema L en NP puede ser transformado polinomialmente en H. Esta clase puede ser descrita como aquella que contiene a los problemas de decisión que son como mínimo tan difíciles como un problema de NP. Esta afirmación se justifica porque si podemos encontrar un algoritmo A que resuelve uno de los problemas H de NP-hard en tiempo polinómico, entonces es posible construir un algoritmo que trabaje en tiempo polinómico para cualquier problema de NP ejecutando primero la reducción de este problema en H y luego ejecutando el algoritmo A. 
