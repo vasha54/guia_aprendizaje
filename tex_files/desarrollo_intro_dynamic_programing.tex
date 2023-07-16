@@ -1,0 +1,80 @@
+La programación dinámica es una técnica que combina la corrección de la búsqueda completa y la eficiencia de los algoritmos golosos. Hay dos usos para la programación dinámica:
+
+\begin{enumerate}
+	\item \textbf{Encontrar una solución óptima:} Queremos encontrar una solución que sea tan grande lo más posible o lo más pequeño posible de acuerdo a la situación que nos plantea el problema o ejercicio.
+	\item \textbf{Contar el número de soluciones:} Queremos calcular el número total de soluciones posibles.
+\end{enumerate}
+
+La programación dinámica (a partir de ahora abreviada como DP) es quizás de las más desafiante técnica de resolución de problemas entre los paradigmas presentes en la programación de concursos ya que compinas algunos de estos como son la búsqueda completa, algoritmos golosos y divide y vencerás. Las habilidades clave que debe desarrollar para dominar DP son las habilidades para determinar los estados del problema y determinar las relaciones o transiciones entre los estados problema y sus subproblemas.
+
+Ahora como poder definir si un problema puede ser solucionado aplicando DP. Para esto el problema original debe tener:
+
+\begin{enumerate}
+	\item \textbf{Propiedad óptima de la subestructura:} La solución óptima al problema contiene soluciones óptimas a los subproblemas.
+	\item \textbf{Propiedad de subproblemas superpuestos:} Accidentalmente recalculamos el mismo problema dos veces o más.
+\end{enumerate}
+
+Hay 2 tipos de DP: podemos construir soluciones de subproblemas de pequeños a
+grande (de abajo hacia arriba, \emph{Bottom-Up}) o podemos guardar los resultados de las soluciones de los subproblemas en una tabla (de arriba hacia abajo
++ memorización, \emph{Top-Down+memoization}).
+
+\subsection{Top-Down DP}
+
+En el enfoque de \emph{Top-Down DP}, implementamos la solución naturalmente utilizando la recursión, pero la modificamos para guardar la solución de cada subproblema en una matriz o tabla hash. Este enfoque primero verificará si ha resuelto previamente el subproblema. En caso afirmativo, devuelve el valor almacenado y guarda más cálculos. De lo contrario, el enfoque de arriba hacia abajo calculará las soluciones de subproblemas de la manera habitual. Decimos que es la versión memoizada de una solución recursiva, es decir, recuerda qué resultados se han calculado anteriormente.
+
+
+\subsection{Bottom-Up DP}
+
+Hay otra forma de implementar una solución DP a menudo denominada \emph{Bottom-Up DP}. Esta es en realidad la forma verdadera de DP, ya que DP se conocía originalmente como el método tabular (técnica de cálculo que involucra una tabla). Los pasos básicos para construir una solución \emph{Bottom-Up DP}
+son como sigue:
+
+\begin{enumerate}
+	\item Determine el conjunto requerido de parámetros que describen de manera única el problema (el estado). Este paso es similar a lo que hemos discutido en retroceso recursivo y \emph{Top-Down DP} anteriormente.
+	\item Si se requieren $N$ parámetros para representar a los estados, prepare una matriz $n$ dimensional (tabla DP), con una entrada por estado. Esto es equivalente a la tabla de memo en \emph{Top-Down DP}. Sin embargo, hay diferencias. En Bottom-Up DP, solo necesitamos inicializar algunas celdas de la tabla DP con valores iniciales conocidos (los casos base). Recuerde que en \emph{Top-Down DP}, inicializamos la tabla de memo completamente con valores ficticios (generalmente -1) para indicar que aún no hemos calculado los valores.
+	\item Ahora, con las células/estados de casos base en la tabla DP ya llena, determine las celdas/estados que se pueden llenar a continuación (las transiciones). Repita este proceso hasta que se complete la tabla DP. Para el \emph{Bottom-Up DP}, esta parte generalmente se logra a través de iteraciones, utilizando bucles.
+\end{enumerate}
+
+
+\subsection{Bottom-Up vs Top-Down}
+
+Aunque ambos estilos usan matrices o arreglos, la forma en que se llena la matriz o arreglo de \emph{Bottom-Up DP} es diferente a la de la matriz o arreglo de memorizacion de \emph{Top-Down DP}. En el \emph{Top-Down DP}, las entradas de la matriz o arreglo de memorización se llenan según sea necesario a través de la recursividad misma. En el \emph{Bottom-Up DP}, usamos un orden de llenado de matriz o arreglo DP correcto para calcular los valores de modo que ya se hayan obtenido los valores anteriores necesarios para procesar la celda actual. 
+
+Para la mayoría de los problemas de DP, estos dos estilos son igualmente buenos y la decisión de usar un el estilo particular de DP es una cuestión de preferencia. Sin embargo, para problemas de DP más difíciles, uno de los estilos pueden ser mejores que el otro. Para ayudarlo a comprender qué estilo debe utilizar cuando se le presenta un problema de DP presentamos la siguiente tabla:
+
+\begin{longtable}{|p{7.5cm}|p{7.5cm}|}
+	\hline
+\multicolumn{1}{|c|}{\textbf{Top-Down DP}}	&  \multicolumn{1}{|c|}{\textbf{Bottom-Up DP}} \\
+	\hline
+\multicolumn{2}{|c|}{\textbf{Ventajas}}	  \\
+	\hline
+Es una transformación natural de la búsqueda completa recursiva normal	& Más rápido si se revisan muchos subproblemas
+Como no hay sobrecarga de llamadas recursivas  \\
+	\hline
+Calcula los subproblemas solo cuando
+necesario (a veces esto es más rápido)	& Puede guardar espacio de memoria con la técnica de \emph{ahorro de espacio} \\
+	\hline
+\multicolumn{2}{|c|}{\textbf{Desventajas}} \\
+	\hline
+Más lento si se revisan muchos subproblemas debido a la sobrecarga de llamadas de función (esto es notablemente penalizado en los concursos de programación)	&  Para los programadores que se inclinan a la recursión, este estilo puede no ser intuitivo \\
+	\hline
+Si hay $M$ estados, un tamaño de tabla O($M$)
+se requiere, lo que puede conducir a MLE para algunos
+problema más dificiles	& Si hay M estados, \emph{Bottom-Up DP}
+visita y llena el valor de todos estos estados de $M$
+Incluso si muchos de los estados no son necesarios \\
+	\hline
+\end{longtable}
+
+\subsection{Mostrando la solución óptima}
+
+Muchos problemas de DP solicitan solo el valor de la solución óptima. Sin embargo, muchos concursantes son atrapados por descuidados cuando también están obligados a imprimir la solución óptima. Somos conscientes de dos formas de hacer esto.
+
+La primera forma se utiliza principalmente en el enfoque Bottom-Up DP (que todavía es aplicable a Top-Down DP) donde almacenamos la información predecesora en cada estado. Si hay más de un predecesor óptimo y tenemos que generar todas las soluciones óptimas, podemos almacenar a esos predecesores en una lista. Una vez que tenemos el estado final óptimo, podemos hacer retroceso desde el estado final óptimo y seguir las transiciones óptimas registradas en cada estado hasta llegar a uno de los casos base. Si el problema solicita todas las soluciones óptimas, esta rutina de retroceso las imprimirá todas. Sin embargo, la mayoría de los autores de proeblemas o ejercicios generalmente establecen criterios de salida adicionales para que la solución óptima seleccionada sea única (para juzgar más fácilmente).
+
+La segunda forma es aplicable principalmente al enfoque Top-Down DP, donde utilizamos la fuerza de la recursión y la memorización para hacer el mismo trabajo. 
+
+%La programación dinámica se basa fundamentalmente o parte de una \textbf{función recursiva} que pasa por todas las posibilidades, como un algoritmo de búsqueda completa. Sin embargo, el algoritmo de programación dinámica es eficiente porque utiliza la \textbf{memorización} y calcula la respuesta a cada subproblema una sola vez.
+
+%La idea en la programación dinámica es formular el problema recursivamente para que la solución al problema pueda calcularse a partir de soluciones a subproblemas más pequeños. Mientras la memorización es usada para calcular de manera eficiente los valores de la función recursiva. Esto significa que los valores de la función se almacenan en una matriz después de calcularlos. Para cada parámetro, el valor de la función se calcula recursivamente solo una vez y, después de esto, el valor se puede recuperar directamente de la matriz.
+
+ %Si es nuevo en la técnica de DP, puede comenzar asumiendo que (el \textbf{\emph{Top-Down}}) DPes una especie de retroceso recursivo inteligente o más rápido. Explicaremos la razones por las que DP es a menudo más rápido que el retroceso recursivo para los problemas que se pueden resolver. DP se usa principalmente para resolver problemas de optimización y problemas de conteo.  La mayoría de los problemas de DP en los concursos de programación solo piden el valor óptimo/total y no la solución óptima mismo, lo que a menudo hace que el problema sea más fácil de resolver al eliminar la necesidad de retroceder y producir la solución. Sin embargo, algunos problemas de DP más difíciles también requieren la solución óptima ser devuelto de alguna manera. Mejoraremos continuamente nuestra comprensión de DP.
