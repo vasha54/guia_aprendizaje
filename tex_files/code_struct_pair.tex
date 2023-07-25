@@ -1,0 +1,91 @@
+\subsection{Pair}
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+   pair<string, double> estudiante1("Alejandro Perez", 1.80);
+   pair<string, double> estudiante2, estudiante3("Jose Perez", 2.05);
+   pair<string, double> estudiante4(estudiante1);
+   
+   estudiante2 = make_pair("Perico Ramirez", 1.76);
+   
+   cout << estudiante1.first << " ";
+   cout << estudiante1.second << endl;
+   
+   cout << estudiante2.first << " ";
+   cout << estudiante2.second << endl;
+   
+   cout << estudiante3.first << " ";
+   cout << estudiante3.second << endl;
+   
+   cout << estudiante4.first << " ";
+   cout << estudiante4.second << endl;
+   
+   cout << endl;
+   estudiante1.swap(estudiante2);
+   tie(ignore, estudiante2.second) = estudiante3;
+   
+   cout << estudiante1.first << " ";
+   cout << estudiante1.second << endl;
+   
+   cout << estudiante2.first << " ";
+   cout << estudiante2.second << endl;
+   
+   cout << estudiante3.first << " ";
+   cout << estudiante3.second << endl;
+   
+   cout << estudiante4.first << " ";
+   cout << estudiante4.second << endl;
+	
+   return 0;
+}
+\end{lstlisting}
+
+
+\subsection{Struct}
+
+\begin{lstlisting}[language=C++]
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Estudiante {
+   string nombre;
+   double estatura;
+	
+   Estudiante(){
+      nombre="Andres Valido";
+      estatura = 1.75;
+   }
+	
+   Estudiante(string _n, double _e){
+      nombre=_n;
+      estatura = _e;
+   }
+};
+
+int main() {
+	
+   Estudiante e1,e4,e5,e6;
+   Estudiante * e2,*e3;
+   e1.nombre="Alejandro Perez";
+   e1.estatura=1.89;
+	
+   e2 = new Estudiante();
+   e3 = new Estudiante("Juana Carrasco", 1.69);
+   e4 = Estudiante();
+   e5 = Estudiante("Jorge Padron",1.78);
+   e2->nombre="Perico Perez";
+   e2->estatura=2.04;
+	
+   cout<<e1.nombre<<" "<<e1.estatura<<endl;
+   cout<<e2->nombre<<" "<<e2->estatura<<endl;
+   cout<<e3->nombre<<" "<<e3->estatura<<endl;
+   cout<<e4.nombre<<" "<<e4.estatura<<endl;
+   cout<<e5.nombre<<" "<<e5.estatura<<endl;
+   cout<<e6.nombre<<" "<<e6.estatura<<endl;
+	
+   return 0;
+}
+\end{lstlisting}

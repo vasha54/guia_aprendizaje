@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Introducción a la Programación Dinámica}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Cambio de monedas (\emph{Coin change})}
 	\end{flushleft}}
 	% To, From, Subject Block
 	

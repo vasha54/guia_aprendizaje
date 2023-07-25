@@ -1,0 +1,12 @@
+Antes de adentrarnos en como solucionar cada interrogante vamos a dejar claro cual es la situación inicial que para ambos casos es la misma y solo cambia lo que se quiere hallar.
+
+\emph{Se cuenta con $k$ denominaciones de billetes o monedas ($c_1,c_2,\dots,c_k$) cuya cantidad de cada denominación es ilimitada y un valor $N$.}
+
+\subsection{Mínima cantidad de billetes que sumen N}
+\input{tex_files/desarrollo_coin_change_minimal_coin.tex}
+
+\subsection{Cantidad de formas de devolver N}
+\input{tex_files/desarrollo_coin_change_count_way.tex}
+
+Tenga en cuenta que también podemos construir iterativamente en ambos casos el valor del arreglo  usando un ciclo que simplemente calcula todos los valores de solve para los parámetros $0\dots n$. De hecho, la mayoría de los programadores competitivos prefieren esta idea porque es más corta y tiene factores constantes más bajos.
+

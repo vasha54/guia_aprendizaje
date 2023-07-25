@@ -1,0 +1,125 @@
+Siguiendo con la situación expuesta en la introducción si tenemos $N$ estudiantes y de cada uno de ellos se su nombre (un valor representado por una cadena de caracteres) y estatura (un valor decimal positivo) a la hora de representar computacionalmente podrías hacerlo de una forma muy trivial utilizando dos arreglos uno que almacenes todos los nombres y otro que almacene todas la estaturas con el esquema que en la posición $i$ de ambos arreglos está la información referente al estudiante $i$. Está solución aunque puede parecer efectiva no siempre es recomendable ya que cuando se puede complejizar cuando se comienza a manipular la información. 
+
+Ahora veremos como podemos resolver esto aplicando dos elementos que nos brinda C++ como lenguaje de programación
+
+\subsection{Pair}
+El \emph{pair} se usa para combinar dos valores que pueden ser de diferentes tipos de datos. El \emph{pair} proporciona una forma de almacenar dos objetos heterogéneos como una sola unidad. Básicamente se usa si queremos almacenar tuplas. El contenedor de pares es un contenedor simple definido en el encabezado $<utility>$ que consta de dos elementos u objetos de datos.
+
+\begin{itemize}
+	\item El primer elemento se hace referencia como \emph{first} y el segundo elemento como \emph{second} y el orden es fijo (first, second).
+	\item El \emph{pair} puede ser asignado, copiado y comparado. Un arreglo de objetos asignados en un mapa o hash\_map es de tipo \emph{pair} de forma predeterminada en la que todos los primeros elementos son claves únicas asociadas con sus segundo objetos de valor.
+	\item Para acceder a los elementos, usamos el nombre de la variable seguido del operador punto (.) seguido de la palabra clave primero o segundo.
+\end{itemize}
+
+La sintaxis para crear un \emph{pair} es bastante sencillo:
+
+\begin{lstlisting}[language=C++]
+pair<tipo_dato_1, tipo_dato_2> <nombre_pair>;
+\end{lstlisting}
+
+De igual forma un \emph{pair} se puede crear e inicializar en la misma instrucción cuya sintaxis es:
+
+\begin{lstlisting}[language=C++]
+pair<tipo_dato_1, tipo_dato_2> <nombre_pair> (<valor_1>,<valor_2>);
+\end{lstlisting}
+
+Existen otras formas de crear un \emph{pair} las cuales veremos mas adelante. Veamos algunas funciones de los \emph{pair} y como funciona frente a los diferentes operadores:
+
+\begin{itemize}
+	\item \textbf{make\_pair():} Esta función de plantilla permite crear un par de valores sin escribir los tipos explícitamente. La sintaxis es la siguiente
+	\begin{lstlisting}[language=C++]
+<nombre_pair> = make_pair (valor_1,valor_2);
+	\end{lstlisting}
+	
+	\item \textbf{swap:} Esta función intercambia el contenido de un objeto de \emph{pair} con el contenido de otro objeto de \emph{pair}. Los \emph{pair} deben ser del mismo tipo. Su sintaxis es la siguiente:
+	\begin{lstlisting}[language=C++]
+<nombre_pair_1>.swap(<nombre_pair_2>) ;
+	\end{lstlisting}
+	
+	\item \textbf{tie():} Esta función funciona igual que en las tuplas. Crea una tupla de referencias de lvalue a sus argumentos, es decir, para desempaquetar los valores de la tupla (o aquí el \emph{pair}) en variables separadas. Al igual que en las tuplas, aquí también hay dos variantes del \emph{tie}, con y sin \textbf{ignore}. La palabra clave \textbf{ignore} ignora un elemento de tupla en particular para que no se descomprima.
+	Sin embargo, las tuplas pueden tener múltiples argumentos, pero los \emph{pair} solo tienen dos argumentos. Por lo tanto, en el caso de un \emph{pair} de pares, el desempaquetado debe manejarse explícitamente. La sintaxis de dicha función es:
+	\begin{lstlisting}[language=C++]
+tie(<variable_1>, <variable_2>) = <nombre_pair>;
+	\end{lstlisting}
+	\item \textbf{Asiganción(=):} Asigna un nuevo objeto para un \emph{pair} de objetos. Al primer valor se le asigna el primer valor de y al segundo valor se le asigna el segundo valor.
+	\item \textbf{Comparación(==):} Para los dos \emph{pairs} dados, digamos par1 y par2, el operador de comparación compara el primer valor y el segundo valor de esos dos pares, es decir, si par1.first es igual a par2.first o no y si par1.second es igual a par2.second o no.
+	\item \textbf{No es igual (!=):} Para los dos pares dados, digamos par1 y par2, el operador != compara los primeros valores de esos dos pares, es decir, si par1.first es igual a par2.first o no, si son iguales, comprueba los segundos valores de ambos.
+	\item \textbf{Operadores lógicos ($>=,<=$):} Para los dos pares dados, digamos par1 y par2, el =, >, también se puede usar con pares. Devuelve 0 o 1 comparando solo el primer valor del par. Para pares como $p1=(1,20)$ y $p2=(1,10)$ $p2<p1$ debería dar 0 (ya que compara solo el primer elemento y son iguales, por lo que definitivamente no es menor), pero eso no es cierto. Aquí, el par compara el segundo elemento y, si cumple, devuelve 1 (este es solo el caso cuando el primer elemento es igual al usar un operador relacional $>$ o $<$ solamente, de lo contrario, estos operadores funcionan como se mencionó anteriormente)
+\end{itemize}
+
+Los \emph{pair} pueden ser perfectamente almacenados en las estructuras de datos conocida por tanto podemos tener arreglos, matrices, vectores, listas, colas, pilas y árboles que almacenan \emph{pair}. Los \emph{pair} se puede ordenar por defecto se ordena tomando como primer criterio el valor del primer elemento en caso de igualdad se tomará como segundo criterio el valor del segundo elemento del \emph{pair}.
+
+Aunque se vea un tanto recursivo o raro incluso se puede pensar que no se utiliza aunque hay casos de que si. Se puede definir un \emph{pair} donde uno o los dos elementos que lo conforman sean \emph{pair} declarados previamente.
+
+\subsection{Struct}
+
+Una estructura (\emph{struct}) es una forma de agrupar un conjunto de datos de distinto tipo bajo un mismo
+nombre o identificador. Supóngase que se desea diseñar una estructura que
+guarde los datos correspondientes a un estudiante como se planteo en la introdución de esta guía. Esta estructura, a la que se llamará
+estudiante, deberá guardar el nombre y la estatura. Cada uno de estos datos se denomina miembro de la estructura. El
+modelo, patrón o sintaxis de una estructura puede crearse del siguiente modo:
+
+\begin{lstlisting}[language=C++]
+struct <nombre_struct> {
+  <tipo_dato> <nombre_miembro_1>;
+  <tipo_dato> <nombre_miembro_2>;
+  <tipo_dato> <nombre_miembro_3>;
+  ...
+  <tipo_dato> <nombre_miembro_N>;
+};
+\end{lstlisting}
+
+La sintaxis anterior crea el tipo de dato, pero aún no hay ninguna variable
+declarada con este nuevo tipo. Obsérvese la necesidad de incluir un carácter (;) después de
+cerrar las llaves. Para declarar variables de tipo de estructura creado se debe utilizar la sentencia
+la sintaxis:
+
+\begin{lstlisting}[language=C++]
+<nombre_struct> <nombre_variable>;
+\end{lstlisting}
+
+Para acceder a los miembros ya sea para leer o modificar su valor de una estructura se utiliza el operador punto (.),
+precedido por el nombre de la estructura y seguido del nombre del miembro.
+
+\begin{lstlisting}[language=C++]
+<nombre_variable>.<nombre_miembro>
+\end{lstlisting}
+
+Los miembros de las estructuras pueden ser variables de cualquier tipo, incluyendo
+vectores y matrices, e incluso otras estructuras previamente definidas. Las estructuras se diferencian de los arrays (vectores y matrices) en varios aspectos. Por una parte, los arrays contienen información múltiple pero homogénea, mientras que los miembros de las estructuras pueden ser de naturaleza muy diferente. Además, las estructuras permiten ciertas operaciones globales que no se pueden realizar con arrays.
+
+Se pueden definir también punteros a estructuras y esto permite una nueva forma
+de acceder a sus miembros utilizando el operador flecha (->), constituido por los signos (-) y (>). El operador flecha debe utilizarse exclusivamente con vectores. El elemento que va a
+su izquierda, siempre tiene que ser una dirección, ya sea representada por un puntero, o utilizando el operador \&.
+
+Al igual que podía crear una estructuras de datos con cualquier tipo de datos en C++, también puede crear
+estructuras de datos de estructuras. Esto potencia aún más el poder de esta herramienta, ya que le
+permite crear matrices de dos dimensiones capaces de almacenar una cantidad grande
+de registros en cada posición del vector, con diferentes campos, los cuales están representados por los miembros de la estructura.
+
+Una estructura llamada \emph{struct} nos permite crear un grupo de variables que consta de tipos de datos mixtos en una sola unidad. De la misma manera, un constructor es un método especial, que se llama automáticamente cuando se declara un objeto para la clase, en un lenguaje de programación orientado a objetos.
+
+Entonces, combinando estas dos metodologías diferentes, podemos decir que cuando estos constructores se definen dentro de una \emph{struct}, estos se denominarían constructores de \emph{struct}. Aprendamos sobre esta funcionalidad en el lenguaje de programación C++.
+
+La sintaxis general para el constructor de Struct se puede definir a continuación:
+
+\begin{lstlisting}[language=C++]
+struct <nombre_struct> {
+  <tipo_dato> <nombre_miembro_1>;
+  <tipo_dato> <nombre_miembro_2>;
+  
+  <nombre_struct>(){
+     //dentro del constructor por defecto
+  }
+
+  <nombre_struct>(<tipo_dato> <nombre_miembro_1>, <tipo_dato> <nombre_miembro_2>){
+     //dentro del constructor parametrizado
+  }
+};
+\end{lstlisting}
+
+Según la sintaxis anterior, una estructura se puede definir utilizando la palabra clave struct, seguida del nombre de la estructura definida por el usuario. Como podemos notar, la declaración es estructura es similar a la declaración de clase.
+
+Después de definir la estructura, se trata de la declaración de todas las variables con diferentes tipos de datos. Entonces habíamos definido el constructor. Se define como una función con el mismo nombre que el nombre de \emph{struct}. En la sintaxis, mostramos la declaración del constructor predeterminado y parametrizado. Una \emph{struct} puede tener tantos constructores como se necesite pero cada constructor debe ser diferente al resto en la cantidad de parámetros que recibe y el orden de los tipos de datos de los parametros que reciben. 
+
+Para ordenar una colección de estructuras del mismo tipo basta con sobrecargar el operador (<) o implementar una función que sirva como tercer parámetro de la función \emph{sort} en ambas funciones se debe definir el orden entre dos variables del tipo de dato de la estructura.

@@ -1,0 +1,43 @@
+Vamos a considerar otra versión del problema de las monedas en donde la tarea es calcular el total de maneras de producir un total $N$ utilizando las monedas. Para este ejemplo donde las denominaciones de las monedas son ${1,3,4}$ y $N=5$ existen un total de 6 maneras:
+\begin{enumerate}
+	\item 1 + 1 + 1 + 1 + 1 = 5
+	\item 3 + 1 + 1 = 5
+	\item 1 + 1 + 3 = 5
+	\item 1 + 3 + 1 = 5
+	\item 1 + 4 = 5
+	\item 1 + 4 = 5 
+\end{enumerate}
+
+Otra vez vamos a resolver el  problema recursivamente. La función $solve(x)$ calcula la cantidad de formas que se obtiene una suma igual $x$. Por ejemplo, si la denominaciones de las monedas son $c={1,3,4}$, entonces $solve(5)=6$ y su fómula recursiva es:
+
+$$\begin{matrix}
+	solve(x) = & solve(x-1)+ \\
+	& solve(x-3)+ \\
+	& solve(x-4)
+\end{matrix}$$
+
+Entonces la fórmula general recursiva es la siguiente:
+
+$$solve(x) = \begin{cases}
+	0 & x<0 \\ 
+	1 & x=0 \\
+	\sum_{c \in monedas} solve(x-c)+1 & x>0 
+\end{cases}$$
+
+Si $x < 0$, el valor es 0, porque no hay soluciones. Si $x = 0$, el valor es 1, porque solo hay una forma de formar una suma vacía. De lo contrario, calculamos la suma de todos los valores de la forma $solve(x-c)$ donde c está en monedas.
+
+A menudo, el número de soluciones es tan grande que no es necesario calcular el número exacto, pero es suficiente para dar la respuesta módulo m donde, por ejemplo, $m = 10^9 + 7$. Esto se puede hacer cambiando el código para que todos los cálculos se realicen módulo $m$.
+
+Aún así, esta función no es eficiente, porque puede haber una exponencial
+número de maneras de devolver la suma. Sin embargo, aplicando el mismo proceder del caso anterior veremos cómo hacer el función eficiente con el uso de la memorización. 
+
+En este problema, usamos arreglos donde $ready[x]$ indica si el valor de $solve(x)$ ha sido calculado, y si es así, $counts[x]$ contiene este valor. La constante $N$ ha sido elegida para que todos los valores requeridos quepan en los arreglos.
+
+La función maneja los casos base $x < 0$ y $x = 0$ como antes. Luego, la función verifica desde  $ready[x]$ es verdadero si lo es implica que $solve(x)$ ya se ha almacenado en el $count[x]$, y si es así, la función lo devuelve directamente. De lo contrario, la función calcula el valor de $solve(x)$ de forma recursiva y lo almacena en el $value[x]$.
+
+Esta función funciona de manera eficiente, porque la respuesta para cada parámetro $x$ se calcula recursivamente solo una vez. Después de que un valor de $solve(x)$ se haya almacenado en $count[x]$, se puede recuperar de manera eficiente cada vez que se vuelva a llamar a la función con el parámetro $x$. 
+
+
+
+
+ 

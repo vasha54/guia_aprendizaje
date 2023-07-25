@@ -1,0 +1,141 @@
+\subsection{C++}
+
+\subsubsection{Mínima cantidad de billetes}
+\begin{lstlisting}[language=C++]
+int minimunCoins(vector<int> coins, int x) {
+   vector<int> values(x+10,INT_MAX);
+   values[0] = 0;
+   for (int i = 1; i <= x; i++) {
+      for (int c : coins) {
+         if (i - c >= 0 && values[i - c] != INT_MAX) {
+            values[i] = min(values[i], values[i - c] + 1);
+         }
+      }
+   }
+   return values[x] == INT_MAX ? -1 : values[x];
+}
+
+
+
+\end{lstlisting}
+
+Notar que en esta implementación se retorna -1 si no se puede devolver la cantidad solicitada ($x$) con las denominaciones de las monedas disponibles ($coins$).
+
+\begin{lstlisting}[language=C++]
+int minimunCoinsWithSolution(vector<int> coins,int x,vector<int> * solution){
+   vector<int> values(x+10,INT_MAX);
+   vector<int> s(x+10,0);
+   values[0] = 0;
+   solution->assign(x+10,0);
+   for (int i = 1; i <= x; i++) {
+      for (int c : coins) {
+         if(i-c>=0 && values[i-c]!=INT_MAX && values[i]>values[i-c]+1){
+            values[i] = values[i - c] + 1;
+            s[i] = c;
+         }
+      }
+   }
+   solution->assign(s.begin(),s.end());
+   return values[x] == INT_MAX ? -1 : values[x];
+}
+
+void printSolution(vector<int>solution, int x) {
+   while (x > 0) {
+      cout<<solution[x]<<endl;
+      x -= solution[x];
+   }
+}
+\end{lstlisting}
+
+Esta implementación es muy similar a la anterior con la adecuación que se construye una posible solución para eso la función \emph{minimunCoinsWithSolution} recibe un tercer parámetro \emph{solution} vector donde se almacenará una de las posibles soluciones óptimas al problema. Una vez invocada la función \emph{minimunCoinsWithSolution} y comprobar que existe al menos una solución solo bastará con invocar la funcionalidad \emph{printSolution} pasando el arreglo $solution$ y $x$ para imprimir una posible solución optima.
+
+\subsubsection{Cantidad de formas}
+
+\begin{lstlisting}[language=C++]
+ULL countWays(vector<int> coins, int x) {
+   vector<ULL> counts(x + 10, 0);
+   counts[0] = 1L;
+   for (int i = 0; i <= x; i++) {
+      if (counts[i] == 0L) continue;
+      for (int c : coins) {
+         if (i + c <= x) {
+            counts[i + c] += counts[i];
+            //counts[i + c] %= MOD;
+         }
+      }
+   }
+   return counts[x];
+}
+\end{lstlisting}
+
+Esta es una implementación que utiliza el enfoque de \textbf{\emph{Bottom Up + Memorization}}. Como se dijo anteriormente para este tipo de problema la solución tiende a crecer muy rapido por lo cual es muy normal que se pida una solución modulada para lo cual lo hemos puesto en el código de forma comentada para cuando la necesiten.
+
+
+\subsection{Java}
+
+\subsubsection{Mínima cantidad de billetes}
+\begin{lstlisting}[language=Java]
+private int minimunCoins(int[] coins, int x) {
+  int[] values = new int[x + 10];
+  Arrays.fill(values, Integer.MAX_VALUE);
+  values[0] = 0;
+  for (int i = 1; i <= x; i++) {
+     for (int c : coins) {
+        if (i - c >= 0 && values[i - c]!=Integer.MAX_VALUE) {
+           values[i] = Math.min(values[i], values[i - c] + 1);
+        }
+     }
+   }
+   return values[x]==Integer.MAX_VALUE ? -1 : values[x];
+}
+\end{lstlisting}
+
+Notar que en esta implementación se retorna -1 si no se puede devolver la cantidad solicitada ($x$) con las denominaciones de las monedas disponibles ($coins$).
+
+\begin{lstlisting}[language=Java]
+private int minimunCoinsWithSolution(int[] coins, int x, int[] solution) {
+   int[] values = new int[x + 10];
+   Arrays.fill(values, Integer.MAX_VALUE);
+   values[0] = 0;
+   for (int i = 1; i <= x; i++) {
+      for (int c : coins) {
+         if (i - c >= 0 && values[i - c] != Integer.MAX_VALUE && values[i] > values[i - c] + 1) {
+            values[i] = values[i - c] + 1;
+            solution[i] = c;
+         }
+      }
+   }
+   return values[x] == Integer.MAX_VALUE ? -1 : values[x];
+}
+
+private void printSolution(int[] solution, int x) {
+   while (x > 0) {
+      System.out.println(solution[x]);
+      x -= solution[x];
+   }
+}
+\end{lstlisting}
+
+Esta implementación es muy similar a la anterior con la adecuación que se construye una posible solución para eso la función \emph{minimunCoinsWithSolution} recibe un tercer parámetro \emph{solution}  arreglo donde se almacenará una de las posibles soluciones óptimas al problema. Este parámetro debe estar inicializado previamente con una capacidad igual a $x$. Una vez invocada la función \emph{minimunCoinsWithSolution} y comprobar que existe al menos una solución solo bastará con invocar la funcionalidad \emph{printSolution} pasando el arreglo $solution$ y $x$ para imprimir una posible solución optima.
+
+\subsubsection{Cantidad de formas}
+
+\begin{lstlisting}[language=Java]
+private long countWays(int[] coins, int x) {
+   long[] counts = new long[x + 10];
+   Arrays.fill(counts, 0L);
+   counts[0] = 1L;
+   for (int i = 0; i <= x; i++) {
+      if(counts[i]==0L)continue;
+      for (int c : coins) {
+         if (i + c <= x) {
+            counts[i+c] += counts[i];
+            //counts[i+c] %=MOD;
+         }
+      }
+   }
+   return counts[x];
+}
+\end{lstlisting}
+
+Esta es una implementación que utiliza el enfoque de \textbf{\emph{Bottom Up + Memorization}}. Como se dijo anteriormente para este tipo de problema la solución tiende a crecer muy rapido por lo cual es muy normal que se pida una solución modulada para lo cual lo hemos puesto en el código de forma comentada para cuando la necesiten.

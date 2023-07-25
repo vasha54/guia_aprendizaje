@@ -1,0 +1,71 @@
+Este caso nuestra tarea es formar la suma $N$ usando la menor cantidad de monedas posible. 
+
+Podemos resolver el problema usando un algoritmo goloso (greedy) que siempre elige la moneda más grande posible. El algoritmo goloso (greedy) no siempre no produce necesariamente una solución óptima sobre todo para algunos casos con ciertas denominaciones de monedas.
+
+Ahora es el momento de resolver el problema de manera eficiente utilizando la programación dinámica, de modo que el algoritmo funcione para cualquier juego de monedas. El algoritmo de programación dinámica se basa en una función recursiva que pasa por todas las posibilidades de cómo formar la suma, como un algoritmo de fuerza bruta. Sin embargo, el algoritmo de programación dinámica es eficiente porque utiliza la memorización y calcula la respuesta a cada subproblema una sola vez.
+
+\subsubsection{Formulación recursiva}
+
+La idea en la programación dinámica es formular el problema recursivamente para que la solución al problema pueda calcularse a partir de soluciones a subproblemas más pequeños. 
+
+Entonces $solve(x)$ calcula el número mínimo de monedas necesarias para una suma $x$. Los valores de la función dependen de las denominaciones de las monedas. Por ejemplo, si las denominaciones de las monedas fueran = {1, 3, 4}, los primeros valores de la función son los siguientes:\\
+
+
+$$\begin{matrix}
+    solve (0) & = & 0  \\
+	solve (1) & = & 1\\
+	solve (2) & = & 2\\
+	solve (3) & = & 1\\
+	solve (4) & = & 1\\
+	solve (5) & = & 2\\
+	solve (6) & = & 2\\
+	solve (7) & = & 2\\
+	solve (8) & = & 2\\
+	solve (9) & = & 3\\
+	solve (10) & = & 3
+\end{matrix}$$
+   
+   
+Por ejemplo, $solve(10) = 3$, porque se necesitan al menos 3 monedas para formar la suma 10. La solución óptima es 3 + 3 + 4 = 10 respuesta muy diferente a la dada por un algoritmo goloso en la misma situación la cual sería 4 ya que escogiendo la moneda más grande posible la solución sería 4 + 4 +1 +1.
+
+La propiedad esencial de $solve$ es que sus valores se pueden calcular recursivamente a partir de sus valores más pequeños. La idea es centrarnos en la primera moneda que elegimos para la suma. Por ejemplo, en el escenario anterior, la primera moneda puede ser 1, 3 o 4. Si primero elegimos la moneda 1, la tarea restante es formar la suma 9 usando el número mínimo de monedas, que es un subproblema del problema original. Por supuesto, lo mismo se aplica a las monedas 3 y 4. Por lo tanto, podemos usar lo siguiente fórmula recursiva para calcular el número mínimo de monedas:
+
+
+$$\begin{matrix}
+solve(x) = \min	& (solve(x-1)+1, \\
+	& solve(x-3)+1, \\
+	& solve(x-4)+1)
+\end{matrix}$$
+
+
+
+El caso base de la recursión es $solve(0) = 0$, porque no se necesitan monedas para formar una suma vacía. Por ejemplo,
+
+$$solve (10) = solve (7) + 1 = solve (4) + 2 = solve (0) + 3 = 3.$$
+
+Ahora estamos listos para dar una función recursiva general que calcule el número mínimo de monedas necesarias para formar una suma x:
+
+$$solve(x) = \begin{cases}
+	\infty & x<0 \\ 
+	0 & x=0 \\
+	\min_{c \in monedas} solve(x-c)+1 & x>0 
+\end{cases}$$
+
+Primero, si $x < 0$, el valor es $\infty$ , porque es imposible formar una suma negativa de dinero. Entonces, si $x = 0$, el valor es 0, porque no se necesitan monedas para formar una suma vacía. Finalmente, si $x > 0$, la variable $c$ pasa por todas las posibilidades de elegir la primera moneda de la suma.
+
+Aún así, esta función no es eficiente, porque puede haber una exponencial
+número de maneras de construir la suma. Sin embargo, a continuación veremos cómo hacer el función eficiente usando una técnica llamada \textbf{memorización}.
+
+\subsubsection{Usando memorización}
+
+La idea de la programación dinámica es usar la memorización para calcular de manera eficiente los valores de una función recursiva. Esto significa que los valores de la función se almacenan en una matriz después de calcularlos. Para cada parámetro, el valor de la función se calcula recursivamente solo una vez y, después de esto, el valor se puede recuperar directamente de la matriz.
+
+En este problema, usamos arreglos donde $ready[x]$ indica si el valor de $solve(x)$ ha sido calculado, y si es así, $value[x]$ contiene este valor. La constante $N$ ha sido elegida para que todos los valores requeridos quepan en los arreglos.
+
+La función maneja los casos base $x < 0$ y $x = 0$ como antes. Luego, la función verifica desde  $ready[x]$ es verdadero si lo es implica que $solve(x)$ ya se ha almacenado en el $value[x]$, y si es así, la función lo devuelve directamente. De lo contrario, la función calcula el valor de $solve(x)$ de forma recursiva y lo almacena en el $value[x]$.
+
+Esta función funciona de manera eficiente, porque la respuesta para cada parámetro $x$ se calcula recursivamente solo una vez. Después de que un valor de $solve(x)$ se haya almacenado en $value[x]$, se puede recuperar de manera eficiente cada vez que se vuelva a llamar a la función con el parámetro $x$. 
+
+\subsubsection{Construyendo una solución}
+
+A veces se nos pide que hallemos el valor de una solución óptima y que demos un ejemplo de cómo se puede construir dicha solución. En el problema de la moneda, por ejemplo, podemos declarar otro arreglo que indique para cada suma de dinero la primera moneda en una solución óptima y de esta forma podemos construir una solución optima que se construye de $N$ a $0$
