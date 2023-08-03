@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Cambio de monedas (\emph{Coin change})}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Árboles y sus propiedades básicas}
 	\end{flushleft}}
 	% To, From, Subject Block
 	
