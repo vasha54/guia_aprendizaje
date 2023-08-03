@@ -1,0 +1,16 @@
+Hay muchas maneras diferentes para representar e implementar árboles computacionalmente; las representaciones más comunes representan a los nodos dinámicamente como registros (estructuras) con punteros a sus hijos, a sus padres, o a ambos, o como elementos de un vector, con relaciones entre ellos determinadas por sus posiciones en este (por ejemplo, un montículo binario). Basicamente van existir dos variantes de implementación: implementación estáticas y implementación dinámica enlazada
+
+En general un nodo en un árbol no tendrá punteros a sus padres, pero esta información puede ser incluida (ampliando la estructura de datos para incluir también un puntero al vector) o almacenarse por separado. Alternativamente, los enlaces ascendentes pueden ser incluidos en los datos del nodo hijo, como en un árbol binario enlazado. Dentro de las operaciones más comunes que podemos encontrar en un árbol está:
+
+\begin{itemize}
+	\item Enumerar todos los elementos
+	\item Enumerar la sección de un árbol
+	\item Buscar un elemento
+	\item Añadir un nuevo elemento en una determinada posición del árbol
+	\item Borrar un elemento
+	\item Podar: Borrar una sección entera de un árbol
+	\item Insertar: Añadir una sección entera a un árbol
+	\item Buscar la raíz de algún nodo
+	\item Representar el árbol con un vector, arreglo o lista
+\end{itemize}
+

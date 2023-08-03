@@ -1,0 +1,42 @@
+Un árbol es una estructura (posiblemente no lineal) de datos compuesta de nodos, vértices y aristas que es acíclica. Un árbol que no tiene ningún nodo se llama árbol vacío o nulo. Un árbol que no está vacío consta de un nodo raíz y potencialmente muchos niveles de nodos adicionales que forman una jerarquía. 
+
+Una estructura de datos de árbol se puede definir de forma recursiva (localmente) como una colección de nodos (a partir de un nodo raíz), donde cada nodo es una estructura de datos con un valor, junto con una lista de referencias a los nodos (los hijos), con la condición de que ninguna referencia esté duplicada ni que ningún nodo apunte a la raíz.
+
+Alternativamente, un árbol se puede definir de manera abstracta en su conjunto como un árbol ordenado, con un valor asignado a cada nodo. Ambas perspectivas son útiles: mientras que un árbol puede ser analizado matemáticamente, realmente es representado como una estructura de datos en la que se trabaja con cada nodo por separado (en lugar de como una lista de nodos y una lista de adyacencia entre nodos, como un grafo). Mirando a un árbol como conjunto, se puede hablar de el nodo padre de un nodo dado, pero en general se habla de una estructura de datos de un nodo dado que sólo contiene la lista de sus hijos sin referencia a su padre (si lo hay).
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.2\linewidth]{img/tree_wrong_1}\hspace*{6.5em}
+	\includegraphics[width=0.1\linewidth]{img/tree_wrong_2}\hspace*{6.5em}
+	\includegraphics[width=0.2\linewidth]{img/tree_wrong_3}
+	\label{fig:treewrong1}
+\end{figure}
+
+En la imagen anterior tenemos tres representaciones que no son árboles por diferentes cuestiones que analizaremos a continuación:
+
+\begin{itemize}
+	\item En la primera representación (izquierda) nos es un árbol debido a que el nodo $4$ tiene más de un padre lo cual en un árbol no ocurre ya que cada nodo tiene un solo padre exceptuando uno que no tendrá ningún padre el cual será la raiz del árbol.
+	\item En la segunda representación (centro) no podemos decir que es un árbol ya que a pesar que presenta un solo nodo o vértice existe un ciclo, además el nodo A tiene un solo padre pero no existe un nodo sin padre que pueda ser la raíz del árbol 
+	\item En la tercera representación (derecha) no existen ciclos y pero existen dos nodos sin padre cuando debe existir uno solo. Además todos los nodos están conectados entre sí. Para este caso podemos decir que estamos en presencia de un bosque con dos arboles. El primer árbol conformado por los nodos $B$ y $A$ siendo este último la raiz del mismo. El segundo árbol lo componen los nodos $E$,$D$ y $C$ siendo este la raíz.
+\end{itemize}
+
+\subsection{Tipo de datos frente a la estructura de datos} 
+
+Hay una distinción entre un árbol como un tipo de datos abstracto y como una estructura concreta de datos, de forma análoga a la distinción entre una lista y lista enlazada. Como tipo de dato, un árbol tiene un valor e hijos, y los hijos son a su vez subárboles; el valor y los hijos de un árbol se interpreta como el valor del nodo raíz y los subárboles de los hijos del nodo raíz. Para permitir que los árboles puedan ser finitos, hay que, o bien permitir que la lista de los hijos pueda estar vacía, o permitir que los árboles puedan estar vacíos, en cuyo caso la lista de los hijos pueden ser de tamaño fijo (factor de ramificación, especialmente 2 o binario), si se desea.
+
+Como una estructura de datos, un árbol vinculado es un grupo de nodos, donde cada 
+nodo tiene un valor y una lista de referencias a otros nodos (sus hijos). Esta 
+estructura de datos realmente define a un grafo dirigido, porque puede tener bucles 
+o varias referencias al mismo nodo, del mismo modo que una lista enlazada. Luego 
+también existe el requisito de que no hay dos referencias que apuntan al mismo nodo 
+(que cada nodo tiene como máximo un solo padre, y de hecho todos lo tienen, a 
+excepción de la raíz), y un árbol que viola esto es árbol corrupto.
+
+Debido al uso de referencias a los árboles en la estructura de datos de un árbol enlazado, a menudo se habla de árboles en los que implícitamente están siendo representados por referencias al nodo raíz, ya que esto es, normalmente, la forma en la que se aplican realmente. Por ejemplo, en lugar de un árbol vacío, uno puede tener una referencia nula: un árbol nunca está vacío, sino que una referencia a un árbol puede ser nula. 
+
+\subsection{Terminología utilizada en árboles}
+\input{tex_files/desarrollo_tree_property_basic_terminology.tex}
+
+\subsection{Tipos de árboles}
+\input{tex_files/desarrollo_tree_property_basic_type.tex}
