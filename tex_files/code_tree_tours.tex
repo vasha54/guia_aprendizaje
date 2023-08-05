@@ -1,0 +1,95 @@
+La implementaciones de los recorridos va depender en gran medida del tipo de árbol y de como fue implementado por lo que a continuación se van a presentar ideas generales de la implementación de estos recorridos asumiendo que estamos trabajando con árboles binarios.
+
+\subsection{Recorrido en profundidad-primero}
+
+\subsubsection{Preorden}
+
+\begin{lstlisting}[language=C++]
+//Variante recursiva 
+preorden(nodo)
+   si nodo == nulo entonces retorna
+   imprime nodo.valor
+   preorden(nodo.izquierda)
+   preorden(nodo.derecha)
+   
+//Variante iterativa
+iterativePreorder(node)
+   if (node = null)
+      return
+   s = empty stack
+   s.push(node)
+   while (not s.isEmpty())
+      node = s.pop()
+      visit(node)
+      if (node.right != null)
+         s.push(node.right)
+      if (node.left != null)
+         s.push(node.left)   
+\end{lstlisting}
+
+\subsubsection{Inorden}
+
+\begin{lstlisting}[language=C++]
+//Variante recursiva 
+inorden(nodo)
+   si nodo == nulo entonces retorna
+   inorden(nodo.izquierda)
+   imprime nodo.valor
+   inorden(nodo.derecha)
+   
+//Variante iterativa
+iterativeInorder(node)
+   s = empty stack
+   while (not s.isEmpty() or node != null)
+      if (node != null)
+         s.push(node)
+         node = node.left
+      else
+         node = s.pop()
+         visit(node)
+         node = node.right
+\end{lstlisting}
+
+\subsubsection{Postorden}
+
+\begin{lstlisting}[language=C++]
+//Variante recursiva 
+postorden(nodo)
+   si nodo == nulo entonces retorna
+   postorden(nodo.izquierda)
+   postorden(nodo.derecha)
+   imprime nodo.valor
+   
+//Variante iterativa
+iterativePostorder(node)
+   s = empty stack
+   lastNodeVisited = null
+   while (not s.isEmpty() or node != null)
+      if (node != null)
+         s.push(node)
+         node = node.left
+      else
+         peekNode = s.peek()
+         if (peekNode.right != null and lastNodeVisited != peekNode.right)
+            node = peekNode.right
+         else
+            visit(peekNode)
+            lastNodeVisited = s.pop()
+\end{lstlisting}
+
+\subsection{Recorrido en anchura-primero}
+
+También está el pseudocódigo para un simple recorrido en orden por nivel basado en cola.
+
+\begin{lstlisting}[language=C++]
+orden_por_nivel(raiz)
+   cola = nueva cola
+   cola.encola(raiz)
+   mientras not cola.vacia hacer
+      nodo = cola.desencola()
+      visita(nodo)
+      si nodo.izquierdo != null entonces
+         cola.encola(nodo.izquierdo)
+      si nodo.derecho != null entonces
+         cola.encola(nodo.derecha)
+\end{lstlisting}

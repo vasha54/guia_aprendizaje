@@ -1,0 +1,20 @@
+Comparado a las estructuras de datos lineales como las listas enlazadas y arreglos unidimensionales, que tienen un método canónico de recorrido, las estructuras arborescentes pueden ser recorridas de muchas maneras diferentes. Comenzando en la raíz de un árbol, hay tres pasos principales que pueden ser realizados y el orden en la cual son realizados define el tipo de recorrido. Estos pasos (en ningún orden particular) son: ejecución de una acción en el nodo actual (referido como \emph{visitando} el nodo), recorriendo al nodo hijo de la izquierda, y recorriendo al nodo hijo de la derecha. Así el proceso más fácilmente descrito a través de la recursión. 
+
+Los nombres dados para un estilo particular de recorrido vienen de la posición del elemento de raíz con respecto a los nodos izquierdo y derecho (si el árbol es binario, sino se asume como izquierdo el primer hijo y el resto de los hijos son derechos o viceversa todos los hijos son izquierdos menos el último que es el derecho.). Imagine que los nodos izquierdo y derecho son constantes en espacio, entonces el nodo raíz pudiera colocarse a la izquierda del nodo izquierdo (pre-orden), entre el nodo izquierdo y derecho (in-orden), o a la derecha del nodo derecho (post-orden).
+
+Con el fin de ilustrar, se asume que los nodos izquierdos tienen siempre prioridad sobre los nodos derechos. Este ordenamiento puede ser invertido mientras el mismo orden sea asumido para todos los métodos de recorrido. Para explicar cada uno de los recorridos vamos a tomar como muestra el siguiente árbol:
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.7\linewidth]{img/tree_example}
+	\label{fig:treeexample}
+\end{figure}
+
+Y para un mejor entendimiento asumiremos que los nodos hijos izquierdos serán todos menos el último hijo que será el derecho. De esta forma el nodo $B$ tiene dos hijos izquierdos ($E$,$F$) y un derecho ($G$).
+
+\subsection{Recorrido en profundidad-primero}
+\input{tex_files/desarrollo_tree_tours_dfs.tex}
+
+\subsection{Recorrido en anchura-primero}
+\input{tex_files/desarrollo_tree_tours_bfs.tex}

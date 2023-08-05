@@ -1,0 +1,51 @@
+\subsubsection{Preorden}
+
+\emph{(\textbf{raíz}, izquierdo, derecho)}. Para recorrer un árbol no vacío en Preorden, hay que realizarlas siguientes operaciones recursivamente en cada nodo, comenzando con el nodo raíz:
+
+\begin{itemize}
+	\item Procesa la raíz
+	\item Recorrer el subárbol izquierdo InOrden
+	\item Recorrer el subárbol derecho InOrden
+\end{itemize}
+
+Si asumimos que el procesar la raiz es la impresión del valor almacenado en el nodo el recorrido en inorden en el árbol presentado de muestra anteriormente daría la siguiente secuencia o impresión de salida.
+
+$$ A, B,E,F,G,C,H,I,D,L,M,K $$
+
+\subsubsection{Inorden}
+
+\emph{(izquierdo, \textbf{raíz}, derecho)}. El valor en un nodo no se procesa hasta que se procesen los valores ensu subárbol izquierdo.Para recorrer un árbol no vacío en Inorden, hay que realizar las siguientes operacionesrecursivamente en cada nodo, comenzando con el nodo raíz:
+
+\begin{itemize}
+	\item Recorrer el subárbol izquierdo InOrden
+	\item Procesa la raíz
+	\item Recorrer el subárbol derecho InOrden
+\end{itemize}
+
+Si asumimos que el procesar la raiz es la impresión del valor almacenado en el nodo el recorrido en inorden en el árbol presentado de muestra anteriormente daría la siguiente secuencia o impresión de salida.
+
+$$ E,F,B,G,H,C,I,A,L,D,K,M $$
+
+\subsubsection{Postorden}
+
+\emph{(izquierdo, derecho, \textbf{raíz})}. Para recorrer un árbol binario no vacío en Postorden, hay que realizarlas siguientes operaciones recursivamente en cada nodo, comenzando con el nodo raíz:
+
+\begin{itemize}
+	\item Recorrer el subárbol izquierdo InOrden
+	\item Recorrer el subárbol derecho InOrden
+	\item Procesa la raíz
+\end{itemize}
+
+Si asumimos que el procesar la raiz es la impresión del valor almacenado en el nodo el recorrido en inorden en el árbol presentado de muestra anteriormente daría la siguiente secuencia o impresión de salida.
+
+$$ E,F,G,B,H,I,C,L,K,M,D,A $$
+
+En general, la diferencia entre preorden, inorden y postorden es cuándo se recorre la raíz. En los tres, se recorre primero el sub-árbol izquierdo y luego el derecho. 
+
+\begin{itemize}
+	\item En preorden, la raíz se recorre antes que los recorridos de los subárboles izquierdo y derecho
+	\item En inorden, la raíz se recorre entre los recorridos de los árboles izquierdo y derecho
+	\item En postorden, la raíz se recorre después de los recorridos por el subárbol izquierdo y el derecho
+\end{itemize}
+
+Preorden (antes), inorden (en medio), postorden (después). 

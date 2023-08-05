@@ -1,0 +1,13 @@
+Es particularmente común usar un recorrido inorden en un árbol binario de búsqueda porque éste retornará valores en el orden del conjunto subyacente, de acuerdo al comparador que configura el árbol de búsqueda binaria (de aquí el nombre).
+
+Para ver porqué éste es el caso, note que si n es un nodo en un árbol binario de búsqueda, entonces todo n en el subárbol izquierdo es menor que n, y todo n en el subárbol derecho es mayor o igual a n. Por lo tanto, si visitamos el subárbol izquierdo en orden, usando una llamada recursiva, y entonces visitamos a n, y después visitamos el subárbol derecho en orden, nosotros hemos visitado completamente el subárbol con raíz en n en orden. Podemos asumir que las llamadas recurrentes visitan correctamente los subárboles en orden usando el principio matemático de inducción estructural. Similarmente, el recorrer en inorden reverso da los valores por orden decreciente. 
+
+Recorriendo un árbol en preorden mientras se está insertando los valores en un nuevo árbol es una manera común de hacer una copia completa de un árbol binario de búsqueda.
+
+También se pueden usar los recorridos preorden para conseguir una expresión prefijo 
+(notación polaca) de árboles de expresión: recorra el árbol de expresión en 
+preorden. Para calcular el valor de tal expresión: explore de derecha a izquierda, 
+poniendo los elementos en un stack. Cada vez que se encuentre un operador, se 
+sustituyen los dos símbolos superiores del stack por el resultado de aplicar al 
+operador a esos elementos. Por ejemplo, la expresión * + 2 3 4, que en la notación 
+de infijo es (2 + 3) * 4.
