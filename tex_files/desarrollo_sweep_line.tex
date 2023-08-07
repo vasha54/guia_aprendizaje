@@ -1,0 +1,69 @@
+Este enfoque puede rastrearse hasta los algoritmos de línea de exploración de representación en gráficos por computadora, seguido de la explotación de este enfoque en los primeros algoritmos de diseño de diseño de circuitos integrados, en los que se procesaba una descripción geométrica de un circuito integrado en tiras paralelas porque la descripción completa no cabía en la memoria. .
+
+La idea detrás de los algoritmos de este tipo es imaginar que una línea (a menudo una línea vertical) es barrida o movida a través del plano, deteniéndose en algunos puntos. Las operaciones geométricas están restringidas a los objetos geométricos que intersecan o se encuentran en las inmediaciones de la línea de barrido cada vez que se detiene, y la solución completa está disponible una vez que la línea ha pasado por todos los objetos.
+
+En términos prácticos no la podemos mover de forma continua ya que hay infinitos puntos, por lo que solo la vamos a mover de forma discreta en los lugares de interés, a los que llamaremos \textbf{eventos}.
+
+Lo mínimo que esos eventos necesitan guardar es el tiempo en el que ocurren, y la forma usual de procesarlos es ordenarlos por dicho tiempo de menor a mayor, iterar por todos ellos y mantener cierta información global relativa al problema que irá cambiando entre evento y \textbf{evento}.
+
+La idea de tales algoritmos es representar una instancia del problema como un conjunto de \textbf{eventos} que corresponden a puntos en el plano. Los \textbf{eventos} se procesan en orden creciente según sus coordenadas $x$ o $y$.
+
+Como ejemplo, considere el siguiente problema: \emph{Hay una empresa que tiene $N$ empleados, y sabemos para cada empleado su hora de entrada y salida en un día determinado. Nuestra tarea es calcular el número máximo de empleados que estaban en la oficina al mismo tiempo.}
+
+El problema se puede resolver modelando la situación de modo que a cada empleado se le asignen dos eventos que correspondan a sus tiempos de llegada y salida. Después de ordenar los eventos, los revisamos y hacemos un seguimiento de la cantidad de personas en la oficina. Por ejemplo como se muestra en la siguiente tabla:
+
+
+
+\begin{longtable}{ccc}
+	
+	\textbf{Empleado}& \textbf{Tiempo de llegada}  & \textbf{Tiempo de salida}  \\
+	
+	John & 10 & 15  \\
+
+	Maria & 6 & 12 \\
+
+	Peter & 14  & 16 \\
+	
+	Lisa & 5  &  13 \\
+	
+\end{longtable}
+
+corresponde a los siguientes eventos:
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{img/example_sweep_line}
+	\label{fig:examplesweepline}
+\end{figure}
+
+Revisamos los eventos de izquierda a derecha y mantenemos un contador. Siempre cuando llega una persona, aumentamos el valor del contador en uno, y cuando una persona se va, disminuimos el valor del contador en uno. La respuesta al problema es el valor máximo del contador durante el algoritmo.
+
+En el ejemplo, los eventos se procesan de la siguiente manera:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{img/example_sweep_line2}
+	\label{fig:examplesweepline2}
+\end{figure}
+
+Los símbolos $+$ y $-$ indican si el valor del contador aumenta o disminuye, y el valor del contador se muestra a continuación. El valor máximo del contador es 3 entre la llegada de Juan y la salida de María.
+
+El tiempo de ejecución del algoritmo es O ($n\log n$), porque ordenar los eventos toma O($n\log n$) tiempo y el resto del algoritmo toma O($n$) tiempo. Donde $n$ es el doble de personas ya que por cada persona se registra dos \textbf{eventos}.
+
+El algoritmo de barrido de línea se utiliza para resolver problemas como el par más cercano, las intersecciones de segmentos de línea, la unión de rectángulos, la envoltura convexa, el árbol de expansión mínimo de Manhattan los cuales vamos analizar su solución aplicando este paradigma algorítmico.
+
+\subsection{Par más cercano (\emph{Closest pair})}
+\input{tex_files/desarrollo_sweep_line_closet_pair.tex}
+
+\subsection{Intersecciones de segmento de línea}
+\input{tex_files/desarrollo_sweep_line_intersection_points.tex}
+
+\subsection{Área de la unión de rectángulos}
+\input{tex_files/desarrollo_sweep_line_area_union_rectangles.tex}
+
+\subsection{Envoltura convexa (\emph{Convex hull})}
+\input{tex_files/desarrollo_sweep_line_convex_hull.tex}
+
+\subsection{Árbol de expansión mínimo de Manhattan}
+\input{tex_files/desarrollo_sweep_line_manhattan_minimum_spanning_tree.tex}

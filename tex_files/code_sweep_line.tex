@@ -1,0 +1,7 @@
+La implementación de la línea de barrido tendrá tres componentes importantes:
+
+\begin{enumerate}
+	\item \textbf{Eventos ordenados:} Agrega todos los eventos (ejemplo: tanto el comienzo como el final de las líneas horizontales) en la lista de eventos y los ordena.
+	\item \textbf{Eventos activos:} Dependiendo del problema que esté resolviendo, agregue solo ciertos eventos en la lista de eventos activos. Por ejemplo: para algunos problemas, se encontrará iterando sobre la lista de eventos ordenados y agregando solo el comienzo de una línea horizontal en la lista de eventos activos, y cuando llega al final de una línea horizontal, realiza algunos cálculos necesarios.
+	\item \textbf{Clase de evento:} A menudo nos encontraremos creando una clase de Evento dependiendo del problema que estemos resolviendo. Por ejemplo: al resolver problemas relacionados con el barrido de un plano con líneas horizontales, es posible que nos encontremos creando una clase de Evento con propiedades (eventValue, isStart, begin, end) donde eventValue será el valor de la coordenada del inicio o final de la línea horizontal. , isStart indicará si es el comienzo o el final de la línea, begin tendrá el valor de las coordenadas para el comienzo de la línea y end tendrá el valor de las coordenadas para el final de la línea.
+\end{enumerate}
