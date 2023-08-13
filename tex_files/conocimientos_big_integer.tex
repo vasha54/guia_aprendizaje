@@ -1,0 +1,26 @@
+\subsection{Complemento a dos}
+El complemento a 2 es una forma de representar números negativos en el sistema binario. El complemento a dos de un número $N$ , expresado en el sistema binario con $n$ dígitos, se define como:
+
+$ C_2(N)=2^n -N $
+
+donde total de números positivos será $2^{n-1}-1$  y el de negativos $2^{n-1}$, siendo n el número de bits. El 0 contaría como positivo, ya que los positivos son los que empiezan por 0 y los negativos los que empiezan por 1.
+
+\subsection{Transformada rápida de Fourier}
+
+La transformada rápida de Fourier, conocida por la abreviatura FFT (del inglés Fast Fourier Transform) es un algoritmo eficiente que permite calcular la transformada de Fourier discreta (DFT) y su inversa. La FFT es de gran importancia en una amplia variedad de aplicaciones, desde el tratamiento digital de señales y filtrado digital en general a la resolución de ecuaciones en derivadas parciales o los algoritmos de multiplicación rápida de grandes enteros. Cuando se habla del tratamiento digital de señales, el algoritmo FFT impone algunas limitaciones en la señal y en el espectro resultante ya que la señal muestreada y que se va a transformar debe consistir de un número de muestras igual a una potencia de dos. La mayoría de los analizadores de FFT permiten la transformación de 512, 1024, 2048 o 4096 muestras. El rango de frecuencias cubierto por el análisis FFT depende de la cantidad de muestras recogidas y de la proporción de muestreo.
+
+La transformada rápida de Fourier es de importancia fundamental en el análisis matemático y ha sido objeto de numerosos estudios. La aparición de un algoritmo eficaz para esta operación fue un hito en la historia de la informática. 
+
+\subsection{Algoritmo de Karatsuba}
+
+El algoritmo de Karatsuba es un procedimiento para multiplicar números grandes eficientemente, que fue descubierto por Anatolii 
+Alexeevitch Karatsuba en 1960 y publicado en 1962. El algoritmo consigue reducir la múltiplicación de dos números de $n$ dígitos a 
+como máximo $3n^{\log _{2}3}\approx 3n^{1.585}$  multiplicaciones de un dígito. Es, por lo tanto, más rápido que el algoritmo clásico, 
+que requiere $n^2$ productos de un dígito. Si $n = 2^10 = 1024$, en particular, el cómputo final exacto es $3^10 = 59.049 y (2^10)^2 = 
+1.048.576$, respectivamente. 
+
+El algoritmo de Karatsuba es un claro ejemplo del paradigma divide y vencerás, concretamente del algoritmo de partición binaria. 
+
+\subsection{Teorema del resto chino}
+El teorema chino del resto es un resultado sobre congruencias en teoría de números y sus generalizaciones en álgebra abstracta. Fue publicado por primera vez en el siglo III por el matemático chino Sun Tzu. 
+

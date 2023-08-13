@@ -1,0 +1,42 @@
+La idea principal es que el número se almacene como un arreglo o vector de sus 
+dígitos en alguna base. Varias de las bases más utilizadas son decimales, potencias 
+de decimales ( $10^4$ o $10^9$) y binarias. Para el caso de trabajar con enteros 
+negativos es preferible usar la representación de enteros en complemento a dos.
+
+Las operaciones con números en esta forma se realizan utilizando algoritmos escolares de suma, resta, multiplicación y división de columnas. También es posible utilizar algoritmos de multiplicación rápida: transformada rápida de Fourier y algoritmo de Karatsuba.
+
+Aquí describimos la aritmética larga para cada una de las operaciones mencionadas anterioremente.
+
+\subsection{Estructura de datos}
+
+Guardaremos los números como un vector$<$int$>$, en el que cada elemento es un solo dígito del número. Para saber el signo del numero podemos definir un entero cuyo valor sea 1 o -1 dependiendo de que si es un numero positivo o negativo.
+
+Para mejorar el rendimiento, usaremos $10^9$ como base, de modo que cada dígito del número largo contenga 9 dígitos decimales a la vez.
+
+Los dígitos se almacenarán en orden de menor a mayor. Todas las operaciones se implementarán de manera que después de cada una de ellas el resultado no lleve ceros a la izquierda, siempre que los operandos tampoco lleven ceros a la izquierda. Todas las operaciones que puedan dar como resultado un número con ceros a la izquierda deben ir seguidas de un código que los elimine. Tenga en cuenta que en esta representación hay dos notaciones válidas para el número cero: un vector vacío y un vector con un solo dígito cero.
+
+\subsection{Impresión}
+
+Imprimir el entero largo es la operación más fácil. Primero imprimimos el signo del entero luego imprimimos el último elemento del vector (o 0 si el vector está vacío), seguido del resto de los elementos rellenados con ceros a la izquierda si es necesario para que tengan exactamente $n$ dígitos de acuerdo la enésima potencia de 10 que fue seleccionada, en nuestro caso $n=9$.
+
+
+\subsection{Lectura}
+
+Para leer un entero largo, lea su notación en una cadena y luego conviértala en dígitos, teniendo en cuenta la base seleccionada y que el primer elemento de la cadena puede indicar el signo del valor. Una vez leido el valor en forma de cadena debemos ir almacenando los digitos de dicho valor convertidos en la base seleccionada este proceso se comienza por los digitos mas a la derecha del valor. 
+
+\subsection{Adicción}
+
+Para esta operación basta con implementar un algoritmo que simule el proceso aprendido en la escuela para esta operación teniendo en cuenta los signos de los valores que intervienen en la operaciones.
+
+
+\subsection{Subtracción}
+
+Para esta operación basta con implementar un algoritmo que simule el proceso aprendido en la escuela para esta operación teniendo en cuenta los signos de los valores que intervienen en la operaciones.
+
+\subsection{Multiplicación}
+
+Para esta operación bien pudieramos implementar un algoritmo que simules el proceso de multiplicación que aprendimos en la escuela pero el mismo sería muy complejo en cuanto a cantidad de operaciones a realizar es por eso que vamos a apoyarnos en el algoritmo de Karatsuba que permite la multiplicación de enteros largos de manera más eficiente.
+
+\subsection{División}
+
+Similar a lo que ocurre con la multiplicación implementar un algoritmo que simule el proceso que aprendemos en la escuela sería demasiado costoso por tanto vamos apoyarnos en el algoritmo ideado por Donald Kunth para esta operación. Lo interesante de este algoritmo es que permite calcular el cociente y resto de la operación, como se está trabjando con enteros se descarta parte decimal del resultado.

@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Línea de barrido (\emph{Sweep line})}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Entero grande (\emph{Big Integer})}
 	\end{flushleft}}
 	% To, From, Subject Block
 	

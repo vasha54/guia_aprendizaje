@@ -1,0 +1,39 @@
+La aritmética larga tiene varias aplicaciones mas allá de problemas o ejercicios de la programación competitiva aunque su utilizanción en este ámbito tiene como objetivo aumentar el grado de complejidad que ya tenga el problema o ejercicio en sí que en la gran mayoría es baja. Incluso en muchos casos no debemos hacer una implementación tan elaborada como la mostrada ya que por lo general no se necesita hacer uso de todas las operaciones o por determinadas condiciones del problema se pueden acotar las que se necesitan. Entre las aplicaciones podemos citar:
+
+\subsection{Aritmética de enteros largos para la representación de factorización}
+
+Aritmética de enteros largos para la representación de factorización
+
+La idea es almacenar el entero como su factorización, es decir, las potencias de los números primos que lo dividen.
+
+Este enfoque es muy fácil de implementar y permite hacer multiplicaciones y divisiones fácilmente (asintóticamente más rápido que el método clásico), pero no sumas ni restas. También es muy eficiente en memoria en comparación con el enfoque clásico.
+
+Este método se usa a menudo para cálculos módulo número no primo M; en este caso, un número se almacena como potencias de divisores de $M$ que dividen el número más el resto módulo $M$.
+
+\subsection{Aritmética de enteros largos en módulos primos (algoritmo de Garner)}
+
+La idea es elegir un conjunto de números primos (por lo general, son lo suficientemente pequeños como para caber en el tipo de datos de números enteros estándar) y almacenar un número entero como un vector de residuos de la división del número entero por cada uno de esos números primos.
+
+El teorema del resto chino establece que esta representación es suficiente para restaurar de forma única cualquier número de 0 al producto de estos números primos menos uno. El algoritmo de Garner permite restaurar el número de dicha representación a un entero normal.
+
+Este método permite ahorrar memoria en comparación con el enfoque clásico (aunque los ahorros no son tan drásticos como en la representación de factorización). Además, permite realizar sumas, restas y multiplicaciones rápidas en un tiempo proporcional al número de números primos utilizados como módulos.
+
+La contrapartida es que volver a convertir el entero a su forma normal es bastante laborioso y requiere implementar la aritmética clásica de precisión arbitraria con la multiplicación. Además, este método no admite la división.
+
+\subsection{Aritmética fraccionaria de precisión arbitraria}
+
+Las fracciones ocurren en competencias de programación con menos frecuencia que los números enteros, y la aritmética larga es mucho más complicada de implementar para fracciones, por lo que las competencias de programación presentan solo un pequeño subconjunto de aritmética larga fraccionaria.
+
+\subsubsection{Aritmética en Fracciones Irreducibles}
+
+Un número se representa como una fracción irreducible $\frac{a}{b}$, donde $a$ y $b$ son números enteros. Todas las operaciones con fracciones se pueden representar como operaciones con numeradores y denominadores enteros de estas fracciones. Por lo general, esto requiere el uso de la aritmética clásica de precisión arbitraria para almacenar el numerador y el denominador, pero a veces es suficiente un tipo de datos integrado de enteros de 64 bits.
+
+\subsubsection{Almacenamiento de posición de punto flotante como tipo separado}
+
+A veces, un problema requiere el manejo de números muy pequeños o muy grandes sin permitir el desbordamiento o subdesbordamiento. El tipo de datos doble incorporado usa de 8 a 10 bytes y permite valores del exponente en $[-308; 308]$ rango, que a veces puede ser insuficiente.
+
+El enfoque es muy simple: se utiliza una variable entera separada para almacenar el valor del exponente y, después de cada operación, el número de coma flotante se normaliza, es decir, se vuelve a $[0.1; 1) $ intervalo ajustando el exponente en consecuencia.
+
+Cuando dos de estos números se multiplican o dividen, sus exponentes deben sumarse o restarse, respectivamente. Cuando se suman o se restan números, primero se tienen que llevar al exponente común multiplicando uno de ellos por 10 elevado a la potencia igual a la diferencia de los valores de los exponentes.
+
+Como nota final, la base del exponente no tiene que ser igual a 10. Según la representación interna de los números de punto flotante, tiene más sentido usar 2 como base del exponente.
