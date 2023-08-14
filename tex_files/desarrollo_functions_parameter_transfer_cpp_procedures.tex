@@ -1,0 +1,30 @@
+Los procedimientos son similares a las funciones, aunque más resumidos. Debido a que los procedimientos no retornan valores, no hacen uso de la sentencia return para devolver valores y no tienen tipo específico, solo \textbf{void}. Los procedimientos también pueden usar la sentencia return, pero no con un valor. En los procedimientos el return sólo se utiliza para finalizar allí la ejecución del procedimiento. Por tanto su sintaxis de declaración sería la siguiente:
+
+\begin{lstlisting}[language=C++]
+void <nombreProcedimiento> (<parametros>){
+   <bloque instrucciones>
+}
+\end{lstlisting}
+
+Donde:
+
+\begin{itemize}
+	\item \textbf{<nombreProcedimiento>:} Identificador del procedimiento el cual debe cumplir con las misma restricciones y reglas para los identificadores de las variables. Como buena practica dicho indentificador debe indicar de forma corta de ser posible cual es el objetivo o que realiza el procedimiento.
+	\item \textbf{<parametros>:} Grupo de variables definidas cada una por su tipo de dato e identificador, separadas por coma en caso de ser mas de una. Los parámetros son valores necesarios e indispensables para que el procedimiento pueda realizar sus operaciones e instrucciones. La necesidad de parámetros por parte de un procedimiento es definida por el programador que la implementa por tanto un procedimiento bien pudiera no tener parámetros ese caso se pone simplemente los paréntesis vacío (). Más adelante abordaremos un poco mas sobre los parámetros.  
+	\item \textbf{<bloque instrucciones>:} Conjunto de instrucciones o sentencias ya sean simples o compuestas que permiten ejecutar o llevar a cabo el objetivo con que fue creada el procedimiento. 
+\end{itemize}
+
+\subsubsection{Invocando procedimientos C++}
+
+Ya hemos visto cómo se crean los procedimientos en C++, ahora veamos cómo hacemos uso de ellos o lo invocamos.
+
+\begin{lstlisting}[language=C++]
+<nombreProcedimiento> (<parametros>);
+\end{lstlisting} 
+
+Donde:
+
+\begin{itemize}
+	\item \textbf{<nombreProcedimiento>:} Nombre del procedimiento que se desea invocar.
+	\item \textbf{<parametros>:} Coleción de valores que necesita el procedimiento para su ejecucción. Dicha colección puede tener ninguno , uno o varios valores los cuales se separán por una coma y se pueden especificar el valor de forma literal o nombrar a la variable que tiene el valor que deseamos pasar al procedimiento. 
+\end{itemize}

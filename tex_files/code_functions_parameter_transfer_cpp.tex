@@ -1,0 +1,155 @@
+\subsection{Funciones y procedimientos}
+
+\begin{lstlisting}[language=C++]
+int funcionEntera(){ //Funcion sin parametros 
+   int suma = 5+5;
+   return suma; 
+   //Aca termina la ejecucion de la funcion 
+   return 5+5;//Este return nunca se ejecutara 
+   //Intenta intercambiar la linea 3 con la 5 
+   int x = 10; //Esta linea nunca se ejecutara
+}
+
+char funcionChar(int n){//Funcion con un parametro
+   if(n == 0){ //Usamos el parametro en la funcion 
+      return 'a'; //Si n es cero retorna a 
+                  //Notar que de aqui para abajo no se ejecuta nada mas 
+   } 
+   return 'x';//Este return solo se ejecuta cuando n NO es cero 
+} 
+
+bool funcionBool(int n, string mensaje){//Funcion con dos parametros 
+   if (n == 0){//Usamos el parametro en la funcion 
+      cout << mensaje;//Mostramos el mensaje 
+      return 1; //Si n es cero retorna 1 
+      return true; //Equivalente
+   } 
+   return 0;//Este return solo se ejecuta cuando n NO es cero 
+   return false;//Equivalente
+}
+
+void procedimiento(int n, string nombre){
+   if(n == 0){
+      cout << "hola" << nombre; 
+      return; 
+  } 
+  cout << "adios" << nombre;
+} 
+
+int main(){ 
+   funcionEntera(); //Llamando o invocando a una funcion sin argumentos 
+   bool respuesta = funcionBool(1, "hola"); //Asignando el valor 
+                                            //retornado una variable 
+   procedimiento(0, "Juan");//Invocando el procedimiento 
+   //Usando una funcion como parametro 
+   procedimiento(funcionBool(1, "hola"), "Juan"); 
+   return 0; 
+} 
+\end{lstlisting}
+
+En el código anterior podemos ver cómo todas las funciones han sido invocadas al interior de la función main (la función principal), esto nos demuestra que podemos hacer uso de funciones al interior de otras. También vemos cómo se asigna el valor retornado por la función a la variable \emph{'respuesta'} y finalmente, antes del return, vemos cómo hemos usado el valor retornado por \emph{funcionBool} como parámetro del procedimiento.
+
+\subsection{Parámetros}
+
+\subsubsection{Paso por valor}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+
+int invertir(int num){
+   int inverso = 0, cifra;
+   while (num != 0){
+      cifra = num % 10;
+      inverso = inverso * 10 + cifra;
+      num = num / 10;
+   }
+   return inverso;
+}
+
+int main(){   
+   int num; int resultado;
+   cout << "Introduce un numero entero: ";
+   cin >> num;
+   resultado = invertir(num);
+   cout << "Numero introducido: " << num << endl;
+   cout << "Numero con las cifras invertidas: " << resultado << endl;
+}
+\end{lstlisting}
+
+En la llamada a la función el valor de la variable \emph{num} se copia en la variable \emph{num} de la cabecera de la función. Aunque tengan el mismo nombre, se trata de dos variables distintas. Dentro de la función se modifica el valor de \emph{num}, pero esto no afecta al valor de \emph{num} en \emph{main}. Por eso, al mostrar en \emph{main} el valor de \emph{num} después de la llamada aparece el valor original que se ha leído por teclado.
+
+\subsubsection{Paso de parámetros por referencia basado en punteros al estilo C}
+\begin{lstlisting}[language=C++]
+ #include <iostream>
+using namespace std;
+void intercambio(int *x, int *y){
+   int z;                      
+   z = *x;
+   *x = *y;
+   *y = z;
+}
+
+int main(){
+   int a, b;
+   cout << "Introduce primer numero: ";
+   cin >> a;
+   cout << "Introduce segundo numero: ";
+   cin >> b;
+   cout << endl;
+   cout << "valor de a: " << a << " valor de b: " << b << endl;
+   intercambio(&a, &b); 
+   cout << endl << "Despues del intercambio: " << endl << endl;
+   cout << "valor de a: " << a << " valor de b: " << b << endl;
+}
+\end{lstlisting}
+
+En la llamada, a la función se le envía la dirección de los parámetros. El operador que obtiene la dirección de una variable es \&.
+
+\begin{lstlisting}[language=C++]
+intercambio(&a, &b);  
+\end{lstlisting}
+
+En la cabecera de la función, los parámetros formales que reciben las direcciones deben ser punteros. Esto se indica mediante el operador *.
+
+\begin{lstlisting}[language=C++]
+void intercambio(int *x, int *y)
+\end{lstlisting}
+
+Los punteros $x$ e $y$ reciben las direcciones de memoria de las variables $a$ y $b$. Al modificar el contenido de las direcciones $x$ e $y$, indirectamente estamos modificando los valores $a$ y $b$. Por tanto, pasar parámetros por referencia a una función o procedimiento es hacer que la función o procedimiento acceda indirectamente a las variables pasadas. 
+
+\subsubsection{Paso de parámetros por referencia usando referencias al estilo C++}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+using namespace std;
+void intercambio(int &x, int &y){
+   int z;                      
+   z = x;
+   x = y;
+   y = z;
+}
+
+int main( ){
+   int a, b;
+   cout << "Introduce primer numero: ";
+   cin >> a;
+   cout << "Introduce segundo numero: ";
+   cin >> b;
+   cout << endl;
+   cout << "valor de a: " << a << " valor de b: " << b << endl;
+   intercambio(a, b); 
+   cout << endl << "Despues del intercambio: " << endl << endl;
+   cout << "valor de a: " << a << " valor de b: " << b << endl;
+}
+\end{lstlisting}
+
+En la declaración de la función o procedimiento y en la definición se coloca el operador referencia a \& en aquellos parámetros formales que son referencias de los parámetros actuales:
+\begin{lstlisting}[language=C++]
+void intercambio(int &x, int &y)  //definicion de la funcion
+\end{lstlisting}
+Cuando se llama a la función:
+\begin{lstlisting}[language=C++]  
+intercambio(a, b);
+\end{lstlisting} 
+
+se crean dos referencias ($x$ e $y$) a las variables $a$ y $b$ de la llamada. Lo que se haga dentro de la función con $x$ e $y$ se está haciendo realmente con $a$ y $b$. La llamada a una función usando referencias es idéntica a la llamada por valor. 

@@ -1,0 +1,26 @@
+Los parámetros son variables locales a los que se les asigna un valor antes de comenzar la ejecución del cuerpo de una función o procedimientos. Su ámbito de validez, por tanto, es el propio cuerpo de la función o procedimientos. 
+
+Hay algunos detalles respecto a los parámetros de una función o procedimientos, veamos:
+
+\begin{enumerate}
+	\item Una función o procedimiento pueden tener una cantidad cualquier de parámetros, es decir pueden tener cero, uno, tres, diez, cien o más parámetros. Aunque habitualmente no suelen tener más de 4 o 5.
+	\item Si una función tiene más de un parámetro cada uno de ellos debe ir separado por una coma.
+	\item Los parámetros de una función también tienen un tipo y un nombre que los identifica. El tipo del argumento puede ser cualquiera y no tiene relación con el tipo de la función.
+\end{enumerate}
+
+En C++ existen dos alternativas para la transmisión de los parámetros a las funciones:
+
+\subsubsection{Paso por valor}
+
+Los parámetros formales son variables locales a la función, es decir, solo accesibles en el ámbito de ésta. Reciben como valores iniciales los valores de los parámetros actuales. Posteriores modificaciones en la función de los parámetros formales, al ser locales, no afectan al valor de los parámetros actuales.
+
+Pasar parámetros por valor significa que a la función se le pasa una copia del valor que contiene el parámetro actual. Los valores de los parámetros de la llamada se copian en los parámetros de la cabecera de la función. La función trabaja con una copia de los valores por lo que cualquier modificación en estos valores no afecta al valor de las variables utilizadas en la llamada. Aunque los parámetros actuales (los que aparecen en la llamada a la función) y los parámetros formales (los que aparecen en la cabecera de la función) tengan el mismo nombre son variables distintas que ocupan posiciones distintas de memoria. Por defecto, todos los argumentos salvo los arreglos se pasan por valor. 
+
+\subsubsection{Paso por referencia}
+
+Los parámetros formales no son variables locales a la función, sino alias de los propios parámetros actuales. ¡No se crea ninguna nueva variable! Por tanto, cualquier modificación de los parámetros formales afectará a los actuales.  El paso de parámetros por referencia permite que la función pueda modificar el valor del parámetro recibido. Vamos a explicar dos formas de pasar los parámetros por referencia:
+
+\begin{enumerate}
+	\item \textbf{Paso de parámetros por referencia basado en punteros al estilo C:}  Cuando se pasan parámetros por referencia, se le envía a la función la dirección de memoria del parámetro actual y no su valor. La función realmente está trabajando con el dato original y cualquier modificación del valor que se realice dentro de la función se estará realizando con el parámetro actual. Para recibir la dirección del parámetro actual, el parámetro formal debe ser un puntero.
+	\item \textbf{Paso de parámetros por referencia usando referencias al estilo C++:}  Una referencia es un nombre alternativo (un alias, un sinónimo) para un objeto. Una referencia no es una copia de la variable referenciada, sino que es la misma variable con un nombre diferente. Utilizando referencias, las funciones trabajan con la misma variable utilizada en la llamada. Si se modifican los valores en la función, realmente se están modificando los valores de la variable original.
+\end{enumerate}

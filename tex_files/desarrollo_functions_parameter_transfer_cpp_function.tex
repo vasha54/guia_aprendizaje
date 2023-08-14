@@ -1,0 +1,65 @@
+La sintaxis para declarar una función es muy simple, veamos:
+
+\begin{lstlisting}[language=C++]
+<tipo de dato> <nombreFuncion> (<parametros>){
+   <bloque instrucciones>
+}
+\end{lstlisting}
+
+Donde:
+
+\begin{itemize}
+	\item \textbf{<tipo de dato>:} Se especifica el tipo de dato que retornará o devolverá la función. El tipo de dato debe corresponderse con los nativos del lenguaje o uno previemente definido por el propio programador previamente. 
+	\item \textbf{<nombreFuncion>:} Identificador de la función el cual debe cumplir con las misma restricciones y reglas para los identificadores de las variables. Como buena practica dicho indentificador debe indicar de forma corta de ser posible cual es el objetivo o que realiza la función.
+	\item \textbf{<parametros>:} Grupo de variables definidas cada una por su tipo de dato e identificador, separadas por coma en caso de ser mas de una. Los parámetros son valores necesarios e indispensables para que la función pueda realizar sus operaciones e instrucciones. La necesidad de parámetros por parte de una función es definida por el programador que la implementa por tanto una función bien pudiera no tener parámetros ese caso se pone simplemente los paréntesis vacío (). Más adelante abordaremos un poco mas sobre los parámetros.  
+	\item \textbf{<bloque instrucciones>:} Conjunto de instrucciones o sentencias ya sean simples o compuestas que permiten ejecutar o llevar a cabo el objetivo con que fue creada la función. Dentro de dichas instrucciones estará la instrucción \textbf{return} la cual es la encargada de retornar el resultado final de la función cuyo valor debe coincidir con el tipo de dato que retorna la función.
+\end{itemize}
+
+\subsubsection{Consejos acerca de return}
+
+Debes tener en cuenta dos cosas importantes con la sentencia \textbf{return}:
+
+\begin{itemize}
+	\item Cualquier instrucción que se encuentre después de la ejecución de return NO será ejecutada. Es común encontrar funciones con múltiples sentencias return al interior de condicionales, pero una vez que el código ejecuta una sentencia return lo que haya de allí hacia abajo no se ejecutará. 
+	\item El tipo del valor que se retorna en una función debe coincidir con el del tipo declarado a la función, es decir si se declara \emph{int}, el valor retornado debe ser un número entero.
+\end{itemize}
+
+\subsubsection{Invocando funciones C++}
+
+Ya hemos visto cómo se crean las funciones en C++, ahora veamos cómo hacemos uso de ellas o la invocamos.
+
+\begin{lstlisting}[language=C++]
+//variante 1
+<tipo de dato> <resultado> = <nombreFuncion> (<parametros>);
+
+//variante 2
+<tipo de dato> <resultado>;
+<resultado> = <nombreFuncion> (<parametros>);
+
+//variante 3
+<nombreFuncion> (<parametros>);
+\end{lstlisting}
+
+Donde:
+
+\begin{itemize}
+	\item \textbf{<tipo de dato>:} Se especifica el tipo de dato de la variable que recibirá o se le asignará el valor que retornará la función. Dicho tipo de dato debe ser igual al tipo de dato que retorna la función.
+	\item \textbf{<resultado>:} Identificador de la variable que recibirá, almacenará o se le asignará el valor devuelto por la función. 
+	\item \textbf{<nombreFuncion>:} Nombre de la función que se desea invocar.
+	\item \textbf{<parametros>:} Coleción de valores que necesita la función para su ejecucción. Dicha colección puede tener ninguno , uno o varios valores los cuales se separán por una coma y se pueden especificar el valor de forma literal o nombrar a la variable que tiene el valor que deseamos pasar a la función. 
+\end{itemize}
+
+Como puedes notar es bastante sencillo invocar o llamar funciones en C++ (de hecho en cualquier lenguaje actual), sólo necesitas el nombre de la función y enviarle el valor de los parámetros. Hay que hacer algunas salvedades respecto a esto. No obstante se debe tener en cuenta los siguientes detalles a la hora de invocar:
+
+\begin{itemize}
+	\item El nombre de la función debe coincidir exactamente al momento de invocarla.
+	\item El orden de los parámetros y el tipo debe coincidir. Hay que ser cuidadosos al momento de enviar los parámetros, debemos hacerlo en el mismo orden en el que fueron declarados y deben ser del mismo tipo (número, texto u otros).
+	\item Cada parámetro enviado también va separado por comas.
+	\item Si una función no recibe parámetros, simplemente no ponemos nada al interior de los paréntesis, pero SIEMPRE debemos poner los paréntesis.
+	\item Invocar una función sigue siendo una sentencia habitual de C++, así que ésta debe finalizar con ';' como siempre.
+	\item El valor retornado por una función puede ser asignado a una variable del mismo tipo.
+	\item Una función puede llamar a otra dentro de sí misma o incluso puede ser enviada como parámetro a otra.
+\end{itemize}
+
+
+

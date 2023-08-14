@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Entero grande (\emph{Big Integer})}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Funciones, procedimientos y traspaso de parámetros en C++}
 	\end{flushleft}}
 	% To, From, Subject Block
 	
