@@ -1,0 +1,33 @@
+Un algoritmo greedy es cualquier algoritmo que sigue la heurística de resolución de problemas de hacer la elección localmente óptima en cada etapa. En muchos problemas, una estrategia greedy no produce una solución óptima, pero una heurística codiciosa puede generar soluciones óptimas locales que se aproximan a una solución óptima global en un tiempo razonable.
+
+Greedy es un paradigma algorítmico que construye una solución pieza por pieza, eligiendo siempre la siguiente pieza que ofrece el beneficio más obvio e inmediato. Por lo tanto, los problemas en los que elegir lo óptimo localmente también conduce a una solución global son los que mejor se adaptan a Greedy.
+
+Los algoritmos greedy producen buenas soluciones en algunos problemas matemáticos, pero no en otros. La mayoría de los problemas para los que funcionan tendrán dos propiedades:
+
+\begin{enumerate}
+	\item \textbf{Propiedad de elección codiciosa:} Podemos tomar la decisión que nos parezca mejor en ese momento y luego resolver los subproblemas que surjan más adelante. La elección realizada por un algoritmo codicioso puede depender de las elecciones realizadas hasta el momento, pero no de las elecciones futuras o de todas las soluciones al subproblema. De manera iterativa, toma una decisión codiciosa tras otra, reduciendo cada problema dado a uno más pequeño. En otras palabras, un algoritmo codicioso nunca reconsidera sus elecciones. Esta es la principal diferencia con la programación dinámica, que es exhaustiva y garantiza encontrar la solución. Después de cada etapa, la programación dinámica toma decisiones basadas en todas las decisiones tomadas en la etapa anterior y puede reconsiderar la ruta algorítmica de la etapa anterior hacia la solución.
+	\item \textbf{Subestructura óptima:} Un problema exhibe una subestructura óptima si una solución óptima al problema contiene soluciones óptimas a los subproblemas.
+\end{enumerate}
+
+\subsection{Tipos}
+
+Los algoritmos greedy se pueden caracterizar como miope y también como no recuperables. Son ideales solo para problemas que tienen una subestructura óptima. A pesar de esto, para muchos problemas simples, los algoritmos más adecuados son los greedy. Sin embargo, es importante tener en cuenta que el algoritmo voraz se puede usar como un algoritmo de selección para priorizar opciones dentro de una búsqueda o un algoritmo de ramificación y enlace. Hay algunas variaciones del algoritmo greedy que nos permite clasificarlos como:
+
+\begin{itemize}
+	\item Algoritmos greedys puros
+	\item Algoritmos greedys ortogonales
+	\item Algoritmos greedys relajados
+\end{itemize}
+
+Como ayuda para identificar si un problema es susceptible de ser resuelto porun algoritmo greedy vamos a definir una serie de elementos que han de estarpresentes en el problema:
+
+\begin{itemize}
+	\item Un conjunto de \textbf{candidatos}, que corresponden a las \textbf{n} entradas del problema.
+	\item Una \textbf{función de selección} que en cada momento determine el candidato idóneo
+	para formar la solución de entre los que aún no han sido seleccionados nirechazados.
+	\item Una función que compruebe si un cierto subconjunto de candidatos es\textbf{prometedor}. Entendemos por prometedor que sea posible seguir añadiendocandidatos y encontrar una solución.
+	\item Una \textbf{función objetivo} que determine el valor de la solución hallada. Es la
+	función que queremos maximizar o minimizar.
+	\item Una función que compruebe si un subconjunto de estas entradas es solución al
+	problema, sea óptima o no.
+\end{itemize}

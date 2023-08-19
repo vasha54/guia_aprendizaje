@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Funciones, procedimientos y traspaso de parámetros en C++}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Algoritmos ávidos}
 	\end{flushleft}}
 	% To, From, Subject Block
 	

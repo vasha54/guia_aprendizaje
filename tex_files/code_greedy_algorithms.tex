@@ -1,0 +1,22 @@
+Con estos elementos ya identificados que deben estar presentes en un problema para que el mismo sea susceptible a ser resuelto por un algoritmo greedy, podemos resumir el funcionamiento de los algoritmosgreedy en los siguientes puntos:
+
+\begin{enumerate}
+	\item Para resolver el problema, un algoritmo ávido tratará de encontrar un
+	subconjunto de candidatos tales que, cumpliendo las restricciones del problema,
+	constituya la solución óptima.
+	\item Para ello trabajará por etapas, tomando en cada una de ellas la decisión que le
+	parece la mejor, sin considerar las consecuencias futuras, y por tanto escogerá de entre todos los candidatos el que produce un óptimo local para esa etapa,suponiendo que será a su vez óptimo global para el problema.
+	\item Antes de añadir un candidato a la solución que está construyendo comprobará si es prometedora al añadilo. En caso afirmativo lo incluirá en ella y en casocontrario descartará este candidato para siempre y no volverá a considerarlo.
+	\item Cada vez que se incluye un candidato comprobará si el conjunto obtenido essolución.
+\end{enumerate}
+
+Resumiendo, los algoritmos ávidos construyen la solución en etapas sucesivas, tratando siempre de tomar la decisión óptima para cada etapa. A la vista de todo esto no resulta difícil plantear un esquema general para este tipo de algoritmos:
+
+Algoritmo codicioso
+
+Para empezar, el conjunto de soluciones (que contiene las respuestas) está vacío.
+En cada paso, se agrega un elemento al conjunto de soluciones hasta que se llega a una solución.
+Si el conjunto de soluciones es factible, se mantiene el elemento actual.
+De lo contrario, el artículo se rechaza y no se vuelve a considerar nunca más.
+
+Ahora usemos este algoritmo para resolver un problema.
