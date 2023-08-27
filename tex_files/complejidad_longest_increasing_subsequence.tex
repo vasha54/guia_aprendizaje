@@ -1,0 +1,11 @@
+Veamos un análisis tanto temporal como espacial de los diferentes enfoques analizados para resolver el problema:
+
+\begin{longtable}{|c|p{5.5cm}|p{5.5cm}|}
+	\hline
+	& \textbf{Complejidad temporal} & \textbf{Complejidad espacial} \\
+	\hline
+	\textbf{Recursividad} &  La complejidad temporal de este enfoque recursivo es exponencial O($2^N$) ya que existe un caso de subproblemas superpuestos como se explica en el diagrama de árbol recursivo anterior.  & No se utiliza ningún espacio externo para almacenar valores aparte del espacio de la pila interna por tanto O($1$) \\ \hline
+	\textbf{Memorización} & En el peor de los casos se tendría que calcular todos los posibles estados que sería como recorrer todas las posiciones de la matriz por lo que la complejidad es O($N^2$) & Es evidente que el uso de una matriz para almacenar los cálculos de los diferentes estados hace que la complejidad espacial para esta variante es O($N^2$) \\ \hline
+	\textbf{Programación Dinámica} & Como la implementación tiene un ciclo anidado dicha implementación tiene una complejidad temporal O($N^2$)  & Como utiliza un arreglo para almacenar el LIS para índice de la colección esta idea tiene una complejidad O($N$)  \\ \hline
+	\textbf{Búsqueda Binaria} & Como se recorre todos los elementos y dentro de este recorrido se realiza una busqueda binaria en el peor de los casos la complejidad temporal de esta implementación es O($N\log N$)  &  Como utiliza un arreglo para almacenar el LIS para índice de la colección esta idea tiene una complejidad O($N$)\\ \hline
+\end{longtable} 

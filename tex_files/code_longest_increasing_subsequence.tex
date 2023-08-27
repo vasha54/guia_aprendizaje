@@ -1,0 +1,196 @@
+\subsection{C++}
+
+\subsubsection{Recursividad}
+\begin{lstlisting}[language=C++]
+int _lis(int arr[], int n, int* max_ref){
+   if(n == 1) return 1;
+   
+   int res, max_ending_here = 1;
+   
+   for(int i = 1; i < n; i++){
+      res = _lis(arr, i, max_ref);
+      if(arr[i-1] < arr[n-1] && res+1 > max_ending_here)
+         max_ending_here = res + 1;
+   }
+	
+   if (*max_ref < max_ending_here)
+      *max_ref = max_ending_here;
+	
+   return max_ending_here;
+}
+
+int lis(int arr[], int n){
+   int max = 1;
+   _lis(arr, n, &max);
+   return max;
+}
+\end{lstlisting}
+
+
+\subsubsection{Memorización}
+\begin{lstlisting}[language=C++]
+int f(int idx, int prev_idx, int n, int a[],vector<vector<int> >& dp){
+   if (idx == n) return 0;
+   
+   if (dp[idx][prev_idx + 1] != -1) return dp[idx][prev_idx + 1];
+	
+   int notTake = 0 + f(idx + 1, prev_idx, n, a, dp);
+   int take = INT_MIN;
+   if (prev_idx == -1 || a[idx] > a[prev_idx]) 
+      take = 1 + f(idx + 1, idx, n, a, dp);
+   
+   return dp[idx][prev_idx + 1] = max(take, notTake);
+}
+
+int longestSubsequence(int n, int a[]){
+   vector<vector<int> > dp(n + 1, vector<int>(n + 1, -1));
+   return f(0, -1, n, a, dp);
+}
+\end{lstlisting}
+
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=C++]
+int lis(int arr[], int n){
+   int lis[n];
+   lis[0] = 1;
+	
+   for (int i=1;i<n;i++){
+      lis[i] = 1;
+      for (int j = 0; j < i; j++)
+         if (arr[i] > arr[j] && lis[i] < lis[j] + 1)
+            lis[i] = lis[j] + 1;
+   }
+   return *max_element(lis, lis + n);
+}
+
+\end{lstlisting}
+
+\subsubsection{Búsqueda binaria}
+\begin{lstlisting}[language=C++]
+
+int lengthOfLIS(vector<int>& nums){
+   int n = nums.size();
+   vector<int> ans;
+	
+   ans.push_back(nums[0]);
+	
+   for (int i = 1; i < n; i++) {
+      if (nums[i] > ans.back()) {
+         ans.push_back(nums[i]);
+      }
+      else {
+         int low = lower_bound(ans.begin(), ans.end(),nums[i])-ans.begin();
+         ans[low] = nums[i];
+      }
+   }
+   return ans.size();
+}
+\end{lstlisting}
+
+
+\subsection{Java}
+
+\subsubsection{Recursividad}
+\begin{lstlisting}[language=Java]
+class Main {
+	
+   static int max_ref;
+	
+   static int _lis(int arr[], int n){
+      if (n == 1) return 1;
+      
+      int res, max_ending_here = 1;
+		
+      for(int i = 1; i < n; i++){
+         res = _lis(arr, i);
+         if(arr[i-1] < arr[n-1] && res+1 > max_ending_here)
+            max_ending_here = res + 1;
+      }
+		
+      if(max_ref < max_ending_here)
+         max_ref = max_ending_here;
+		
+      return max_ending_here;
+    }
+	
+    static int lis(int arr[], int n){
+       max_ref = 1;
+       _lis(arr, n);
+       return max_ref;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Memorización}
+\begin{lstlisting}[language=Java]
+class Main{
+   static int f(int idx, int prev_idx, int n, int a[],int[][] dp){
+      if (idx == n) return 0;
+		
+      if (dp[idx][prev_idx + 1] != -1) return dp[idx][prev_idx + 1];
+      
+      int notTake = 0 + f(idx + 1, prev_idx, n, a, dp);
+      int take = Integer.MIN_VALUE;
+      if (prev_idx == -1 || a[idx] > a[prev_idx]) 
+         take = 1 + f(idx + 1, idx, n, a, dp);
+      return dp[idx][prev_idx + 1] = Math.max(take, notTake);
+   }
+	
+   static int lis(int arr[], int n){
+      int dp[][] = new int[n + 1][n + 1];
+      for (int row[] : dp) Arrays.fill(row, -1);
+         return f(0, -1, n, arr, dp);
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=Java]
+class Main {
+
+   static int lis(int arr[], int n){
+      int lis[] = new int[n];
+      int i, j, max = 0;
+		
+      for (i = 0; i < n; i++)
+         lis[i] = 1;
+		
+      for (i = 1; i < n; i++)
+         for (j = 0; j < i; j++)
+            if (arr[i] > arr[j] && lis[i] < lis[j] + 1)
+               lis[i] = lis[j] + 1;
+		
+      for (i = 0; i < n; i++)
+         if (max < lis[i])
+            max = lis[i];
+		
+      return max;
+   }
+}
+
+\end{lstlisting}
+
+\subsubsection{Búsqueda binaria}
+\begin{lstlisting}[language=Java]
+public class Main {
+   static int lengthOfLIS(int[] nums) {
+      int n = nums.length;
+      List<Integer> ans = new ArrayList<>();
+      ans.add(nums[0]);
+      
+      for (int i = 1; i < n; i++) {
+         if (nums[i] > ans.get(ans.size() - 1)) {
+            ans.add(nums[i]);
+         } else {
+		    int low = Collections.binarySearch(ans, nums[i]);
+            if (low < 0) {
+               low = -(low + 1);
+            }
+            ans.set(low, nums[i]);
+         }
+      }
+      return ans.size();
+   }
+}
+
+\end{lstlisting}	

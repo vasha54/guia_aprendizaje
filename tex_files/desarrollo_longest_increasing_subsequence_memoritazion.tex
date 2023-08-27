@@ -1,0 +1,10 @@
+Si se analiza con atención, podemos ver que la solución recursiva anterior también sigue la propiedad de subproblemas superpuestos, es decir, la misma subestructura resuelta una y otra vez en diferentes rutas de llamada recursiva. Podemos evitar esto utilizando el enfoque de memorización.
+
+Podemos ver que cada estado se puede identificar de forma única mediante dos parámetros:
+
+\begin{itemize}
+	\item \textbf{Índice actual:} Denota el último índice del LIS.
+	\item \textbf{Índice anterior:} Denota el índice final del LIS anterior detrás del cual se concatena el arr[i] es decir el índice actual.
+\end{itemize}
+
+La idea es usar una matriz para almacenar los resultados de los diferentes estados que puede generar la recursividad y solo utilizar la recursividad cuando no se haya calculado el valor previamente para ese estado. Esta idea mejora la complejidad temporal pero sacrificando la complejidad espacial.   

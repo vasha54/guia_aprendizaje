@@ -1,22 +1,40 @@
-Con estos elementos ya identificados que deben estar presentes en un problema para que el mismo sea susceptible a ser resuelto por un algoritmo greedy, podemos resumir el funcionamiento de los algoritmosgreedy en los siguientes puntos:
+Con estos elementos ya identificados que deben estar presentes en un problema para que el mismo sea susceptible a ser resuelto por un algoritmo greedy, podemos resumir el funcionamiento de los algoritmos
+greedy en los siguientes puntos:
 
 \begin{enumerate}
 	\item Para resolver el problema, un algoritmo ávido tratará de encontrar un
 	subconjunto de candidatos tales que, cumpliendo las restricciones del problema,
 	constituya la solución óptima.
 	\item Para ello trabajará por etapas, tomando en cada una de ellas la decisión que le
-	parece la mejor, sin considerar las consecuencias futuras, y por tanto escogerá de entre todos los candidatos el que produce un óptimo local para esa etapa,suponiendo que será a su vez óptimo global para el problema.
-	\item Antes de añadir un candidato a la solución que está construyendo comprobará si es prometedora al añadilo. En caso afirmativo lo incluirá en ella y en casocontrario descartará este candidato para siempre y no volverá a considerarlo.
-	\item Cada vez que se incluye un candidato comprobará si el conjunto obtenido essolución.
+	parece la mejor, sin considerar las consecuencias futuras, y por tanto escogerá de entre todos los candidatos el que produce un óptimo local para esa etapa,
+suponiendo que será a su vez óptimo global para el problema.
+	\item Antes de añadir un candidato a la solución que está construyendo comprobará si es prometedora al añadilo. En caso afirmativo lo incluirá en ella y en caso
+contrario descartará este candidato para siempre y no volverá a considerarlo.
+	\item Cada vez que se incluye un candidato comprobará si el conjunto obtenido es
+solución.
 \end{enumerate}
 
 Resumiendo, los algoritmos ávidos construyen la solución en etapas sucesivas, tratando siempre de tomar la decisión óptima para cada etapa. A la vista de todo esto no resulta difícil plantear un esquema general para este tipo de algoritmos:
 
-Algoritmo codicioso
+\begin{lstlisting}[language=C++]
+PROCEDURE AlgoritmoAvido(entrada:CONJUNTO):CONJUNTO;
+   VAR x:ELEMENTO; solucion:CONJUNTO; encontrada:BOOLEAN;
+BEGIN
+   encontrada:=FALSE; 
+   crear(solucion);
+   WHILE NOT EsVacio(entrada) AND (NOT encontrada) DO
+      x:=SeleccionarCandidato(entrada);
+      IF EsPrometedor(x,solucion) THEN
+         Incluir(x,solucion);
+         IF EsSolucion(solucion) THEN
+            encontrada:=TRUE
+         END;
+      END
+   END;
+   RETURN solucion;
+END AlgoritmoAvido;
+\end{lstlisting}
 
-Para empezar, el conjunto de soluciones (que contiene las respuestas) está vacío.
-En cada paso, se agrega un elemento al conjunto de soluciones hasta que se llega a una solución.
-Si el conjunto de soluciones es factible, se mantiene el elemento actual.
-De lo contrario, el artículo se rechaza y no se vuelve a considerar nunca más.
+De este esquema se desprende que los algoritmos ávidos son muy fáciles de implementar y producen soluciones muy eficientes. Entonces cabe preguntarse ¿por qué no utilizarlos siempre? En primer lugar, porque no todos los problemas admiten esta estrategia de solución. De hecho, la búsqueda de óptimos locales no tiene por qué conducir siempre a un óptimo global, como mostraremos en varios ejemplos de este capítulo. La estrategia de los algoritmos ávidos consiste en tratar de ganar todas las batallas sin pensar que, como bien saben los estrategas militares y los jugadores de ajedrez, para ganar la guerra muchas veces es necesario perder alguna batalla.
 
-Ahora usemos este algoritmo para resolver un problema.
+Desgraciadamente, y como en la vida misma, pocos hechos hay para los que podamos afirmar sin miedo a equivocarnos que lo que parece bueno para hoy siempre es bueno para el futuro. Y aquí radica la dificultad de estos algoritmos. Encontrar la función de selección que nos garantice que el candidato escogido o rechazado en un momento determinado es el que ha de formar parte o no de la solución óptima sin posibilidad de reconsiderar dicha decisión. Por ello, una parte muy importante de este tipo de algoritmos es la demostración formal de que la función de selección escogida consigue encontrar óptimos globales para cualquier entrada del algoritmo. No basta con diseñar un procedimiento ávido, que seguro que será rápido y eficiente (en tiempo y en recursos), sino que hay que demostrar que siempre consigue encontrar la solución óptima del problema.
