@@ -1,0 +1,42 @@
+\subsubsection{Recursividad}
+Podemos movernos recursivamente hacia la derecha y hacia abajo desde el principio hasta llegar al destino y luego sumar todos los caminos válidos para obtener la respuesta. Pero aquí la situación es bastante diferente. Mientras avanzamos por la cuadrícula, podemos encontrar algunos obstáculos que no podemos saltar y el camino para llegar a la esquina inferior derecha está bloqueado. Para resolver el problema podemos crear una función recursiva con parámetros como índice de fila y columna, a la hora llamar a esta función recursiva se le pasa como párametros $N-1$ y $M-1$. Ya en la función recursiva la misma funciona de la misma manera:
+
+\begin{itemize}
+	\item Si la posición $[N,M]$ existe un obstáculo entonces devuelves $0$
+	\item Si $N == 1$ o $M == 1$ entonces devuelve $1$
+	\item Sino llame a la función recursiva con (N-1, M) y (N, M-1) y devuelva la suma de esto
+\end{itemize}
+
+\subsubsection{Top-Down}
+La solución más eficiente a este problema se puede lograr mediante programación dinámica. Como todo concepto de problema dinámico, no volveremos a calcular los subproblemas. Se construirá una matriz 2D temporal y el valor se almacenará utilizando el enfoque de arriba hacia abajo.
+
+\subsubsection{Bottom-Up}
+Se construirá una matriz 2D temporal y el valor se almacenará utilizando el enfoque ascendente. El enfoque sería el siguiente:
+
+\begin{itemize}
+	\item Cree una matriz 2D del mismo tamaño que la matriz dada para almacenar los resultados.
+	\item Recorra la matriz creada en filas y comience a completar los valores que contiene.
+	\item Si se encuentra un obstáculo, establezca el valor en 0.
+	\item Para la primera fila y columna, establezca el valor en 1 si no se encuentra ningún obstáculo.
+	\item Establezca la suma de los valores derecho y superior si no hay un obstáculo presente en esa posición correspondiente en la matriz dada
+	\item Devuelve el último valor de la matriz 2D creada.
+\end{itemize}
+
+
+
+\subsubsection{Optimización del espacio de la solución DP}
+
+En este método, usaremos la matriz $A$ 2D  dada para almacenar la respuesta anterior usando el enfoque ascendente. El enfoque sería el siguiente:
+
+\begin{itemize}
+	\item Comience a recorrer la matriz $A$ 2D  dada en filas y complete los valores que contiene.
+	\item Para la primera fila y la primera columna, establezca el valor en 1 si no se encuentra ningún obstáculo.
+	\item Para la primera fila y la primera columna, si se encuentra un obstáculo, comience a llenar 0 hasta el último índice en esa fila o columna en particular.
+	\item Ahora comience a recorrer desde la segunda fila y columna (por ejemplo: $A[1][1]$).
+	\item Si se encuentra un obstáculo, establezca 0 en una cuadrícula particular (por ejemplo: $A[i][j]$); de lo contrario, establezca la suma de los valores superior e izquierdo en $A[i][j]$.
+	\item Devuelve el último valor de la matriz 2D.
+\end{itemize}
+
+\subsubsection{El enfoque 2D DP}
+
+Según el problema, díganos que podemos movernos de dos maneras puede ir a $(x, y + 1)$ o $(x + 1, y)$. Por lo tanto, calculamos todos los resultados posibles en ambas formas y almacenamos en el vector DP 2D y devolvemos el $DP[0][0]$ es decir, todas las formas posibles que lo llevan de $(0,0)$ a $(N-1,M-1)$

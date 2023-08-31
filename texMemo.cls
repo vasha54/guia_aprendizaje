@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Subsecuencia creciente más larga (\emph{LIS})}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Caminos en una cuadrícula}
 	\end{flushleft}}
 	% To, From, Subject Block
 	
