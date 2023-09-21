@@ -1,1 +1,3 @@
 Para una columna particular con \(k\) bloques vacíos, el peor tiempo de ejecución del análisis anterior es \(O(f_{k})\), donde \(f_{k}\) es \(k\) º número de Fibonacci. Hay \(^{n}C_{k}\) perfiles con \(k\) bloques vacíos. También hay columnas \(m\). Entonces, el tiempo total de ejecución es \(m \times \sum_{k = 0}^{n}\) \(^{n}C_{k} \times O(f_{k})\) que es igual a \(O(m \times (1+ \phi)^n)\). Observe que este algoritmo es muy eficiente que el anterior.
+
+La fórmula es muy eficiente porque calcula el número de mosaicos en tiempo $O(n\times m)$, pero dado que la respuesta es un producto de números reales, un problema al usar la fórmula es cómo almacenar los resultados intermedios con precisión.

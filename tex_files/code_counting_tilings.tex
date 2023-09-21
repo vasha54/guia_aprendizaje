@@ -1,3 +1,53 @@
 \subsection{C++}
+\begin{lstlisting}[language=C++]
+int n,m;
+vector< vector<long long> > dp;
 
+void tiling(int x=0, int y=0, int mask=0, int next_mask=0){
+   if(x==n) return;
+   if(y>=m) dp[x+1][next_mask]=dp[x+1][next_mask]+dp[x][mask];
+   else{
+      int my_mask=1<<y;
+      if(mask & my_mask) tiling(x,y+1,mask,next_mask);
+      else{
+         tiling(x,y+1,mask,next_mask|my_mask);
+         if(y+1<m && !(mask&my_mask) && !(mask&(my_mask<<1)))
+         tiling(x,y+2,mask,next_mask);
+      }
+   }
+}
+
+long long countTilings(int n,int m){
+   dp.resize (n+1, vector<long long> (1<<m));
+   dp[0][0]= 1;
+   for (int x=0; x<=n; ++x)
+      for (int mask=0; mask<(1<<m); ++mask)
+         tiling(x, 0, mask, 0);
+   return dp[n][0];
+}
+\end{lstlisting}
 \subsection{Java}
+\begin{lstlisting}[language=Java]
+public static void tiling(int x, int y, int mask, int next_mask, long [] [] dp,int n,int m){
+   if(x==n) return;
+   if(y>=m) dp[x+1][next_mask]=dp[x+1][next_mask]+dp[x][mask];
+   else{
+      int my_mask=1<<y;
+      if((mask & my_mask)>0) tiling(x,y+1,mask,next_mask,dp,n,m);
+      else{
+         tiling(x,y+1,mask,next_mask|my_mask,dp,n,m);
+         if(y+1<m && !((mask & my_mask)>0) && !(( (mask & (my_mask<<1)) >0)))
+            tiling(x,y+2,mask,next_mask,dp,n,m);
+      }
+   }
+}
+
+public static long countTilings(int n,int m){
+   long [] [] dp =new long [n+1][1<<m];
+   dp[0][0]= 1;
+   for (int x=0; x<=n; ++x)
+      for (int mask=0; mask<(1<<m); ++mask)
+         tiling(x, 0, mask, 0,dp,n,m);
+   return dp[n][0];
+}
+\end{lstlisting}
