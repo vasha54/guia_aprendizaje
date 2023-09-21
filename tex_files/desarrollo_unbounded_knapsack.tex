@@ -1,0 +1,63 @@
+Este problema se basa en el de la Mochila 0/1 pero en vez de existir $n$ objetos distintos, de lo que disponemos es de $n$ tipos de objetos distintos. Con esto, de un objeto cualquiera podemos escoger tantas unidades como deseemos.
+
+Este problema se puede formular también como una modificación al problema
+de la Mochila 0/1, en donde sustituimos el requerimiento de que $x_{i}$=0 ó $x_{i}$=1,
+por el que $x_{i}$ sean números naturales. Como en el problema original, deseamos
+maximizar la suma de los beneficios de los elementos introducidos, sujeta a la
+restricción de que éstos no superen la capacidad de la mochila.
+
+Para encontrar un algoritmo de Programación Dinámica que resuelva el problema, primero hemos de plantearlo como una secuencia de decisiones que verifiquen el principio del óptimo. De aquí seremos capaces de deducir una expresión recursiva de la solución. Por último habrá que encontrar una estructura de datos adecuada que permita la reutilización de los cálculos de la ecuación en recurrencia, consiguiendo una complejidad mejor que la del algoritmo puramente recursivo.
+
+\subsection{Enfoque recursivo}
+Una solución simple es considerar todos los subconjuntos de artículos y calcular el peso y el valor total de todos los subconjuntos. Considere los únicos subconjuntos cuyo peso total es menor  que $W$. De todos esos subconjuntos, elija el subconjunto de valor máximo.
+
+\textbf{Subestructura óptima}: para considerar todos los subconjuntos de elementos, puede haber dos casos para cada elemento.
+
+\begin{itemize}
+	\item Caso 1: El artículo está incluido en el subconjunto óptimo.
+	\item Caso 2: El artículo no está incluido en el conjunto óptimo.
+\end{itemize}
+
+Por lo tanto, el valor máximo que se puede obtener de $n$ elementos es el máximo de los dos valores siguientes.
+
+Valor máximo obtenido por $n-1$ artículos y peso $W$ (excluyendo el enésimo artículo). Valor del enésimo artículo más el valor máximo obtenido por $n$ (debido a la oferta infinita) artículos y $W$ menos el peso del enésimo artículo (incluido el enésimo artículo). Si el peso del enésimo elemento es mayor que $W$, entonces el enésimo elemento no se puede incluir y el Caso 1 es la única posibilidad.
+
+Con esto en mente, llamaremos $V(i,p)$ al valor máximo de una mochila de
+capacidad $p$ y con $i$ tipos de objetos. Iremos decidiendo en cada paso si
+introducimos o no un objeto de tipo $i$. Por consiguiente, para calcular $V(i,p)$ existen
+dos opciones en cada paso:
+
+\begin{itemize}
+	\item No introducir ninguna unidad del tipo $i$, con lo cual el valor de la mochila $V(i,p)$ es el calculado para $V(i–1,p)$.
+	\item Introducir una unidad más del objeto $i$ lo cual indica que el valor de $V(i,p)$ será el resultado obtenido para $V(i,p-p_{i} )$ más el valor del objeto $v_{i}$ , con lo cual se verifica que $V(i,p) = V(i,p-p_{i}$ ) + $b_{i}$ .
+\end{itemize}
+
+Esto nos permite establecer la siguiente relación en recurrencia para $V(i,p)$:
+
+$$V(i,p) = \begin{cases}
+			0 & p=0 \\ 
+			(p \div p_i)b_i & i=1 \\
+			V(i-1,p) & p < p_i \\
+			\max \{ V(i-1,p), V(i,p-p_i)+b_i  \} & \text{en otro caso}
+\end{cases}$$
+
+\subsection{Memorización}
+
+Al igual que otros problemas típicos de programación dinámica (DP), se puede evitar volver a calcular los mismos subproblemas construyendo una matriz temporal $K[][]$ de manera ascendente en la cual se guarde los resultados de los subproblemas.
+
+\subsection{Programación Dinámica}
+
+Es un problema de mochila ilimitado ya que podemos usar 1 o más instancias de cualquier recurso. Se puede usar una matriz unidimensional simple, digamos $dp[W+1]$, de modo que $dp[i]$ almacene el valor máximo que se puede lograr usando todos los elementos y la capacidad de la mochila. Tenga en cuenta que aquí usamos una matriz unidimensional, que es diferente de la mochila clásica donde usamos una matriz bidimensional. Aquí el número de elementos nunca cambia. Siempre tenemos todos los artículos disponibles.
+Podemos calcular recursivamente $dp[]$ usando la siguiente fórmula: $dp[i]=0$,
+$dp[i]= \max(dp[i], dp[i-wt[j]] + val[j])$ donde $j$ varía de $0$ a $n-1$ tal que $peso[j] \le i$. De esta forma la respuesta queda en $d[W]$.
+
+\subsection{Enfoque eficiente}
+
+El enfoque anterior se puede optimizar en función de las siguientes observaciones:
+
+\begin{enumerate}
+	\item Supongamos que el índice $i$ nos da el valor máximo por unidad de peso en los datos dados, que se puede encontrar fácilmente en $O(n)$.
+	\item Para cualquier peso $X$, mayor o igual a $wt[i]$, el valor máximo alcanzable será $dp[X - wt[i]] + val[i]$.
+	\item Podemos calcular los valores de $dp[]$ de $0$ a $wt[i]$ usando el algoritmo tradicional y también podemos calcular el número de instancias del i-ésimo elemento que podemos incluir en el peso $W$.
+	\item Entonces la respuesta requerida será $val[i] * (W/wt[i]) + dp[W\%wt[i]]$.
+\end{enumerate}

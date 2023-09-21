@@ -1,0 +1,186 @@
+\subsection{C++}
+
+\subsubsection{Enfoque recursivo}
+\begin{lstlisting}[language=C++]
+
+int unboundedKnapsack(int W, int wt[], int val[], int idx){
+   if (idx == 0) return (W / wt[0]) * val[0];
+   int notTake = 0 + unboundedKnapsack(W,wt,val,idx-1);
+   int take = INT_MIN;
+   if (wt[idx] <= W) take = val[idx]+unboundedKnapsack(W-wt[idx],wt,val,idx);
+   return max(take, notTake);
+}
+\end{lstlisting}
+
+\subsubsection{Memorización}
+\begin{lstlisting}[language=C++]
+int unboundedKnapsackMemo(int W, int wt[], int val[], int idx,vector<vector<int> >& dp){
+   if (idx == 0) return (W / wt[0]) * val[0];
+   if (dp[idx][W] != -1) return dp[idx][W];
+   int notTake = 0 + unboundedKnapsackMemo(W, wt, val, idx - 1, dp);
+   int take = INT_MIN;
+   if (wt[idx] <= W) 
+      take = val[idx] + unboundedKnapsackMemo(W-wt[idx],wt,val,idx,dp);
+	
+    return dp[idx][W] = max(take, notTake);
+}
+
+int unboundedKnapsack(int W, int wt[], int val[]){
+   int n = sizeof(val) / sizeof(val[0]);	
+   vector<vector<int> > dp(n, vector<int>(W + 1, -1));
+   return unboundedKnapsackRecursive(W, wt, val, n - 1, dp);
+}
+\end{lstlisting}
+
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=C++]
+int unboundedKnapsackDP(int W, int val[], int wt[]){
+   int n = sizeof(val)/sizeof(val[0]);
+   vector<int> dp(W+1,0);
+   for (int i=0; i<=W; i++)
+      for (int j=0; j<n; j++)
+        if (wt[j] <= i)
+           dp[i] = max(dp[i], dp[i-wt[j]] + val[j]);
+   return dp[W];
+}
+\end{lstlisting}
+\subsubsection{Enfoque eficiente}
+\begin{lstlisting}[language=C++]
+int unboundedKnapsackBetter(int W, vector<int> val, vector<int> wt){
+   int maxDenseIndex = 0;
+	
+   for (int i = 1; i < val.size(); i++) {
+      if (val[i] / wt[i] > val[maxDenseIndex] / wt[maxDenseIndex] || 
+         (val[i] / wt[i] == val[maxDenseIndex] / wt[maxDenseIndex] && 
+         wt[i] < wt[maxDenseIndex])) {
+         maxDenseIndex = i;
+      }
+   }
+	
+   int dp[W + 1] = { 0 };
+   int counter = 0;
+   bool breaked = false;
+   int i = 0;
+   for (i = 0; i <= W; i++) {
+      for (int j = 0; j < wt.size(); j++) {
+         if (wt[j] <= i) {
+            dp[i] = max(dp[i], dp[i - wt[j]] + val[j]);
+         }
+      }
+      if (i - wt[maxDenseIndex] >= 0 && 
+          dp[i] - dp[i - wt[maxDenseIndex]] == val[maxDenseIndex]) {
+         counter += 1;
+         if (counter >= wt[maxDenseIndex]) {
+            breaked = true; break;
+         }
+      } 
+      else counter = 0; 
+   }
+	
+   if (!breaked) return dp[W];
+   else {
+      int start = i - wt[maxDenseIndex] + 1;
+      int times = (floor)((W - start) / wt[maxDenseIndex]);
+      int index = (W - start) % wt[maxDenseIndex] + start;
+      return (times * val[maxDenseIndex] + dp[index]);
+   }
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Enfoque recursivo}
+\begin{lstlisting}[language=Java]
+static int unboundedKnapsack(int W, int wt[], int val[], int idx){
+   if (idx == 0) return (W / wt[0]) * val[0];
+   int notTake = 0 + unboundedKnapsack(W, wt, val, idx - 1);
+   int take = Integer.MIN_VALUE;
+   if (wt[idx] <= W) take = val[idx]+unboundedKnapsack(W-wt[idx],wt,val,idx);
+   return Math.max(take, notTake);
+}
+\end{lstlisting}
+
+\subsubsection{Memorización}
+
+\begin{lstlisting}[language=Java]
+public static int unboundedKnapsackRecursive(int W,int wt[],int val[],int idx,int dp[][]){
+   if (idx == 0) return (W / wt[0]) * val[0];
+   
+   if (dp[idx][W] != -1) return dp[idx][W];
+   
+   int notTake = 0 + unboundedKnapsackMemo(W,wt,val,idx-1,dp);
+   int take = Integer.MIN_VALUE;
+   if (wt[idx] <= W) 
+      take = val[idx] + unboundedKnapsackMemo(W-wt[idx],wt,val,idx,dp);
+	
+   return dp[idx][W] = Math.max(take, notTake);
+}
+
+public static int unboundedKnapsack(int W, int wt[], int val[]){
+   int n = val.length;
+   int[][] dp = new int[n][W + 1];
+   for (int row[] : dp) Arrays.fill(row, -1);
+   return unboundedKnapsackMemo(W,wt,val,n-1,dp);
+}
+\end{lstlisting}
+
+
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=Java]
+public static int unboundedKnapsackDP(int W,int[] val, int[] wt){
+   int n = val.length;
+   int dp[] = new int[W + 1];
+   
+   for(int i = 0; i <= W; i++){
+      for(int j = 0; j < n; j++){
+         if(wt[j] <= i)
+            dp[i] = Math.max(dp[i],dp[i-wt[j]]+val[j]);
+      }
+   }
+   return dp[W];
+}
+\end{lstlisting}
+
+\subsubsection{Enfoque eficiente}
+\begin{lstlisting}[language=Java]
+public static int unboundedKnapsackBetter(int W,int[] val,int[] wt){
+   int maxDenseIndex = 0;
+   for (int i = 1; i < val.length; i++) {
+      if (val[i] / wt[i] > val[maxDenseIndex] / wt[maxDenseIndex] || 
+         (val[i] / wt[i] == val[maxDenseIndex] / wt[maxDenseIndex] && 
+         wt[i] < wt[maxDenseIndex])) {
+         maxDenseIndex = i;
+      }
+   }
+   
+   int[] dp = new int[W + 1];
+   int counter = 0;
+   boolean breaked = false;
+   int i = 0;
+   
+   for (i = 0; i <= W; i++) {
+      for (int j = 0; j < wt.length; j++) {
+         if (wt[j] <= i) {
+            dp[i] = Math.max(dp[i], dp[i - wt[j]] + val[j]);
+         }
+      }
+      if (i - wt[maxDenseIndex] >= 0 && dp[i] - dp[i - wt[maxDenseIndex]] == val[maxDenseIndex]){
+         counter += 1;
+         if (counter >= wt[maxDenseIndex]) {
+            breaked = true; break;
+         }
+      } 
+      else {
+         counter = 0;
+      }
+   }
+	
+   if (!breaked) return dp[W];
+   else {
+      int start = i - wt[maxDenseIndex] + 1;
+      int times = (int)((W - start) / wt[maxDenseIndex]);
+      int index = (W - start) % wt[maxDenseIndex] + start;
+	  return (times * val[maxDenseIndex] + dp[index]);
+   }
+}
+\end{lstlisting}

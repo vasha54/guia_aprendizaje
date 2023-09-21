@@ -1,0 +1,20 @@
+Veamos un análisis tanto temporal como espacial de los diferentes enfoques analizados para resolver el problema:
+
+\begin{longtable}{|c|p{5.5cm}|p{5.5cm}|}
+	\hline
+	& \textbf{Complejidad temporal} & \textbf{Complejidad espacial} \\
+	\hline
+	\textbf{Enfoque recursivo} &  La complejidad temporal de este
+	enfoque recursivo es exponencial $O(2^W)$ ya que existen un casos de subproblemas superpuestos &  No se utiliza ningún espacio
+	externo para almacenar valores
+	aparte del espacio de la pila interna por tanto $O(1)$\\ \hline
+	\textbf{Memorización} & En el peor de los casos se tendría que calcular todos los posibles estados que sería como recorrer todas las posiciones de la
+	matriz por lo que la complejidad
+	es $O(W\times n )$ donde $W$ es el peso máximo de la mochila y $n$ la cantidad de  diferentes de tipos objetos & Es evidente que el uso de una
+	matriz para almacenar los cálculos de los diferentes estados hace
+	que la complejidad espacial paraesta variante es $O(W\times n )$  \\ \hline
+	\textbf{Programación Dinámica} & Es evidente que se calcula todos los posibles estados que sería como recorrer todas las posiciones de la
+	matriz por lo que la complejidad
+	es $O(W\times n )$ donde $W$ es el peso máximo de la mochila y $n$ la cantidad de  diferentes de tipos objetos  &  El uso de un arreglo para almacenar lo mejor para cada posible peso de $1$ a $W$ hace que esta complejidad sea $O(W)$ \\ \hline
+	\textbf{Enfoque eficiente} & Esta optimización o enfoque mas eficiente hace que la complejidad sea igual $O( N + \min(wt[i], W) \times N)$ &  El uso de un arreglo para almacenar lo mejor para cada posible peso de $1$ a $W$ hace que esta complejidad sea $O(W)$ \\ \hline
+\end{longtable} 
