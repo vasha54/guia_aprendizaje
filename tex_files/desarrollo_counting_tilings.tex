@@ -72,3 +72,8 @@ Cada permutación que llena la columna actual produce un perfil único \(p\) que
 Ahora, observe que para \(i = 0\), llenar las primeras \(0\) columnas completamente y tener el perfil \(p\) para la \(1\)st columna es posible si \(p = 0\). Esto implica que \(dp[0][p]\) es igual a \(1\) para \(p = 0\) e igual a \(0\) para todo \(p \neq 0\).
 
 Dado que necesitamos llenar todas las \(m\) columnas con el perfil para la \((m+1)\)ésima columna igual a 0 (ya que no existe ninguna \((m+1)\)ésima columna), el requerido la respuesta es igual a \(dp[m][0]\).
+
+\subsection{Fórmula}
+Como nota final, también existe una sorprendente fórmula directa para calcular el número de mosaicos, pero como la respuesta es un producto de números reales, un problema al usar la fórmula es cómo almacenar los resultados intermedios con precisión.La fórmula es la siguiente
+
+$$ \prod_{a=1}^{\lceil n/2 \rceil } \prod_{b=1}^{\lceil m/2 \rceil } 4  (\cos^2 \frac{\pi a}{n+1} + \cos^2 \frac{\pi b}{m+1}) $$
