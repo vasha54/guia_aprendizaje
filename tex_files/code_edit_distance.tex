@@ -1,0 +1,40 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+unsigned int edit_distance(string s1, string s2) {
+   const size_t len1 = s1.size(), len2 = s2.size();
+   vector< vector<unsigned int> > d(len1+1, vector <unsigned int>(len2 + 1));
+   d[0][0] = 0;
+   for (unsigned int i = 1; i <= len1; ++i) d[i][0] = i;
+   for (unsigned int i = 1; i <= len2; ++i) d[0][i] = i;
+	
+   for (unsigned int i = 1; i <= len1; ++i)
+      for (unsigned int j = 1; j <= len2; ++j)
+         d[i][j] = min(min(d[i-1][j]+1,d[i][j-1]+1),
+                       d[i-1][j-1]+(s1[i-1]== s2[j-1] ? 0 : 1));
+   return d[len1][len2];
+}
+\end{lstlisting} 
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+public static int edit_distance(String s1, String s2) {
+   int[][] dp = new int[s1.length()+1][s2.length()+1];
+   for (int i = 0; i <= s1.length(); i++) dp[i][0] = i;
+   for (int j = 0; j <= s2.length(); j++) dp[0][j] = j;
+	
+   for (int i = 1; i <= s1.length(); i++) {
+      for (int j = 1; j <= s2.length(); j++) {
+      	if (s1.charAt(i-1) == s2.charAt(j-1)) dp[i][j] = dp[i-1][j-1];
+        else dp[i][j]= 1+ Math.min( Math.min( dp[i-1][j], dp[i][j-1]),
+                                    dp[i-1][j-1]);
+      }
+   }
+   return dp[s1.length()][s2.length()];
+}
+\end{lstlisting}
+
+
+Nótese que $d[i-1][j]+1$ representa un costo de 1 para la inserción, $d[i][j-1]+1$
+ costo 1 para eliminación, y $d[i-1][j-1]+(s1[i-1] == s2[j-1]? 0 : 1))$ representa
+costo 1 para reemplazo (en caso de que no sean iguales). Con estas concideraciones
+es fácil adaptar este problema a otros similares.

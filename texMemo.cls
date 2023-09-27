@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Contando mosaicos (\emph{Counting Tilings})}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Distancia de edición (\emph{Edit Distance})}
 	\end{flushleft}}
 	% To, From, Subject Block
 	
