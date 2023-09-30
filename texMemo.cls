@@ -138,7 +138,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Distancia de edición (\emph{Edit Distance})}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Operaciones de bits}
 	\end{flushleft}}
 	% To, From, Subject Block
 	

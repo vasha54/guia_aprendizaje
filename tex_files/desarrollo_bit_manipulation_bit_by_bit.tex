@@ -1,0 +1,54 @@
+Son operaciones logicas que se ejecutan sobre bits individuales.
+
+\subsubsection{AND}
+
+El AND bit a bit, toma dos números enteros y realiza la operación AND lógica en cada parcorrespondiente de bits. El resultado en cada posición es 1 si el bit correspondiente de los dosoperandos es 1, y 0 de lo contrario. La operacion AND se representa con el signo $\&$.  Por ejemplo, $22 \& 26 = 18$, porque:
+
+$$
+\begin{array}{ccc}
+	& 10110 & (22) \\
+	\&	& 11010 & (26) \\
+	\hline
+	= & 10010 & (18)
+\end{array}
+$$
+
+\subsubsection{OR}
+
+Una operación OR de bit a bit, toma dos números enteros y realiza la operación OR inclusivo encada par correspondiente de bits. El resultado en cada posición es 0 si el bit correspondiente de losdos operandos es 0, y 1 de lo contrario. La operacion OR se representa con el signo $\vert$. Por ejemplo, $22 \vert 26 = 30$, porque:
+
+$$
+\begin{array}{ccc}
+	& 10110 & (22) \\
+	\vert	& 11010 & (26) \\
+	\hline
+	= & 11110 & (30)
+\end{array}
+$$
+
+\subsubsection{NOT}
+El NOT bit a bit, es una operación unaria que realiza la negación lógica en cada bit, invirtiendo losbits del número, de tal manera que los ceros se convierten en 1 y viceversa.
+
+La operación not $\sim x$ produce un número donde todos los bits de $x$ se han invertido. La fórmula $\sim x =-x-1$ se cumple, por ejemplo, $\sim 29=-30$.
+
+El resultado de la operación not a nivel de bits depende de la longitud de la representación de bits, porque la operación invierte todos los bits. Por ejemplo, si el Los números son números int de 32 bits, el resultado es el siguiente:
+$$
+\begin{array}{cccc}
+	x	& = & 29 & 00000000000000000000000000011101 \\
+  \sim x	& = & -30  & 11111111111111111111111111100010
+\end{array}
+$$
+
+
+\subsubsection{XOR}
+
+El XOR bit a bit, toma dos números enteros y realiza la operación OR exclusivo en cada par correspondiente de bits. El resultado en cada posición es 1 si el par de bits son diferentes y 0 si el par de bits son iguales. La operacion XOR se representa con el signo $\wedge$. Por ejemplo, $22 \wedge 26 = 12$, porque:
+
+$$
+\begin{array}{ccc}
+		& 10110 & (22) \\
+	\wedge	& 11010 & (26) \\
+	\hline
+	= & 01100 & (12)
+\end{array}
+$$

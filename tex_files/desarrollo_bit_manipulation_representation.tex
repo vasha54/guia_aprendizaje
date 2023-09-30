@@ -1,0 +1,44 @@
+En programación, un entero de $n$ bits se almacena internamente como un número binario que consta de $n$ bits. Por ejemplo, el tipo int de C++ es un tipo de $32$ bits, lo que significa que cada número int consta de $32$ bits.
+
+Aquí está la representación de bits del número int 43:
+
+$$00000000000000000000000000101011$$
+
+Los bits de la representación están indexados de derecha a izquierda. Para convertir una representación de bits $b_k\dots b_2b_1b_0$ en un número, podemos usar la fórmula:
+
+$$b_k 2^k + \dots + b_2 2^2 + b_1 2^1 + b_0 2^0 .$$
+
+Por ejemplo,
+
+$$1\times2^5 + 1 \times 2^3 + 1 \times 2^1 + 1 \times 2^0 = 43$$
+
+La representación en bits de un número puede tener \textbf{signo o no}. Normalmente se utiliza una representación con signo, lo que significa que se pueden representar números tanto negativos como positivos. Una variable con signo de $n$ bits puede contener cualquier número entero entre $-2^{n-1}$ y $2^{n-1}-1$. Por ejemplo, el tipo int en C++ es un tipo con signo, por lo que una variable int puede contener cualquier número entero entre $-2^{31}$ y $2^{31}-1$.
+
+El primer bit en una representación con signo es el signo del número ($0$ para
+números no negativos y $1$ para números negativos), y los $n-1$ bits restantes contienen la magnitud del número. Se utiliza el \textbf{complemento a dos}, lo que significa que el número opuesto de un número se calcula invirtiendo primero todos los bits del número y luego aumentando el número en uno.
+
+Por ejemplo, la representación en bits del número int $-43$ es:
+
+$$11111111111111111111111111010101$$
+
+En una representación sin signo, sólo se pueden utilizar números no negativos, pero el límite superior de los valores es mayor. Una variable sin signo de $n$ bits puede contener cualquier número entero entre $0$ y $2^n-1$. Por ejemplo, en C++, una variable int sin signo puede contener cualquier número entero entre $0$ y $2^{32}-1$.
+
+Existe una conexión entre las representaciones: un número con signo $-x$ es igual a un número sin signo $2^n-x$. Por ejemplo, el siguiente código muestra que el número con signo $x =-43$ es igual al número sin signo $y=2^{32}-43$:
+
+\begin{lstlisting}[language=C++]
+int x = -43;
+unsigned int y = x;
+cout<< x << "\n"; // -43
+cout<< y << "\n"; // 4294967253
+\end{lstlisting}
+
+Si un número es mayor que el límite superior de la representación de bits, el número se desbordará. En una representación con signo, el siguiente número después de $2^{n-1}-1$ es $-2^{n-1}$, y en una representación sin signo, el siguiente número después de $2^n-1$ es $0$. Por ejemplo, considere el siguiente código:
+
+\begin{lstlisting}[language=C++]
+int x = 2147483647
+cout << x << "\n"; // 2147483647
+x++;
+cout << x << "\n"; // -2147483648
+\end{lstlisting}
+
+Inicialmente, el valor de $x$ es $2^{31}-1$. Este es el valor más grande que se puede almacenar en una variable int, por lo que el siguiente número después de $2^{31}-1$ es $-2^{31}$.

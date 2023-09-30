@@ -1,0 +1,22 @@
+\subsection{C++}
+
+El compilador g++ proporciona las siguientes funciones para contar bits:
+
+\begin{itemize}
+	\item \textbf{\_\_builtin\_clz(x):} El número de zeros que comienza el número.
+	\item \textbf{\_\_builtin\_ctz(x):} El número de zeros que termina el número.
+	\item \textbf{\_\_builtin\_popcount(x):} El número de unos tiene el número en su representación binaria.
+	\item \textbf{\_\_builtin\_parity(x):} La paridad (par o impar) del número de unos
+\end{itemize}
+
+Las funciones se pueden utilizar de la siguiente manera:
+
+\begin{lstlisting}[language=C++]
+int x = 5328; // 00000000000000000001010011010000
+cout << __builtin_clz(x) << "\n"; // 19
+cout << __builtin_ctz(x) << "\n"; // 4
+cout << __builtin_popcount(x) << "\n"; // 5
+cout << __builtin_parity(x) << "\n"; // 1
+\end{lstlisting}
+
+Si bien las funciones anteriores solo admiten números \textbf{int}, también hay versiones \textbf{long long} de las funciones disponibles con el sufijo ll.

@@ -1,0 +1,22 @@
+Con todas las operaciones anteriormente vistas podemos hacer muchas cosas interesantes a la hora de
+programar, ahora les mostraremos algunas de las mas importante aplicaciones de estas operaciones:
+
+\begin{enumerate}
+	\item \textbf{Estado de un bit:} Con el uso de las operaciones AND y left shift podemos determinar el estado de un bit determinado.
+Por ejemplo: Supongamos que tenemos el numero $17$ y queremos saber si su quinto bit esta
+encendido, lo que haremos sera desplazar cuatro posiciones el número $1$, notese que se desplaza $n-1$ veces los bits, y realizamos la operacion AND si el resultado es diferente de $0$ el bit esta encendido, por el contrario esta apagado.
+	\item \textbf{Apagar un bit:} Usando las operaciones AND, NOT y left shift podemos apagar un determinado bit. Por ejemplo: Supogamos que tenemos el número $15$ y queremos apagar su segundo bit, lo que haremos sera
+desplazar una posición el número $1$, aplicamos NOT a este número y luego AND entre ambos, con
+esto habremos apagado el segundo bit del numero $15$.
+	\item \textbf{Encender un bit:} Usando las operaciones OR y left shift encenderemos un bit determinado de un número. Por ejemplo: Supongamos que tenemos el número $21$ y queremos encender su cuarto bit, lo que haremos sera
+desplazar tres posiciones el número $1$, y realizamos la operación OR entre ambos números.
+	\item \textbf{Multiplicación y División por $2$:} Una forma rápida de multilicar o dividir un número por $2$ es haciendo uso del desplazamiento de
+bits, pues si tenemos un número entero $n$, y lo desplazamos una pocición a la derecha el número se
+dividira entre 2 con resultado entero ($n/2$) y si por el contrario desplazamos el número una posición
+	a la izquierda el número se multiplicará por $2$ ($2 \times n$).
+	\item \textbf{Dos elevado a la $n$:} Si tenemos el número $1$ y lo desplazamos $n$ veces a la izquierda obtendremos como resultado $2^n$ .
+	\item \textbf{Máscara de bits o \emph{BitMask}:} es un algoritmo sencillo que se utiliza para calcular todos los subconjuntos
+de un conjunto.
+\end{enumerate}
+
+Las operaciones de bits proporcionan una manera eficiente y conveniente de implementar algoritmos de programación dinámica cuyos estados contienen subconjuntos de elementos, porque dichos estados pueden almacenarse como números enteros.
