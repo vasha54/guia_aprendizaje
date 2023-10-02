@@ -1,0 +1,75 @@
+\subsection{C++}
+
+\subsubsection{Recorrido en profundidad (\emph{DFS})}
+\begin{lstlisting}[language=C++]
+struct Node{
+   int m_dist,m_dfs;
+   vector<int> m_neighbors;
+   Node(){ m_neighbors.clear(); m_dfs=m_dist=0;}
+};
+
+Node graphs[MAX_N];
+int nnodes,a,b;
+
+int diameterTree(int _nodeStart){
+   int tDiameter=0,nextNode,currentNode,farthestNode=_nodeStart;
+   graphs[_nodeStart].m_dist=0;
+   graphs[_nodeStart].m_dfs=1;
+	
+   stack<int> visit;
+   visit.push(_nodeStart);
+	
+   while(!visit.empty()){
+      currentNode=visit.top(); visit.pop();
+      if(graphs[currentNode].m_dist>tDiameter){
+         tDiameter=graphs[currentNode].m_dist;
+         farthestNode=currentNode;
+      }
+      int tNeighbors=graphs[currentNode].m_neighbors.size();
+      for(int i=0;i<tNeighbors;i++){
+         nextNode=graphs[currentNode].m_neighbors[i];
+         if(graphs[nextNode].m_dfs<1){
+            graphs[nextNode].m_dfs=1;
+            graphs[nextNode].m_dist=graphs[currentNode].m_dist+1;
+            if(graphs[nextNode].m_dist>tDiameter){
+               tDiameter=graphs[nextNode].m_dist;
+               farthestNode=nextNode;
+            }
+            visit.push(nextNode);
+         }
+      }
+   }
+   
+   graphs[farthestNode].m_dist=0;
+   graphs[farthestNode].m_dfs=2;
+   tDiameter=0;
+	
+   visit.push(farthestNode);
+	
+   while(!visit.empty()){
+      currentNode=visit.top();
+      visit.pop();
+      if(graphs[currentNode].m_dist>tDiameter){
+         tDiameter=graphs[currentNode].m_dist;
+         farthestNode=currentNode;
+      }
+		
+      int tNeighbors=graphs[currentNode].m_neighbors.size();
+      for(int i=0;i<tNeighbors;i++){
+         nextNode=graphs[currentNode].m_neighbors[i];
+         if(graphs[nextNode].m_dfs<2){
+            graphs[nextNode].m_dfs=2;
+            graphs[nextNode].m_dist=graphs[currentNode].m_dist+1;
+            if(graphs[nextNode].m_dist>tDiameter){
+               tDiameter=graphs[nextNode].m_dist;
+               farthestNode=nextNode;
+            }
+            visit.push(nextNode);
+         }
+      }
+   }
+   return tDiameter;
+}
+\end{lstlisting} 
+
+\subsection{Java}
