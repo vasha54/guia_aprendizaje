@@ -100,3 +100,106 @@ void diameterTree(int node ,int par, int * diameter){
 \end{lstlisting}
 
 \subsection{Java}
+
+\subsubsection{Recorrido en profundidad (\emph{DFS})}
+
+\begin{lstlisting}[language=Java]
+private class Node{
+   int m_dist,m_dfs;
+   ArrayList<Integer> m_neighbors;
+   public Node(){ m_neighbors =new ArrayList<Integer>(); m_dfs=m_dist=0;}
+};
+
+public Node [] graphs;
+
+public int diameterTree(int _nodeStart){
+   int tDiameter=0,nextNode,currentNode,farthestNode=_nodeStart;
+   graphs[_nodeStart].m_dist=0; graphs[_nodeStart].m_dfs=1;
+	
+   Stack<Integer> visit =new Stack<Integer>();
+   visit.push(_nodeStart);
+	
+   while(!visit.empty()){
+      currentNode=visit.pop();
+      if(graphs[currentNode].m_dist>tDiameter){
+         tDiameter=graphs[currentNode].m_dist;
+         farthestNode=currentNode;
+      }
+		
+      int tNeighbors=graphs[currentNode].m_neighbors.size();
+      for(int i=0;i<tNeighbors;i++){
+         nextNode=graphs[currentNode].m_neighbors.get(i);
+         if(graphs[nextNode].m_dfs<1){
+            graphs[nextNode].m_dfs=1;
+            graphs[nextNode].m_dist=graphs[currentNode].m_dist+1;
+            if(graphs[nextNode].m_dist>tDiameter){
+               tDiameter=graphs[nextNode].m_dist;
+               farthestNode=nextNode;
+            }
+			visit.push(nextNode);
+         }
+       }
+   }
+	
+   graphs[farthestNode].m_dist=0; graphs[farthestNode].m_dfs=2;
+   tDiameter=0;
+	
+   visit.push(farthestNode);
+	
+   while(!visit.empty()){
+      currentNode=visit.pop();
+      if(graphs[currentNode].m_dist>tDiameter){
+         tDiameter=graphs[currentNode].m_dist;
+         farthestNode=currentNode;
+      }
+		
+      int tNeighbors=graphs[currentNode].m_neighbors.size();
+      for(int i=0;i<tNeighbors;i++){
+         nextNode=graphs[currentNode].m_neighbors.get(i);
+         if(graphs[nextNode].m_dfs<2){
+            graphs[nextNode].m_dfs=2;
+            graphs[nextNode].m_dist=graphs[currentNode].m_dist+1;
+            if(graphs[nextNode].m_dist>tDiameter){
+               tDiameter=graphs[nextNode].m_dist;
+               farthestNode=nextNode;
+            }
+			visit.push(nextNode);
+         }
+      }
+   }
+   return tDiameter;
+}
+	
+\end{lstlisting}
+
+\subsubsection{Programación Dinámica}
+
+\begin{lstlisting}[language=Java]
+private class Node{
+   ArrayList<Integer> children;
+   int maxLentgh,toLeaft;
+
+   public Node(){ children =new ArrayList<Integer>(); maxLentgh=toLeaft=0;}
+};
+
+public Node [] graphs;
+
+public int diameter;
+
+public void diameterTree(int node ,int par){
+   ArrayList<Integer> childList = new ArrayList<Integer>();
+	
+   for(int child : graphs[node].children)
+      if(child != par){
+         diameterTree(child , node);
+         graphs[node].maxLentgh = Math.max(graphs[node].maxLentgh,graphs[child].maxLentgh+1);
+         childList.add(graphs[child].maxLentgh);
+      }
+   diameter = Math.max(diameter , graphs[node].maxLentgh);
+   Collections.sort(childList);
+   if(childList.size() >= 2){
+      graphs[node].toLeaft = 2+childList.get(childList.size()-1)+childList.get(childList.size()-2);
+      diameter = Math.max(diameter,graphs[node].toLeaft);
+   }
+}
+\end{lstlisting}
