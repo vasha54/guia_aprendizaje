@@ -44,3 +44,7 @@ Calculamos para cada nodo $x$ dos valores:
 	\item \textbf{toLeaf(x):} La longitud máxima de una ruta desde $x$ a cualquier hoja
 	\item \textbf{maxLength(x):} La longitud máxima de un camino cuyo punto más alto es $x$.
 \end{itemize}
+
+Por ejemplo, en el árbol anterior, $toLeaf(1) = 2$, porque hay una ruta $1 \rightarrow 2 \rightarrow 6$, y $maxLength(1) = 4$, porque hay una ruta $6 \rightarrow 2 \rightarrow 1 \rightarrow 4 \rightarrow 7$. En En este caso, $maxLength(1)$ es igual al diámetro.
+
+La programación dinámica se puede utilizar para calcular los valores anteriores para todos los nodos en tiempo O($n$). Primero, para calcular $toLeaf(x)$, revisamos los hijos de $x$, elegimos un hijo $c$ con $toLeaf(c)$ máximo y sumamos uno a este valor. Luego, para calcular $maxLength(x)$, elegimos dos hijos distintos $a$ y $b$ tales que la suma $toLeaf(a) + toLeaf(b)$ sea máxima y sumamos dos a esta suma

@@ -72,4 +72,31 @@ int diameterTree(int _nodeStart){
 }
 \end{lstlisting} 
 
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=C++]
+struct Node {
+   vector<int> children;
+   int maxLength,toLeaft;
+   Node(){ children.clear(); maxLength=toLeaft=0;}
+};
+
+vector<Node> tree;
+
+void diameterTree(int node ,int par, int * diameter){
+   vector<int> childList;
+   for(int child : tree[node].children)
+      if(child != par){
+         diameterTree(child,node,diameter);
+         tree[node].maxLength=max(tree[node].maxLength,tree[child].maxLength+1);
+         childList.push_back(tree[child].f);
+	  }
+   *diameter = max(*diameter , tree[node].maxLength);
+   sort(childList.begin(),childList.end());
+   if(childList.size() >= 2){
+      tree[node].toLeaft = 2 + childList[childList.size()-1] + childList[childList.size()-2];
+      *diameter = max(*diameter , tree[node].toLeaft);
+   }
+}
+\end{lstlisting}
+
 \subsection{Java}
