@@ -119,6 +119,9 @@
 	\rule[0.5ex]{\linewidth}{#1}\par
 }
 
+\def\@titleguide{\relax}
+\newcommand{\titleguide}[1]{\gdef\@titleguide{#1}}
+
 % Set the Paper Size and margins
 \RequirePackage{geometry}
 \geometry{margin=1.0in,bottom=1.7in}
@@ -138,7 +141,7 @@
 	\end{minipage}
 	}
 	{\begin{flushleft}
-	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: Diámetro del árbol}
+	\MakeUppercase{\LARGE\bf Guía de Aprendizaje para Concursantes ICPC y IOI: \@titleguide }
 	\end{flushleft}}
 	% To, From, Subject Block
 	
