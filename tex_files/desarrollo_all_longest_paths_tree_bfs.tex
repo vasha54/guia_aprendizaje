@@ -1,0 +1,21 @@
+Otra idea algorítmica para resolver este problema se basa en la utilización del algoritmo \emph{BFS} con ciertas modificaciones y una estructura como vector o arreglo para almacenar para cada nodo el máximo camino donde él es uno de los extremos.
+
+La idea algorítmica parte del díametro del árbol donde un árbol puede tener uno o varios díametros representados por todos aquellos caminos cuya longitud es máxima en todo el árbol y que comienza en un nodo $u$ y terminan en un nodo $v$. 
+
+Para cualquier nodo $z$ el máximo camino que lo comprende y comienza en él va terminar siempre en un nodo de tipo $u$ o $v$. Por tanto basta con seleccionar un par $(u,v)$ en el árbol y realizar un bfs partiendo sobre cada uno de ellos y ver para cada nodo del árbol de cual de estos dos nodos esta más lejos y ese será el máximo camino para el nodo. Para llevar esta idea vamos a tener dos elementos importantes:
+
+\begin{enumerate}
+	\item Un vector o arreglo $path$ con la capacidad igual a la cantidad de nodos con un valor bien pequeño inicialmente. La idea de este vector o arreglo es que voy almacenar en la posición $path[i]$ la longitud máxima de un camino en el árbol donde uno de los extremos de dicho camino es el nodo $i$.
+	\item Implementar un \emph{BFS} que retorne el último nodo visitado y que calcule la distancia desde el nodo que se comenzo el \emph{BFS} hacia cualquier otro nodo $i$ del árbol si dicha distancia es mayor que la que se tiene almacenada en el $path$ para el nodo $i$ actualizar el valor de $path[i]$ con dicho valor.
+\end{enumerate}
+
+Una vez visto estos detalles el procedimiento sería bien sencillo:
+
+\begin{enumerate}
+\item Realizar el \emph{BFS} modificado desde cualquier nodo del árbol escogido de forma arbitraria este nos va devolver un posible nodo $u$.
+\item Realizar el \emph{BFS} modificado desde el nodo $u$ obtenido en el paso anterior. Esta ejecucción del \emph{BFS} nos va devolver un posible nodo $v$ asociado con $u$ cuyo camino entre ellos es un diámetro del árbol.
+\item Realizar el \emph{BFS} modificado desde el nodo $v$ obtenido en el paso anterior.
+ 
+\end{enumerate}
+
+Una vez realizados estos tres \emph{BFS} en el vector o arreglo $path$ en la posición $i$ tenemos el valor de la longitud del máximo que comienza o termina en el nodo $i$. 

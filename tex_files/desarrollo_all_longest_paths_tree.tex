@@ -1,0 +1,8 @@
+La idea trivial de la solución a este ejercicio sería realizar un DFS por cada nodo y para dicho ver al nodo más lejano que puede llegar y este sería el camino maslargo para el nodo por donde se comenzo el DFS. Esta idea el único inconveniente es el alto costo temporal para cuando el árbol tenga gran cantidad de nodos ya que su complejidad temporal esta dada por la expresión O($N(N+E)$) donde $N$ sería la cantidad de nodos del árbol y $E$ las aristas del mismo que por definición de un árbol sería $N-1$ por lo que sustituyen en la expresión inicial nos queda O($2N^2-N$). Pero esta idea del DFS nos va a servir para ver la primera variante de solución.
+
+\subsection{Programación dinámica con DFS}
+\input{tex_files/desarrollo_all_longest_paths_tree_dp_dfs.tex}
+
+\subsection{Usando BFS}
+\input{tex_files/desarrollo_all_longest_paths_tree_bfs.tex}
+

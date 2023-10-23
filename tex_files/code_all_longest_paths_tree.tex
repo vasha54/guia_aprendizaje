@@ -1,3 +1,199 @@
 \subsection{C++}
 
+\subsubsection{Programación dinámica con DFS}
+\begin{lstlisting}[language=C++]
+struct Node {
+   vector<int> neighborns;
+   int firstMaxPath; // Primer camino mas largo
+   int secondMaxPath; // Segundo camino mas largo
+   int nodeChildMaxPath; // Nodo hijo o padre que salio el camino mas largo
+};
+
+vector<Node> tree;
+
+void dfsLongestPathsChild(int v, int p){
+   tree[v].firstMaxPath = tree[v].secondMaxPath = 0;
+   for (auto x : tree[v].neighborns) {
+      if (x == p) continue;
+      dfsLongestPathsChild(x, v);
+      if (tree[x].firstMaxPath + 1 > tree[v].firstMaxPath) {
+         tree[v].secondMaxPath = tree[v].firstMaxPath;
+         tree[v].firstMaxPath = tree[x].firstMaxPath + 1;
+         tree[v].nodeChildMaxPath = x;
+      } else if (tree[x].firstMaxPath + 1  > tree[v].secondMaxPath) {
+         tree[v].secondMaxPath= tree[x].firstMaxPath + 1;
+      }
+   }
+}
+
+void dfsLongestPathsParent(int v, int p){
+   for (auto x : tree[v].neighborns) {
+      if (x == p) continue;
+      if (tree[v].nodeChildMaxPath == x) {
+         if (tree[x].firstMaxPath < tree[v].secondMaxPath + 1) {
+            tree[x].secondMaxPath = tree[x].firstMaxPath;
+            tree[x].firstMaxPath = tree[v].secondMaxPath + 1;
+            tree[x].nodeChildMaxPath = v;
+         } else {
+            tree[x].secondMaxPath = max(tree[x].secondMaxPath,tree[v].secondMaxPath + 1);
+         }
+      } else {
+         tree[x].secondMaxPath = tree[x].firstMaxPath;
+         tree[x].firstMaxPath = tree[v].firstMaxPath + 1;
+         tree[x].nodeChildMaxPath = v;
+      }
+      dfsLongestPathsParent(x, v);
+   }
+}
+
+void allLongestPathsTree(){
+   dfsLongestPathsChild(1,-1);
+   dfsLongestPathsParent(1,-1);
+}
+\end{lstlisting}
+
+\subsubsection{Usando BFS}
+\begin{lstlisting}[language=C++]
+struct Node {
+   vector<int> neighborns;
+   int maxPath = LONG_MIN;
+};
+
+int nnodes;
+
+vector<Node> tree;
+
+int bfs(int src) {
+   int top;
+   queue<int> q;
+   vector<int> d(nnodes+1, -1);
+   d[src] = 0;
+   tree[src].maxPath = max(tree[src].maxPath, d[src]);
+   q.push(src);
+   while(!q.empty()) {
+      top = q.front(); q.pop();
+      for(int v: tree[top].neighborns) {
+         if(d[v] == -1) {
+            q.push(v);
+            d[v] = d[top] + 1;
+            tree[v].maxPath = max(tree[v].maxPath, d[v]);
+         }
+      }
+   }
+   return top;
+}
+
+void allLongestPathsTree(){
+   int diam_end_1 = bfs(1);
+   int diam_end_2 = bfs(diam_end_1);
+   bfs(diam_end_2);
+}
+\end{lstlisting}
+
 \subsection{Java}
+
+\subsubsection{Programación dinámica con DFS}
+\begin{lstlisting}[language=Java]
+public class Main {
+   private class Node{
+      public List<Integer> neighborns ;
+      public int firstMaxPath; // Primer camino mas largo
+      public int secondMaxPath; // Segundo camino mas largo
+	  public int nodeChildMaxPath; // Nodo hijo o padre que salio el camino mas largo
+		
+      public Node() {
+         firstMaxPath =Integer.MIN_VALUE;
+         secondMaxPath = Integer.MIN_VALUE;
+         nodeChildMaxPath = Integer.MIN_VALUE;
+         neighborns =new ArrayList<Integer>();
+      }
+   }
+   
+   private Node [] tree ;
+   
+   public void dfsLongestPathsChild(int v, int p){
+      tree[v].firstMaxPath = tree[v].secondMaxPath = 0;
+      for (int x : tree[v].neighborns) {
+         if (x == p) continue;
+         dfsLongestPathsChild(x, v);
+         if (tree[x].firstMaxPath + 1 > tree[v].firstMaxPath) {
+            tree[v].secondMaxPath = tree[v].firstMaxPath;
+            tree[v].firstMaxPath = tree[x].firstMaxPath + 1;
+            tree[v].nodeChildMaxPath = x;
+         } else if (tree[x].firstMaxPath + 1  > tree[v].secondMaxPath) {
+            tree[v].secondMaxPath= tree[x].firstMaxPath + 1;
+         }
+      }
+   }
+	
+   public void dfsLongestPathsParent(int v, int p){
+       for (int x : tree[v].neighborns) {
+          if (x == p) continue;
+          if (tree[v].nodeChildMaxPath == x) {
+             if (tree[x].firstMaxPath < tree[v].secondMaxPath + 1) {
+                 tree[x].secondMaxPath = tree[x].firstMaxPath;
+                 tree[x].firstMaxPath = tree[v].secondMaxPath + 1;
+                 tree[x].nodeChildMaxPath = v;
+             } else {
+                 tree[x].secondMaxPath = Math.max(tree[x].secondMaxPath,tree[v].secondMaxPath + 1);
+             }
+          } else {
+            tree[x].secondMaxPath = tree[x].firstMaxPath;
+			tree[x].firstMaxPath = tree[v].firstMaxPath + 1;
+			tree[x].nodeChildMaxPath = v;
+		  }
+		  dfsLongestPathsParent(x, v);
+       }
+   }
+	
+   public void allLongestPathsTree(){
+      dfsLongestPathsChild(1,-1);
+      dfsLongestPathsParent(1,-1);
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Usando BFS}
+\begin{lstlisting}[language=Java]
+public class Main {
+   private class Node{
+      public List<Integer> neighborns ;
+      public int maxPath;
+			
+      public Node() {
+         maxPath =Integer.MIN_VALUE;
+         neighborns =new ArrayList<Integer>();
+      }
+   }
+		
+   private Node [] tree ;
+   private int nnodes;
+		
+   public int bfs(int src) {
+      int top=0;
+      Queue<Integer> q =new LinkedList<Integer>();
+      int [] d = new int[nnodes+2];
+      Arrays.fill(d, -1);
+      d[src] = 0;
+      tree[src].maxPath = Math.max(tree[src].maxPath, d[src]);
+      q.add(src);
+      while(!q.isEmpty()) {
+         top = q.remove();
+         for(int v: tree[top].neighborns) {
+            if(d[v] == -1) {
+               q.add(v);
+               d[v] = d[top] + 1;
+               tree[v].maxPath = Math.max(tree[v].maxPath, d[v]);
+            }
+          }
+       }
+       return top;
+    }
+		
+    public void allLongestPathsTree(){
+       int diam_end_1 = bfs(1);
+       int diam_end_2 = bfs(diam_end_1);
+       bfs(diam_end_2);
+    }
+}
+\end{lstlisting}
