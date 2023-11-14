@@ -1,0 +1,27 @@
+El rango de una matriz es el mayor número de filas/columnas linealmente independientes de la matriz. El rango no solo se define para matrices cuadradas. El rango de una matriz también se puede definir como el orden más grande de cualquier menor distinto de cero en la matriz.
+
+Deje que la matriz sea rectangular y tenga tamaño $ N \times M $. Tenga en cuenta que si la matriz es cuadrada y su determinante no es cero, entonces el rango es $ n $ ($ = m $); De lo contrario, será menos. En general, el rango de una matriz no excede $ \min (n, m) $.
+
+La mejor manera de entender este concepto es con un ejemplo, vamos a determinar cuántas filas o columnas son linealmente independientes en las siguientes matrices:
+
+$$ A = \begin{bmatrix}
+	1	& 2  \\
+	2	& 4 
+\end{bmatrix}  
+B = \begin{bmatrix}
+	2	& 1 & -1 \\
+	0	& -1 & 2  \\
+	2	& 0 & 1 
+\end{bmatrix}
+C = \begin{bmatrix}
+	2	& 1 & 1 \\
+	0	& 2 & 1 \\
+	0	& 0 & -1
+\end{bmatrix}    
+$$
+
+Como puedes observar en la matriz $A$, la segunda fila corresponde a la primera fila multiplicada por 2. Entonces, una fila es la combinación lineal de la otra y, por lo tanto, solo una de ellas es linealmente independiente $R_g(A) =1$. Para la matriz $B$, podemos observar que la tercera fila es la suma de la primera y la segunda fila. Las dos primeras son linealmente independientes entre sí, por lo que $R_g(B) =2$. En la matriz $C$ no hay ninguna operación entre las filas o columnas que las relacione. Por tanto, $R_g(C) =3$. 
+
+Puede buscar el rango usando la eliminación gaussiana. Realizaremos las mismas operaciones que cuando resuelvan el sistema o encuentren su determinante. Pero si en algún paso en la columna $ i $ -th no hay filas con una entrada no vacía entre las que ya no seleccionamos, entonces saltamos este paso. De lo contrario, si hemos encontrado una fila con un elemento distinto de cero en la columna $ i $ -th durante el paso $ i $ -th, entonces marcamos esta fila como uno seleccionado, aumentamos el rango por uno (inicialmente el rango se establece igual a $ 0 $) y realiza las operaciones habituales de quitar esta fila del resto.
+
+%Cubico

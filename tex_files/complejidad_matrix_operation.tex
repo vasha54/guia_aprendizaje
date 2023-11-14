@@ -1,0 +1,15 @@
+Para ver la complejidad vamos a analizarla por cada una de las operaciones abordadas
+
+\begin{enumerate}
+	\item \textbf{Traspuesta:} Para esta operación  su complejidad temporal es O($n^2$) siendo $n$ las dimensiones de la matriz. Mientras en la espacial tenemos O($n^2$) en la matriz original y O($n^2$) en la matriz traspuesta.
+	\item \textbf{Suma:} Para esta operación  su complejidad temporal es O($n^2$) siendo $n$ las dimensiones de la matriz. Mientras en la espacial tenemos O($2n^2$)  por las dos matrices que se suman y O($n^2$) en la matriz resultado.
+	\item \textbf{Multipicación:}
+	\begin{itemize}
+		\item \textbf{Por un valor:} Para esta operación su complejidad temporal es O($n^2$) siendo $n$ las dimensiones de la matriz. Mientras en la espacial tenemos O($n^2$) en la matriz original y O($n^2$) en la matriz resultado.
+		\item \textbf{Por una matriz:}  Para esta operación su complejidad temporal es O($n\times m \times l $) siendo $n$ filas de la matriz $A$, $m$ las columnas y filas de $A$ y $B$ respectivamente mientras $l$ las columnas de $B$. En caso de matrices cuadradas ambas burno es evidente que la complejidad es O($n^3$). En cuanto a la complejidad espacial es O($n\cdot m + m\cdot l+ n\cdot l$) por tomando en cuenta las tres matrices.
+	\end{itemize}
+	\item \textbf{Matriz identidad:} Para esta operación tanto su complejidad temporal como espacial es O($n^2$) siendo $n$ las dimensiones de la matriz.
+	\item \textbf{Potencia:} Es operación tiene una complejidad de temporal de O($n^3\log k$) siendo $n$ las dimensiones de la matriz y $k$ el exponente que se desea elevar la matriz. En cuanto a la complejidad espacial tiene la matriz que se le desea calcular la potencia que sería O($n^2$) y otro O($n^2$) en la matriz que se almacena el resultado 
+	\item \textbf{Determinante:} Es operación tiene una complejidad de temporal de O($n^3$) siendo $n$ las dimensiones de la matriz. En cuanto a la complejidad espacial tiene la matriz que se le desea calcular el determinante que sería O($n^2$)
+	\item \textbf{Rango:} Es operación tiene una complejidad de temporal de O($n^3$) siendo $n$ las dimensiones de la matriz. En cuanto a la complejidad espacial tiene la matriz que se le desea calcular el rango que sería O($n^2$) y un vector cuya complejidad espacial es O($n$.)
+\end{enumerate}

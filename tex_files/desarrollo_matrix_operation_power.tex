@@ -1,0 +1,59 @@
+La potencia de $A^k$ de una matrix $A$ es definida si $A$ es una matriz cuadrada. La definición esta basada en la multiplicación de matrices:
+
+$$
+A^k = \underset{\text{k veces}}{\underbrace{A \cdot A \cdot A \dots A}}
+$$
+
+Por ejemplo:
+
+$$
+\begin{bmatrix}
+	2 & 5  \\
+	1 & 4 
+\end{bmatrix}^3  =
+\begin{bmatrix}
+	2 & 5  \\
+	1 & 4 
+\end{bmatrix} \cdot
+\begin{bmatrix}
+	2 & 5  \\
+	1 & 4 
+\end{bmatrix} \cdot
+\begin{bmatrix}
+	2 & 5  \\
+	1 & 4 
+\end{bmatrix}
+=
+\begin{bmatrix}
+	48 & 165  \\
+	33 & 114
+\end{bmatrix}$$ 
+
+En correspondencia $A^0$ es una matriz identidad. Por ejemplo:
+
+$$\begin{bmatrix}
+	2 & 5  \\
+	1 & 4 
+\end{bmatrix}^0  =
+\begin{bmatrix}
+	1 & 0  \\
+	0 & 1 
+\end{bmatrix}$$
+
+
+
+La matrix $A^k$ puede ser eficientemente calculada en O($n^3\log k$) usando el algoritmo de exponenciación binaria. Por Ejemplo
+
+$$\begin{bmatrix}
+	2 & 5  \\
+	1 & 4 
+\end{bmatrix}^8  =
+\begin{bmatrix}
+	2 & 5  \\
+	1 & 4
+\end{bmatrix}^4 \cdot
+\begin{bmatrix}
+	2 & 5  \\
+	1 & 4
+\end{bmatrix}^4$$
+

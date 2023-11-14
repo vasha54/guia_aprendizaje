@@ -1,0 +1,47 @@
+Los números catalanes también se pueden calcular mediante coeficientes binomiales:
+
+$$C_n = \frac{1}{n + 1} {\binom{2n}{n}}$$
+
+aquí $\binom{n}{k}$ denota el coeficiente binomial habitual, es decir, el número de formas de seleccionar $k$ objetos de un conjunto de $n$ objetos).
+
+La fórmula se puede explicar como sigue:
+
+Hay un total de $\binom{2n}{n}$ formas de construir una expresión entre paréntesis (no necesariamente válida) que contenga $n$ paréntesis izquierdos y $n$ paréntesis derechos. Calculemos el número de expresiones que no son válidas.
+
+Si una expresión entre paréntesis no es válida, debe contener un prefijo donde el número de paréntesis derechos exceda el número de paréntesis izquierdos. La idea es invertir cada paréntesis que pertenece a dicho prefijo. Por ejemplo, la expresión $())()($ contiene un prefijo $())$ y, después de invertir el prefijo, la expresión se convierte en $)((()($.
+
+La expresión resultante consta de $n+1$ paréntesis izquierdo y $n-1$ paréntesis derecho. El número de tales expresiones es $\binom{2n}{n+1}$, que es igual el número de expresiones entre paréntesis no válidas. Por tanto, el número de expresiones entre paréntesis válidas se puede calcular utilizando la fórmula:
+
+$$ \binom{2n}{n} - \binom{2n}{n+1} = \binom{2n}{n} - \frac{1}{n + 1} \binom{2n}{n} = \frac{1}{n + 1} \binom{2n}{n}   $$
+
+Otra forma de enteder la expresión anterior es  a partir del problema de los caminos monótonos en 
+una cuadrícula. El número total de caminos monótonos en el tamaño de la matriz de $n \times n$ está dado por $\binom{2n}{n}$.
+
+Ahora contamos el número de caminos monótonos que cruzan la diagonal principal. Considere los 
+caminos que cruzan la diagonal principal y encuentre el primer borde que está por encima de la 
+diagonal. Refleja el camino alrededor de la diagonal hasta el final, siguiendo este borde. El 
+resultado es siempre un camino monótono en la cuadrícula $(n - 1) \times (n + 1)$. Por otro 
+lado, cualquier camino monótono en la red $(n - 1) \times (n + 1)$ debe cruzar la diagonal. Por 
+lo tanto, enumeramos todos los caminos monótonos que cruzan la diagonal principal en la red $n 
+\times n$.
+
+El número de caminos monótonos en la red $(n-1) \times (n+1)$ son $\binom{2n}{n-1}$. Llamemos a esos caminos \emph{malos}. Como resultado, para obtener el número de caminos monótonos que no cruzan la diagonal principal, restamos los caminos \emph{malos} anteriores, obteniendo la fórmula:
+
+$$ C_n = \binom{2n}{n} - \binom{2n}{n-1} = \frac{1}{n + 1} \binom{2n}{n} , {n} \geq 0 $$
+
+Si se nos pide que calculemos los valores de C(n) para varios valores de n, puede ser mejor calcular los valores usando DP (de abajo hacia arriba). Si conocemos C(n), podemos calcular C(n+1) manipulando la fórmula como se muestra a continuación.
+$$\begin{array}{rl}
+C_n =	& \frac{(2n)!}{n!\times n! \times (n+1)} \\
+	&  \\
+C_{n+1} = 	& \frac{(2\times(n+1))!}{(n+1)!\times(n+1)!\times((n+1)+1)}  \\
+	&  \\
+	&   \frac{(2n+2)\times(2n+1)\times(2n)!}{(n+1)\times n!\times(n+1)\times n!\times(n+2)} \\
+	&  \\
+	& \frac{(2\times(n+1))\times(2n+1)\times[(2n)!]}{(n+2)\times(n+1)\times[n!\times n!\times(n+1)]}  \\
+	&  \\
+	& \frac{4n+2}{n+2} \times C_n
+\end{array}$$
+
+
+
+

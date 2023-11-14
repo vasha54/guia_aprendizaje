@@ -1,0 +1,13 @@
+Para explicar como realizar una detección de ciclo dentro un grafo lo primero que haremos será dividir el problema en dos, de esta forma veremos el problema para grafos dirigidos y para grafos no dirigidos de forma separada.
+
+\subsection{Grafo dirigido}
+
+Para resolver este problema sobre un grafo no dirigido ejecutaremos una serie de DFS en el grafo. Inicialmente todos los vértices están coloreados de blanco (0). Desde cada vértice $v$ no visitado (blanco), iniciaremos el DFS, marcamos el nodo $v$ en gris (1) al entrar en el DFS cuando se procesa  y lo marcamos en negro (2) al salir. Si DFS se mueve a un vértice gris $u$, entonces hemos encontrado un ciclo que comenzó el nodo $u$ término en el nodo $v$. El ciclo en sí se puede reconstruir utilizando un arreglo donde se almacene para cada nodo $v$ su padre. Para dicha reconstrucción empezariamos en el nodo $v$ hasta llegar al nodo $u$ apoyados en el arreglo de padres.
+
+
+
+\subsection{Grafo no dirigido}
+
+La solución para grafos no dirigidos es similar a los grafos dirigidos solo se debe tener en cuenta que en la versión no dirigida, si un vértice $v$ se colorea de negro, el DFS nunca volverá a visitarlo. Esto se debe a que ya exploramos todas las aristas conectadas de $v$ cuando lo visitamos por primera vez. El componente conectado que contiene $v$ (después de eliminar la arista entre $v$ y su padre) debe ser un árbol, si el DFS ha completado el procesamiento de $v$ sin encontrar un ciclo. Así que ni siquiera necesitamos distinguir entre estados grises y negros. Por lo tanto, podemos convertir el color del vector char en un vector booleano visitado.
+
+

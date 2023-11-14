@@ -1,0 +1,28 @@
+Los números catalanes se pueden calcular mediante la fórmula:
+
+$$C_0 = C_1 = 1$$
+
+$$C_n = \sum_{i = 0}^{n-1} C_i C_{n-1-i} , {n} \geq 2$$
+
+La suma pasa por las formas de dividir la expresión en dos partes de modo que ambas partes sean expresiones válidas y la primera parte sea lo más corta posible pero no vacía. Para cualquier i, la primera parte contiene i + 1 pares de paréntesis y el número de expresiones es el producto de los siguientes valores:
+
+\begin{itemize}
+	\item $C_i$: el número de formas de construir una expresión usando los paréntesis de la primera parte, sin contar los paréntesis más externos.
+	\item $C_{n-i-1}$: el número de formas de construir una expresión usando los paréntesis de la segunda parte.
+\end{itemize}
+
+El caso base es $C_0 = 1$, porque podemos construir una expresión entre paréntesis vacía usando cero pares de paréntesis.
+
+La fórmula de recurrencia se puede deducir fácilmente del problema de la secuencia correcta de corchetes.
+
+El paréntesis de apertura más a la izquierda $l$ corresponde a cierto corchete de cierre $r$, que 
+divide la secuencia en 2 partes que a su vez deberían ser una secuencia correcta de corchetes. 
+Así, la fórmula también se divide en 2 partes. Si denotamos $k = {r - l - 1}$, entonces para $r$ 
+fijo, habrá exactamente $C_i C_{n-1-i}$ tales secuencias de corchetes. Sumando esto sobre todos 
+los $i$ admisibles, obtenemos la relación de recurrencia en $C_n$.
+
+También puedes pensarlo de esta manera. Por definición, $C_n$ denota el número de secuencias de 
+corchetes correctas. Ahora, la secuencia se puede dividir en 2 partes de longitud $i$ y ${n-i}$, cada una de las cuales debe ser una secuencia de corchetes correcta. Ejemplo:
+
+$()(())$ se puede dividir en $()$ y $(())$, pero no se puede dividir en $()($ y $())$. Nuevamente 
+sumando todos los $i$ admisibles, obtenemos la relación de recurrencia en $C_n$.

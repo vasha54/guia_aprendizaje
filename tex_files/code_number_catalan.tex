@@ -1,0 +1,173 @@
+
+
+\subsection{C++}
+
+\subsubsection{Función recursiva}
+\begin{lstlisting}[language=C++]
+unsigned long long catalan(unsigned long long n){
+   if (n <= 1) return 1;
+	
+   unsigned long long res = 0;
+   for (unsigned long long i = 0; i < n; i++)
+      res += catalan(i) * catalan(n - i - 1);
+   return res;
+}
+\end{lstlisting}
+
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=C++]
+unsigned long long catalanDP(unsigned long long n){
+   unsigned long long catalan[n + 1];
+   catalan[0] = catalan[1] = 1;
+   
+   for (unsigned long long i = 2; i <= n; i++) {
+      catalan[i] = 0;
+      for (int j = 0; j < i; j++)
+         catalan[i] += catalan[j] * catalan[i-j-1];
+   }
+   return catalan[n];
+}
+
+unsigned long long catalanDPV2(unsigned long long n){
+   unsigned long long catalan[n + 3];
+   catalan[0] = 1;
+   for (unsigned long long i = 0; i <= n; i++)
+      catalan[i+1] = catalan[i]* (4*i+2) / (i+2);
+   return catalan[n];
+}
+\end{lstlisting}
+
+
+\subsubsection{Coeficiente Binomiales}
+\begin{lstlisting}[language=C++]
+unsigned long long binomialCoeff(unsigned long long n, unsigned long long k) {
+   unsigned long long res = 1;
+	
+   if (k>n-k) k =n-k;
+	
+   for (unsigned long long i = 0; i < k; ++i) {
+      res *= (n - i); res /= (i + 1);
+   }
+   return res;
+}
+
+unsigned long long catalan(unsigned long long n){
+   unsigned long long c = binomialCoeff(2*n,n);
+   return c/(n+1);
+}
+\end{lstlisting}
+
+\subsubsection{Coeficiente Binomiales \emph{BigInteger}}
+\begin{lstlisting}[language=C++]
+// asumimos que el bigint ya esta implementado	
+bigint findCatalan(int n){
+   bigint b = 1;
+   // calculando n!
+   for (int i = 1; i <= n; i++) b = b * i;
+	
+   // calculando n! * n!
+   b = b * b;
+	
+   bigint d = 1;
+	
+   // calculando (2n)!
+   for (int i = 1; i <= 2 * n; i++) d = d * i;
+	
+   // calculando (2n)! / (n! * n!)
+   bigint ans = d / b;
+	
+   // calculando (2n)! / ((n! * n!) * (n+1))
+   ans = ans / (n + 1);
+   return ans;
+}
+\end{lstlisting}
+
+
+\subsection{Java}
+
+\subsubsection{Función recursiva}
+\begin{lstlisting}[language=Java]
+public static long catalan(long n){
+   int res = 0;
+   if (n <= 1L) return 1L;
+
+   for (long i = 0; i < n; i++)
+      res += catalan(i) * catalan(n - i - 1);
+   return res;
+}
+\end{lstlisting}
+
+
+\subsubsection{Programación Dinámica}
+\begin{lstlisting}[language=Java]
+public static long catalanDP(long n){
+   long catalan[] = new long[n + 2];
+	
+   catalan[0] = 1; catalan[1] = 1;
+   
+   for (long i = 2; i <= n; i++) {
+      catalan[i] = 0;
+      for (long j = 0; j < i; j++) {
+         catalan[i] += catalan[j] * catalan[i - j - 1];
+      }
+   }
+   return catalan[n];
+}
+
+public static long catalanDPV2(long n){
+   long catalan[] = new long[n + 3];
+   catalan[0] = 1; 
+   for (long i = 0; i <= n; i++)
+      catalan[i+1] = catalan[i]* (4*i+2) / (i+2);
+   return catalan[n];
+}
+\end{lstlisting}
+
+
+\subsubsection{Coeficiente Binomiales}
+\begin{lstlisting}[language=Java]
+public static long binomialCoeff(long n, long k){
+   long res = 1;
+	
+   if (k > n - k) { k = n - k; }
+	
+   for (long i = 0; i < k; ++i) {
+      res *= (n - i);
+      res /= (i + 1);
+   }
+   return res;
+}
+
+public static long catalan(int n){
+   long c = binomialCoeff(2 * n, n);
+   return c / (n + 1);
+}
+\end{lstlisting}
+
+\subsubsection{Coeficiente Binomiales \emph{BigInteger}}
+\begin{lstlisting}[language=Java]
+public static BigInteger findCatalan(int n){
+   // usando BigInteger para calcular factoriales largos
+   BigInteger b = new BigInteger("1");
+	
+   // calculando n!
+   for (int i = 1; i <= n; i++) 
+      b = b.multiply(BigInteger.valueOf(i));
+   
+   // calculando n! * n!
+   b = b.multiply(b);
+	
+   BigInteger d = new BigInteger("1");
+	
+   // calculando (2n)!
+   for (int i = 1; i <= 2 * n; i++)
+      d = d.multiply(BigInteger.valueOf(i));
+   
+   // calculando (2n)! / (n! * n!)
+   BigInteger ans = d.divide(b);
+	
+   // calculando (2n)! / ((n! * n!) * (n+1))
+   ans = ans.divide(BigInteger.valueOf(n + 1));
+   return ans;
+}
+\end{lstlisting}

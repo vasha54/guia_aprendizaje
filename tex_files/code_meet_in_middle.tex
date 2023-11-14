@@ -1,0 +1,13 @@
+%Podemos implementar el algoritmo para que su complejidad temporal sea O($2^{\frac{n}{2}}$). Primero, generamos listas ordenadas $S_A$ y $S_B$, que se pueden hacer en O ($2^{\frac{n}{2}}$) tiempo usando una técnica similar a la de fusión. Después de esto, dado que las listas están ordenadas, podemos verificar en O ($2^{\frac{n}{2}}$) tiempo si la suma $x$ se puede crear a partir de $S_A$ y $S_B$.
+
+Para resumir todo el proceso de esta idea:
+
+\begin{enumerate}
+	\item Divida el conjunto dado en dos conjuntos de aproximadamente el mismo tamaño.
+	\item Calcule las respuestas requeridas para los dos conjuntos formados así y ordene uno del conjunto resultante para prepararlo para la búsqueda binaria.
+	\item Itere sobre el conjunto de resultados sin ordenar y busque binariamente el valor requerido en el conjunto ordenado.
+\end{enumerate}
+
+
+
+

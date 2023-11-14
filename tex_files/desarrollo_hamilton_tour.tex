@@ -1,0 +1,89 @@
+No se conoce ningún método eficiente para probar si un grafo contiene una ruta hamiltoniana, y el problema es \emph{NP-Hard}. Aún así, en algunos casos especiales, podemos estar seguros de que un grafo contiene un camino hamiltoniano.
+
+Una observación simple es que si el grafo está completo, es decir, hay una arista entre todos los pares de nodos, también contiene un camino hamiltoniano. También se han logrado resultados más fuertes:
+
+\begin{itemize}
+	\item \textbf{Teorema de Dirac:} Si el grado de cada nodo es al menos $N /2$ donde $N$ es la cantidad de nodos del grafo, el grafo contiene un camino hamiltoniano.
+	\item \textbf{Teorema de Ore:} si la suma de grados de cada par de nodos no adyacentes es al menos $N$ donde $N$ es la cantidad de nodos del grafo, el grafo contiene un camino hamiltoniano.
+\end{itemize}
+
+Una propiedad común en estos teoremas y otros resultados es que garantizan la existencia de una ruta hamiltoniana si el grafo tiene una gran cantidad de aristas. Esto tiene sentido, porque cuantas más aristas contiene el grafo, más posibilidades hay para construir un camino hamiltoniano.
+
+La mejor aportación en este sentido es un teorema publicado en 1976 debido a J. A. Bondy y a V. Chvátal, que generaliza los resultados anteriormente encontrados por G. A. Dirac (1952) y Ø. Ore (1960). Todos estos resultados afirman, básicamente, que un grafo es hamiltoniano si existen suficientes aristas. Para enunciar el Teorema de Bondy-Chvátal es menester definir primero qué es la clausura de un grafo.
+
+\textbf{Definición} Dado un grafo $G$ con $n$ vértices, la clausura de $G$ es el grafo que tiene los mismos vértices que $G$ y que aparece al agregar todas las aristas de la forma ${u, v}$ para cualquier par de vértices $u$ y $v$ que no sean adyacentes y cumplan que $grado(v) + grado(u) \ge n$.  
+
+\textbf{Teorema de Bondy-Chvátal:} Un grafo es hamiltoniano si y sólo si lo es su clausura.
+
+Dado que no hay una forma eficiente de verificar si existe una ruta hamiltoniana, está claro que tampoco hay un método para construir eficientemente la ruta, porque de lo contrario podríamos tratar de construir la ruta y ver si existe.
+
+Una forma simple de buscar una ruta hamiltoniana es usar un algoritmo de retroceso (\emph{backtracking}) que pase por todas las formas posibles de construir la ruta.
+
+Una solución más eficiente se basa en la programación dinámica. La idea es calcular los valores de una función $posible(S, X)$, donde $S$ es un subconjunto de nodos y $X$ es uno de los nodos. La función indica si hay una ruta hamiltoniana que visita los nodos de $S$ y termina en el nodo $X$.
+
+\subsection{Algoritmo de retroceso}
+
+\subsubsection{Verificar si existe ciclo}
+Este problema se puede resolver utilizando la siguiente idea. Genere todas las configuraciones posibles de vértices e imprima una configuración que satisfaga las restricciones dadas. Habrá $n!$ configuraciones. Por lo tanto, la complejidad temporal general de este enfoque será O($N!$). 
+
+Cree una matriz de ruta vacía y agréguele el vértice 0. Agregue otros vértices, comenzando desde el vértice 1. Antes de agregar un vértice, verifique si es adyacente al vértice agregado anteriormente y si aún no está agregado. Si encontramos dicho vértice, lo agregamos como parte de la solución. Si no encontramos un vértice, devolvemos falso y sacamos el último vertice adicionado y buscamos un nuevo nodo vecino no visitado del nodo que se encuentra al final de la mtriz que indica la matriz. Cuando la cantidad de nodos en la matriz sea igual a la cantidad de nodos y el nodo inicial sea vecino del nodo final entonces encontramos un ciclo.
+
+\subsubsection{Imprimir todos los posibles ciclos de Hamilton grafo no dirigido}
+El problema dado se puede resolver utilizando Backtracking para generar todos los ciclos hamiltonianos posibles. Siga los pasos a continuación para resolver el problema:
+
+\begin{enumerate}
+	\item Cree una matriz auxiliar, digamos $path[]$ para almacenar el orden de recorrido de los nodos y una matriz booleana $visited[]$ para realizar un seguimiento de los vértices incluidos en la ruta actual.
+	\item Inicialmente, agregue el vértice de origen a $path$.
+	\item Ahora, agregue recursivamente vértices a $path$ uno por uno para encontrar el ciclo.
+	\item Antes de agregar un vértice a $path$, verifique si el vértice que se está considerando es adyacente al vértice agregado previamente o no y si aún no se encuentra en $path$. Sino se encuentra dicho vértice, agréguelo a $path$  y marque su valor como verdadero en la matriz $visited[]$.
+	\item Si la longitud de $path$ se vuelve igual a $N$ y hay una arista desde el último vértice en $path$ hasta el primer vertice almacenado en $path$, imprima la matriz $path$.
+	\item Después de completar los pasos anteriores, si no existe dicha ruta, entonces no existe ciclo hamiltoniano.
+\end{enumerate}
+
+\subsection{Programación Dinamica}
+
+\subsubsection{Verificar si existe camino}
+
+El enfoque más simple para resolver el problema dado es generar todas las permutaciones posibles de $N$ vértices. Para cada permutación, verifique si es una ruta hamiltoniana válida verificando si hay una arista entre los vértices adyacentes o no.
+
+El enfoque anterior se puede optimizar mediante el uso de programación dinámica y enmascaramiento de bits, que se basa en las siguientes observaciones:
+
+\begin{itemize}
+	\item La idea es tal que para cada subconjunto $S$ de vértices, comprobar si existe un camino hamiltoniano en el subconjunto $S$ que termina en el vértice $v$ donde $v \in S$.
+	\item Si $v$ tiene un vecino $u$, donde $u \in S - {v}$, por lo tanto, existe un camino hamiltoniano que termina en el vértice $u$.
+	\item El problema se puede resolver generalizando el subconjunto de vértices y el vértice final del camino hamiltoniano.
+\end{itemize}
+
+Siga los pasos a continuación para resolver el problema:
+
+\begin{enumerate}
+	\item Inicialice una matriz booleana $dp[][]$ en la dimensión $N*2^N$ donde $dp[j][i]$ representa si existe o no una ruta en el subconjunto representada por la máscara $i$ que visita todos y cada uno de los vértices en $i$ una vez y termina en vértice $j$.
+	\item Para el caso base, actualice $dp[i][1 << i] =$ verdadero, para $i$ en el rango $[0, N-1]$
+	\item Itere sobre el rango $[1, 2^N-1]$ usando la variable $i$ y realice los siguientes pasos:
+	\begin{itemize}
+		\item Todos los vértices con bits establecidos en la máscara $i$ están incluidos en el subconjunto.
+		\item Itere sobre el rango $[1, N]$ usando la variable $j$ que representará el vértice final de la ruta hamiltoniana de la máscara del subconjunto actual $i$ y realice los siguientes pasos:
+		\begin{itemize}
+			\item Si el valor de $i$ y $2^j$ es verdadero, entonces itere sobre el rango $[1, N]$ usando la variable $k$ y si el valor de $dp[k][i \quad xor \quad 2^j]$ es verdadero, entonces marque $dp[j][i]$ es cierto y sale del ciclo.
+			\item De lo contrario, continúe con la siguiente iteración.
+		\end{itemize}
+	\end{itemize}
+	\item Itere sobre el rango usando la variable $i$ y si el valor de $dp[i][2^N-1]$ es verdadero, entonces existe una ruta hamiltoniana que termina en el vértice $i$.
+\end{enumerate}
+
+\subsubsection{Calcular todos los caminos de hamilton del nodo 1 al nodo N en grafo dirigido}
+
+El problema dado se puede resolver de igual manera que el anterior usando máscara de bits con programación dinámica con algunas modificaciones, iterando sobre todos los subconjuntos de los vértices dados representados por una máscara de tamaño $N$ y verificando si existe una ruta hamiltoniana que comienza en el vértice $1$ y termina en  vértice $N$  y contar todos esos caminos. Digamos que para un grafo que tiene $N$ vértices, $S$ representa una máscara de bits donde S esta en una rango $[0 , (1 << N)-1]$ y $dp[i][S]$ representa el número de rutas que visitan cada vértice en la máscara $S$ y terminan en el vertice $i$ entonces la recurrencia válida será dada como $dp[i][S] = \sum dp[j][S \quad XOR \quad 2^i]$ donde $j \in S$ y hay una arista de $j$ a $i$ donde $S \quad  XOR  \quad  2^i$ representa el subconjunto donde el i-ésimo vértice no esta y debe haber una arista de $j$ a $i$.
+
+\begin{enumerate}
+	\item Inicialice una matriz 2D $dp[N][2^N]$ con $0$ y establezca $dp[0][1]$ como $1$.
+	\item Itere sobre el rango de $[2, 2^N-1]$ usando la variable i y verifique que la máscara tenga todos los bits configurados.
+	\begin{itemize}
+		\item Itere sobre el rango desde $[0, N)$ usando la variable $end$ y recorra todos los bits de la máscara actual y asuma cada bit como el bit final.
+		\begin{itemize}
+			\item Inicialice la variable $prev$ como $i-(1 << end)$.
+			\item Itere sobre el rango $[0, size)$ donde $size$ es el tamaño de la lista de adyacencia al nodo $end$ usando la variable $it$ y recorra los vértices adyacentes del bit final actual y actualice la matriz $dp[][]$ de esta manera $dp[end][i] += dp[it][prev]$.
+		\end{itemize}
+	\end{itemize}
+	\item Después de realizar los pasos anteriores, imprima el valor de $dp[N-1][2^N-1]$ como respuesta.
+\end{enumerate}

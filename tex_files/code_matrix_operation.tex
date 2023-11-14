@@ -1,0 +1,156 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+#define EPS 1e-9
+typedef double number;
+typedef vector <number> Array;
+typedef vector <Array > Matrix;
+
+Matrix identity (int n) {
+   Matrix A (n, Array (n,0));
+   for (int i=0; i<n; ++i) A[i][i]=1;
+   return A;
+}
+
+Matrix sum( Matrix & A,  Matrix & B){
+   Matrix C (A.size(),Array(A[0].size()));
+   for (int i = 0; i<C.size(); ++i)
+      for (int j=0; j<C[i].size (); ++j) C[i][j] = A[i][j] + B[i][j];
+   return C;
+}
+
+Matrix mul ( Matrix & A,  Matrix & B) {
+   Matrix C (A.size (), Array (B [0]. size ()));
+   for (int i = 0; i<C.size(); ++i)
+      for (int j=0; j<C[i].size (); ++j)
+         for (int k=0; k<A[i].size(); ++k) C[i][j]+= A[i][k] * B[k][j];
+   return C;
+}
+
+Matrix pow (Matrix & A, int e){
+   Matrix ret = identity(A.size());
+   while(e){
+      if(e&1) ret=mul(ret,A);
+      e>>=1;
+      A=mul(A,A);
+   }
+   return ret;
+}
+
+number det(Matrix A) {
+   const int n = A.size();
+   number D = 1;
+   for (int i = 0; i < n; ++i) {
+      int pivot = i;
+      for (int j = i+1; j < n; ++j)
+         if (abs(A[j][i]) > abs(A[pivot][i])) pivot = j;
+      swap(A[pivot], A[i]);
+      D *= A[i][i] * (i != pivot ? -1 : 1);
+      if (abs(A[i][i]) < EPS) break;
+      for(int j = i+1; j < n; ++j)
+         for(int k = n-1; k >= i; --k) A[j][k] -= A[i][k] * A[j][i] / A[i][i];
+   }
+   return D;
+}
+
+int rankMatrix(Matrix A) {
+   int n = A.size(); int m = A[0].size();
+   int rankM = 0;
+   vector<bool> row_selected(n, false);
+   for (int i = 0; i < m; ++i) {
+      int j;
+      for (j = 0; j < n; ++j) 
+         if (!row_selected[j] && abs(A[j][i]) > EPS) break;
+	  if (j != n) {
+         ++rankM;
+         row_selected[j] = true;
+         for (int p = i + 1; p < m; ++p) A[j][p] /= A[j][i];
+         for (int k = 0; k < n; ++k) {
+            if (k != j && abs(A[k][i]) > EPS) {
+               for (int p = i + 1; p < m; ++p) A[k][p] -= A[j][p] * A[k][i];
+            }
+         }
+      }
+   }
+   return rankM;
+}
+
+\end{lstlisting}
+
+\subsection{Java}
+
+\begin{lstlisting}[language=Java]
+public class Main {
+   private double EPS = 1e-9;
+	
+   public double[][] identity(int n) {
+      double[][] A = new double[n][n];
+      for (int i = 0; i < n; ++i) { Arrays.fill(A[i], 0); A[i][i] = 1;}
+      return A;
+   }
+	
+   public double[][] sum(double[][] A, double[][] B) {
+      double[][] C = new double[A.length][A[0].length];
+      for (int i = 0; i < C.length; ++i)
+         for (int j = 0; j < C[i].length; ++j) C[i][j] = A[i][j] + B[i][j];
+      return C;
+   }
+	
+   public double[][] mul(double[][] A, double[][] B) {
+      double[][] C = new double[A.length][B[0].length];
+      for (int i=0; i<C.length; ++i)
+         for (int j=0; j<C[i].length; ++j)
+            for (int k=0; k<A[i].length;++k) C[i][j] += A[i][k] * B[k][j];
+      return C;
+   }
+	
+   public double[][] pow(double[][] A, int e) {
+      double[][] ret = identity(A.length);
+      while (e > 0) {
+         if ((e & 1) == 1) ret = mul(ret, A);
+         e >>= 1;
+         A = mul(A, A);
+      }
+      return ret;
+   }
+	
+   public double det(double[][] A) {
+      int n = A.length; double D = 1;
+      for (int i = 0; i < n; ++i) {
+         int pivot = i;
+         for (int j = i + 1; j < n; ++j)
+            if (Math.abs(A[j][i]) > Math.abs(A[pivot][i])) pivot = j;
+            for (int h = 0; h < A[pivot].length; h++) {
+               double tmp = A[pivot][h]; A[pivot][h] = A[i][h];
+               A[i][h] = tmp;
+            }
+            D *= A[i][i] * (i != pivot ? -1 : 1);
+            if (Math.abs(A[i][i]) < EPS) break;
+            for (int j = i + 1; j < n; ++j)
+            for (int k = n - 1; k >= i; --k)
+            A[j][k] -= A[i][k] * A[j][i] / A[i][i];
+       }
+       return D;
+   }
+	
+   public int rankMatrix(double[][] A) {
+      int n = A.length; int m = A[0].length; int rankM = 0;
+      boolean[] row_selected = new boolean[n];
+      Arrays.fill(row_selected, false);
+      for (int i = 0; i < m; ++i) {
+         int j;
+         for (j = 0; j < n; ++j)
+            if (!row_selected[j] && Math.abs(A[j][i]) > EPS) break;
+         if (j != n) {
+            ++rankM; row_selected[j] = true;
+            for (int p = i + 1; p < m; ++p) A[j][p] /= A[j][i];
+            for (int k = 0; k < n; ++k) {
+               if (k != j && Math.abs(A[k][i]) > EPS) {
+                  for (int p = i + 1; p < m; ++p) A[k][p] -= A[j][p] * A[k][i];
+               }
+            }
+         }
+      }
+      return rankM;
+   }
+}
+\end{lstlisting}

@@ -1,0 +1,323 @@
+\subsection{C++}
+
+\subsubsection{Verificar si existe ciclo (Algoritmo retroceso)}
+\begin{lstlisting}[language=C++]
+#define V 5 //cantidad de vertices
+
+void printSolution(int path[]); 
+
+bool isSafe(int v, bool graph[V][V], int path[], int pos) { 
+   if (graph [path[pos - 1]][ v ] == 0) return false; 
+   for (int i = 0; i < pos; i++) if (path[i] == v) return false; 
+   return true; 
+} 
+
+bool hamCycleUtil(bool graph[V][V], int path[], int pos){ 
+   if (pos == V) { 
+      if (graph[path[pos - 1]][path[0]] == 1) return true; 
+      else return false; 
+   } 
+	
+   for (int v = 1; v < V; v++){ 
+      if (isSafe(v, graph, path, pos)){ 
+         path[pos] = v; 
+         if (hamCycleUtil (graph, path, pos + 1) == true) return true; 
+         path[pos] = -1; 
+      } 
+   } 
+   return false; 
+} 
+
+//Se invoca este metodo pasando la matriz de adyacencia del grafo
+bool hamCycle(bool graph[V][V]){ 
+   int *path = new int[V]; 
+   for (int i = 0; i < V; i++) path[i] = -1; 
+   
+   path[0] = 0; 
+   if (hamCycleUtil(graph, path, 1) == false ){ 
+      cout << "\nNo existe una solucion"; return false; 
+   } 
+   printSolution(path); return true; 
+} 
+
+
+void printSolution(int path[]) { 
+   cout << "Existe solucion: El siguiente es un ciclo de Hamilton \n"; 
+   for (int i = 0; i < V; i++) cout << path[i] << " "; 
+   cout << path[0] << " ";  cout << endl;
+} 
+\end{lstlisting}
+
+\subsubsection{Imprimir todos los posibles ciclos de Hamilton grafo no dirigido (Algoritmo retroceso)}
+\begin{lstlisting}[language=C++]
+#define V 6 //cantidad de vertices
+bool hasCycle;
+
+bool isSafe(int v, int graph[][V], vector<int> path, int pos){
+   if (graph[path[pos - 1]][v] == 0) return false;
+   for (int i = 0; i < pos; i++) if (path[i] == v) return false;
+   return true;
+}
+
+void FindHamCycle(int graph[][V], int pos, vector<int> path, bool visited[], int N) {
+   if (pos == N) {
+      if (graph[path[path.size() - 1]][path[0]] != 0) {
+         path.push_back(0);
+         for (int i = 0; i < path.size(); i++) cout << path[i] << " ";
+         cout << endl;
+         path.pop_back();
+         hasCycle = true;
+      }
+      return;
+   }
+   for (int v = 0; v < N; v++) {
+      if (isSafe(v, graph, path, pos) && !visited[v]) {
+         path.push_back(v); visited[v] = true;
+         FindHamCycle(graph, pos + 1, path, visited, N);
+         visited[v] = false; path.pop_back();
+      }
+   }
+}
+
+void hamCycle(int graph[][V], int N){
+   hasCycle = false;
+   vector<int> path;
+   path.push_back(0);
+   bool visited[N];
+   for (int i = 0; i < N; i++) visited[i] = false;
+   visited[0] = true;
+   FindHamCycle(graph, 1, path, visited, N);
+   if (!hasCycle) {
+     cout << "No existe ciclo hamiltoniano " << endl; return;
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Verificar si existe camino (Programación Dinámica)}
+\begin{lstlisting}[language=C++]
+bool Hamiltonian_path( vector<vector<int> >& adj, int N){
+   int dp[N][(1 << N)];
+   memset(dp, 0, sizeof dp);
+   
+   for (int i = 0; i < N; i++) dp[i][(1 << i)] = true;
+	
+   for (int i = 0; i < (1 << N); i++) {
+      for (int j = 0; j < N; j++) {
+         if (i & (1 << j)) {
+            for (int k = 0; k < N; k++) {
+                if (i&(1<<k) && adj[k][j] && j!=k && dp[k][i ^ (1 << j)]){
+                	dp[j][i] = true; break;
+                }
+            }
+         }
+      }
+   }
+	
+   for (int i = 0; i < N; i++) {
+      if (dp[i][(1 << N) - 1]) return true;
+   }
+   return false;
+}
+\end{lstlisting}
+
+\subsubsection{Calcular todos los caminos de hamilton del nodo 1 al nodo N en grafo dirigido}
+\begin{lstlisting}[language=C++]
+int findAllPaths( int N, vector<vector<int> >& graph){
+   int dp[N][(1 << N)];
+   memset(dp, 0, sizeof dp);
+   dp[0][1] = 1;
+   for (int i = 2; i < (1 << N); i++) {
+      // Si el primer vertice esta ausente
+      if ((i & (1 << 0)) == 0) continue;
+      
+      // Considere solo los subconjuntos completos
+      if ((i & (1 << (N - 1))) && i != ((1 << N) - 1)) continue;
+		
+      // Elige la ciudad final
+      for (int end = 0; end < N; end++) {
+        // Si esta ciudad no esta en el subconjunto
+        if (i & (1 << end) == 0) continue;
+        // Conjunto sin la ciudad final
+        int prev = i - (1 << end);
+        // Consultar por las ciudades adyacentes.
+        for (int it : graph[end]) {
+            if ((i & (1 << it))) {
+               dp[end][i] += dp[it][prev];
+            }
+        }
+      }
+   }
+   return dp[N - 1][(1 << N) - 1];
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Verificar si existe ciclo (Algoritmo retroceso)}
+\begin{lstlisting}[language=Java]
+class HamiltonianCycle {
+   final int V = 5; //cantidad de vertices del grafo
+   int path[]; // secuencia que indica un posible ciclo
+	
+   boolean isSafe(int v, int graph[][], int path[], int pos){
+      if (graph[path[pos - 1]][v] == 0) return false;
+      for (int i = 0; i < pos; i++) if (path[i] == v) return false;
+      return true;
+   }
+   
+   boolean hamCycleUtil(int graph[][], int path[], int pos){
+      if (pos == V){
+         if (graph[path[pos - 1]][path[0]] == 1) return true;
+         else return false;
+      }
+		
+      for (int v = 1; v < V; v++) {
+         if (isSafe(v, graph, path, pos)) {
+            path[pos] = v;
+            if (hamCycleUtil(graph, path, pos + 1) == true) return true;
+            path[pos] = -1;
+         }
+       }
+       return false;
+   }
+	
+   int hamCycle(int graph[][]) {
+      path = new int[V];
+      for (int i = 0; i < V; i++) path[i] = -1;
+
+      path[0] = 0;
+      if (hamCycleUtil(graph, path, 1) == false) {
+         System.out.println("\nNo existe ciclo"); return 0;
+      }
+      printSolution(path); return 1;
+   }
+	
+   void printSolution(int path[]){
+      System.out.println("Existe solucion : El siguiente" +" es un ciclo de Hamilton");
+      for (int i = 0; i < V; i++) System.out.print(" " + path[i] + " ");
+      System.out.println(" " + path[0] + " ");
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Imprimir todos los posibles ciclos de Hamilton grafo no dirigido (Algoritmo retroceso)}
+\begin{lstlisting}[language=Java]
+import java.util.ArrayList;
+public class Main {
+	
+   public boolean isSafe(int v,int graph[][],ArrayList<Integer> path,int pos){
+      if (graph[path.get(pos - 1)][v] == 0) return false;
+      for (int i = 0; i < pos; i++) if (path.get(i) == v) return false;
+      return true;
+   }
+	
+   public boolean hasCycle;
+	
+   void hamCycle(int graph[][]){
+      hasCycle = false;
+		
+      ArrayList<Integer> path = new ArrayList<>();
+      path.add(0);
+		
+      boolean[] visited = new boolean[graph.length];
+		
+      for (int i = 0; i < visited.length; i++) visited[i] = false;
+      visited[0] = true;
+		
+      FindHamCycle(graph, 1, path, visited);
+		
+      if (!hasCycle) {
+         System.out.println("No Hamiltonian Cycle" + "possible "); return;
+      }
+   }
+	
+   void FindHamCycle(int graph[][], int pos, ArrayList<Integer> path, boolean[] visited){
+      if (pos == graph.length) {
+         if (graph[path.get(path.size() - 1)][path.get(0)] != 0) {
+            path.add(0);
+            for (int i = 0; i < path.size(); i++) {
+            	System.out.print(path.get(i) + " ");
+            }
+            System.out.println();
+            path.remove(path.size() - 1);
+            hasCycle = true;
+         }
+         return;
+      }
+		
+      for (int v = 0; v < graph.length; v++) {
+         if (isSafe(v, graph, path, pos) && !visited[v]) {
+            path.add(v); visited[v] = true;
+            FindHamCycle( graph, pos + 1,path, visited);
+            visited[v] = false; path.remove(path.size() - 1);
+         }
+      }
+   }
+}
+
+\end{lstlisting}
+
+\subsubsection{Verificar si existe camino (Programación Dinámica)}
+\begin{lstlisting}[language=Java]
+class Main{
+   static boolean Hamiltonian_path(int adj[][], int N) {
+      boolean dp[][] = new boolean[N][(1 << N)];
+      for(int i = 0; i < N; i++) dp[i][(1 << i)] = true;
+      
+      for(int i = 0; i < (1 << N); i++){
+          for(int j = 0; j < N; j++){
+              if ((i & (1 << j)) != 0){
+              	for(int k = 0; k < N; k++){
+                   if ((i & (1 << k)) != 0 &&  adj[k][j] == 1 && j != k && dp[k][i ^ (1 << j)]) {
+                      dp[j][i] = true; break;
+                   }
+                }
+              }
+          }
+       }
+			
+       for(int i = 0; i < N; i++) {
+          if (dp[i][(1 << N) - 1]) return true;
+       }
+	   return false;
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Calcular todos los caminos de hamilton del nodo 1 al nodo N en grafo dirigido}
+\begin{lstlisting}[language=Java]
+class Main {
+   static int findAllPaths(int N, List<List<Integer>> graph){
+      int dp[][] = new int[N][(1<<N)];
+      for(int i=0;i<N;i++){
+         for(int j=0;j<(1<<N);j++){
+            dp[i][j]=0;
+         }
+      }
+		
+      // Inicializar para el primer vertice
+      dp[0][1] = 1;
+      
+      // Iterar sobre todas las mascaras.
+      for (int i = 2; i < (1 << N); i++) {
+         // Si el primer vertice esta ausente
+         if ((i & (1 << 0)) == 0) continue;
+         // Considere solo los subconjuntos completos
+         if ((i & (1 << (N - 1)))==1 && (i != ((1 << N) - 1))) continue;
+         // Elige la ciudad final
+         for (int end = 0; end < N; end++) {
+            // Si esta ciudad no esta en el subconjunto
+            if ((i & (1 << end)) == 0) continue;
+            // Conjunto sin la ciudad final
+            int prev = i - (1 << end);
+            // Consultar por las ciudades adyacentes.
+            for (int it : graph.get(end)) {
+               if ((i & (1 << it))!=0)
+                  dp[end][i] += dp[it][prev];
+            }
+          }
+       }
+       return dp[N - 1][(1 << N) - 1];
+   }
+}
+\end{lstlisting}

@@ -1,0 +1,195 @@
+\subsection{C++}
+
+\subsubsection{Grafo dirigido}
+\begin{lstlisting}[language=C++]
+int n;
+vector<vector<int>> adj;
+vector<char> color;
+vector<int> parent;
+int cycle_start, cycle_end;
+
+bool dfs(int v) {
+   color[v] = 1;
+   for (int u : adj[v]) {
+      if (color[u] == 0) {
+         parent[u] = v;
+         if (dfs(u)) return true;
+      } else if (color[u] == 1) {
+         cycle_end = v; cycle_start = u;
+         return true;
+      }
+   }
+   color[v] = 2;
+   return false;
+}
+
+void find_cycle() {
+   color.assign(n, 0); parent.assign(n, -1);
+   cycle_start = -1;
+	
+   for (int v = 0; v < n; v++) {
+      if (color[v] == 0 && dfs(v)) break;
+   }
+	
+   if (cycle_start == -1) { cout << "Aciclico" << endl;} 
+   else {
+      vector<int> cycle;
+      cycle.push_back(cycle_start);
+      for (int v = cycle_end; v != cycle_start; v = parent[v])
+      cycle.push_back(v); cycle.push_back(cycle_start);
+      reverse(cycle.begin(), cycle.end());
+      cout << "Ciclo encontrado: ";
+      for (int v : cycle) cout << v << " ";
+      cout << endl;
+   }
+}
+\end{lstlisting}
+
+
+\subsubsection{Grafo no dirigido}
+\begin{lstlisting}[language=C++]
+int n;
+vector<vector<int>> adj;
+vector<bool> visited;
+vector<int> parent;
+int cycle_start, cycle_end;
+
+bool dfs(int v, int par) { //pasando el vertice y su vertice padre
+   visited[v] = true;
+   for (int u : adj[v]) {
+      if (u == par) continue; // arista al vertice padre
+      if (visited[u]) {
+         cycle_end = v; cycle_start = u;
+         return true;
+      }
+      parent[u] = v;
+      if (dfs(u, parent[u])) return true;
+   }
+   return false;
+}
+
+void find_cycle() {
+   visited.assign(n, false);
+   parent.assign(n, -1);
+   cycle_start = -1;
+	
+   for (int v = 0; v < n; v++) {
+      if (!visited[v] && dfs(v, parent[v])) break;
+   }
+	
+   if (cycle_start == -1) { cout << "Aciclico" << endl;} 
+   else {
+      vector<int> cycle;
+      cycle.push_back(cycle_start);
+      for (int v = cycle_end; v != cycle_start; v = parent[v]) cycle.push_back(v);
+      cycle.push_back(cycle_start);
+		
+      cout << "Ciclo encontrado: ";
+      for (int v : cycle) cout << v << " ";
+      cout << endl;
+   }
+}
+\end{lstlisting}
+
+\subsection{Java}
+
+\subsubsection{Grafo dirigido}
+\begin{lstlisting}[language=Java]
+public class Main {
+   int nnodes;
+   ArrayList<ArrayList<Integer> > adj;
+   char [] color;
+   int [] parent;
+   int cycle_start, cycle_end;
+	
+   public boolean dfs(int v) {
+      color[v] = 1;
+      for (int u : adj.get(v)) {
+         if (color[u] == 0) {
+            parent[u] = v;
+            if (dfs(u)) return true;
+         } else if (color[u] == 1) {
+            cycle_end = v; cycle_start = u; return true;
+         }
+      }
+      color[v] = 2; return false;
+   }
+	
+   public void findCycle() {
+      color = new char[nnodes+5];
+      parent = new int [nnodes+5];
+      Arrays.fill(color, (char)0);
+      Arrays.fill(parent, -1);
+      cycle_start = -1;
+		
+      for (int v = 1; v <= nnodes; v++) {
+         if (color[v] == 0 && dfs(v)) break;
+      }
+		
+      if (cycle_start == -1) { out.printf("IMPOSSIBLE\n");} 
+      else {
+         List <Integer> cycle = new ArrayList<Integer>();
+         cycle.add(cycle_start);
+         for (int v = cycle_end; v != cycle_start; v = parent[v])
+            cycle.add(v); 
+         cycle.add(cycle_start);
+         Collections.reverse(cycle); 
+         out.printf("Ciclo detectado:\n");
+         for (int v : cycle) out.printf("%d ", v);
+         out.println();
+      }
+   }
+}
+\end{lstlisting}
+
+
+\subsubsection{Grafo no dirigido}
+\begin{lstlisting}[language=Java]
+public class Main {
+   int nnodes;
+   ArrayList<ArrayList<Integer> > adj;
+   boolean []  visited;
+   int [] parent;
+   int cycle_start, cycle_end;
+	
+   public boolean dfs(int v, int par) { //pasando el vertice y su vertice padre
+      visited[v] = true;
+      for (int u : adj.get(v)) {
+         if (u == par) continue; // arista al vertice padre
+         if (visited[u]) {
+            cycle_end = v; cycle_start = u;
+            return true;
+         }
+         parent[u] = v;
+         if (dfs(u, parent[u])) return true;
+      }
+      return false;
+   }
+	
+   public void findCycle() {
+      visited = new boolean[nnodes+5];
+      parent = new int [nnodes+5];
+      
+      Arrays.fill(visited, false);
+      Arrays.fill(parent, -1);
+		
+      cycle_start = -1;
+		
+      for (int v = 1; v <= nnodes; v++) {
+         if (!visited[v] && dfs(v, parent[v])) break;
+      }
+		
+      if (cycle_start == -1) { out.printf("Aciclico\n");} 
+      else {
+         List<Integer> cycle = new ArrayList<Integer>();
+         cycle.add(cycle_start);
+         for (int v = cycle_end; v != cycle_start; v = parent[v]) cycle.add(v);
+         cycle.add(cycle_start);
+			
+         out.printf("Ciclo detectado: ");
+         for (int v : cycle) out.printf("%d ", v) ;
+         out.println();
+      }
+   }
+}
+\end{lstlisting}

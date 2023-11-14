@@ -1,0 +1,41 @@
+
+El determinante $det(A)$ de una matriz $A$ es definido si la matriz $A$ es cuadradada. Si las dimensiones de $A$ es $1 \times 1$, entonces $det(A) = A[1,1]$. El determinante de matrices de mayores dimensiones se calcula recursivamente usando la fórmula:
+
+$$ det(A)=\sum_{j=1}^{n}A[1,j]C[1,j]$$
+
+donde $C[i,j]$ es el cofactor de $A$ en $[i,j]$. El cofactor es calculado usando la fórmula:
+
+$$C[i,j] = (-1)^{i+j}det(M[i,j])$$
+
+
+
+donde $M[i,j]$ se obtiene por remover la fila $i$ y columna $j$ de $A$.  Debido al coeficiente $( -1)^{i+j}$ en el cofactor, todos los demás determinantes son positivos y negativos. Por ejemplo,
+
+$$ det(\begin{bmatrix}
+	1 & 4 \\
+	3 & 9 
+\end{bmatrix})=3 \cdot 6 - 4 \cdot 1 =14$$
+
+y
+
+$$ det(\begin{bmatrix}
+	2 & 4 &3 \\
+	5 & 1 & 6\\
+	7 & 2 & 4
+\end{bmatrix})=2 \cdot det(\begin{bmatrix}
+1 & 6  \\
+2 & 4 \end{bmatrix}) - 4 \cdot det(\begin{bmatrix}
+5 & 6  \\
+7 & 4 \end{bmatrix}) + 3 \cdot det(\begin{bmatrix}
+5 & 1  \\
+7 & 2 \end{bmatrix})  =81$$
+
+El determinante de $A$ nos dice si existe una matriz inversa $A^{-1}$ tal que $A \cdot A^{-1} = I$ , donde $I$ es una matriz identidad. Resulta que $A^{-1}$ existe exactamente
+cuando $det(A) \neq  0$, y se puede calcular usando la fórmula:
+
+$$ A^{-1}[i,j] = \frac{C[i,j]}{det(A)}  $$
+
+Por ejemplo:
+
+$$ \underset{A}{\underbrace{\begin{bmatrix} 2 & 4 &3 \\ 5 & 1 & 6\\ 7 & 2 & 4 \end{bmatrix}}}
+\cdot \underset{A^{-1}}{\underbrace{\frac{1}{81}\begin{bmatrix} -8 & -10 &21 \\ 22 & -13 & 3\\ 3 & 24 & -18 \end{bmatrix}}} = \underset{I}{\underbrace{\begin{bmatrix} 1 & 0 &0 \\ 0 & 1 & 0\\ 0 & 0 & 1 \end{bmatrix}}}$$

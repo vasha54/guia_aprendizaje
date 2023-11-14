@@ -1,0 +1,50 @@
+Para el cálculo del los números catalanes veremos varios enfoques a partir de las fórmulas analizadas previamente.
+
+\subsubsection{Función recursiva}
+Siga los pasos a continuación para implementar la fórmula recursiva anterior:
+
+\begin{itemize}
+	\item Condición base para el enfoque recursivo, cuando $n \le 1$, devuelve 1.
+	\item Iterar desde $i = 0$ hasta $i < n$
+	\begin{itemize}
+		\item Haga una llamada recursiva a $catalán(i)$ y $catalán(n-i-1)$ y siga sumando el producto de ambos en $res$.
+	\end{itemize}
+	\item Devuelve $res$
+\end{itemize}
+
+\subsubsection{Programación Dinámica}
+
+Podemos observar que la implementación recursiva anterior realiza mucho trabajo repetido. Dado que hay subproblemas superpuestos, podemos utilizar la programación dinámica para ello.
+
+A continuación se muestra la implementación de la idea anterior:
+
+\begin{itemize}
+	\item Cree una matriz $catalan[]$ para almacenar el i-ésimo número catalán.
+	\item Inicializar, $catalán[0]$ y $catalán[1] = 1$.
+	\item Recorre $i = 2$ hasta el número catalán dado $n$.
+	\begin{itemize}
+		\item Recorra $j = 0$ hasta $j < i$ y siga agregando el valor de $catalan[j] * catalan[i-j-1]$ en $catalán[i]$.
+	\end{itemize}
+	\item Finalmente, regresa $catalan[n]$
+\end{itemize}
+
+\subsubsection{Coeficiente Binomiales}
+
+A continuación se detallan los pasos para calcular $nC_r$.
+
+\begin{itemize}
+	\item Cree una variable para almacenar la respuesta y cambie $r$ a $n-r$ si $r$ es mayor que $n-r$ porque sabemos que $C(n, r) = C(n, n-r)$ si $r > n-r$
+	\item Ejecute un bucle de $0$ a $r-1$
+	\begin{itemize}
+		\item En cada iteración, actualice ans como $(ans*(n-i))/(i+1)$, donde i es el contador de bucle.
+	\end{itemize}
+	\item Entonces la respuesta será igual a $((n/1)\times((n-1)/2) \times \dots \times ((n-r+1)/r)$, que es igual a $nC_r$.
+\end{itemize}
+
+A continuación se detallan los pasos para calcular números catalanes usando la fórmula: $2n\frac{C_n}{(n+1)}$
+
+\begin{itemize}
+	\item Calcule $2nC_n$ usando pasos similares a los que usamos para calcular $nC_r$
+	\item Retorne el valor de $2n\frac{C_n}{(n+1)}$
+\end{itemize}
+
