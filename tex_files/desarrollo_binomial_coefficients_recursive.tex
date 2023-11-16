@@ -1,0 +1,15 @@
+Los coeficientes binomiales se pueden calcular de manera recursiva de la siguiente manera:
+
+$$\binom n k = \binom {n-1} {k-1} + \binom {n-1} k$$
+
+que está asociado con el famoso Triángulo de Pascal. Es fácil deducir esto utilizando la fórmula analítica. La idea es agregar un elemento $x$ en el conjunto. Si se incluye $x$ en el subconjunto, tenemos que elegir elementos $k-1$ de los elementos $n-1$, y si $x$ no está incluido en el subconjunto, tenemos que elegir $k$ elementos de los elementos $n-1$.
+
+Tenga en cuenta que para $n < k$ se supone que el valor de $\binom n k$ es cero.
+
+La idea es fijar un elemento $x$ en el conjunto. Si $x$ está incluido en el subconjunto, tenemos que elegir $k-1$ elementos de $n-1$ elementos, y si $x$ no está incluido en el subconjunto, tenemos que elegir $k$ elementos de $n-1$ elementos.
+
+Los casos base para la recursividad son:
+$$\binom n 0 = \binom n n = 1$$
+
+porque siempre hay exactamente una manera de construir un subconjunto vacío y un subconjunto que contenga todos los elementos.
+

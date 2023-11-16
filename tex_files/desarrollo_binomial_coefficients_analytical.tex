@@ -1,0 +1,11 @@
+La fórmula analítica para el cálculo es:
+
+$$\binom n k = \frac {n!} {k!(n-k)!}$$
+
+Esta fórmula se puede deducir fácilmente del problema del acuerdo ordenado (número de formas de seleccionar $k$ diferentes elementos de $n$ diferentes elementos). Primero, cuentemos el número de selecciones ordenadas de $k$ elementos. Hay $n$ formas de seleccionar el primer elemento, $ N-1 $ formas de seleccionar el segundo elemento, $n-2$ formas de seleccionar el tercer elemento, y así sucesivamente. Como resultado, obtenemos la fórmula del número de arreglos ordenados:
+$n \times(n-1)\times (n-2)\times \ldots \times (n-k +1) = \frac{n!}{(n-k)!}$. Podemos pasar fácilmente a los arreglos desordenados, señalando que cada acuerdo desordenado corresponde a los arreglos ordenados exactamente por $k!$ ($k!$ Es el número de permutaciones posibles de los elementos de $k$). Obtenemos la fórmula final dividiendo
+$\frac{n!}{(n-k)!}$ por $k!$.
+
+Hay $n!$ Permutaciones de $n$ elementos. Revisamos todas las permutaciones y siempre incluimos los primeros $k$ elementos de la permutación en el subconjunto. Dado que el orden de los elementos en el subconjunto y fuera del subconjunto no importa, el resultado se divide por $k!$ y $(n-k)!$
+
+
