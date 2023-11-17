@@ -1,5 +1,18 @@
 \subsubsection{Cálculo sencillo mediante fórmula analítica}
+La primera fórmula sencilla es muy fácil de codificar, pero es probable que este método se desborde incluso para valores relativamente pequeños de $n$ y $k$ (incluso si la respuesta encaja completamente en algún tipo de datos, el cálculo de los factoriales intermedios puede provocar un desbordamiento). Por lo tanto, este método a menudo sólo se puede utilizar con aritmética larga.
 
 \subsubsection{Implementación mejorada}
 
+Tenga en cuenta que en la idea anterior el numerador y el denominador tienen el mismo número de factores ($k$), cada uno de los cuales es mayor o igual a 1. Por lo tanto, podemos reemplazar nuestra fracción con un producto $k$ fracciones, cada una de las cuales tiene un valor real. Sin embargo, en cada paso después de multiplicar la respuesta actual por cada una de las siguientes fracciones, la respuesta seguirá siendo un número entero (esto se desprende de la propiedad de factorizar).
+
+Aquí convertimos cuidadosamente el número de coma flotante a un número entero, teniendo en cuenta que debido a los errores acumulados, puede ser ligeramente menor que el valor real (por ejemplo, $2.99999$ en lugar de $3$).
+
 \subsubsection{Triángulo de Pascal}
+
+Utilizando la relación de recurrencia podemos construir una tabla de  coeficientes binomiales (triángulo de Pascal) y obtener el resultado de  ella. La ventaja de este método es que los 
+resultados intermedios nunca exceden la respuesta y el cálculo de cada nuevo elemento de la tabla requiere solo una suma. El defecto es la ejecución lenta para grandes $n$ y $k$ si solo necesita 
+un valor único y no toda la tabla (porque para calcular $\binom n k$ necesitarás construir una tabla de todos $\binom i j, 1 \le i \le n, 1 \le j \le n$, o al menos a $1 \le j \le \min (i,2k)$). Se puede considerar que la complejidad del tiempo es O $(n^2)$.
+
+\subsubsection{Cálculo en O($1$) }
+
+Finalmente, en algunas situaciones es beneficioso precalcular todos los factoriales para producir cualquier coeficiente binomial necesario con sólo dos divisiones después. Esto puede resultar ventajoso cuando se utiliza aritmética larga , cuando la memoria no permite el cálculo previo de todo el triángulo de Pascal.

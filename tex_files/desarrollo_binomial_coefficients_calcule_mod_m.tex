@@ -1,0 +1,59 @@
+Muy a menudo te encuentras con el problema de calcular coeficientes binomiales módulo algunos $m$.
+
+\subsubsection{Coeficiente de binomial para pequeños $n$}
+
+El enfoque previamente discutido del triángulo de Pascal se puede utilizar para calcular todos los valores de $\binom n  k  \bmod m$ por un tamaño razonablemente pequeño $n$, ya que requiere complejidad de tiempo O$(n^2)$. Este enfoque puede manejar cualquier módulo, ya que solo se utilizan operaciones de suma.
+
+\subsubsection{Coeficiente binomial módulo primo grande}
+
+La fórmula para los coeficientes binomiales es:
+
+$$\binom n k = \frac {n!} {k!(n-k)!},$$
+
+entonces si queremos calcularlo módulo algún primo $m > n$ obtenemos:
+
+$$\binom n k \equiv n! \cdot (k!)^{-1} \cdot ((n-k)!)^{-1} \mod m$$
+
+Primero calculamos previamente todos los módulos factoriales $m$ hasta $\text{MAXN}!$ en O($\text{MAXN}$) tiempo. Y luego podemos calcular el coeficiente binomial en O$(\log m)$ tiempo. 
+Incluso podemos calcular el coeficiente binomial en $O(1)$ tiempo si precalculamos los inversos multiplicativos de todos los factoriales en O$(\text{MAXN} \log m)$ utilizando el método habitual 
+para calcular el inverso multiplicativo, o incluso en O$(\text{MAXN})$ tiempo usando la congruencia $(x!)^{-1} \equiv ((x-1)!)^{-1} \cdot x^{-1}$ y el método para calcular todas todos los 
+inversos en O$(n)$.
+
+\subsubsection{Coeficiente binomial módulo potencia prima}
+
+Aquí queremos calcular el coeficiente binomial módulo de alguna potencia prima, es decir $m = p^b$ por alguna prima $p$. Si $p > \max(k,nk)$, entonces podemos usar el mismo método descrito en la sección anterior. Pero si $p \le \max(k, nk)$, entonces al menos uno de $k!$ y $(nk)!$ no son coprimos con $m$, y por lo tanto no podemos calcular las inversas: no existen. Sin embargo, podemos calcular el coeficiente binomial.
+
+La idea es la siguiente: Calculamos para cada $x!$ el mayor exponente $c$ tal que $p^c$ divide $x!$, es decir $p^c ~|~ x!$. Dejar $c(x)$ sea es número. Y deja $g(x) := \frac{x!}{p^{c(x)}}$. Entonces podemos escribir el coeficiente binomial como:
+
+$$\binom n k = \frac {g(n) p^{c(n)}} {g(k) p^{c(k)} g(n-k) p^{c(n-k)}} = \frac {g(n)} {g(k) g(n-k)}p^{c(n) - c(k) - c(n-k)}$$
+
+Lo interesante es que $g(x)$ ahora está libre del divisor primo $p$. Por lo tanto $g(x)$ es coprimo de m, y podemos calcular los inversos modulares de $g(k)$ y $g(nk)$.
+
+Después de precalcular todos los valores para $g$ y $c$ , que se puede hacer de manera eficiente usando programación dinámica en O($n$) , podemos calcular el coeficiente binomial en $O(\log m)$ tiempo. O precalcular todas las inversas y todas las potencias de $p$ y luego calcular el coeficiente binomial en $O(1)$ .
+
+Aviso, si $c(n) - c(k) - c(nk) \ge b$, que $p^b ~|~ p^{c(n) - c(k) - c(nk)}$, y el coeficiente binomial es $0$
+
+\subsubsection{Módulo de coeficiente binomial un número arbitrario}
+
+Ahora calculamos el módulo del coeficiente binomial algún módulo arbitrario $m$.
+
+Sea la factorización prima de $m$ ser $m=p_1^{e_1} p_2^{e_2} \cdots p_h^{e_h}$. Podemos calcular el módulo del coeficiente binomial $p_i^{e_i}$ para cada $i$. esto nos da $h$ diferentes 
+congruencias. Dado que todos los módulos $p_i^{e_i}$ son coprimos, podemos aplicar el teorema chino del resto para calcular el módulo del coeficiente binomial, el producto de los módulos, que es 
+el módulo del coeficiente binomial deseado $m$.
+
+\subsubsection{Coeficiente binomial para grandes $n$ y módulo pequeño}
+
+Cuando $n$ es demasiado grande, el $\mathcal{O}(n)$ Los algoritmos discutidos anteriormente se vuelven poco prácticos. Sin embargo, si el módulo $m$ es pequeño todavía hay maneras de calcular 
+$\binom{n}{k} \bmod m$  cuando el módulo $m$ es primo, hay 2 opciones:
+
+\begin{itemize}
+	\item Se puede aplicar el teorema de Lucas , lo que resuelve el problema de la informática $\binom{n}{k} \bmod m$ en $\log_mn$ problemas de la forma 
+	$\binom{x_i}{y_i} \bmod m$ dónde $x_i, y_i <m$ . Si cada coeficiente reducido se calcula utilizando factoriales precalculados y factoriales inversos, la complejidad es $\mathcal{O}(m + \log_m n)$.
+	\item El método de calcular el módulo factorial P se puede utilizar para obtener el valor requerido. $g$ y $c$ valores y utilícelos como se describe en la sección de módulo de potencia primaria esto toma O$(m \log_m n)$.
+\end{itemize}
+
+Cuando $m$ no está libre de cuadrados, se puede aplicar una generalización del teorema de Lucas para potencias primas en lugar del teorema de Lucas.
+
+Cuando $m$ no es primo sino libre de cuadrados, los factores primos de $m$ se puede obtener y el módulo de coeficiente de cada factor primo se puede calcular utilizando cualquiera de los métodos anteriores, y la respuesta general se puede obtener mediante el teorema del resto chino.
+
+
