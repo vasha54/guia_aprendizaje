@@ -29,9 +29,10 @@ $$\binom n k = \frac {g(n) p^{c(n)}} {g(k) p^{c(k)} g(n-k) p^{c(n-k)}} = \frac {
 
 Lo interesante es que $g(x)$ ahora está libre del divisor primo $p$. Por lo tanto $g(x)$ es coprimo de m, y podemos calcular los inversos modulares de $g(k)$ y $g(nk)$.
 
-Después de precalcular todos los valores para $g$ y $c$ , que se puede hacer de manera eficiente usando programación dinámica en O($n$) , podemos calcular el coeficiente binomial en $O(\log m)$ tiempo. O precalcular todas las inversas y todas las potencias de $p$ y luego calcular el coeficiente binomial en $O(1)$ .
+Después de precalcular todos los valores para $g$ y $c$, que se puede hacer de manera eficiente usando programación dinámica en O($n$), podemos calcular el coeficiente binomial en $O(\log m)$
+tiempo. O precalcular todas las inversas y todas las potencias de $p$ y luego calcular el coeficiente binomial en $O(1)$.
 
-Aviso, si $c(n) - c(k) - c(nk) \ge b$, que $p^b ~|~ p^{c(n) - c(k) - c(nk)}$, y el coeficiente binomial es $0$
+Aviso, si $c(n) - c(k) - c(nk) \ge b$, que $p^b ~|~ p^{c(n) - c(k) - c(nk)}$, y el coeficiente binomial es $0$
 
 \subsubsection{Módulo de coeficiente binomial un número arbitrario}
 
@@ -43,13 +44,13 @@ el módulo del coeficiente binomial deseado $m$.
 
 \subsubsection{Coeficiente binomial para grandes $n$ y módulo pequeño}
 
-Cuando $n$ es demasiado grande, el $\mathcal{O}(n)$ Los algoritmos discutidos anteriormente se vuelven poco prácticos. Sin embargo, si el módulo $m$ es pequeño todavía hay maneras de calcular 
-$\binom{n}{k} \bmod m$  cuando el módulo $m$ es primo, hay 2 opciones:
+Cuando $n$ es demasiado grande, el O($n$) los algoritmos discutidos anteriormente se vuelven poco prácticos. Sin embargo, si el módulo $m$ es pequeño todavía hay maneras de calcular $\binom{n}{k} \bmod m$ cuando el módulo $m$ es primo, hay 2 opciones:
 
 \begin{itemize}
-	\item Se puede aplicar el teorema de Lucas , lo que resuelve el problema de la informática $\binom{n}{k} \bmod m$ en $\log_mn$ problemas de la forma 
-	$\binom{x_i}{y_i} \bmod m$ dónde $x_i, y_i <m$ . Si cada coeficiente reducido se calcula utilizando factoriales precalculados y factoriales inversos, la complejidad es $\mathcal{O}(m + \log_m n)$.
-	\item El método de calcular el módulo factorial P se puede utilizar para obtener el valor requerido. $g$ y $c$ valores y utilícelos como se describe en la sección de módulo de potencia primaria esto toma O$(m \log_m n)$.
+	\item Se puede aplicar el teorema de Lucas, lo que resuelve el problema de la informática $\binom{n}{k} \bmod m$ en $\log_mn$ problemas de la forma $\binom{x_i}{y_i} \bmod m$
+	dónde $x_i, y_i < m$. Si cada coeficiente reducido se calcula utilizando factoriales precalculados y factoriales inversos, la complejidad es O($m + \log_m n$).
+	\item El método de calcular el módulo factorial $P$ se puede utilizar para obtener el valor requerido $g$ y $c$ valores y utilícelos como se describe en la sección de módulo de potencia 
+	primaria esto toma O$(m \log_m n)$.
 \end{itemize}
 
 Cuando $m$ no está libre de cuadrados, se puede aplicar una generalización del teorema de Lucas para potencias primas en lugar del teorema de Lucas.
