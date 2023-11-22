@@ -11,7 +11,7 @@ Aquí convertimos cuidadosamente el número de coma flotante a un número entero
 
 Utilizando la relación de recurrencia podemos construir una tabla de  coeficientes binomiales (triángulo de Pascal) y obtener el resultado de  ella. La ventaja de este método es que los 
 resultados intermedios nunca exceden la respuesta y el cálculo de cada nuevo elemento de la tabla requiere solo una suma. El defecto es la ejecución lenta para grandes $n$ y $k$ si solo necesita 
-un valor único y no toda la tabla (porque para calcular $\binom n k$ necesitarás construir una tabla de todos $\binom i j, 1 \le i \le n, 1 \le j \le n$, o al menos a $1 \le j \le \min (i,2k)$). Se puede considerar que la complejidad del tiempo es O $(n^2)$.
+un valor único y no toda la tabla (porque para calcular $\binom n k$ necesitarás construir una tabla de todos $\binom i j, 1 \le i \le n, 1 \le j \le n$, o al menos a $1 \le j \le \min (i,2k)$).
 
 \subsubsection{Cálculo en O($1$) }
 

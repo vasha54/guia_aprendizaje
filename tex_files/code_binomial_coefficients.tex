@@ -1,3 +1,178 @@
 \subsection{C++}
+\subsubsection{Fórmula analítica}
+\begin{lstlisting}[language=C++]
+int C(int n, int k) {
+   int res = 1;
+   for (int i = n - k + 1; i <= n; ++i) res *= i;
+   for (int i = 2; i <= k; ++i) res /= i;
+   return res;
+}
+
+int Cv2(int n, int k) {
+   double res = 1;
+   for (int i = 1; i <= k; ++i)
+      res = res * (n - k + i) / i;
+   return (int)(res + 0.01);
+}	
+\end{lstlisting}
+
+
+\subsubsection{Triangulo de Pascal}
+\begin{lstlisting}[language=C++]
+const int maxn = 1000;
+int pt[maxn + 1][maxn + 1];
+
+void pascalTriangle(){
+   pt[0][0] = 1;
+   for (int n = 1; n <= maxn; ++n) {
+      pt[n][0] = pt[n][n] = 1;
+      for (int k = 1; k < n; ++k)
+          pt[n][k] = pt[n - 1][k - 1] + pt[n - 1][k];
+   }
+}
+
+int C(int n, int k) {
+   return pt[n][k];
+}
+
+\end{lstlisting}
+
+\subsubsection{Coeficiente binomial módulo primo grande}
+\begin{lstlisting}[language=C++]
+#define int long long
+int factorial[MAXN+10],m;
+
+//precalculamos todos los factoriales
+void calculateFactorial(){
+   factorial[0] = 1;
+   for (int i = 1; i <= MAXN; i++) {
+      factorial[i] = factorial[i - 1] * i % m;
+   }
+}
+
+int inverse(int a) {
+   return a <= 1 ? a : m - (int)(m/a) * inverse(m % a) % m;
+}	
+
+//Y luego podemos calcular el coeficiente binomial.
+int binomial_coefficient(int n, int k) {
+   return factorial[n] * inverse(factorial[k] * factorial[n - k] % m) % m;
+}
+	
+\end{lstlisting}
+
+Incluso podemos calcular el coeficiente binomial en de forma más eficiente tiempo si precalculamos los inversos de todos los factoriales usando el método regular para calcular el 
+inverso, usando la congruencia $(x!)^{-1} \equiv ((x-1)!)^{-1} \cdot x^{-1}$.
+
+\begin{lstlisting}[language=C++]
+#define int long long
+int m;
+vector<int> factorial, inverse_factorial;
+
+int gcd(int a, int b, int& x, int& y) {
+   x = 1, y = 0;
+   int x1 = 0, y1 = 1, a1 = a, b1 = b;
+   while (b1) {
+      int q = a1 / b1;
+      tie(x, x1) = make_tuple(x1, x - q * x1); tie(y, y1) = make_tuple(y1, y - q * y1);
+      tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+   }
+   return a1;
+}
+
+vector<int> invs(const std::vector<int> &a, int m) {
+   int n = a.size();
+   if (n == 0) return {};
+   vector<int> b(n);
+   int v = 1;
+   for (int i = 0; i != n; ++i) {
+      b[i] = v; v = static_cast<int>(v) * a[i] % m;
+   }
+   int x, y;
+   gcd(v, m, x, y);
+   x = (x % m + m) % m;
+   for (int i = n - 1; i >= 0; --i) {
+      b[i] = static_cast<int>(x) * b[i] % m;
+      x = static_cast<int>(x) * a[i] % m;
+   }
+   return b;
+}
+
+void calculateFactorial(){
+   factorial.resize(MAX_N+5); factorial[0] = 1;
+   for (int i = 1; i <= MAX_N; i++) {
+      factorial[i] = factorial[i - 1] * i % m;
+   }
+   inverse_factorial = invs(factorial,m);
+}
+
+int binomial_coefficient(int n, int k) {
+   return factorial[n]*inverse_factorial[k]%m*inverse_factorial[n-k]%m;
+}
+	
+\end{lstlisting}
 
 \subsection{Java}
+
+\subsubsection{Fórmula analítica}
+\begin{lstlisting}[language=Java]
+public static int C(int n, int k) {
+   int res = 1;
+   for (int i = n - k + 1; i <= n; ++i) res *= i;
+   for (int i = 2; i <= k; ++i) res /= i;
+   return res;
+}
+
+public static int Cv2(int n, int k) {
+   double res = 1;
+   for (int i = 1; i <= k; ++i)
+      res = res * (n - k + i) / i;
+   return (int)(res + 0.01);
+}	
+\end{lstlisting}
+
+\subsubsection{Triangulo de Pascal}
+\begin{lstlisting}[language=Java]
+public class Main {
+   private final int MAX_N = 1000;
+   private long [][] tp;
+	
+   public void pascalTriangle(){
+      tp = new long [MAX_N+3][MAX_N+3];	
+      tp[0][0] = 1;
+      for (int n = 1; n <= MAX_N; ++n) {
+          tp[n][0] = tp[n][n] = 1;
+          for(int k=1;k<n;++k) tp[n][k] = tp[n-1][k-1] + tp[n-1][k];
+      }
+   }
+	
+   public long C(int n, int k) { return tp[n][k]; }
+}
+\end{lstlisting}
+
+\subsubsection{Coeficiente binomial módulo primo grande}
+\begin{lstlisting}[language=Java]
+public class Main {
+   private final int MAX_N = 1000010;
+   private long [] factorial;
+   private long m;
+	
+   //precalculamos todos los factoriales
+   public void calculateFactorial(){
+      factorial = new long [MAX_N+5];
+      factorial[0] = 1;
+      for (int i = 1; i <= MAX_N; i++) {
+         factorial[i] = factorial[i - 1] * i % m;
+      }
+   }
+	
+   public long inverse(long a) {
+      return a <= 1 ? a : m - (int)(m/a) * inverse(m % a) % m;
+   }	
+	
+   //Y luego podemos calcular el coeficiente binomial.
+   public long binomial_coefficient(int n, int k) {
+      return factorial[n] * inverse(factorial[k] * factorial[n - k] % m) % m;
+   }
+}
+\end{lstlisting}

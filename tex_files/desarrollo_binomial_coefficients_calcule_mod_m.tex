@@ -16,8 +16,7 @@ $$\binom n k \equiv n! \cdot (k!)^{-1} \cdot ((n-k)!)^{-1} \mod m$$
 
 Primero calculamos previamente todos los módulos factoriales $m$ hasta $\text{MAXN}!$ en O($\text{MAXN}$) tiempo. Y luego podemos calcular el coeficiente binomial en O$(\log m)$ tiempo. 
 Incluso podemos calcular el coeficiente binomial en $O(1)$ tiempo si precalculamos los inversos multiplicativos de todos los factoriales en O$(\text{MAXN} \log m)$ utilizando el método habitual 
-para calcular el inverso multiplicativo, o incluso en O$(\text{MAXN})$ tiempo usando la congruencia $(x!)^{-1} \equiv ((x-1)!)^{-1} \cdot x^{-1}$ y el método para calcular todas todos los 
-inversos en O$(n)$.
+para calcular el inverso multiplicativo, o incluso en O$(\text{MAXN})$ tiempo usando la congruencia $(x!)^{-1} \equiv ((x-1)!)^{-1} \cdot x^{-1}$ y el método para calcular todas todos los inversos en O$(n)$.
 
 \subsubsection{Coeficiente binomial módulo potencia prima}
 

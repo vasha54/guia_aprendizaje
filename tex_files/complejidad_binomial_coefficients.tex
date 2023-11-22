@@ -1,0 +1,6 @@
+La implementación del triángulo Pascal se puede considerar que la complejidad del tiempo es O $(n^2)$, así que usar esta variante es mejor hacer un precalculo hasta mayor posible valor del $\binom{n}{k}$ para que la respuestas sean después en O($1$)
+
+La idea de precalcular todos los inversos de todos los factoriales hace posible calcular el 
+coeficiente binomial en $O(1)$ tiempo si precalculamos los inversos de todos los factoriales en 
+O($\text{MAXN} \log m$) usando el método regular para calcular el inverso, o incluso en
+O($\text{MAXN}$) tiempo usando la congruencia anteriormente citada y el método para calcular todas las inversas en $O(n)$.
