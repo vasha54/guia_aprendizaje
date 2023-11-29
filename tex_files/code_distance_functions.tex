@@ -1,0 +1,43 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+double euclideanDistance(double x1, double y1, 
+                         double x2, double y2){
+   return sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+}
+
+double distanceManhattan(double x1, double y1, 
+                         double x2, double y2){
+   return abs(x1-x2) + abs(y1-y2);
+}
+
+//Las latitudes y longitudes de los puntos deben estar en radianes.
+double distanceSpherical(double Plat, double Plong, 
+                         double Qlat, double Qlong, double r){
+   double A = sin(Plat)*sin(Qlat);
+   double B = cos(Plat)*cos(Qlat)*cos(Plong)*cos(Qlong);
+   double C = cos(Plat)*cos(Qlat)*sin(Plong)*sin(Qlong);
+   return acos(A+B+C)*r;
+}
+\end{lstlisting} 
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public static double euclideanDistance(double x1, double y1, 
+                                       double x2, double y2){
+   return Math.sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+}
+	
+public static double distanceManhattan(double x1, double y1, 
+                                       double x2, double y2){
+   return Math.abs(x1-x2) + Math.abs(y1-y2);
+}
+		
+//Las latitudes y longitudes de los puntos deben estar en radianes.
+public static double distanceSpherical(double Plat, double Plong, 
+                                       double Qlat, double Qlong, double r){
+   double A = Math.sin(Plat)*Math.sin(Qlat);
+   double B = Math.cos(Plat)*Math.cos(Qlat)*Math.cos(Plong)*Math.cos(Qlong);
+   double C = Math.cos(Plat)*Math.cos(Qlat)*Math.sin(Plong)*Math.sin(Qlong);
+   return Math.acos(A+B+C)*r;
+}
+\end{lstlisting} 
