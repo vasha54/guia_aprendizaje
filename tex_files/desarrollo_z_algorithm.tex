@@ -1,0 +1,68 @@
+ En esta guía, para evitar ambigüedades, asumimos el 0 como índice; es decir: el primer carácter de $s$ tiene índice $0$ y el ultimo tiene índice $n-1$. Realizada dicha aclaración vamos a proceder a resolver el problema planteado en la introducción  de la guía.
+ 
+ Vamos a partir que el algoritmo que obtengamos como resultado le llamaremos \emph{algoritmo Z} o \emph{función Z}. Adicionalmente queremos que el  algoritmo sea capaz de generar un arreglo $z$de enteros con capacidad $n$ donde $z[i]$ es la longitud de la cadena más larga que es, al mismo tiempo, un prefijo de $s$ y un prefijo del sufijo de $s$ a partir de $i$. El primer elemento del algoritmo Z, $z[0]$ , generalmente no está bien definido. En esta guía asumiremos que es cero (aunque no cambia nada en la implementación del algoritmo).
+
+Por ejemplo, aquí están los valores del algoritmo Z calculados para diferentes cadenas:
+
+aaaa - $[0,~4,~3,~2,~1]$
+
+aaabaab - $[0,~2,~1,~0,~2,~1,~0]$
+
+abacaba - $[0,~0,~1,~0,~3,~0,~1]$
+
+\subsection{Algoritmo trivial}
+
+Simplemente iteramos a través de cada posición $i$ y actualizar $z[i]$ para cada uno de ellos, a partir de $z[i] = 0$ e incrementándolo siempre que no
+encontremos una discrepancia (y siempre que no lleguemos al final de la línea).
+Por supuesto, esta no es una implementación eficiente. Ahora mostraremos la construcción de una implementación eficiente.
+
+\subsection{Algoritmo eficiente}
+
+Para obtener un algoritmo eficiente calcularemos los valores de $z[i]$ a su vez de $i = 1$ a $n-1$ pero al mismo tiempo, al calcular un nuevo valor,
+intentaremos hacer el mejor uso posible de los valores calculados previamente.
+
+
+En aras de la brevedad, llamemos \textbf{coincidencias de segmentos} a aquellas subcadenas que coinciden con un prefijo de $s$. Por ejemplo, el valor del algoritmo Z deseada $z[i]$ es la longitud de la coincidencia del segmento que comienza en la posición $i$ (y eso termina en la posición $i+z[i]-1$ ).
+
+Para hacer esto, mantendremos \textbf{el $[l, r)$ los índices del segmento más a la derecha coinciden}. Es decir, entre todos los segmentos detectados nos
+quedaremos con el que termina más a la derecha. En cierto modo, el índice $r$ puede verse como el \emph{límite} a la que nuestra cadena $s$ ha sido
+procesado por el algoritmo; todo lo que pase más allá de ese punto aún no se sabe.
+
+Entonces, si el índice actual (para el cual tenemos que calcular el siguiente valor de la función Z) es i , tenemos una de dos opciones:
+
+\begin{itemize}
+	\item $i \ge r$: la posición actual está \textbf{fuera} de lo que ya hemos procesado. Luego calcularemos $z[i]$ con el algoritmo trivial (es decir, simplemente comparando valores uno por uno). Tenga en cuenta que al final, si $z[i] > 0$ , tendremos que actualizar los índices del segmento más a la derecha, porque está garantizado que el nuevo $r = i + z[i]$ es mejor que
+	el anterior $r$.
+	
+	\item $i < r$: la posición actual está dentro de la coincidencia del segmento actual $[l, r)$.
+	
+	Luego podemos usar los valores $z$ ya calculados para inicializar el valor de $z[i]$ a algo (seguro que es mejor que comenzar desde cero), tal vez
+	incluso a algún número grande.
+	
+	Para esto observamos que las subcadenas $s[l \dots r)$ y $s[0 \dots r-l)$ coincidencia. Esto significa que como aproximación inicial para $z[i]$
+	podemos tomar el valor ya calculado para el segmento correspondiente $s[0 \dots r-l)$ , y eso es $z[i-l]$.
+	
+	Sin embargo, el valor $z[i-l]$ podría ser demasiado grande: cuando se aplica a la posición $i$ podría superar el índice $r$. Esto no está permitido porque no sabemos nada sobre los caracteres a la derecha de $r$  pueden diferir de los requeridos.
+	
+	Aquí hay un ejemplo de un escenario similar:
+	
+	$$ s = aaaabaa $$
+	
+	Cuando lleguemos a la última posición ($i=6$), el segmento de coincidencia actual será $[5,7)$. La posición 6 entonces coincidirá con la posición
+	$6-5=1$ , para el cual el valor del algoritmo Z es $z[1]=3$. Obviamente, no podemos inicializar $z[6]$ a $3$ , sería completamente incorrecto. El valor máximo al que podríamos inicializarlo es $1$ porque es el valor más grande el que no nos lleva más allá del índice $r$ del segmento de coincidencia $[l, r)$. Por lo tanto, como \textbf{aproximación inicial} para $z[i]$ podemos tomar con seguridad:
+	
+	$$ z_0[i] = \min(r - i,\; z[i-l]) $$
+	
+	Después de haber $z[i]$ inicializado a $z_0[i]$ , intentamos incrementar $z[i]$ ejecutando el algoritmo trivial, porque en general, después del extremo $r$ , no podemos saber si el segmento seguirá coincidiendo o no.
+	
+\end{itemize}
+
+Por lo tanto, todo el algoritmo se divide en dos casos, que difieren sólo en el valor inicial de $z[i]$: en el primer caso se supone que es cero, en el
+segundo caso está determinado por los valores calculados previamente (usando la fórmula anterior). Después de eso, ambas opciones de este
+algoritmo se pueden reducir a la implementación del el algoritmo trivial, que comienza inmediatamente después de que especificamos el valor
+inicial. El algoritmo resulta muy sencillo. A pesar de que en cada iteración se ejecuta el algoritmo trivial, hemos logrado avances significativos al tener un
+algoritmo que se ejecuta en tiempo lineal.
+
+El algoritmo mantiene un rango $[l, r-1]$ tal que $s[l \dots x]$ sea un prefijo de $s$ y sea lo más grande posible. Como sabemos que $s[0 \dots y-x]$ y $s[x \dots y]$ son iguales, podemos usar esta información al calcular los valores $z$ para las posiciones $x+1, x+2, \dots, y$.
+
+En cada posición $k$, primero verificamos el valor de $z[k-x]$. Si $k+z[k-x]<y$, sabemos que $z[k] = z[k-x]$. Sin embargo, si $k+z[k-x] \ge y$, $s[0 \dots y-k]$ es igual a $s[k \dots y]$, y para determinar el valor de $z[k]$ necesitamos comparar las subcadenas carácter a carácter. Aún así, el algoritmo funciona en tiempo lineal , porque comenzamos a comparar en las posiciones $y-k+1$ y $y+1$.

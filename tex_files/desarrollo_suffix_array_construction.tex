@@ -1,0 +1,82 @@
+\subsubsection{Trivial}
+Este es el enfoque más ingenuo. Obtenga todos los sufijos y ordénelos usando ordenación rápida o ordenación por mezcla y conserve simultáneamente sus índices originales.
+
+\subsubsection{Variante de desplazamientos cíclicos de una cadena}
+
+Estrictamente hablando, el siguiente algoritmo no ordenará los sufijos, sino los 
+desplazamientos cíclicos de una cadena. Sin embargo, podemos derivar muy 
+fácilmente un algoritmo para ordenar sufijos a partir de él: basta con añadir un 
+carácter arbitrario al final de la cadena que sea más pequeño que cualquier 
+carácter de la cadena. Es común utilizar el símbolo \$. Entonces el orden de los 
+desplazamientos cíclicos ordenados es equivalente al orden de los sufijos 
+ordenados, como se demuestra aquí con la cadena $dabb$.
+
+$$\begin{array}{lll} 1. & abbb\$d & abbb \\ 4. & b\$dabb & b \\ 3. & bb\$dab & bb \\ 2. & bbb\$da & bbb \\ 0. & dabbb\$ & dabbb \end{array}$$
+
+Como vamos a ordenar los desplazamientos cíclicos, consideraremos \textbf{subcadenas cíclicas}. Usaremos la notación $s[i \dots j]$ para la subcadena de $s$
+incluso si $i>j$. En este caso en realidad nos referimos a la cadena $s[i \dots n-1]+s[0 \dots j]$. Además tomaremos todos los índices módulo la 
+longitud de $s$ y omitirá la operación del módulo por simplicidad.
+
+El algoritmo que analizamos funcionará $\lceil \log n \rceil + 1$ iteraciones. En el $k$-ésima iteración ($k = 0 \dots \lceil \log n \rceil$) ordenamos el
+$n$ subcadenas cíclicas de $s$ de longitud $2^k$. Después de la $\lceil \log n \rceil$-ésima iteración de las subcadenas de longitud
+$2^{\lceil \log n \rceil} \ge n$ se ordenarán, por lo que esto equivale a ordenar los cambios cíclicos por completo.
+
+En cada iteración del algoritmo, además de la permutación $p[0 \dots n-1]$, dónde $p[i]$ es el índice de la $i$-ésima subcadena (comenzando en $i$ y con
+longitud $2^k$) en el orden ordenado, también mantendremos una matriz $c[0 \dots n-1]$, dónde $c[i]$ corresponde a la \textbf{clase de equivalencia} a la que 
+pertenece la subcadena. Porque algunas de las subcadenas serán idénticas y el algoritmo debe tratarlas por igual. Para mayor comodidad, las clases se
+etiquetarán con números que comienzan desde cero. Además los números $c[i]$ se asignarán de tal manera que conserven información sobre el orden: si una subcadena es más pequeña que la otra, entonces también debería tener una etiqueta de clase más pequeña. El número de clases de equivalencia se almacenará en 
+una variable $\text{clases}$.
+
+Veamos un ejemplo. Considere la cuerda $s = aaba$. Las subcadenas cíclicas y las matrices correspondientes $p[]$ y $c[]$ se dan para cada iteración:
+
+$$\begin{array}{cccc} 0: & (a,~ a,~ b,~ a) & p = (0,~ 1,~ 3,~ 2) & c = (0,~ 0,~ 1,~ 0)\\ 1: & (aa,~ ab,~ ba,~ aa) & p = (0,~ 3,~ 1,~ 2) & c = (0,~ 1,~ 2,~ 0)\\ 2: & (aaba,~ abaa,~ baaa,~ aaab) & p = (3,~ 0,~ 1,~ 2) & c = (1,~ 2,~ 3,~ 0)\\ \end{array}$$
+
+Vale la pena señalar que los valores de $p[]$ puede ser diferente. Por ejemplo en el $0$-ésima iteración la matriz también podría ser $p=(3,~1,~0,~2)$ o
+$p=(3,~0,~1,~2)$. Todas estas opciones permutan las subcadenas en un orden ordenado. Entonces todos son válidos. Al mismo tiempo la matriz $c[]$ es fijo, no 
+puede haber ambigüedades.
+
+Centrémonos ahora en la implementación del algoritmo. Escribiremos una función que tome una cadena $s$ y devuelve las permutaciones de los cambios cíclicos ordenados.
+
+Al principio (en el $0$-ésima iteración) debemos ordenar las subcadenas cíclicas de longitud $1$, es decir, tenemos que ordenar todos los caracteres de la 
+cadena y dividirlos en clases de equivalencia (los mismos símbolos se asignan a la misma clase). Esto se puede hacer de forma trivial, por ejemplo, utilizando 
+la ordenación por conteo. Para cada carácter contamos cuántas veces aparece en la cadena y luego usamos esta información para crear la matriz $p[]$. Después 
+de eso pasamos por la matriz $p[]$ y construir $c[]$ comparando caracteres adyacentes.
+
+Ahora tenemos que hablar del paso de iteración. Supongamos que ya hemos realizado el $k-1$-ésimo paso y calculó los valores de las matrices $p[]$ y $c[]$ para ello. Queremos calcular los valores de $k$-ésimo paso en $O(n)$ tiempo. Ya que realizamos este paso $O(\log n)$ veces, el algoritmo completo tendrá una complejidad temporal de $O(n \log n)$.
+
+Para hacer esto, tenga en cuenta que las subcadenas cíclicas de longitud $2^k$ consta de dos subcadenas de longitud $2^{k-1}$ que podemos comparar entre sí en $O(1)$ utilizando la información de la fase anterior - los valores de las clases de equivalencia $c[]$. Así, para dos subcadenas de longitud $2^k$ comenzando en la posición $i$ y $j$, toda la información necesaria para compararlos está contenida en los pares $(c[i],~ c[i+2^{k-1}])$ y $(c[j],~c[j+2^{k-1}])$.
+
+$$\dots \overbrace{ \underbrace{s_i \dots s_{i+2^{k-1}-1}}_{\text{length} = 2^{k-1},~ \text{class} = c[i]} \quad \underbrace{s_{i+2^{k-1}} \dots s_{i+2^k-1}}_{\text{length} = 2^{k-1},~ \text{class} = c[i + 2^{k-1}]} }^{\text{length} = 2^k} \dots \overbrace{ \underbrace{s_j \dots s_{j+2^{k-1}-1}}_{\text{length} = 2^{k-1},~ \text{class} = c[j]} \quad \underbrace{s_{j+2^{k-1}} \dots s_{j+2^k-1}}_{\text{length} = 2^{k-1},~ \text{class} = c[j + 2^{k-1}]} }^{\text{length} = 2^k} \dots$$
+
+Esto nos da una solución muy simple: ordenar las subcadenas de longitud $2^k$ por estos pares de números. Esto nos dará el orden requerido $p[]$. Sin embargo, se ejecuta una clasificación normal $O(n \log n)$ tiempo, con el que no estamos satisfechos. Esto sólo nos dará un algoritmo para construir una matriz de sufijos en $O(n\log^2n)$ veces.
+
+¿Cómo realizamos rápidamente tal clasificación de los pares? Dado que los elementos de los pares no exceden $n$, podemos usar la ordenación por conteo 
+nuevamente. Sin embargo, ordenar pares con ordenación por conteo no es lo más eficiente. Para lograr una constante mejor oculta en la complejidad, usaremos 
+otro truco.
+
+Usamos aquí la técnica en la que se basa la clasificación por base: para ordenar los pares primero los clasificamos por el segundo elemento y luego por el 
+primer elemento (con una clasificación estable, es decir, sin romper el orden relativo de elementos iguales). Sin embargo, los segundos elementos ya estaban 
+ordenados en la iteración anterior. Así, para ordenar los pares por los segundos elementos, sólo necesitamos restar $2^{k-1}$ de los índices en $p[]$ (por 
+ejemplo, si la subcadena más pequeña de longitud $2^{k-1}$ comienza en la posición $i$, entonces la subcadena de longitud $2^k$ con la segunda mitad más 
+pequeña comienza en $i-2^{k-1}$).
+
+Así que sólo mediante restas simples podemos ordenar los segundos elementos de los pares en $p[]$. Ahora necesitamos realizar una clasificación estable por
+los primeros elementos. Como ya se mencionó, esto se puede lograr con la clasificación por conteo.
+
+Lo único que queda es calcular las clases de equivalencia $c[]$, pero como antes, esto se puede hacer simplemente iterando sobre la permutación ordenada
+$p[]$ y comparar pares vecinos.
+
+Aquí está la implementación restante. Usamos matrices temporales $pn[]$ y $cn[]$ para almacenar la permutación por los segundos elementos y los nuevos índices 
+de clase equivalentes.
+
+El algoritmo requiere $O(n\log n)$ tiempo y $O(n)$ memoria. Por simplicidad utilizamos el rango ASCII completo como alfabeto.
+
+Si se sabe que la cadena sólo contiene un subconjunto de caracteres, por ejemplo, sólo letras minúsculas, entonces la implementación se puede optimizar, pero 
+el factor de optimización probablemente sería insignificante, ya que el tamaño del alfabeto sólo importa en la primera iteración. Cada dos iteraciones dependen 
+del número de clases de equivalencia, que pueden alcanzar rápidamente $O(n)$ incluso si inicialmente era una cadena sobre el alfabeto de tamaño $2$.
+
+Tenga en cuenta también que este algoritmo solo ordena los cambios de ciclo. Como se mencionó al principio de esta sección, podemos generar el orden de los 
+sufijos agregando un carácter que sea más pequeño que todos los demás caracteres de la cadena y ordenando esta cadena resultante por cambios de ciclo, por  ejemplo, ordenando los cambios de ciclo de \$s.+\$\$. Obviamente, esto dará la matriz de sufijos de $s$, sin embargo antepuesto con $|s|$.
+
+
+

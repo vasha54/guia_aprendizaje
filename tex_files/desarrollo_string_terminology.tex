@@ -1,0 +1,56 @@
+A continuación vamos a abordar cada unos de los términos más usados en los problemas que se enmarcan dentro del área del conocimiento del trabajo con cadenas.
+
+Para eso vamos asumir que en las cadenas se utiliza indexación de base cero. Por tanto, una cadena $s$ de longitud $n$ consta de caracteres $s[0], s[1],\dots , s[n-1]$. Al conjunto de caracteres que pueden aparecer en las cadenas se le llama alfabeto. Por ejemplo, el alfabeto $\{A, B, \dots , Z\}$ consta de las letras mayúsculas del inglés.
+
+\subsection{Subcadena (\emph{substring})}
+Una subcadena es una secuencia de caracteres consecutivos en una cadena. Usamos la notación $s[a \dots b]$ para referirse a una subcadena de $s$ que comienza en la posición $a$ y termina en la posición $b$. Una cadena de longitud $n$ tiene $n(n+1)/2$ subcadenas. Por ejemplo, las subcadenas de ABCD son A, B, C, D, AB, BC, CD, ABC, BCD y ABCD.
+
+Para generar una subcadena tanto C++ como Java cuenta para el tipo de dato string con un método que  permiten generar un subcadena. Dicho método presenta varias implementaciones permitiendo la variedad de parámetros que se le puede pasar al la función.
+
+\subsection{Subsecuencia}
+
+Una subsecuencia es una secuencia de caracteres (no necesariamente consecutivos) en una cadena en su orden original. Una cadena de longitud $n$ tiene $2^{n-1}$ subsecuencias. Por ejemplo, las subsecuencias de ABCD son A, B, C, D, AB, AC, AD, BC, BD, CD, ABC, ABD, ACD, BCD y ABCD.
+
+Para generar todas las subsecuencias de una secuencia tendríamos que implementar un método recursivo que vaya construyendo una subsecuencia a partir de una posición de la secuencia  el resto de las posiciones las puede o no incluir en la subsecuencia.
+
+
+\subsection{Prefijo}
+Un prefijo es una subcadena que comienza al principio de una cadena. Por ejemplo, los prefijos de ABCD son A, AB, ABC y ABCD. 
+
+Para generar un prefijo o todos los prefijos de una cadena se puede utilizar la función de generar una subcadena donde siempre la posición inicial $a$ sea constante ($0$) y dependiendo de la longitud del prefijo la posición de $b$ cambiará
+
+\subsection{Sufijo}
+Un sufijo es una subcadena que termina al final de una cadena. Por ejemplo los sufijos de ABCD son D, CD, BCD y ABCD.  
+
+Para generar un sufijo o todos los sufijos de una cadena se puede utilizar la función de generar una subcadena donde siempre la posición final $b$ sea constante ($n-1$) y dependiendo de la longitud del sufijo la posición de $a$ cambiará.
+
+\subsection{Rotaciones}
+Se puede generar una rotación moviendo los caracteres de una cadena uno por uno desde el principio hasta el final (o viceversa). Por ejemplo, las rotaciones de ABCD son ABCD, BCDA, CDAB y DABC.
+
+Una idea trivial para realizar las rotaciones sería simular el proceso completo pero si analizamos el proceso veremos que solo debemos realizar de las $m$ rotaciones prevista solo $ m \mod n $ rotaciones donde $n$ es la longitud de la cadena ya que cada $n$ rotaciones la cadena vuelve a tomar el valor incial antes de comenzar las rotaciones. 
+
+\subsection{Período}
+
+Un período es un prefijo de una cadena tal que la cadena se puede construir repitiendo el período. La última repetición podrá ser parcial y contener únicamente un prefijo del período. Por ejemplo, el período más corto de ABCABCA es ABC.
+
+Un algoritmo trivial para calcular el período sería probar con todos los posible prefijo de la cadena y buscar aquellos que pueden ser períodos de la cadena.
+
+\subsection{Borde}
+
+Un borde es una cadena que es a la vez prefijo y sufijo de una cadena. Por ejemplo, las fronteras de ABACABA son A, ABA y ABACABA.
+
+Para determinar el borde de una secuencia bastaría con calcular todos los prefijo y sufijo de la cadena para luego buscar aquel prefijo  y sufijo con que sean iguales  y que tengan la máxima longitud posible  
+
+\subsection{Palíndromo}
+Un palíndromo , también llamado palíndroma o palíndroma, es una palabra o frase que se lee igual en un sentido que en otro (por ejemplo; Ana, Anna, Otto). Si se trata de números en lugar de letras, se llama capicúa. 
+
+Para comprobar sin una cadena es palíndroma bastaría con verificar que se cumple que $s[i] == s[n-i-1]$ para todo $ i \in [0,n-1]$.
+
+\subsection{Anagrama}
+Un anagrama es una palabra que resulta de la transposición de todas las letras de otra palabra. Dicho de otra forma, una palabra es anagrama de otra si las dos tienen las mismas letras, con el mismo número de apariciones, pero en un orden diferente. Esto se aplica también a grupos de palabras o frases. Ejemplos de anagramas son \emph{nacionalista} y \emph{altisonancia}. 
+
+Para saber si  dos palabras son anagramas bastaría con ordenar las letras de ambas palabras comprobar si las dos nuevas secuencias son iguales. 
+
+\subsection{Ordenamiento lexicográfico}
+
+Las cadenas se comparan utilizando el orden lexicográfico (que corresponde al orden alfabético). Significa que $x < y$ si $x \neq y$ y $x$ es un prefijo de $y$, o hay una posición $k$ tal que $x[ i ] = y[ i ]$ cuando $i < k$ y $x[k]<y[k]$.

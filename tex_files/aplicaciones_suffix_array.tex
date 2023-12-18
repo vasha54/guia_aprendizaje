@@ -1,0 +1,134 @@
+Esta estructura presenta un grupo de aplicaciones en la resolución de problemas entre los cuales podemos mencionar:
+
+\begin{enumerate}
+	\item \textbf{Encontrar el cambio cíclico más pequeño:} El algoritmo anterior ordena todos los cambios cíclicos (sin agregar un carácter a la cadena) y, por lo tanto, $p[0]$ da la posición del cambio cíclico más pequeño.
+	
+	\item \textbf{Encontrar una subcadena en una cadena:} La tarea es encontrar una cuerda $s$ dentro de algún texto $t$ en línea-conocemos el texto $t$ de
+	antemano, pero no la cuerda $s$. Podemos crear la matriz de sufijos para el texto $t$ en O$(|t|\log|t|)$ tiempo. Ahora podemos buscar la subcadena $s$
+	de la siguiente manera. La ocurrencia de $s$ debe ser un prefijo de algún sufijo de $t$. Como ordenamos todos los sufijos, podemos realizar una búsqueda 
+	binaria de $s$ en $p$. Comparando el sufijo actual y la subcadena $s$ dentro de la búsqueda binaria se puede hacer en O$(|s|)$ tiempo, por lo tanto la
+	complejidad para encontrar la subcadena es O$(|s|\log|t|)$. Observe también que si la subcadena aparece varias veces en $t$, entonces todas las 
+	ocurrencias estarán una al lado de la otra en $p$. Por lo tanto, el número de apariciones se puede encontrar con una segunda búsqueda binaria y todas las 
+	apariciones se pueden imprimir fácilmente.
+	
+	\item \textbf{Comparando dos subcadenas de una cadena:} Queremos poder comparar dos subcadenas de la misma longitud de una cadena determinada $s$ en $O(1)$ 
+	tiempo, es decir, comprobar si la primera subcadena es más pequeña que la segunda. Para esto construimos la matriz de sufijos en O$(|s|\log|s|)$ tiempo y
+	almacenar todos los resultados intermedios de las clases de equivalencia $c[]$.
+	
+	Usando esta información podemos comparar dos subcadenas cualesquiera cuya longitud sea igual a una potencia de dos en O(1): para esto es suficiente comparar las clases de equivalencia de ambas subcadenas. Ahora queremos generalizar este método a subcadenas de longitud arbitraria.
+	
+	Comparemos dos subcadenas de longitud $l$ con los índices iniciales $i$ y $j$. Encontramos la longitud más grande de un bloque que se coloca dentro de una 
+	subcadena de esta longitud: la mayor $k$ tal que $2^k\le l$. Luego, la comparación de las dos subcadenas se puede reemplazar comparando dos bloques de longitud superpuestos $2^k$: primero necesitas comparar los dos bloques comenzando en $i$ y $j$, y si son iguales, compare los dos bloques que terminan en
+	posiciones $i+l-1$ y $j+l-1$:
+		
+	$$\dots \overbrace{\underbrace{s_i \dots s_{i+l-2^k} \dots s_{i+2^k-1}}_{2^k} \dots s_{i+l-1}}^{\text{first}} \dots \overbrace{\underbrace{s_j \dots s_{j+l-2^k} \dots s_{j+2^k-1}}_{2^k} \dots s_{j+l-1}}^{\text{second}} \dots$$
+	
+	$$\dots \overbrace{s_i \dots \underbrace{s_{i+l-2^k} \dots s_{i+2^k-1} \dots s_{i+l-1}}_{2^k}}^{\text{first}} \dots \overbrace{s_j \dots \underbrace{s_{j+l-2^k} \dots s_{j+2^k-1} \dots s_{j+l-1}}_{2^k}}^{\text{second}} \dots$$
+	
+	Aquí está la implementación de la comparación. Tenga en cuenta que se supone que la función se llama con el valor ya calculado $k$. $k$ se puede calcular
+	con $\lfloor \log l \rfloor$, pero es más eficiente precalcular todos $k$ valores para cada $l$.
+
+\begin{lstlisting}[language=C++]	
+int compare(int i, int j, int l, int k) {
+   pair<int, int> a = {c[k][i], c[k][(i+l-(1 << k))%n]};
+   pair<int, int> b = {c[k][j], c[k][(j+l-(1 << k))%n]};
+   return a == b ? 0 : a < b ? -1 : 1;
+}
+\end{lstlisting}	
+
+	\item \textbf{Prefijo común más largo de dos subcadenas con memoria adicional:} Para una cadena dada $s$ queremos calcular el prefijo común más largo (LCP) 
+	de dos sufijos arbitrarios con posición $i$ y $j$.
+	
+	El método descrito aquí utiliza O$(|s|\log|s|)$ memoria adicional. En la siguiente sección se describe un enfoque completamente diferente que solo 
+	utilizará una cantidad lineal de memoria.
+	
+	Construimos la matriz de sufijos en O$(|s|\log|s|)$ tiempo, y recordar los resultados intermedios de las matrices $c[]$ de cada iteración.
+	
+	Calculemos el LCP para dos sufijos comenzando en $i$ y $j$. Podemos comparar dos subcadenas cualesquiera con una longitud igual a una potencia de dos en $O(1)$. Para hacer esto, comparamos las cadena por potencia de dos (de mayor a menor potencia) y si las subcadenas de esta longitud son iguales, entonces 
+	sumamos la longitud igual a la respuesta y continuamos verificando el LCP a la derecha de la parte igual, es decir $i$ y $j$ se suman por la potencia  actual de dos.
+	
+\begin{lstlisting}[language=C++]	
+int lcp(int i, int j) {
+   int ans = 0;
+   for (int k = log_n; k >= 0; k--) {
+      if (c[k][i % n] == c[k][j % n]) {
+         ans += 1 << k;
+         i += 1 << k;
+         j += 1 << k;
+      }
+   }
+   return ans;
+}
+\end{lstlisting}
+
+
+Aquí $log\_n$ denota una constante que es igual al logaritmo de $n$ en base $2$ redondeado hacia abajo.
+	
+	\item \textbf{Prefijo común más largo de dos subcadenas sin memoria adicional:} Tenemos la misma tarea que en el apartado anterior. Hemos calculado el prefijo común más largo (LCP) para dos sufijos de una cadena $s$.
+
+A diferencia del método anterior, este solo utilizará O$(|s|)$ memoria. El resultado del preprocesamiento será una matriz (que en sí misma es una fuente
+importante de información sobre la cadena y, por lo tanto, también se utiliza para resolver otras tareas). Las consultas LCP se pueden responder realizando 
+consultas RMQ (consultas de rango mínimo) en esta matriz, por lo que para diferentes implementaciones es posible lograr un tiempo de consulta logarítmico e 
+incluso constante.
+
+La base de este algoritmo es la siguiente idea: calcularemos el prefijo común más largo para cada par de sufijos adyacentes en el orden ordenado . En otras 
+palabras construimos una matriz $\text{lcp}[0 \dots n-2]$, dónde $\text{lcp}[i]$ es igual a la longitud del prefijo común más largo de los sufijos que 
+comienzan en $p[i]$ y $p[i+1]$. Esta matriz nos dará una respuesta para dos sufijos adyacentes de la cadena. Entonces, a partir de esta matriz se puede
+obtener la respuesta para dos sufijos arbitrarios, no necesariamente vecinos. De hecho, sea la solicitud calcular el LCP de los sufijos $p[i]$ y $p[j]$. 
+Entonces la respuesta a esta consulta será $\min(lcp[i],~lcp[i+1],~\dots,~lcp[j-1])$.
+
+Por lo tanto, si tenemos tal matriz $\text{lcp}$, entonces el problema se reduce al RMQ, que tiene una gran cantidad de soluciones diferentes con diferentes
+complejidades.
+
+Entonces la tarea principal es construir esta matriz $\text{lcp}$. Usaremos el algoritmo de Kasai, que puede calcular esta matriz en O$(n)$ tiempo.
+
+Veamos dos sufijos adyacentes en el orden de clasificación (orden de la matriz de sufijos). Que sus posiciones iniciales sean $i$ y $j$ y ellos $\text{lcp}$
+igual a $k>0$. Si eliminamos la primera letra de ambos sufijos, es decir, tomamos los sufijos $i+1$ y $j+1$ - entonces debería ser obvio que el $\text{lcp}$ de
+estos dos es $k-1$. Sin embargo, no podemos usar este valor y escribirlo en el $\text{lcp}$ matriz, porque es posible que estos dos sufijos no estén uno al
+lado del otro en el orden de clasificación el sufijo $i+1$ por supuesto será más pequeño que el sufijo $j+1$, pero puede haber algunos sufijos entre ellos. 
+Sin embargo, como sabemos que el LCP entre dos sufijos es el valor mínimo de todas las transiciones, también sabemos que el LCP entre dos pares cualesquiera en
+ese intervalo tiene que ser al menos $k-1$, especialmente también entre $i+1$ y el siguiente sufijo. Y posiblemente pueda ser más grande.
+	
+Ahora ya podemos implementar el algoritmo. Repetiremos los sufijos en orden de longitud. De esta manera podemos reutilizar el último valor $k$, desde qu 
+pasó del sufijo $i$ al sufijo $i+1$. Es exactamente lo mismo que quitar la primera letra. Necesitaremos una matriz adicional $\text{rank}$, que nos dará la 
+posición de un sufijo en la lista ordenada de sufijos.
+\begin{lstlisting}[language=C++]	
+vector<int> lcp_construction(string const& s, vector<int> const& p) {
+   int n = s.size();
+   vector<int> rank(n, 0);
+   for (int i = 0; i < n; i++) rank[p[i]] = i;
+		
+   int k = 0;
+   vector<int> lcp(n-1, 0);
+   for (int i = 0; i < n; i++) {
+      if (rank[i] == n - 1) {
+         k = 0; continue;
+      }
+      int j = p[rank[i] + 1];
+      while (i + k < n && j + k < n && s[i+k] == s[j+k]) k++;
+      lcp[rank[i]] = k;
+      if (k) k--;
+   }
+   return lcp;
+}
+\end{lstlisting}	
+
+
+Es fácil ver que disminuimos $k$ a lo sumo O$(n)$ veces (cada iteración como máximo una vez, excepto $\text{rank}[i]==n-1$, donde lo reiniciamos directamente 
+a $0$), y el LCP entre dos cadenas es como máximo $n-1$, también aumentaremos $k$ solo O$(n)$ veces. Por lo tanto, el algoritmo se ejecuta en O$(n)$ tiempo.
+	
+	\item \textbf{Número de subcadenas diferentes:} Preprocesamos la cuerda $s$ calculando la matriz de sufijos y la matriz LCP. Usando esta información
+	podemos calcular el número de subcadenas diferentes en la cadena.
+	
+	Para hacer esto, pensaremos qué \textbf{nuevas} subcadenas comienzan en la posición $p[0]$, entonces en $p[1]$, etc. De hecho, tomamos los sufijos en orden y 
+	vemos qué prefijos dan nuevas subcadenas. Por tanto, no pasaremos por alto ninguno por accidente.
+	
+	Debido a que los sufijos están ordenados, está claro que el sufijo actual $p[i]$ dará nuevas subcadenas para todos sus prefijos, excepto los prefijos que
+	coincidan con el sufijo $p[i-1]$. Así, todos sus prefijos excepto el primero $\text{lcp}[i-1]$ uno. Dado que la longitud del sufijo actual es $n-p[i]$,
+	$n-p[i]-\text{lcp}[i-1]$ Los nuevos prefijos comienzan en $p[i]$. Sumando todos los sufijos, obtenemos la respuesta final:
+	
+	$$\sum_{i=0}^{n-1} (n - p[i]) - \sum_{i=0}^{n-2} \text{lcp}[i] = \frac{n^2 + n}{2} - \sum_{i=0}^{n-2} \text{lcp}[i]$$
+\end{enumerate}
+
+Como estructura de datos es ampliamente utilizada en áreas como la compresión de datos, la bioinformática y, en general, en cualquier área que trate con cadenas y problemas de coincidencia de cadenas.
+	

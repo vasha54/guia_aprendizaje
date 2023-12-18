@@ -11,12 +11,23 @@ double distanceManhattan(double x1, double y1,
 }
 
 //Las latitudes y longitudes de los puntos deben estar en radianes.
-double distanceSpherical(double Plat, double Plong, 
-                         double Qlat, double Qlong, double r){
-   double A = sin(Plat)*sin(Qlat);
-   double B = cos(Plat)*cos(Qlat)*cos(Plong)*cos(Qlong);
-   double C = cos(Plat)*cos(Qlat)*sin(Plong)*sin(Qlong);
-   return acos(A+B+C)*r;
+double distanceSpherical(double Plong, double Plat, double Qlong, 
+                         double Qlat, double r){
+   double Px= r* cos(Plong) * cos(Plat);
+   double Py= r* sin(Plat);
+   double Pz= r* sin(Plong) * cos(Plat);
+   double Qx= r* cos(Qlong) * cos(Qlat);
+   double Qy= r* sin(Qlat);
+   double Qz= r* sin(Qlong) * cos(Qlat);
+	
+   double deltaXSquare = (Qx-Px)*(Qx-Px);
+   double deltaYSquare = (Qy-Py)*(Qy-Py);
+   double deltaZSquare = (Qz-Pz)*(Qz-Pz);
+	
+   double numerador = 2 * r * r - deltaXSquare - deltaYSquare - deltaZSquare;
+   double denominator = 2 * r * r;
+   double d = r * acos(numerador/denominator);
+   return d;
 }
 \end{lstlisting} 
 
@@ -33,11 +44,22 @@ public static double distanceManhattan(double x1, double y1,
 }
 		
 //Las latitudes y longitudes de los puntos deben estar en radianes.
-public static double distanceSpherical(double Plat, double Plong, 
-                                       double Qlat, double Qlong, double r){
-   double A = Math.sin(Plat)*Math.sin(Qlat);
-   double B = Math.cos(Plat)*Math.cos(Qlat)*Math.cos(Plong)*Math.cos(Qlong);
-   double C = Math.cos(Plat)*Math.cos(Qlat)*Math.sin(Plong)*Math.sin(Qlong);
-   return Math.acos(A+B+C)*r;
+public static double distanceSpherical(double Plong, double Plat, 
+                                       double Qlong, double Qlat, double r){
+   double Px= r* Math.cos(Plong) * Math.cos(Plat);
+   double Py= r* Math.sin(Plat);
+   double Pz= r* Math.sin(Plong) * Math.cos(Plat);
+   double Qx= r* Math.cos(Qlong) * Math.cos(Qlat);
+   double Qy= r* Math.sin(Qlat);
+   double Qz= r* Math.sin(Qlong) * Math.cos(Qlat);
+	
+   double deltaXSquare = (Qx-Px)*(Qx-Px);
+   double deltaYSquare = (Qy-Py)*(Qy-Py);
+   double deltaZSquare = (Qz-Pz)*(Qz-Pz);
+	
+   double numerador = 2 * r * r - deltaXSquare - deltaYSquare - deltaZSquare;
+   double denominator = 2 * r * r;
+   double d = r * acos(numerador/denominator);
+   return d;
 }
 \end{lstlisting} 

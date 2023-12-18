@@ -1,0 +1,19 @@
+El algoritmo ingenuo recorre todos los elementos en $[i, j]$, y requiere O($N$) en el peor caso. Ahora si nos hicieran $M$ preguntas tendríamos un algoritmo con una complejidad de O($MN$) lo cual no sería factible si la cantidad de preguntas ronda las $10^5$. Ahora hagamos un breve análisis:
+
+Si los elementos del arreglo no pueden cambiar de valor, podemos preprocesar los datos para acelerar el cálculo de las respuestas. Hay $N^2$ preguntas posibles, y podemos precalcular todas sus respuestas en  $N^2$  usando programación dinámica. No hace falta guardar todas las respuestas: basta con
+precalcular una cantidad suficiente como para poder responder cualquier pregunta.
+
+Todo número entero no negativo puede ser representado únicamente como una suma de decrecientes potencias de 2. Esto es precisamente la representación binaria de un número. Ej. $13 = (1101)_2 = 8 + 4 + 1$. Para un número $x$ habrá cuando más $\lceil \log_2 x \rceil$ sumandos.
+
+Por este mismo razonamiento cualquier intervalo puede ser únicamente representado como una unión de intervalos de longitud igual a decrecientes potencias de 2. Por ejemplo $[2, 14] = [2, 9] \cup [10, 13] \cup [14, 14]$ donde la longitud del intervalo completo es $13$ y donde los intervalos individuales tienen de longitud $8$, $4$ y $1$ respectivamente, coincidiendo con la representación binaria de $13$ que es la longitud del intervalo completo. Aquí también el intervalo principal podrá ser representado como máximo por  $\lceil \log_2(\text{longitud del intervalo}) \rceil$ intervalos individuales.
+
+La idea detrás de la Tabla dispersa es precalcular todas las respuestas para consultas de intervalos con longitud igual a una potencia de 2. Luego para responder a la consulta de un intervalo de longitud cualquiera se divide éste en la unión de intervalos de longitud igual a potencias de 2, donde conociendo las respuestas para estos últimos (pues lo precalculamos inicialmente), se combinan dichas respuestas y se obtiene el valor correspondiente al intervalo principal.
+
+\subsection{Precálculo}
+\input{tex_files/desarrollo_sparse_table_precomputation.tex}
+
+\subsection{Consultas de suma en rangos}
+\input{tex_files/desarrollo_sparse_table_query_sum_range.tex}
+
+\subsection{Consultas de mínimo en rangos}
+\input{tex_files/desarrollo_sparse_table_query_min_range.tex}

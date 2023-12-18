@@ -1,0 +1,7 @@
+Al calcular el mínimo de un rango, no importa si procesamos un valor en el rango una o dos veces. Por lo tanto, en lugar de dividir un rango en varios rangos, también podemos dividir el rango en solo dos rangos superpuestos con una
+potencia de dos longitudes. Por ejemplo, podemos dividir el rango $[1, 6]$ en los rangos $[1, 4]$ y $[3, 6]$. El rango mínimo de $[1, 6]$ es claramente el mismo que el mínimo del rango mínimo de $[1, 4]$ y el rango mínimo de $[3, 6]$. 
+Entonces podemos calcular el mínimo del rango $[L, R]$ con:
+
+$$\min(\text{st}[i][L], \text{st}[i][R - 2^i + 1]) \quad \text{ donde } i = \log_2(R - L + 1)$$
+
+Esto requiere que seamos capaces de calcular $\log_2(R - L + 1)$ rápido. Puedes lograrlo precalculando todos los logaritmos o alternativamente, se puede calcular sobre la marcha en espacio y tiempo constantes.

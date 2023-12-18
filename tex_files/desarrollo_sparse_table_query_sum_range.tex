@@ -1,0 +1,9 @@
+Para este tipo de consultas, nosotros necesitamos hallar la suma de todos los valores en un rango. La operación asociativa empleada sería la suma. Para este tipo de consultas, queremos encontrar la suma de todos los valores en un rango. Por lo tanto la definición natural de la función $f$ es $f(x, y) = x + y$.
+
+Para responder a la consulta de suma para el rango $[L, R]$, iteramos sobre todas las potencias de dos, comenzando por la más grande. Tan pronto
+como una potencia de dos $2^i$ es menor o igual a la longitud del rango ($I= R - L + 1$) , procesamos la primera parte del rango $[L, L + 2^i - 1]$, y y
+continuar con el rango restante $[L + 2^i, R]$. Nosotros simplemente hallamos la longitud del intervalo $I= R - L + 1$ y descomponemos dicho intervalo en intervalos de longitud igual a una potencia de 2, que como vimos al inicio coincide con los bits activos de la representación binaria del número $I$. 
+
+Donde $I$ en su representación binaria tenga el bit $k$ activo, el subintervalo a tener en cuenta es $st[k][L]$. Luego aumentamos  el  extremo  derecho de  $L$  en   $2^k$  para continuar el procesamiento ahora en el intervalo $[L + 2^k, R]$. Continuar el procesamiento significa hallar los restantes bits activos de $I$ y desplazar el extremo derecho del intervalo en $2^k$ posiciones, siendo $k$ el bit activo que se encontró en $I$. El resultado a devolver en el método, la variable $r$, se inicializa con el elemento neutro de la operación asociativa empleada, pues cada vez que se encuentre un bit activo en $I$, $r$ se operará con $st[k][L]$. 
+Para chequear si $I$ tiene el bit $k$ activo se emplea la operación de bits $I^ \& (1<<k)$. Para desplazar el extremo izquierdo del intervalo en $2^k$ posiciones, se emplea la operación de bits $L += (1<<k)$.
+

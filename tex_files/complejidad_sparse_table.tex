@@ -1,0 +1,8 @@
+La tabla dispersa es una estructura de datos que permite responder consultas de rango. Puede responder a la mayoría de las consultas de rango en
+O($\log N$) , pero su verdadero poder es responder consultas de rango mínimo (o consultas de rango máximo equivalente). Para esas consultas puede
+calcular la respuesta en O($1$) tiempo. Mientras tanto su operación de precalculo tiene una complejidad de O$(\text{N} \log \text{N})$. En el caso de la operación de suma en el rango la complejidad es $O(K) = O(\log \text{MAXN})$
+
+Una de las principales debilidades del O($1$) de la consulta del mínimo es que este enfoque solo admite consultas de funciones idempotentes . Es decir, funciona muy bien para consultas de rango mínimo o máximo, pero no es posible responder consultas de suma de rango utilizando este enfoque.
+
+Existen estructuras de datos similares que pueden manejar cualquier tipo de funciones asociativas y responder consultas de rango en O(1) . Uno de
+ellos se llama \emph{Disjoint Sparse Table} . Otro sería el \emph{Sqrt Tree} .

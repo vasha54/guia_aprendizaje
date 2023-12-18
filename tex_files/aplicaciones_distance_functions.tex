@@ -25,3 +25,49 @@ En resumen, la distancia esférica es una medida comúnmente utilizada en aplica
 \subsection{Coordenadas giratorias}
 
 Algunos problemas son más fáciles de resolver si se usan distancias de Manhattan en lugar de distancias euclidianas. Como ejemplo, considere un problema en el que se nos da n puntos en el plano bidimensional y nuestra tarea es calcular la distancia máxima de Manhattan entre dos puntos. Por ejemplo, considere el siguiente conjunto de puntos:
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.25\linewidth]{img/diistance_functios_1}
+	\label{fig:diistancefunctios1}
+\end{figure}
+
+La distancia máxima de Manhattan es 5 entre los puntos $B$ y $C$:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.25\linewidth]{img/diistance_functios_2}
+	\label{fig:diistancefunctios2}
+\end{figure}
+
+Una técnica útil relacionada con las distancias de Manhattan es rotar todas las coordenadas 45 grados para que se convierta un punto $(x,y)$ a $(x + y, y - x)$. Por ejemplo, después de rotar los puntos anteriores, el resultado es:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.25\linewidth]{img/diistance_functios_3}
+	\label{fig:diistancefunctios3}
+\end{figure}
+
+Y la distancia máxima es la siguiente:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.25\linewidth]{img/diistance_functios_4}
+	\label{fig:diistancefunctios4}
+\end{figure}
+
+Considere dos puntos $P_1 = (x_1, y_1)$ y $P_2 = (x_2, y_2)$ cuyas coordenadas rotadas son $P'_1 = (x'_1, y'_1)$ y $P'_2 = (x'_2, y'_2)$. Ahora hay dos formas de expresar la distancia de Manhattan entre $P_1$ y $P_2$:
+
+$$|x_1-x_2|+|y_1-y_2| = \max (|x'_1-x'_2|,|y'_1-y'_2|)$$
+
+Por ejemplo, si $P_1=(1,0)$ y $P_2=(3,3)$, las coordenadas rotadas son $P'_1=(1,-1)$ y $P'_=(6,0)$ y la distancia de Manhattan es
+
+$$|1-3| + |0-3| = \max(|1-6|, |-1-0|) = 5$$
+
+Las coordenadas rotadas proporcionan una forma simple de operar con distancias de Manhattan, porque podemos considerar las coordenadas X e Y por separado. Para maximizar la distancia de Manhattan entre dos puntos, debemos encontrar dos puntos cuyas coordenadas rotadas maximizan el valor de:
+
+$$ \max (|x'_1-x'_2|,|y'_1-y'_2|) $$
+
+Esto es fácil, porque la diferencia horizontal o vertical de las coordenadas rotadas tiene que ser máxima.
+

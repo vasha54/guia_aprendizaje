@@ -1,0 +1,20 @@
+Una vez visto las dos ideas algorítmicas e implementadas es evidente que la idea trivial que fue la primera analizada su complejidad de O($n^2$) siendo $n$ la cantidad de caracteres de la cadena. Mientras tanto la complejidad de la segunda idea es aunque no lo parezca O($n$). Lo cual vamos a demostrar a continuación.
+
+La demostración es muy sencilla. Vamos a concentrarnos en el bucle anidado \textbf{\emph{while}} , ya que todo lo demás es sólo un grupo de operaciones constantes que se resumen en O($n$).
+
+Veremos que en cada iteración del bucle \textbf{\emph{while}}  aumentará el límite derecho $r$ del segmento. Para ello, consideraremos las variantes del algoritmo.
+
+\begin{itemize}
+	\item $i \ge r$: En este caso, el bucle \textbf{\emph{while}} no realizará ninguna iteración (si $s[0] \neq s[i]$ ), o serán necesarias algunas iteraciones, comenzando en la posición $i$, cada vez moviendo un carácter hacia la derecha. Después de eso, el límite derecho $r$ será necesariamente actualizado. Entonces hemos encontrado que, cuando $i \ge r$, cada iteración del \textbf{\emph{while}} bucle aumenta el valor del nuevo índice $r$.
+	\item $i < r$:En este caso inicializamos $z[i]$ a un cierto valor $z_0$ dado por la fórmula anterior. Comparemos este valor inicial $z_0$ al valor $r-i$. Tendremos tres casos:
+	\begin{itemize}
+		\item $z_0 < r-i$: Demostramos que en este caso no se realizará ninguna iteración del \textbf{\emph{while}} bucle.
+		Es fácil demostrarlo, por ejemplo, por contradicción: si el \textbf{\emph{while}} bucle hiciera al menos una iteración, significaría esa aproximación inicial $z[i] = z_0$ fue inexacto. Pero desde $s[l \dots r)$ y $s[0 \dots r-l)$ son iguales, esto implicaría que $z[i-l]$ tiene el valor incorrecto (menos de lo que debería ser). Así, desde $z[i-l]$ es correcto y es menor que $r-i$ , se deduce que este valor coincide con el valor requerido $z[i]$.
+		\item $z_0 = r-i$: En este caso, el bucle \textbf{\emph{while}} puede realizar algunas iteraciones, pero cada una de ellas conducirá a un aumento en el valor del $r$ índice porque comenzaremos a comparar desde $s[r]$ , que irá más allá del intervalo $[l, r)$.
+		\item $z_0 > r-i$: Esta opción es imposible, por definición de $z_0$.
+	\end{itemize} 
+\end{itemize}
+
+Entonces, hemos demostrado que cada iteración del bucle interno hace que $r$ avance del puntero hacia la derecha. Desde $r$ no puede ser más que
+$n-1$ , esto significa que el bucle interno no hará más de $n-1$ iteraciones. Como el resto del algoritmo obviamente funciona en O($n$) , hemos demostrado que todo el algoritmo para calcular funciones Z se ejecuta en tiempo lineal.
+

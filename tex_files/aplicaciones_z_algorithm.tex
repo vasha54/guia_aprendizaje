@@ -1,0 +1,18 @@
+Ahora consideraremos algunos usos del algoritmo Z para tareas específicas:
+
+\begin{itemize}
+	\item \textbf{Buscar la subcadena:} Para evitar confusiones llamamos $t$ la cadena de texto y $p$ el patrón. El problema es: encontrar todas las apariciones del patrón $p$ dentro del texto $t$.
+	Para resolver este problema, creamos una nueva cadena $s = p + \diamond + t$ , es decir, aplicamos concatenación de cadenas  $p$ y $t$ pero también le
+	ponemos un carácter separador $\diamond$ en el medio (elegiremos $\diamond$ de modo que ciertamente no estará presente en ninguna parte de las cadenas $p$ o $t$). Calcule el algoritmo Z para $s$. Entonces, para cualquier $i$ en el intervalo $[0; length(t)-1]$, consideraremos el valor correspondiente
+	$k = z[i + length(p) + 1]$ . Si $k$ es igual a $length(p)$ entonces sabemos que hay una ocurrencia de $p$ en el enésima posición de $t$ , de lo contrario no se produce $p$ en el enésima posición de t .
+	El tiempo de ejecución (y el consumo de memoria) es O($length(t) + length(p)$) .
+	
+	\item \textbf{Número de subcadenas distintas en una cadena:} Dada una cadena $s$ de longitud $n$, cuente el número de subcadenas distintas de $s$.
+	Resolveremos este problema de forma iterativa. Es decir: conociendo el número actual de subcadenas diferentes, recalcule esta cantidad después de
+	sumarla al final de $s$ un carácter. Entonces deja $k$ ser el número actual de subcadenas distintas de $s$. Agregamos un nuevo carácter $c$ a $s$. Obviamente, puede haber algunas subcadenas nuevas que terminen en este nuevo carácter $c$ (es decir, todas aquellas cadenas que terminan con este símbolo y que aún no hemos encontrado) toma una cadena $t = s + c$ e invertirlo (escribir sus caracteres en orden inverso). Nuestra tarea ahora es contar cuántos prefijos de $t$ no se encuentran en ningún otro lugar de $t$ . Calculemos el algoritmo Z de $t$ y encontrar su valor máximo $z_{max}$  Obviamente, $t$ prefijos de longitud $z_{max}$ también ocurre en algún lugar en medio de $t$. Claramente, también aparecen prefijos más cortos.
+	Entonces, hemos descubierto que el número de subcadenas nuevas que aparecen cuando el símbolo $c$ se adjunta a $s$ es igual a $length(t)-z_{max}$.
+	En consecuencia, el tiempo de ejecución de esta solución es O($n^2$) para una cuerda de longitud $n$. Vale la pena señalar que exactamente de la misma manera podemos recalcular, todavía en O($n$) tiempo, el número de subcadenas distintas al agregar un carácter al principio de la cadena, así como al eliminarlo (desde el final o el principio).
+	
+	\item \textbf{Compresión de cadenas:} Dada una cadena $s$ de longitud $n$. Encuentre su longitud \emph{comprimida} más corta. representación, es decir: encontrar una cadena $t$ de longitud más corta tal que $s$ puede representarse como una concatenación de una o más copias de $t$ .
+	Una solución es: calcular el $algoritmo-Z$ de $s$ , recorrer todos $i$ tal que $i$ divide $n$. Para en la primera $i$ tal que $i + z[i] = n$. Entonces, la cuerda $s$ se puede comprimir a la longitud $i$.
+\end{itemize}
