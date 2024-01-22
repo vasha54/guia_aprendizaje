@@ -21,6 +21,7 @@
 \usepackage{fancybox}
 \usepackage{longtable}
 \usepackage{amsmath}
+\usepackage{xcolor}
 %----------------------------------------------------------------------------------------
 %	MEMO INFORMATION
 %----------------------------------------------------------------------------------------
@@ -51,8 +52,12 @@
 %\titleguide{Cadenas de carácteres, terminología}%_string_terminology FALTA
 %\titleguide{Tabla dispersa (\emph{Sparse Table})}%sparse_table 
 %\titleguide{Arreglos de sufijos (\emph{Suffix Array})}%suffix_array FALTA
-\titleguide{Algoritmo-Z (\emph{Z-Algorithm})}%z_algorithm 
-
+%\titleguide{Algoritmo-Z (\emph{Z-Algorithm})}%z_algorithm 
+%\titleguide{Función de prefijo. Algoritmo de Knuth-Morris-Pratt (\emph{KMP})}%kmp
+%\titleguide{Descomposición raíz cuadrada (\emph{Sqrt Decomposition})}%sqrt_decomposition
+%\titleguide{Sucesiones númericas}%successions FALTA
+%\titleguide{Algoritmo de Mo (\emph{Mo's algorithm})}%mo_algorithm 
+\titleguide{Probabilidades}%probability
 \begin{document}
 
 %\AddToShipoutPicture{\BackgroundPic}
@@ -81,19 +86,21 @@
 
 
 \section{Introducción}
-\input{tex_files/introduccion_z_algorithm.tex}
+\input{tex_files/introduccion_probability.tex}
 \section{Conocimientos previos}
-\input{tex_files/conocimientos_z_algorithm.tex}
+\input{tex_files/conocimientos_probability.tex}
 \section{Desarrollo}
-\input{tex_files/desarrollo_z_algorithm.tex}
+\input{tex_files/desarrollo_probability.tex}
 \section{Implementación}
-\input{tex_files/code_z_algorithm.tex}
+\input{tex_files/code_probability.tex}
 \section{Aplicaciones}
-\input{tex_files/aplicaciones_z_algorithm.tex}
+\input{tex_files/aplicaciones_probability.tex}
 \section{Complejidad}
-\input{tex_files/complejidad_z_algorithm.tex}
+\input{tex_files/complejidad_probability.tex}
 \section{Ejercicios}
-\input{tex_files/excercises_z_algorithm.tex}
+\input{tex_files/excercises_probability.tex}
+%\section{Anexos}
+%\input{tex_files/anexos_successions.tex}
 
 
 \end{document}
