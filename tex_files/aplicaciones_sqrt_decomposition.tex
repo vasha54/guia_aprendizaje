@@ -1,0 +1,15 @@
+Hasta ahora estábamos discutiendo el problema de encontrar la suma de los elementos de una subarrray continua. Este problema se puede extender para permitir actualizar elementos de un arreglo. Si un elemento $a[i]$ cambia, es suficiente actualizar el valor de $b[k]$ para el bloque al que pertenece este elemento ($k=i/s$) en una operación:
+
+$$ b[k] += a_{nuevo}[i] - a_{viejo}[i] $$
+
+Por otro lado, la tarea de encontrar la suma de elementos puede reemplazarse con la tarea de encontrar un elemento mínimo/máximo de una subarreglo. Si este problema también tiene que abordar las actualizaciones de los elementos individuales, también es posible actualizar el valor de $b[k]$, pero requerirá iterarse a través de todos los valores de bloque $k$ en $O(s) = O(\\sqrt{n})$ operaciones.
+
+La descomposición de raíz cuadrada se puede aplicar de manera similar a una clase completa de otros problemas: encontrar el número de elementos cero, encontrar el primer elemento distinto de cero, contando elementos que satisfacen una determinada propiedad, etc.
+
+Otra clase de problemas aparece cuando necesitamos \textbf{actualizar los elementos de un arreglo en intervalos}: incrementar los elementos existentes o reemplazarlos con un valor dado.
+
+Por ejemplo, supongamos que podemos hacer dos tipos de operaciones en un arreglo: adicionar un valor dado $\delta$ a todos los elementos del arreglo en el intervalo $[l,r]$ o consulte el valor del elemento $a[i]$. Generemos el valor que debe agregarse a todos los elementos de bloque $k$ en $b[k]$ (inicialmente todos $ b[k] = 0 $). Durante cada operación de adicionar, necesitamos agregar $\delta$ a $b[k]$ para todos los bloques que pertenecen a intervalo $[l,r]$ y para agregar $\delta$ a $a[i]$ por Todos los elementos que pertenecen a las partes del intervalo. La respuesta una consulta $i$ es simplemente $a[i]+b[i/s]$. De esta manera, la operación Adicionar tiene O$(\sqrt{n})$ complejidad, y responder una consulta tiene O$(1)$ complejidad.
+
+Finalmente, esas dos clases de problemas se pueden combinar si la tarea requiere realizar \textbf{ambas} actualizaciones de elementos en un intervalo y consultas en un intervalo. Ambas operaciones se pueden hacer con una complejidad de O$(\sqrt{n})$. Esto requerirá dos arreglos de bloque $b$ y $c$: uno para realizar un seguimiento de las actualizaciones de elementos y otro para realizar un seguimiento de las respuestas a la consulta.
+
+Existen otros problemas que se pueden resolver utilizando la descomposición de raíz cuadrada, por ejemplo, un problema sobre mantener un conjunto de números que permitirían agregar/eliminar números, verificando si un número pertenece al conjunto y encontrar $K$-th más grande. Para resolverlo, uno tiene que almacenar números en orden creciente, dividido en varios bloques con $\sqrt {n}$ números en cada uno. Cada vez que se agrega/elimina un número, los bloques deben reequilarse mediante números móviles entre comienzos y extremos de bloques adyacentes.

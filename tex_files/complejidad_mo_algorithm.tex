@@ -1,0 +1,31 @@
+Ordenar todas las consultas tomará O$(Q\log Q)$.
+
+¿Qué pasa con las otras operaciones? ¿ Cuántas veces llamarán a \emph{add} y \emph{remove} ?
+
+Digamos que el tamaño del bloque es $S$.
+
+Si solo miramos todas las consultas que tienen el índice izquierdo en el mismo bloque, las consultas 
+se ordenan por el índice derecho. Por eso llamaremos\emph{add(cur\_r)} y \emph{remove(cur\_r)} solo
+O$(N)$ veces para todas estas consultas combinadas. Esto da $O(\frac{N}{S} N)$ llama a todos los
+bloques. El valor de \emph{cur\_l} puede cambiar como máximo $O(S)$ durante entre dos consultas. Por
+lo tanto tenemos un adicional $O(SQ)$ llamadas de \emph{add(cur\_r)} y \emph{remove(cur\_r)}.
+
+Para $S\approx \sqrt{N}$ esto da O$((N+Q)\sqrt{N})$ operaciones en total. Así, la complejidad es
+O$((N+Q)F\sqrt{N})$ dónde O$(F)$ es la complejidad de las funciones \emph{add} y \emph{remove}.
+
+
+\textbf{Consejos para mejorar el tiempo de ejecución}
+
+
+\begin{itemize}
+	\item Tamaño de bloque de precisamente $\sqrt{N}$ no siempre ofrece el mejor tiempo de ejecución. Por ejemplo, si
+	$\sqrt{N}=750$ entonces puede suceder que el tamaño de bloque de $700$ o $800$ puede funcionar mejor. Más importante 
+	aún, no calcule el tamaño del bloque en tiempo de ejecución: hágalo \textbf{const}. Los compiladores optimizan bien la división por constantes.
+	\item En los bloques impares, ordene el índice derecho en orden ascendente y en los bloques pares, ordénelo en orden descendente. Esto minimizará el movimiento del puntero derecho, ya que la clasificación normal moverá el puntero derecho desde el final hasta el principio al comienzo de cada bloque. Con la versión mejorada este reinicio ya no es necesario.
+\begin{lstlisting}[language=C++]
+bool cmp(pair<int, int> p, pair<int, int> q) {
+   if (p.first / BLOCK_SIZE != q.first / BLOCK_SIZE) return p < q;
+   return (p.first / BLOCK_SIZE & 1) ? (p.second < q.second) : (p.second > q.second);
+}
+\end{lstlisting}
+\end{itemize}

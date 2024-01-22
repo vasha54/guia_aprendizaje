@@ -1,0 +1,15 @@
+La primera observación importante es que los valores de la función de prefijo solo pueden aumentar como máximo en uno.
+
+De hecho, de lo contrario, si $\phi[i + 1] > \phi[i] + 1$ , entonces podemos tomar este sufijo que termina en posición $i + 1$ con la longitud $\phi[i + 1]$ y elimine el último carácter. Terminamos con un sufijo que termina en posición $i$ con la longitud $\phi[i + 1] - 1$ , que es mejor que $\phi[i]$ , es decir, obtenemos una contradicción.
+
+La siguiente ilustración muestra esta contradicción. El sufijo propio más largo en la posición $i$ eso también es un prefijo es de longitud $2$ , y en la 
+posición $i + 1$ es de largo $4$ . Por lo tanto la cadena $s_{i-2}~s_{i-1}~s_{i}~s_{i+1}$ es igual a la cadena $s_{i-2}s_{i-1}s_is_{i+1}$
+, lo que significa que también las cadenas $s_0 ~ s_1 ~ s_2$ son iguales, por lo tanto $\phi[i]$ 
+tiene que ser $3$.
+
+$$\underbrace{\overbrace{s_0 ~ s_1}^{\pi[i] = 2} ~ s_2 ~ s_3}_{\pi[i+1] = 4} ~ \dots ~ \underbrace{s_{i-2} ~ \overbrace{s_{i-1} ~ s_{i}}^{\pi[i] = 2} ~ s_{i+1}}_{\pi[i+1] = 4}$$
+
+Por lo tanto, al pasar a la siguiente posición, el valor de la función de prefijo puede aumentar en uno, permanecer igual o disminuir en cierta cantidad.
+Este hecho ya nos permite reducir la complejidad del algoritmo a O($n^3$) , porque en un paso la función de prefijo puede crecer como máximo en uno.
+En total, la función puede crecer como máximo $n$ pasos, y por lo tanto también sólo puede disminuir un total de $n$ pasos. Esto significa que sólo
+tenemos que realizar O($n$) comparaciones de cadenas y alcanzar la complejidad O($n^2$).

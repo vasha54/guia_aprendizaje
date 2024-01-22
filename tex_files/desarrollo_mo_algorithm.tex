@@ -1,0 +1,47 @@
+Esto puede parecer mucho peor que los métodos o estructuras de datos, ya que tiene una complejidad ligeramente peor que la que teníamos antes y no puede actualizar los valores entre dos consultas. Pero en muchas situaciones este método tiene ventajas. Durante una descomposición normal de raíz cuadrada, tenemos que calcular previamente las respuestas para cada bloque y fusionarlas al responder consultas. En algunos problemas, este paso de fusión puede resultar bastante problemático. Por ejemplo, cuando cada consulta solicita encontrar la moda de su rango (el número que aparece con más frecuencia). Para esto, cada bloque tendría que almacenar el recuento de cada número en algún tipo de estructura de datos, y ya no
+podemos realizar el paso de fusión lo suficientemente rápido. El algoritmo de Mo utiliza un enfoque completamente diferente, que puede responder este tipo de consultas rápidamente, porque solo realiza un seguimiento de una estructura de datos y las únicas operaciones con ella son fáciles y rápidas.
+
+La idea es responder las consultas en un orden especial basado en los índices. Primero responderemos todas las consultas que tengan el índice izquierdo en el bloque 0, luego responderemos todas las consultas que tengan el índice izquierdo en el bloque 1 y así sucesivamente. Y también tendremos que responder las consultas de un bloque en un orden especial, es decir, ordenadas por el índice derecho de las consultas.
+
+El algoritmo de Mo mantiene un rango activo del arreglo, y la respuesta a una consulta sobre el rango activo se conoce en cada momento. El algoritmo procesa las consultas una por una y siempre mueve los puntos finales del rango activo insertando y eliminando elementos. 
+
+Como ya se dijo, utilizaremos una única estructura de datos. Esta estructura de datos almacenará información sobre el rango. Al principio este rango estará vacío. Cuando queremos responder la siguiente consulta (en el orden especial), simplemente ampliamos o reducimos el rango, agregando/eliminando elementos en ambos lados del rango actual, hasta que lo transformamos en el rango de consulta. De esta manera, solo necesitamos agregar o eliminar un único elemento una vez a la vez, lo que debería ser una operación bastante sencilla en nuestra estructura de datos.
+
+Dado que cambiamos el orden de respuesta de las consultas, esto solo es posible cuando se nos permite responder las consultas en modo fuera del orden en que fue dada, en otras palabras no existe actualización entre consultas.
+
+El truco del algoritmo de Mo es el orden en que se procesan las consultas. El arreglo se divide en bloques de $k = O(\sqrt{n})$ elementos y se realiza una consulta $[a_1 ,b_1]$
+procesado antes de una consulta $[a_2 , b_2]$ si:
+
+\begin{itemize}
+	\item $\lfloor a_1/k \rfloor < \lfloor a_2/k \rfloor ~\text{o}$
+	\item $\lfloor a_1/k \rfloor = \lfloor a_2/k \rfloor ~\text{y} ~ b_1 < b_2$
+\end{itemize}
+
+Por lo tanto, todas las consultas cuyos puntos finales izquierdos están en un determinado bloque se procesan una tras otra clasificadas según sus puntos finales derechos. Usando este orden, el algoritmo solo realiza operaciones O($n\sqrt{n}$), porque el punto final izquierdo se mueve O($n$) veces en O($\sqrt{n}$) pasos, y el punto final derecho se mueve O($\sqrt{n}$) veces  en O($n$) pasos. Por lo tanto, ambos puntos finales se mueven un total de O($n\sqrt{n}$) pasos durante el algoritmo.
+
+Como ejemplo, considere un problema en el que se nos proporciona un conjunto de consultas, cada una de las cuales corresponde a un rango en un arreglo, y nuestra tarea es calcular para cada consulta el número de elementos distintos en el rango.
+
+En el algoritmo de Mo, las consultas siempre se ordenan de la misma manera, pero dependiendo del problema cambia como se mantiene la respuesta a la consulta. En este problema, podemos mantener un recuento de arreglo donde $count[x]$ indica el número de veces que aparece un elemento $x$ en el rango activo.
+
+Cuando pasamos de una consulta a otra, el rango activo cambia. Por ejemplo, si el rango actual es:
+
+$$
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+	\hline
+4 & \textcolor{red}{2}  & \textcolor{red}{5} & \textcolor{red}{4} & \textcolor{red}{2} & 4 & 3 & 3 & 4 \\
+	\hline 
+\end{tabular}
+$$
+y el siguiente rango es:
+
+$$\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+	\hline
+	4 & 2 & \textcolor{red}{5} & \textcolor{red}{4} & \textcolor{red}{2} & \textcolor{red}{4} & \textcolor{red}{3} & 3 & 4 \\
+	\hline 
+\end{tabular}$$
+
+
+Habrá tres pasos: el extremo izquierdo se mueve un paso hacia la derecha y el extremo derecho se mueve dos pasos hacia la derecha.
+
+Después de cada paso, es necesario actualizar el recuento del arreglo. Después de agregar un elemento x, aumentamos el valor de $count[x]$ en $1$, y si $count[x]=1$ después de esto, también aumentamos la respuesta a la consulta en $1$. De manera similar, después de eliminar un elemento $x$, disminuimos el valor de $count[x]$ por $1$, y si $count[x]=0$ después de esto, también disminuimos la respuesta a la consulta en $1$.
+

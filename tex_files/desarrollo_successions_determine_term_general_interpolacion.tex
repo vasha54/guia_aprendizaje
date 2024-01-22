@@ -1,0 +1,135 @@
+Consideremos sucesiones cuyo término general sea un polinomio de grado $k$. Para estas sucesiones es posible determinar la forma explícita del término general mediante interpolación de polinomio. Se recomienda el empleo del método de Newton. En este caso se necita el conocimiento de los $k + 1$ primeros términos. Expliquemos el método mediante un ejemplo.
+
+\textbf{Ejemplo:} Buscar el término general de la suma de los $n$ primeros números que son cuadrados perfectos.
+
+Los primeros términos de la sucesión son muy fáciles determinar.
+
+$$s_1=1 ~ s_2=5 ~ s_3=14 ~ s_4=30 $$
+
+El término general de esta sucesión es un polinomio de grado 3. Entonces es necesario emplear los primeros 4 términos. Sigamos el siguiente procedimiento:
+
+\begin{enumerate}
+	\item Construyamos una tabla que refleje la relación funcional dada en la sucesión para estos términos:
+	$$
+	\begin{tabular}{|c|c|}
+		\hline
+	 n	& $s_n$  \\
+		\hline
+	1	& 1 \\
+		\hline
+	2	& 5 \\
+	\hline
+	3	& 14 \\
+		\hline
+	4	& 30 \\
+		\hline
+	\end{tabular}
+$$
+    \item Agregar una nueva columna mediante la división de las diferencias de dos valores sucesivos de la sucesión entre las diferencias de correspondiente lugares en la sucesión.
+    
+    $$
+    \begin{tabular}{|c|c|c|}
+    	\hline
+    	n	& $s_n$ & $c_1$ \\
+    	\hline
+    	1	& 1 &  $\dfrac{5-1}{2-1}=4$ \\
+    \hline
+    	2	& 5 & $\dfrac{14-5}{3-2}=9$ \\
+    \hline
+    	3	& 14 & $\dfrac{30-14}{4-3}=16$ \\
+    \hline
+    	4	& 30 & \\
+    	\hline
+    \end{tabular}
+    $$
+    
+    \item Repetimos el proceso hasta que la última columna este formada por un solo número. Tomando para el numerador números sucesivos en la columna anterior y en el caso del denominador los números que se toman son siempre en la primera columna pero debemos dejar un valor por el medio tras cada nueva columna.
+    
+     $$
+    \begin{tabular}{|c|c|c|c|}
+    	\hline
+    	n	& $s_n$ & $c_1$ & $c_2$ \\
+    	\hline
+    	1	& 1 &  $\dfrac{5-1}{2-1}=4$ & $\dfrac{9-4}{3-1} = \dfrac{5}{2}$ \\
+    	\hline
+    	2	& 5 & $\dfrac{14-5}{3-2}=9$ &  $\dfrac{16-9}{4-2} = \dfrac{7}{2}$ \\
+    	\hline
+    	3	& 14 & $\dfrac{30-14}{4-3}=16$ & \\
+    	\hline
+    	4	& 30 &  & \\
+    	\hline
+    \end{tabular}
+    $$
+    
+    Dos números en la última columna, por lo que continuamos:
+    
+    $$
+    \begin{tabular}{|c|c|c|c|c|}
+    	\hline
+    	n	& $s_n$ & $c_1$ & $c_2$ & $c_3$ \\
+    	\hline
+    	1	& 1 &  $\dfrac{5-1}{2-1}=4$ & $\dfrac{9-4}{3-1} = \dfrac{5}{2}$ &  $ \dfrac{\dfrac{7}{2} - \dfrac{5}{2}}{4-1} = \dfrac{1}{3}$ \\
+    	\hline
+    	2	& 5 & $\dfrac{14-5}{3-2}=9$ &  $\dfrac{16-9}{4-2} = \dfrac{7}{2}$ & \\
+    	\hline
+    	3	& 14 & $\dfrac{30-14}{4-3}=16$ &  & \\
+    	\hline
+    	4	& 30 &  &  & \\
+    	\hline
+    \end{tabular}
+    $$
+    
+    Hemos concluido el proceso.
+    
+    \item La primera fila y la primera columna nos permiten construir el polinomio buscado. Los colores le ayudaran a conocer el origen de los números en la expresión del término general.
+    
+     $$
+    \begin{tabular}{|c|c|c|c|c|}
+    	\hline
+    	n	& $s_n$ & $c_1$ & $c_2$ & $c_3$ \\
+    	\hline
+    	1	& \textcolor{red}{1} &  \textcolor{blue}{4} & \textcolor{violet}{$\dfrac{5}{2}$} &  \textcolor{orange}{$\dfrac{1}{3}$} \\
+    	\hline
+    	2	& 5 & $9$ &  $\dfrac{7}{2}$ & \\
+    	\hline
+    	3	& 14 & $16$ &  & \\
+    	\hline
+    	4	& 30 &  &  & \\
+    	\hline
+    \end{tabular}
+    $$
+    
+    
+\end{enumerate}
+
+$$a_n = \textcolor{red}{1} + \textcolor{blue}{4} \times (n-1) + \textcolor{violet}{\dfrac{5}{2}} \times (n-1)\times(n-2) + \textcolor{orange}{\dfrac{1}{3}}  \times (n-1)\times(n-2) \times (n-3)$$
+
+Simplificando resulta:
+
+$$a_n = \dfrac{1}{6}\times n \times (1+3\times n + 2 \times n^2)$$
+
+En general, si la tabla resultante es :
+
+ $$
+\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	n	& $s_n$ & $c_1$ & $c_2$ & \dots & $c_k$ \\
+	\hline
+	$x_1$	& \textcolor{red}{$y_1$} &  \textcolor{blue}{$C_1$} & \textcolor{violet}{$C_2$} &  \dots & \textcolor{orange}{$C_k$} \\
+	\hline
+	$x_2$	& $y_2$ & \dots &  \dots & \dots & \\
+	\hline
+	\vdots	& \vdots & \vdots  &  &  &\\
+	\hline
+	$x_k$	& $y_k$ & \dots &  &  &\\
+	\hline
+	$x_{k+1}$	&  $y_{k+1}$ &  &  &  &\\
+	\hline
+\end{tabular}
+$$
+
+El polinomio se construye a partir de ella por la expresión:
+
+$$a_n = y_0 + C_1 \times (n-x_1) + C_2 \times (n-x_1) \times (n-x_2)+ \dots + C_k \times (n-x_1) \times (n-x_2) \times \dots \times (n-x_k) $$
+
+En caso que usted no sepa el grado del polinomio buscado. Puede comenzar suponiendo que tiene grado $k$ y aplicar el procedimiento anterior. Si el polinomio encontrado permite determinar los términos sucesivos ha logrado el objetivo. En caso contrario supone ahora que tiene grado $k+1$ y partiendo de la tabla del caso anterior agrega un número más siguiendo el mismo procedimiento y vuelve a verificar el resultado hasta lograr encontrar el polinomio.

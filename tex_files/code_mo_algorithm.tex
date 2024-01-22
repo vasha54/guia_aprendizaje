@@ -1,0 +1,96 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void remove(idx);  // Remueve el valor en idx de la estructura de datos
+void add(idx);     // Adiciona el valor en idx a la estructura de datos
+int get_answer();  // Retorna la respuesta actual de la estructura de datos
+
+int block_size;
+//crear una estructura de datos acorde al problema
+
+struct Query {
+   int l, r, idx;
+   bool operator<(Query other) const
+   {
+      return make_pair(l / block_size, r) <
+      make_pair(other.l / block_size, other.r);
+   }
+};
+
+vector<int> mo_s_algorithm(vector<Query> queries) {
+   vector<int> answers(queries.size());
+   sort(queries.begin(), queries.end());
+	
+   //Incializar la estructura de datos
+	
+   int cur_l = 0;
+   int cur_r = -1;
+   // La estructura de datos siempre reflejar la respuesta del rango [cur_l, cur_r]
+   for (Query q : queries) {
+      while (cur_l > q.l) { cur_l--; add(cur_l); }
+	  while (cur_r < q.r) { cur_r++; add(cur_r); }
+      while (cur_l < q.l) { remove(cur_l); cur_l++; }
+      while (cur_r > q.r) { remove(cur_r); cur_r--; }
+      answers[q.idx] = get_answer();
+  }
+  return answers;
+}
+
+void remove(int idx){
+   //dependera del problema
+}
+
+void add(int idx){
+   //dependera del problema
+}
+
+int get_answer(){
+   //dependera del problema
+}
+\end{lstlisting}
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public class MosAlgorithm {
+   public static class Query {
+      int index;
+      int a;
+      int b;
+		
+      public Query(int a, int b) {
+         this.a = a;
+         this.b = b;
+      }
+   }
+   
+   static int add(int[] a, int[] cnt, int i) {
+      //La implementacion depende del problema
+   }
+	
+   static int remove(int[] a, int[] cnt, int i) {
+     //La implementacion depende del problema
+   }
+	
+   public static int[] processQueries(int[] a, Query[] queries) {
+      for (int i = 0; i < queries.length; i++) queries[i].index = i;
+      int sqrtn = (int) Math.sqrt(a.length);
+      Arrays.sort(queries, Comparator.<Query>comparingInt(q -> q.a / sqrtn).thenComparingInt(q -> q.b));
+      // inicializar estructura
+      int[] res = new int[queries.length];
+      int L = 1;
+      int R = 0;
+      int cur = 0;
+      for (Query query : queries) {
+         while (L < query.a) cur += remove(a, cnt, L++);
+         while (L > query.a) cur += add(a, cnt, --L);
+         while (R < query.b) cur += add(a, cnt, ++R);
+         while (R > query.b) cur += remove(a, cnt, R--);
+           res[query.index] = cur;
+      }
+     return res;
+  }
+}
+\end{lstlisting}

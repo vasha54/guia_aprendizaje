@@ -1,0 +1,111 @@
+La implementación acaba siendo sorprendentemente breve y expresiva. Este es un algoritmo en línea, es decir, procesa los datos a medida que llegan; por ejemplo, puede leer los caracteres de la cadena uno por uno. y procesarlos inmediatamente, encontrando el valor de la función de prefijo para cada carácter siguiente. El algoritmo aún requiere almacenar la
+cadena en sí y los valores de la función de prefijo calculados previamente, pero si conocemos de antemano el valor máximo $M$ la función de prefijo puede tomar la cadena, solo podemos almacenar $M + 1$ primeros caracteres de la cadena y el mismo número de valores de la función de prefijo.
+
+\subsection{C++}
+
+\subsubsection{Algoritmo trivial}
+\begin{lstlisting}[language=C++]
+vector<int> prefix_function_trivial(string s) {
+   int n = (int)s.length();
+   vector<int> pi(n);
+   for (int i = 0; i < n; i++)
+     for (int k = 0; k <= i; k++)
+        if (s.substr(0, k) == s.substr(i-k+1, k)) pi[i] = k;
+   return pi;
+}
+\end{lstlisting}
+
+\subsubsection{Algoritmo eficiente} 
+\begin{lstlisting}[language=C++]
+vector<int> prefix_function_efficient(string s) {
+   int n = (int)s.length();
+   vector<int> pi(n);
+   for (int i = 1; i < n; i++) {
+      int j = pi[i-1];
+      while (j > 0 && s[i] != s[j]) j = pi[j-1];
+      if (s[i] == s[j]) j++;
+      pi[i] = j;
+   }
+   return pi;
+}
+\end{lstlisting}
+
+\subsubsection{KMP} 
+\begin{lstlisting}[language=C++]
+vector<int> KMP(string sequence, string pattern){
+   int n = sequence.size();
+   int m = pattern.size();
+   vector<int> matches;
+   vector<int> P(m+1);
+   for (int i=0;i<m;i++) P[i] = -1;
+   for (int i=0, j=-1;i<m;){
+      while (j > -1 && pattern[i] != pattern[j]) j = P[j];
+      i++; j++; P[i] = j;
+   }
+   for (int i=0, j=0;i<n;){
+      while (j > -1 && sequence[i] != pattern[j]) j = P[j];
+      i++; j++;
+      if (j == m){
+         matches.push_back(i - m);
+         j = P[j];
+      }
+   }
+   return matches;
+}
+\end{lstlisting}
+
+
+\subsection{Java}
+
+\subsubsection{Algoritmo trivial}
+\begin{lstlisting}[language=Java]
+public static  int [] prefix_function_trivial(String s) {
+   int n = s.length();
+   int [] pi = new int[n];
+   Arrays.fill(pi,0);
+   for (int i = 0; i < n; i++)
+      for (int k = 0; k <= i; k++)
+         if (s.substring(0, k) == s.substring(i-k+1, k)) pi[i] = k;
+   return pi;
+}
+\end{lstlisting}
+
+\subsubsection{Algoritmo eficiente} 
+\begin{lstlisting}[language=Java]
+public static  int [] prefix_function_efficient(String s) {
+   int n = s.length();
+   int [] pi = new int[n];
+   Arrays.fill(pi,0);
+   for (int i = 1; i < n; i++) {
+      int j = pi[i-1];
+      while (j > 0 && s.charAt(i) != s.charAt(j)) j = pi[j-1];
+      if (s.charAt(i) == s.charAt(j)) j++;
+      pi[i] = j;
+   }
+   return pi;
+}
+\end{lstlisting}
+
+\subsubsection{KMP} 
+\begin{lstlisting}[language=Java]
+ArrayList<Integer> KMP(String sequence, String pattern){
+   int n = sequence.length();
+   int m = pattern.length();
+   ArrayList<Integer> matches = new ArrayList<Integer>();
+   int [] P = new int[m+1];
+   for (int i=0;i<m;i++) P[i] = -1;
+   for (int i=0, j=-1;i<m;){
+      while (j > -1 && pattern.charAt(i) != pattern.charAt(j)) j = P[j];
+      i++; j++; P[i] = j;
+   }
+   for (int i=0, j=0;i<n;){
+      while (j > -1 && sequence.charAt(i) != pattern.charAt(j)) j = P[j];
+      i++; j++;
+      if (j == m){
+         matches.add(i - m);
+         j = P[j];
+      }
+   }
+   return matches;
+}
+\end{lstlisting}

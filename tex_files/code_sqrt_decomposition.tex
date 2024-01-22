@@ -1,0 +1,98 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+// Datos de entradas
+int n;
+vector<int> a,b;
+
+//lectura de datos
+void readData(){
+   a.resize(n);
+   for(int i=0;i<n;i++) cin>>a[i];
+}
+
+// preprocesamiento
+void init(){
+   int len = (int) sqrt (n + .0) + 1; // longitud del bloque y numero de bloques
+   b.resize(len);
+   for (int i=0; i<n; ++i) b[i / len] += a[i];
+}
+
+int query(int l,int r){
+   int sum = 0;
+   int len = (int) sqrt (n + .0) + 1;
+   for (int i=l; i<=r; ){
+      if (i % len == 0 && i + len - 1 <= r) {
+         // Si todo el bloque que comienza en i pertenece a [l, r]
+         sum += b[i / len]; i += len;
+      } else {
+         sum += a[i]; ++i;
+      }
+   }
+   return sum;
+}
+
+int queryv2(int l, int r){
+   int len = (int) sqrt (n + .0) + 1;
+   int sum = 0;
+   int c_l = l / len,   c_r = r / len;
+   if (c_l == c_r) for (int i=l; i<=r; ++i) sum += a[i];
+   else {
+      for (int i=l, ends=(c_l+1)*len-1; i<=ends; ++i) sum += a[i];
+      for (int i=c_l+1; i<=c_r-1; ++i) sum += b[i];
+      for (int i=c_r*len; i<=r; ++i) sum += a[i];
+   }
+   return sum;
+}
+\end{lstlisting}	
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public class Main {
+   // Datos de entradas
+   int n;
+   int[] a;
+   int [] b;
+	
+   void readData(){
+      a = new int [n];
+      Scanner in =new Scanner(System.in);
+      for(int i=0;i<n;i++) a[i]=in.nextInt();
+   }
+	
+   // preprocesamiento
+   public void init(){
+      int len = (int) Math.sqrt (n + .0) + 1; // longitud del bloque y numero de bloques
+      b = new int [len];
+      for (int i=0; i<n; ++i) b[i / len] += a[i];
+   }
+	
+   public int query(int l,int r){
+      int sum = 0;
+      int len = (int) Math.sqrt (n + .0) + 1;
+      for (int i=l; i<=r; ){
+         if (i % len == 0 && i + len - 1 <= r) {
+            // Si todo el bloque que comienza en i pertenece a [l, r]
+            sum += b[i / len]; i += len;
+         } else {
+            sum += a[i]; ++i;
+         }
+      }
+      return sum;
+   }
+	
+   public int queryv2(int l, int r){
+      int len = (int) Math.sqrt (n + .0) + 1;
+      int sum = 0;
+      int c_l = l / len,   c_r = r / len;
+      if (c_l == c_r) for (int i=l; i<=r; ++i) sum += a[i];
+      else {
+         for (int i=l, ends=(c_l+1)*len-1; i<=ends; ++i) sum += a[i];
+         for (int i=c_l+1; i<=c_r-1; ++i) sum += b[i];
+         for (int i=c_r*len; i<=r; ++i) sum += a[i];
+      }
+      return sum;
+   }
+}
+\end{lstlisting}
+
+La implementación \emph{query} tiene demasiadas operaciones de división (que son mucho más lentas que otras operaciones aritméticas). En su lugar, podemos calcular los índices de los bloques $c_l$ y $c_r$ que contienen los índices $l$ y $r$, y recorrer los bloques $c_l+1 \dots c_r-1$ con procesamiento separado de las partes en los bloques $c_l$ y $c_r$. Este enfoque corresponde a la última fórmula de la descripción y hace que el caso $c_l = c_r$ sea un caso especial en este caso tenemos la implementación \emph{queryv2}.

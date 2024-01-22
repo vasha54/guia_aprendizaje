@@ -1,0 +1,5 @@
+Dada una cadena $s$ de longitud $n$ se define como \textbf{función prefijo} un arreglo $\phi$ de longitud $n$, donde $\phi[i]$ almacena la longitud del prefijo propio más largo de la subcadena $s[0\dots i]$ que también es un sufijo de esta subcadena. Un prefijo adecuado de una cadena es un prefijo que no es igual a la cadena misma. Por definición  $\phi[0]=0$. Matemáticamente la definición de la función de prefijo se puede escribir de la siguiente manera:
+
+ $$\pi[i] = \max_ {k = 0 \dots i} \{k : s[0 \dots k-1] = s[i-(k-1) \dots i] \}$$
+ 
+ Por ejemplo, la función de prefijo de la cadena \emph{abcabcd} es $[0,~0,~0,~1,~2,~3,~0]$ y función de prefijo de la cadena \emph{aabaaab} es $[0,~1,~0,~1,~2,~ 2,~3]$. De como hallar la función prefijo y su aplicaciones en la programación competitiva se abordará en la presente guía.

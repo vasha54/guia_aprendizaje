@@ -1,0 +1,29 @@
+Vayamos más allá, queremos deshacernos de las comparaciones de cadenas. Para lograr esto, tenemos que utilizar toda la información calculada en
+los pasos anteriores.
+
+Entonces, calculemos el valor de la función de prefijo $\phi$ para $i+1$. Si $s[i+1]= s[\phi[i]]$, entonces podemos decir con certeza que
+$\phi[i + 1] = \phi[i] + 1$ , ya que sabemos que el sufijo en la posición $i$ de longitud $\phi[i]$ es igual al prefijo de longitud $\phi[i]$. Esto se ilustra nuevamente con un ejemplo.
+
+$$\underbrace{\overbrace{s_0 ~ s_1 ~ s_2}^{\pi[i]} ~ \overbrace{s_3}^{s_3 = s_{i+1}}}_{\pi[i+1] = \pi[i] + 1} ~ \dots ~ \underbrace{\overbrace{s_{i-2} ~ s_{i-1} ~ s_{i}}^{\pi[i]} ~ \overbrace{s_{i+1}}^{s_3 = s_{i + 1}}}_{\pi[i+1] = \pi[i] + 1}$$
+
+
+Si este no es el caso, $s[i+1] \neq s[\pi[i]]$, entonces debemos probar con una cadena más corta. Para acelerar las cosas, nos gustaría pasar
+inmediatamente a la longitud más larga $j < \pi[i]$ , de modo que la propiedad del prefijo en la posición $i$ sostiene, es decir
+$s[0 \dots j-1] = s[i-j+1 \dots i]$ :
+
+$$\overbrace{\underbrace{s_0 ~ s_1}_j ~ s_2 ~ s_3}^{\pi[i]} ~ \dots ~ \overbrace{s_{i-3} ~ s_{i-2} ~ \underbrace{s_{i-1} ~ s_{i}}_j}^{\pi[i]} ~ s_{i+1}$$
+
+
+De hecho, si encontramos tal longitud j , entonces nuevamente solo necesitamos comparar los personajes $s[i + 1]$ y $s[j]$ . Si son iguales entonces
+podemos asignar $\pi[i+1] = j + 1$ . De lo contrario necesitaremos encontrar el valor más grande menor que $j$ , para el cual se cumple la propiedad
+de prefijo, y así sucesivamente. Puede suceder que esto dure hasta $j = 0$. Si entonces $s[i + 1] = s[0]$ , asignamos $\phi[i + 1] = 1$ , y $\phi[i + 1] = 0$ de
+lo contrario.
+
+
+Entonces ya tenemos un esquema general del algoritmo. La única pregunta que queda es ¿cómo encontramos efectivamente las longitudes para $j$ .
+Recapitulemos: para la duración actual $j$ en la posición $i$ para el cual se cumple la propiedad del prefijo, es decir $s[0 \dots j-1] = s[i-j+1 \dots i]$ ,
+queremos encontrar el mayor $k < j$ , para el cual se cumple la propiedad del prefijo.
+
+$$\overbrace{\underbrace{s_0 ~ s_1}_k ~ s_2 ~ s_3}^j ~ \dots ~ \overbrace{s_{i-3} ~ s_{i-2} ~ \underbrace{s_{i-1} ~ s_{i}}_k}^j ~s_{i+1}$$
+
+La ilustración muestra que este tiene que ser el valor de $\phi[j-1]$ , que ya calculamos anteriormente.

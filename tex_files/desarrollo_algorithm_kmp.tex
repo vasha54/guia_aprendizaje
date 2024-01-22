@@ -1,0 +1,8 @@
+Así que finalmente podemos construir un algoritmo que no realice ninguna comparación de cadenas y solo realice O(n) comportamiento. Aquí está el procedimiento final:
+
+\begin{itemize}
+	\item Calculamos los valores del prefijo $\phi[i]$ en un bucle iterando desde $i = 1$ a $i = n-1$ ( $\phi[0]$ simplemente se le asigna 0 ).
+	\item Para calcular el valor actual $\phi[i]$ establecemos la variable $j$ que denota la longitud del mejor sufijo para $i-1$. Inicialmente $j = \phi[i-1]$.
+	\item Prueba si el sufijo de longitud $j+1$ también es un prefijo comparando $s[j]$ y $s[i]$. Si son iguales entonces asignamos $\phi[i] = j + 1$ , de lo contrario reducimos $j$ a $\phi[j-1]$ y repita este paso.
+	\item  Si hemos llegado a la longitud $j = 0$ y todavía no tenemos una coincidencia, entonces asignamos $\phi[i] = 0$ y pasar al siguiente índice $i + 1$.
+\end{itemize}
