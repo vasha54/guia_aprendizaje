@@ -1,0 +1,50 @@
+Una probabilidad es un número real entre $0$ y $1$ que indica qué tan probable es un evento. Si es seguro que ocurrirá un evento, su probabilidad es $1$, y si es imposible, su probabilidad es $0$. La probabilidad de un evento se denota P($\dots$) donde los tres puntos describen el evento.
+
+Por ejemplo, al lanzar un dado, el resultado es un número entero entre 1 y 6 y la probabilidad de cada resultado es 1/6. Por ejemplo, podemos calcular las siguientes probabilidades:
+
+\begin{itemize}
+	\item P(el resultado es 4) = 1/6
+	\item P(el resultado no es 6) = 5/6
+	\item P(el resultado es par) = 1/2
+\end{itemize}
+
+\subsection{Cálculo}
+
+Para calcular la probabilidad de un evento, podemos usar combinatoria o simular el proceso que genera el evento. Como ejemplo, calculemos la probabilidad de sacar tres cartas del mismo valor de una baraja de cartas barajadas (por ejemplo $\spadesuit$8, $\clubsuit$8 y $\diamondsuit$8).
+
+\subsubsection{Método 1}
+\input{tex_files/desarrollo_probability_method_1.tex}
+
+\subsubsection{Método 2}
+\input{tex_files/desarrollo_probability_method_2.tex}
+
+\subsection{Eventos}
+\input{tex_files/desarrollo_probability_events.tex}
+
+\subsubsection{Complemento}
+\input{tex_files/desarrollo_probability_complement.tex}
+
+\subsubsection{Union}
+\input{tex_files/desarrollo_probability_union.tex}
+
+\subsubsection{La probabilidad condicional}
+\input{tex_files/desarrollo_probability_conditional.tex}
+
+\subsubsection{Intersección}
+\input{tex_files/desarrollo_probability_intersection.tex}
+
+
+\textbf{Las reglas básicas de probabilidad:}
+
+\begin{itemize}
+	\item $P(A) + P(\bar{A}) = 1$
+	\item $P(A \cap B) + P(A \cap \bar{B}) = P(A)$
+	\item $P(A \cup B) = 1 - P(\bar{A} \cap \bar{B})$
+	\item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ 
+\end{itemize} 
+
+
+
+
+
+

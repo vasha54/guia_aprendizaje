@@ -1,0 +1,17 @@
+La probabilidad condicional 
+
+$$P(A|B) = \dfrac{P(A \cap B)}{P(B)}$$
+
+es la probabilidad de que $A$ suponga que $B$ sucede. Por lo tanto, al calcular la probabilidad de $A$, solo consideramos los resultados que también pertenecen a $B$.
+
+Usando los conjuntos anteriores $P(A|B) = \dfrac{1}{3}$ porque los resultados de $B$ son $\{~1,~2,~3\}$ y uno de ellos es par. Esta es la probabilidad de un resultado par si sabemos que el resultado está entre $1 \dots 3$.
+
+
+\textbf{Las reglas básicas de la probabilidad condicional:}
+
+\begin{itemize}
+	\item $P(A \cap B) = P(A)\cdot P(B|A)$, cuando $A$ y $B$ son independientes $P(A \cap B) = P(A)\cdot P(B)$
+	\item $P(A \cap B \cap C) = P(A)\cdot P(B|A) \cdot P(C|A \cap B)$, y así sucesivamente.
+	\item $P(A) = P(A|B_1) \cdot P(B_1) + \dots + P(A|B_k) \cdot P(B_k)$, cuando $B_1, \dots, B_k$ son disjuntos y exhaustivos.
+\end{itemize}
+
