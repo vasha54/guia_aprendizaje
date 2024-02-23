@@ -1,0 +1,56 @@
+Solucionar este tipo de problema tiene diferentes enfoques de solución los cuales analizaremos a continuación.
+
+\subsection{Usando BigInteger}
+
+El lenguaje de programación de Java nos ofrece la clase BigInteger para operar y manipular números grandes lo que haría que la solución a este tipo de problema con el uso de este lenguaje de programación sea bastante sencilla.
+
+De igual forma con el lenguaje de Python sería muy trivial la solución de este ejercicio ya que el mismo soporta los números grandes de forma nativa. Pero como resolver el problema cuando las restricciones de tiempo y memoria del hace que las soluciones con el uso de estos lenguajes no es factibles. Veremos que en el próximo apartado daremos una otra variante más eficiente.  
+
+\subsection{Reglas de divisibilidad}
+Una regla de divisibilidad es un conjunto de criterios o condiciones que te permiten determinar si un número es divisible por otro sin necesidad de realizar la división en sí. Estas reglas son útiles para simplificar el proceso de división y para identificar rápidamente si un número es divisible por otro.
+
+Estas reglas son útiles en matemáticas, especialmente en aritmética básica y en álgebra, ya que te permiten determinar rápidamente si un número es divisible por otro sin tener que realizar la división completa. Esto puede ahorrarte tiempo y facilitar el trabajo con números grandes.
+
+Es importante recordar que las reglas de divisibilidad son herramientas útiles, pero no reemplazan la división real cuando se requiere una respuesta precisa. 
+
+A continuación algunas reglas de divisibilidad comunes:
+
+\begin{itemize}
+	\item \textbf{Divisibilidad por 2:} Un número es divisible por 2 si su último dígito es par (0, 2, 4, 6, 8).
+	\item \textbf{Divisibilidad por 3:} Un número es divisible por 3 si la suma de sus dígitos es divisible por 3.
+	\item \textbf{Divisibilidad por 4:} Un número es divisible por 4 si los dos últimos dígitos forman un número divisible por 4.
+	\item \textbf{Divisibilidad por 5:} Un número es divisible por 5 si su último dígito es 0 o 5.
+	\item \textbf{Divisibilidad por 6:} Un número es divisible por 6 si es divisible por 2 y por 3.
+	\item \textbf{Divisibilidad por 7:} Cuando la diferencia entre el número sin la cifra de las unidades y el doble de la cifra de las unidades es 0 ó múltiplo de 7.
+	\item \textbf{Divisibilidad por 8:} Si sus tres últimas cifras son ceros o múltiplo de 8.
+	\item \textbf{Divisibilidad por 9:} Un número es divisible por 9 si la suma de sus dígitos es divisible por 9.
+	\item \textbf{Divisibilidad por 10:} Un número es divisible por 10 si su último dígito es 0. 
+	 
+	\item \textbf{Divisibilidad por 11:} Un número es divisible por 11 si la diferencia entre la suma de los dígitos en posiciones impares y la suma de los dígitos en posiciones pares es un múltiplo de 11. Por ejemplo, el número 4184 es divisible por 11 porque (4 + 8) - (1 + 4) = 7, que es un múltiplo de 11.
+	
+	\item \textbf{Divisibilidad por 13:} Para determinar si un número es divisible por 13, puedes restarle cuatro veces el último dígito al resto del número. Si el resultado es divisible por 13, entonces el número original también lo es. Por ejemplo, para comprobar si 156 es divisible por 13, calculamos 15 - (6 * 4) = 15 - 24 = -9, que es divisible por 13.
+	
+	\item \textbf{Divisibilidad por 17:} Una regla similar a la divisibilidad por 13 se aplica para determinar si un número es divisible por 17. Resta cinco veces el último dígito al resto del número y si el resultado es divisible por 17, entonces el número original también lo es.
+\end{itemize}
+
+Si fuera el primer caso el valor {\em b} es fijo siempre es el mismo realizamos el siguiente análisis. Analizamos si el valor {\em b} es un valor que tiene definida su regla de divisibilidad. De ser así implementamos un algoritmo que compruebe la regla de divisibilidad del valor {\em b} en la cadena donde esta almacenado el valor {\em a}. 
+
+En caso de que el valor {\em b} no tenga regla de divisibilidad conocida entonces lo descomponemos en factores que tengan definido sus reglas de divisibilidad y luego solo debemos comprobar que la cadena cumpla con cada una de las reglas de divisibilidad de cada factor. De cumplir con todas entonces podemos afirmar que el valor {\em a} es divisible por el valor {\em b}. Pero que hacer cuando esto no es posible ? 
+
+\subsection{Autómata de divisibilidad}
+
+El autómata de divisibilidad es un tipo de autómata finito que se utiliza para determinar si un número es divisible por otro. Este tipo de autómata opera sobre secuencias de dígitos que representan números enteros y permite analizar propiedades de divisibilidad de manera eficiente.
+
+La estructura básica de un autómata de divisibilidad consta de un conjunto finito de estados, una función de transición que determina cómo se mueve el autómata entre los estados, un estado inicial y uno o más estados finales que indican si el número analizado cumple con la propiedad de divisibilidad deseada.
+
+El funcionamiento del autómata de divisibilidad se basa en la idea de simular la división entre el número que se desea comprobar si es divisible y el divisor, siguiendo un proceso determinístico. Cada estado del autómata representa un paso en este proceso de división simulada, y la función de transición determina cómo se mueve el autómata en función de los dígitos del número que está siendo analizado.
+
+A medida que el autómata avanza a través de los dígitos del número, se evalúa si el número es divisible por el divisor en cada paso. Si el autómata alcanza un estado final al finalizar la secuencia de dígitos, entonces se concluye que el número es divisible por el divisor. En caso contrario, se determina que el número no es divisible.
+
+Los autómatas de divisibilidad pueden ser diseñados para verificar diferentes propiedades de divisibilidad, como la divisibilidad por un número primo, por un número compuesto, por un conjunto específico de números, entre otros. Estos autómatas son útiles en diversas aplicaciones donde se requiere determinar la divisibilidad de números de forma eficiente y automática.
+
+Esta variante es más efeciente aunque tiene un grado análisis mayor que el anterior. Es la variante que deberían utilizar aquellos amantes  de C++.
+
+El primer paso es almacenar el número {\em a} en una variable de tipo cadena {\em string } no hay otra variante. Lo siguiente es ver quien es {\em b} si es un valor fijo siempre o es una valor variable para cada caso.
+
+Bueno en esta caso podemos aplicar un autómata de divisibilidad. Un autómata de divisibilidad permite saber si un número {\em X} con una gran cantidad de digitos expresado en una base {\em Y} es divisible por un número {\em Z} el cual esta en base decimal. Extrapolando lo anterior a nuestro problema {\em a} es {\em X} 10 es {\em Y} y {\em b} es {\em Z}.

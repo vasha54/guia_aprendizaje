@@ -1,0 +1,77 @@
+A continuación vamos a listar las diferentes funciones que presenta el \emph{string} de C++ las cuales la vamos a agrupar de acuerdo al funcionamiento u objetivo de ellas: 
+
+\subsection{Operaciones de entrada}
+\begin{itemize}
+	\item \emph{cin.getline(str):} Función usada para leer la cadena de caracteres entrada por el usuario. La función extrae los caracteres de la entrada de \emph{stream} mientras no encuentre un delimitador. El delimitador por defecto es el salto de línea ($\setminus n$). En el parámetro \emph{str} será donde se almacenará la cadena de caracteres leída.
+	\item \emph{cin.getline(str,number):} Función con el mismo funcionamiento que la anterior lo que en este caso el parámetro \emph{number} define la cantidad de caracteres ue deben ser leídos. 
+	\item \emph{push\_back(x):} Función utilizada para adicionar un carácter (parámetro \emph{x} pude ser un char o un carácter literal) al final del string. Cuando esto ocurre el tamaño del string se incrementa en uno.  
+	\item \emph{pop\_back():} Función utilizada para remover un carácter del final del string. Cuando esto ocurre el tamaño del string se decrementa en uno.
+\end{itemize}
+\subsection{Operaciones de capacidad}
+\begin{itemize}
+	\item \emph{size():} Podemos encontrar la longitud de la cadena (número de caracteres). Esta función no toma ningún parámetro. Esta función devuelve el número de caracteres en el objeto de cadena.
+	\item \emph{length():} Podemos encontrar la longitud de la cadena (número de caracteres). Esta función no toma ningún parámetro. Esta función devuelve el número de caracteres en el objeto de cadena.
+	\item \emph{capacity():} La función capacity() devuelve el tamaño actual del espacio asignado para la cadena. El tamaño puede ser igual o mayor que el tamaño de la cadena. Asignamos más espacio que el tamaño de la cadena para acomodar nuevos caracteres en la cadena de manera eficiente.
+	\item \emph{resize(x):} Función usada para incrementar o decrementar el tamaño de un string al valor pasado por parámetro (x).
+	\item \emph{shrink\_to\_fit():} La función shrink\_to\_fit() se utiliza para disminuir la capacidad de la cadena para igualarla a la capacidad mínima de la cadena. Esta función nos ayuda a ahorrar memoria si estamos seguros de que no se requieren caracteres adicionales.
+	\item \emph{max\_size():} Encuentra la longitud máxima de la cadena.
+	\item \emph{empty():}  Comprueba si la cadena está vacía o no
+\end{itemize}
+\subsection{Operaciones de acceso}
+\begin{itemize}
+	\item \emph{at(index):} Generalmente, podemos acceder al carácter de una cadena usando el operador de subíndice de arreglo [] y la indexación. Pero std::string también tiene una función llamada at() que puede usarse para acceder a los caracteres de la cadena. index: Representa la posición del carácter en la cadena. Esta función devuelve el carácter presente en el index.
+	\item \emph{[index]:} El string se puede ver como un vector de char y a su vez un vector es un arreglo por lo que podemos utilizar [] para acceder al valor almacenado en una posición especificada. Al igual que la función at() devuelve el carácter presente en el index.
+	\item \emph{back():} Devuelve la referencia del último carácter. 
+	\item \emph{front():} Devuelve la referencia del primer carácter.
+\end{itemize}
+\subsection{Operaciones de iteraciones}
+\begin{itemize}
+	\item \emph{begin():} Retorna un iterador que es un puntero que apunta al principio del string.  
+	\item \emph{end():} Retorna un iterador que es un puntero que apunta al final del string. El iterador siempre apunta al carácter nulo que indica fin de la cadena. 
+	\item \emph{rbegin():} La palabra clave rbegin significa el comienzo inverso. Se utiliza para señalar el último carácter de la cadena. La diferencia entre rbegin() y end() es que end() apunta al elemento siguiente al último elemento de la cadena, mientras que rbegin() apunta al último elemento de una cadena.
+	\item \emph{rend():} La palabra clave rend significa el final inverso. Se utiliza para señalar el primer carácter de la cadena.
+\end{itemize}
+\subsection{Operaciones de manipulación}
+\begin{itemize}
+	\item \emph{insert(index,str2):} La función insert() no solo nos permite agregar una cadena sino que también nos permite agregarla en la posición especificada. También es una función de la clase std::string. Donde str2: cadena a insertar. índex: posición de donde insertar la nueva cadena. Retorna una referencia a str1.
+	\item \emph{replace(index,size,str2):} La función replace() reemplaza la parte de la cadena con la otra cadena dada. A diferencia de insertar, se eliminan los caracteres de la parte donde se insertará la nueva cadena. Donde index: índice de dónde comenzar a reemplazar la nueva cadena. size: longitud de la parte de la cadena que se va a reemplazar. str2: nueva cadena que se va a insertar. Retorna una referencia a str1.
+	\item \emph{erase(start,end):} La función erase() es una función de la clase std::string que se utiliza para eliminar un carácter o una parte de la cadena. Donde start es la posición de inicio y end la posición final.
+	\item \emph{swap(str):} La función swap() intercambia una cadena con otra.
+	\item \emph{clear():} Elimina todos los elementos de la cadena.
+\end{itemize}
+\subsection{Operaciones de generación}
+\begin{itemize}
+	\item \emph{substr(start,end):} Podemos usar la función substr() para generar una parte de la cadena como un nuevo objeto de cadena. Es una función de la clase std::string. Donde start: Posición inicial de la subcadena que se generará.
+	end: Final de la subcadena a generar.Devuelve el objeto de cadena recién creado.
+	\item \emph{strcpy(to,from):} Función encargada de copiar un arreglo de caracteres hacia otro arreglo de caracteres. Donde \emph{to} es el arreglo hacia donde se va a copiar mientras en \emph{from} es el arreglo desde donde se quiere copiar la información. La función asume que el arreglo \emph{to} tiene una capacidad suficiente para almacenar todo el contenido. 
+	\item \emph{setw(num):} La función de setw rellena una cadena con un carácter o espacio específico hasta un ancho determinado especificado en el parámetro \emph{num}.
+	\item \emph{copy(str,length,position):} La función copy() se utiliza para copiar una subcadena a la otra cadena (matriz de caracteres) mencionada en los argumentos de la función. Se necesitan tres argumentos (mínimo dos), matriz de caracteres de destino, longitud a copiar y posición inicial en la cadena para comenzar a copiar.
+	\item \emph{assign():} Asigna un nuevo valor a la cadena.
+\end{itemize}
+\subsection{Operaciones de concatenación}
+\begin{itemize}
+	\item \emph{Operador +:} El operador + está sobrecargado en la clase std::string para realizar la concatenación de cadenas.
+	\item \emph{append(str2):} La función append() es otra función para concatenar dos cadenas. str2: esta función toma la cadena que se agregará como parámetro. Puede ser una cadena de estilo C o C++. Retorna referencia a la cadena final.
+	\item \emph{strcat(str1,str2):} Para usar la función strcat(), necesitamos incluir el archivo de encabezado cstring en nuestro programa. La función strcat() toma dos arreglos de caracteres como entrada. Concatena el segundo arreglo al final del  primer arreglo.
+\end{itemize}
+\subsection{Operaciones de comparación}
+\begin{itemize}
+	\item \emph{Operador ==:} El operador de igualdad se puede utilizar para comparar las dos cadenas, ya que está sobrecargado para esta operación en la clase std::string. Esto devolverá verdadero si ambas cadenas son iguales, de lo contrario devuelve falso.
+	\item \emph{compare(str2):} La función compare() es una función de la clase std::string que se puede usar para comparar dos cadenas. str2: es la cadena a comparar. Puede ser una cadena de estilo C o C++. Si las cadenas son iguales, devuelve cero. Si str1 es mayor que str2, valor de retorno $> 0$. Si str2 es mayor que str1, el valor de retorno $< 0$.
+	\item \emph{compare(position,length,str2):} También podemos comparar la subcadena de str2 usando la función de compare(). dónde, position: posición de la primera subcadena de caracteres. length: longitud de la subcadena. str2: objeto de cadena a comparar.
+\end{itemize}
+\subsection{Operaciones de búsquedas}
+\begin{itemize}
+	\item \emph{find(str2):} Podemos usar la función find() de la clase std::string para comprobar si un carácter determinado o una subcadena está presente en la cadena o en una parte de la cadena. str2: puede ser una cadena de estilo C, una cadena de estilo C++ o un carácter que se va a buscar en la cadena. Devuelve el puntero a la primera ocurrencia del carácter o una subcadena en la cadena.
+	\item \emph{find\_first\_of(str):} Se utiliza para encontrar la primera aparición de la secuencia especificada por parámetros.
+	\item \emph{find\_first\_not\_of(str):} Se utiliza para buscar en la cadena el primer carácter que no coincide con ninguno de los caracteres especificados en la cadena del parámetro.
+	\item \emph{find\_last\_of(str)} Se utiliza para buscar en la cadena el último carácter de la secuencia especificada por parámetro.
+	\item \emph{find\_last\_not\_of(str):} Busca el último carácter que no coincide con la secuencia especificada por parámetro.
+\end{itemize}
+\subsection{Operaciones de conversión}
+\begin{itemize}
+	\item \emph{c\_str():} La función c\_str() es una función miembro que se utiliza para convertir la cadena de estilo C++, es decir, objetos std::string a una cadena de estilo C, es decir, una matriz de caracteres. Esta función no toma ningún parámetro. Retorna un puntero al arreglo de caracteres equivalente.
+	\item \emph{stoi(str):} Función encargada de convertir una cadena  de caracteres o un string en un valor númerico entero. El parámetro \emph{str} debe contener un valor númerico entero en cadena de texto. 
+	\item \emph{stod(str):} Función encargada de convertir una cadena  de caracteres o un string en un valor númerico decimal. El parámetro \emph{str} debe contener un valor númerico decimal en cadena de texto.
+	\item \emph{to\_string(num):} Función encargada de convertir un valor númerico en una cadena de caracteres donde el parámetro \emph{num} es una variable numerica ue contiene el valor que deseamos convertir a string.
+\end{itemize}

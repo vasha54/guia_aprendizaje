@@ -1,0 +1,255 @@
+\subsection{Operaciones de entrada}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+  // Declarando string
+  string str;
+  //Declarando un arreglo de char
+  char str2 [12];
+  // Entrada clasica del string por consola
+  cin>>str;
+  // Tomando el string de entrada por consola usando getline()
+  getline(cin, str);
+  // Otra variante de capturar el string por consola  con el
+  // uso del getline() con un arreglo de char y la cantidad de caracteres
+  // a leer
+  cin.getline(str2,12);
+  //Insertando un caracter al final del string
+  str.push_back('s');
+  //Eliminando el ultimo caracter
+  str.pop_back();
+  return 0;
+}
+\end{lstlisting}
+\subsection{Operaciones de capacidad}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   // Declarando string con valor
+   string str = "C++ Programming";
+   //Invocando a la funcion length()
+   cout << "La longitud de la cadena es: " << str.length() << endl;
+   //Invocando a la funcion capacity()
+   cout << "La capacidad de la cadena es: " << str.capacity() << endl;
+   cout << "La cadena original es: " << str << endl;
+   str.resize(10);
+   cout << "La cadena despues de usar resize es: " << str << endl;
+   str.resize(17);
+   cout << "La capacidad de la cadena antes de usar shrink_to_fit es: "<<str.capacity() << endl;
+   str.shrink_to_fit();
+   cout << "La capacidad de la cadena despues de usar shrink_to_fit es: " << str.capacity() << endl;
+   if(str.empty()==true)
+      cout<<"Cadena vacia"<<endl;
+   else
+      cout<<"Cadena no vacia"<<endl;
+	return 0;
+}	
+\end{lstlisting}
+\subsection{Operaciones de iteraciones}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   //Incializando cadena 
+   string str = "Esto es una cadena de caracteres"; 
+   //Declarando iterador 
+   string::iterator it; 
+   //Declarando iterator reverso  
+   string::reverse_iterator it1; 
+   //Visualizando la cadena
+   cout<<"La cadena usando los iteradores : "; 
+   for(it=str.begin();it!=str.end(); it++) 
+      cout<<*it; 
+   cout<<endl; 
+   //Visualizando el inverso de la cadena 
+   cout<<""La cadena usando los iteradores inversos es: "; 
+   for(it1=str.rbegin();it1!=str.rend(); it1++) 
+      cout<<*it1; 
+   cout<<endl; 
+   return 0;
+}	
+\end{lstlisting}
+\subsection{Operaciones de manipulación}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   string str = "Hello, World!";
+   str.replace(7,5,"Universe");  //Remplaza la subcadena "World" por "Universe"
+   cout << str << endl;
+	
+   // Incializa la primera cadena
+   string str1 = "Una cadena de caracteres";
+	
+   // Incializa la segunda cadena
+   string str2 = "Otra cadena de caracteres";
+	
+   // Visualizando las cadenas antes de intercambiar
+   cout << "La primera cadena antes de intercambiar: ";
+   cout << str1 << endl;
+   cout << "La segunda cadena antes de intercambiar : ";
+   cout << str2 << endl;
+	
+   // using swap() to swap string content
+   str1.swap(str2);
+	
+   // Visualizando las cadenas despues de intercambiar
+   cout << "La primera cadena despues de intercambiar: ";
+   cout << str1 << endl;
+   cout << "La segunda cadena despues de intercambiar: ";
+   cout << str2 << endl;
+	
+   string text2 = "Yo tengo un gato.";
+   text2.insert(16, " negro"); // Inserta " negro" en la posicion 16
+   cout<<text2<<endl;
+	
+   string text3 = "Esto es un ejemplo.";
+   text3.erase(7, 3); // Borra "un "
+   cout<<text3<<endl;
+	
+   return 0;
+}	
+\end{lstlisting}
+\subsection{Operaciones de generación}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+  string str = "Hola";
+  cout << setw(10) << setfill(' ') << str << endl;
+	
+  string str2 = "Hola, Mundo";
+  string substr = str2.substr(6, 5);  //Extrae "Mundo" de la cadena original
+  cout << "La subcadena es: " << substr << endl;
+	
+  char source[] = "Hola, Mundo"; //arreglo de caracteres de origen
+  char destination[20]; // arreglo de caracteres de destino
+  strcpy(destination, source); // Copia
+  cout << "Cadena original: " << source <<endl;
+  cout << "Cadena copiada: " << destination <<endl;
+	
+  // Inicializando 1era cadena
+  string str3 = "Esto es una cadena sin sentido niguno";
+	
+  // Declarando arreglo de caracteres
+  char ch[80];
+	
+  // usando copy() para copiar el contenido str3
+  // en ch comenzando en la posicion 0 los siguientes
+  // 13 de caracteres.
+  str3.copy(ch, 13, 0);
+	
+  // Visualizando el arreglo de cadena
+  cout << "La nueva cadena de caracteres copiada en el arreglo es: ";
+  cout << ch << endl;
+  return 0;
+}
+\end{lstlisting}
+\subsection{Operaciones de concatenación}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   string str1 = "Hello";
+   string str2 = " World!";
+   string result = str1 + str2;
+   cout << result << endl;
+   
+   string base = "Hello";
+   base.append(" World!"); // Adiciona la cadena
+   cout<<<base<<endl;
+	
+   char str3[50] = "Hello ";
+   char str4[] = "Wordl!!!.";
+   strcat(str3, str4);
+   cout << str3 << endl;
+   return 0;
+}
+\end{lstlisting}
+\subsection{Operaciones de comparación}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   string str1 = "manzana";
+   string str2 = "platano";
+   if (str1 == str2) { cout << "Las cadenas son iguales" << endl;}
+   else{ cout << "Las cadenas son iguales" << endl;}
+	
+   int result = str1.compare(str2);
+   if (result == 0) { cout << "Las cadenas son iguales" << endl;}
+   else if (result < 0){ cout << "str1 es lexicograficamente menor que str2" << endl; }
+   else { cout << "str1 es lexicograficamente menor que str2" << endl; }
+   return 0;
+}
+	
+\end{lstlisting}
+\subsection{Operaciones de búsquedas}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   string searchIn = "C++ Programming"; 
+   size_t position = searchIn.find("Programming"); 
+   if (position != string::npos) { 
+      cout << "Encontrado en la posicion:" << position << endl; 
+   }else { 
+      cout << "No encontrado" << endl; 
+   } 
+   return 0;
+}
+	
+\end{lstlisting}
+\subsection{Operaciones de conversión}
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <bits/stdc++.h>
+#include <string> // para la clase string
+using namespace std;
+
+int main(){
+   string str = "123";
+   int num = stoi(str);
+   cout << num << endl;
+	
+   string str2 = "3.14";
+   double num2 = stod(str2);
+   cout << num2 << endl;
+	
+   int num3 = 42;
+   string str3 = to_string(num3);
+   cout << str3 << endl;
+	
+   string str4 = "C++";
+   const char* cstr = str4.c_str();
+   cout << cstr << endl;
+   return 0;
+}
+	
+\end{lstlisting}
