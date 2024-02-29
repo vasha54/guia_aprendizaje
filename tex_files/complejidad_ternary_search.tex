@@ -1,0 +1,8 @@
+Se puede visualizar de la siguiente manera: cada vez que se evalúa la función en los 
+puntos $m_1$ y $m_2$, esencialmente estamos ignorando aproximadamente un tercio del 
+intervalo, ya sea el izquierdo o el derecho. Por tanto, el tamaño del espacio de 
+búsqueda es ${2n}/{3}$ del original.
+
+Aplicando el teorema de Maestro , obtenemos la estimación de complejidad deseada:
+
+$$O(n) = O({2n}/{3}) + O(1) = O(\log n)$$

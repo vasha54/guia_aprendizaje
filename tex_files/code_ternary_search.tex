@@ -1,0 +1,40 @@
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+double f (double x){
+   //Evaluacion de x en la funcion
+}
+
+double ternary_search(double l, double r) {
+   double eps = 1e-9; //establezca el limite de error aqui
+   while (r - l > eps) {
+      double m1 = l + (r - l) / 3;
+      double m2 = r - (r - l) / 3;
+      double f1 = f(m1); //evalua la funcion en m1
+      double f2 = f(m2); //evalua la funcion en m2
+      if (f1 < f2) l = m1;
+      else r = m2;
+   }
+   return f(l); //devolver el maximo de f(x) en [l, r]
+}	
+\end{lstlisting}
+
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public static double f (double x){
+   //Evaluacion de x en la funcion
+}
+
+public static double ternary_search(double l, double r) {
+   double eps = 1e-9; //establezca el limite de error aqui
+   while (r - l > eps) {
+      double m1 = l + (r - l) / 3;
+      double m2 = r - (r - l) / 3;
+      double f1 = f(m1); //evalua la funcion en m1
+      double f2 = f(m2); //evalua la funcion en m2
+      if (f1 < f2) l = m1;
+      else r = m2;
+   }
+   return f(l); //devolver el maximo de f(x) en [l, r]
+}
+\end{lstlisting}

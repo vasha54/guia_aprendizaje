@@ -1,0 +1,43 @@
+Considere 2 puntos cualesquiera $m_1$, y $m_2$ en este intervalo: $l<m_1 <m_2 <r$. Evaluamos la función en $m_1$ y $m_2$, es decir, encontrar los valores de $f(m_1)$ y $f(m_2)$. Ahora, tenemos una de tres opciones:
+
+\begin{enumerate}
+	\item $f(m_1) < f(m_2)$ El máximo deseado no se puede ubicar en el lado izquierdo de 
+	$m_1$, es decir, en el intervalo $[l,m_1]$, ya que ambos puntos $m_1$ y $m_2$ o solo 
+	$m_1$ pertenecen al área donde la función aumenta. En cualquier caso, esto significa 
+	que tenemos que buscar el máximo en el intervalo $[m_1,r]$.
+	\item $f(m_1) > f(m_2)$ Esta situación es simétrica a la anterior: el máximo no puede ubicarse en el lado derecho de $m_2$, es decir, en el intervalo $[m_2,r]$, y el espacio de búsqueda se reduce al segmento $[l,m_2]$.
+	\item $f(m_1) = f(m_2)$ Podemos ver que ambos puntos pertenecen al área donde se 
+	maximiza el valor de la función, o $m_1$ está en la zona de valores crecientes y 
+	$m_2$ está en el área de valores descendentes (aquí usamos el rigor de la función 
+	creciente/decreciente). Así, el espacio de búsqueda se reduce a $[m_1, m_2]$. Para 
+	simplificar el código, este caso se puede combinar con cualquiera de los casos 
+	anteriores.
+\end{enumerate}
+
+Por lo tanto, basándose en la comparación de los valores en los dos puntos internos, 
+podemos reemplazar el intervalo actual $[l,r]$ con un nuevo intervalo más corto
+$[l^\prime, r^\prime]$. Aplicando repetidamente el procedimiento descrito al 
+intervalo, podemos obtener un intervalo arbitrariamente corto. Con el tiempo, su 
+longitud será menor que una determinada constante predefinida (precisión) y el proceso 
+podrá detenerse. Este es un método numérico, por lo que podemos suponer que después de 
+eso la función alcanza su máximo en todos los puntos del último intervalo $[l,r]$. 
+Sin pérdida de generalidad, podemos tomar $f(l)$ como valor de retorno.
+
+No impusimos ninguna restricción en la elección de puntos $m_1$ y $m_2$. Esta elección definirá la tasa de convergencia y la precisión de la implementación. La forma más común es elegir los puntos para que divida el intervalo $[l,r]$ en tres partes iguales. Así, tenemos:
+
+$$m_1 = l + \frac{(r - l)}{3}$$
+
+$$m_2 = r - \frac{(r - l)}{3}$$
+
+Si $m_1$ y $m_2$ se eligen para que estén más cerca entre sí, la tasa de convergencia aumentará ligeramente.
+
+\subsection{El caso de los argumentos enteros}
+Si $f(x)$ toma un parámetro entero, el intervalo $[l,r]$ se vuelve discreto. Dado que 
+no impusimos ninguna restricción en la elección de puntos $m_1$ y $m_2$, la exactitud 
+del algoritmo no se ve afectada $m_1$ y $m_2$ todavía se puede elegir dividir $[l,r]$ 
+en 3 partes aproximadamente iguales.
+
+La diferencia se produce en el criterio de parada del algoritmo. La búsqueda ternaria 
+tendrá que detenerse cuando $(r-l)<3$, porque en ese caso ya no podemos seleccionar 
+$m_1$ y $m_2$ ser diferentes entre sí y también de $l$ y $r$, y esto puede causar un 
+bucle infinito. Una vez $(r-l)<3$, el grupo restante de puntos candidatos $(l,l+1,\ldots,r)$. Es necesario comprobarlo para encontrar el punto que produce el valor máximo $f(x)$.
