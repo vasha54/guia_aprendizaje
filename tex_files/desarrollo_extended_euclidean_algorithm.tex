@@ -1,0 +1,32 @@
+Denotaremos el GCD de $a$ y $b$ con $g$ a partir de ahora.
+
+Los cambios al algoritmo original son muy simples. Si recordamos el algoritmo, podemos ver que el algoritmo termina con $b = 0$ y $a = g$. Para estos parámetros podemos encontrar fácilmente coeficientes, a saber $g \cdot 1 + 0 \cdot 0 = g$.
+
+A partir de estos coeficientes $(x, y) = (1, 0)$ , podemos retroceder hacia arriba en las llamadas recursivas. Todo lo que tenemos que hacer es descubrir cómo los coeficientes $x$ y $y$ cambio durante la transición de $(a, b)$ a $(b, a \bmod b)$.
+
+Supongamos que encontramos los coeficientes $(x_1, y_1)$ para $(b, a \bmod b)$ :
+
+$$b \cdot x_1 + (a \bmod b) \cdot y_1 = g$$
+
+y queremos encontrar la pareja $(x, y)$ para $(a, b)$:
+
+$$a \cdot x + b \cdot y = g$$
+
+podemos representar $a \bmod b$ como:
+
+$$a \bmod b = a - \left\lfloor \frac{a}{b} \right\rfloor \cdot b$$
+
+Sustituyendo esta expresión en la ecuación del coeficiente de $(x_1, y_1)$ da:
+
+$$g = b \cdot x_1 + (a \bmod b) \cdot y_1 = b \cdot x_1 + \left(a - \left\lfloor \frac{a}{b} \right\rfloor \cdot b \right) \cdot y_1$$
+
+y después de reordenar los términos:
+
+$$g = a \cdot y_1 + b \cdot \left( x_1 - y_1 \cdot \left\lfloor \frac{a}{b} \right\rfloor \right)$$
+
+Encontramos los valores de $x$ y $y$:
+
+$$\begin{cases}
+	x = y_1 \\
+	y = x_1 - y_1 \cdot \left\lfloor \frac{a}{b} \right\rfloor
+\end{cases}$$

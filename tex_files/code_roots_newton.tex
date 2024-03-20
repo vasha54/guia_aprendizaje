@@ -1,0 +1,86 @@
+Usemos el cálculo de la raíz cuadrada como ejemplo del método de Newton. Si sustituimos $f(x) = x^2 - n$ , luego simplificando la expresión obtenemos: 
+
+$$ x_{i+1} = \frac{x_i + \frac{n}{x_i}}{2} $$ 
+
+La primera variante típica del problema es cuando un número racional $n$ se da, y su raíz debe calcularse con cierta precisión $eps$ :
+
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+double sqrt_newton(double n) {
+   const double eps = 1E-15;
+   double x = 1;
+   for (;;) {
+      double nx = (x + n / x) / 2;
+      if (abs(x - nx) < eps) break;
+      x = nx;
+   }
+   return x;
+}
+\end{lstlisting}
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public static double sqrt_newton(double n) {
+   final double eps = 1E-15;
+   double x = 1;
+   for (;;) {
+	double nx = (x + n / x) / 2;
+		if (Math.abs(x - nx) < eps) break;
+		x = nx;
+	}
+	return x;
+}
+\end{lstlisting}
+
+Otra variante común del problema es cuando necesitamos calcular la raíz entera (para el dado $n$  encontrar el más grande $x$ tal que  $x^2 \le n$ ). Aquí es
+necesario cambiar ligeramente la condición de terminación del algoritmo, ya que puede suceder que $x$ comenzará a \emph{saltar} cerca de la respuesta. Por lo tanto, agregamos una condición de que si el valor $x$ ha disminuido en el paso anterior e intenta aumentar en el paso actual, entonces se debe
+detener el algoritmo.
+
+\subsection{C++}
+\begin{lstlisting}[language=C++]
+int isqrt_newton(int n) {
+   int x = 1;
+   bool decreased = false;
+   for (;;) {
+      int nx = (x + n / x) >> 1;
+      if (x == nx || nx > x && decreased) break;
+      decreased = nx < x;
+      x = nx;
+   }
+   return x;
+}
+\end{lstlisting}
+
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public static int isqrt_newton(int n) {
+   int x = 1;
+   boolean decreased = false;
+   for (;;) {
+      int nx = (x + n / x) >> 1;
+      if (x == nx || nx > x && decreased) break;
+      decreased = nx < x;
+      x = nx;
+   }
+   return x;
+}
+\end{lstlisting}
+
+Finalmente, nos dan la tercera variante, para el caso de la aritmética de \emph{bignum}. Desde el número $n$ puede ser lo suficientemente grande, tiene sentido prestar atención a la aproximación inicial. Evidentemente, cuanto más cerca esté de la raíz, más rápido se conseguirá el resultado. Es bastante simple y efectivo tomar la aproximación inicial como el número $2^{\textrm{bits}/2}$ , dónde $\textrm{bits}$ es el número de bits en el número $n$ . Aquí está el código Java que
+demuestra esta variante:
+
+\subsection{Java}
+\begin{lstlisting}[language=Java]
+public static BigInteger isqrtNewton(BigInteger n) {
+   BigInteger a = BigInteger.ONE.shiftLeft(n.bitLength() / 2);
+   boolean p_dec = false;
+   for (;;) {
+      BigInteger b = n.divide(a).add(a).shiftRight(1);
+      if (a.compareTo(b) == 0 || a.compareTo(b) < 0 && p_dec) break;
+      p_dec = a.compareTo(b) > 0;
+      a = b;
+   }
+   return a;
+}
+\end{lstlisting}

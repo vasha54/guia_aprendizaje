@@ -1,0 +1,28 @@
+\subsection{Árbol de búsqueda binario equilibrado}
+Un árbol de búsqueda binario equilibrado, también conocido como árbol AVL (por las iniciales de los inventores Adelson-Velsky y Landis), es una estructura de datos en forma de árbol binario de búsqueda en la que se garantiza que la diferencia de alturas entre los subárboles izquierdo y derecho de cada nodo no sea mayor que 1. Esto asegura que el árbol esté equilibrado y mantiene su eficiencia en términos de tiempo de búsqueda, inserción y eliminación.
+
+
+\subsection{Árboles rojo-negro}
+Un árbol rojo-negro es otra estructura de datos en forma de árbol binario de búsqueda que se utiliza para mantener el equilibrio y garantizar un rendimiento eficiente en términos de tiempo de búsqueda, inserción y eliminación. Los árboles rojo-negro se caracterizan por tener nodos que son rojos o negros, y cumplen con ciertas reglas para mantener el equilibrio del árbol.
+
+Las reglas fundamentales de un árbol rojo-negro son las siguientes:
+
+\begin{enumerate}
+	\item Cada nodo es rojo o negro.
+	\item La raíz del árbol siempre es negra. 
+	\item Todos los nodos hoja (nodos nulos) son negros. 
+	\item Si un nodo es rojo, entonces sus hijos deben ser negros. 
+	\item Para cualquier nodo dado, todos los caminos desde ese nodo hasta sus nodos hoja descendientes contienen el mismo número de nodos negros. 
+\end{enumerate}
+
+Estas reglas garantizan que la altura negra de cualquier camino desde la raíz hasta un nodo hoja sea la misma, lo que mantiene el equilibrio del árbol y asegura un rendimiento eficiente en las operaciones de búsqueda, inserción y eliminación.
+
+Durante las operaciones de inserción y eliminación en un árbol rojo-negro, se aplican rotaciones y cambios de colores en los nodos para mantener las propiedades del árbol. Estas operaciones se realizan de manera similar a los árboles AVL, pero con reglas específicas para los colores de los nodos.
+
+
+\subsection{PBDS}
+
+PBDS es una abreviatura que puede referirse a \emph{Policy-Based Data Structures} en el contexto de la biblioteca de estructuras de datos estándar de C++ (STL). Las PBDS son una extensión de la STL que proporciona una forma flexible de definir estructuras de datos con políticas personalizadas para operaciones como inserción, eliminación, búsqueda, etc. Esto permite a los desarrolladores adaptar las estructuras de datos a sus necesidades específicas mediante la especificación de políticas en lugar de implementar estructuras de datos personalizadas desde cero.
+
+En el caso de los árboles rojo-negro, la biblioteca PBDS en C++ ofrece una implementación eficiente y flexible de árboles rojo-negro que se pueden personalizar con políticas específicas según los requisitos del usuario. Esta característica hace que sea más fácil y conveniente trabajar con estructuras de datos complejas como los árboles rojo-negro en C++, ya que se pueden adaptar a diferentes escenarios y requisitos sin tener que reescribir toda la estructura desde cero.
+

@@ -1,0 +1,140 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage[numbered]{bookmark}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+% Set the Paper Size and margins
+\RequirePackage{geometry}
+\geometry{margin=0.9in,bottom=1.7in}
+
+\hypersetup{colorlinks=true,
+	linkcolor=black,
+	citecolor=blue,
+	filecolor=black,
+	urlcolor=blue,
+	pdfauthor=  Luis Andrés Valido Fajardo
+}
+
+\input{manual_configuracion}
+
+\usepackage{listings}
+\lstset{ frame=Ltb,
+framerule=0pt,
+aboveskip=0.5cm,
+framextopmargin=1pt,
+framexbottommargin=1pt,
+framexleftmargin=0.4cm,
+framesep=0pt,
+rulesep=.4pt,
+backgroundcolor=\color{white},
+rulesepcolor=\color{black},
+%
+stringstyle=\ttfamily,
+showstringspaces = false,
+basicstyle=\small\ttfamily,
+commentstyle=\color{blue},
+keywordstyle=\bfseries,
+%
+numbers=none,
+numbersep=20pt,
+numberstyle=\tiny,
+numberfirstline = false,
+breaklines=true,
+}
+% minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+{\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
+\lstdefinestyle{consola}
+{basicstyle=\scriptsize\bf\ttfamily,
+backgroundcolor=\color{white},
+}
+\lstdefinestyle{C++}
+{language=C++,
+}
+
+
+
+%\titleformat{\chapter}{\huge}{\MakeUppercase{\thechapter}}{0.2 em}{}
+\titleformat{\chapter}{}{}{0em}{\bf\LARGE}
+
+\begin{document}
+
+
+\begin{titlepage}
+    \begin{center}
+
+%   Logo de la universidad
+  %  \banner
+
+%   Titulo de la tesis:
+    \titulo
+
+%   Tipo de tesis:
+    \tipoTesis
+
+	\logoACM
+
+	\vspace{200pt}
+%   Autores y tutores de la tesis
+    
+    
+%   Lugar y fecha de confecciÃ³n de la tesis
+    \ciudadFecha
+
+    \end{center}
+\end{titlepage}
+
+\autores
+
+
+\tableofcontents
+
+%\pagebreak
+\include{tex_files/manual/prologue.tex}
+\include{tex_files/manual/historia.tex}
+\include{tex_files/manual/capitulos.tex}
+%\include{./TeX_files/lenguajes}
+%\include{./TeX_files/ides}
+%\include{./TeX_files/dedos_cerebro}
+%\include{./TeX_files/add_hoc}
+%\include{./TeX_files/fuerza_bruta}
+%\include{./TeX_files/aritmetica_algebra}
+%\include{./TeX_files/ordenamiento}
+%\include{./TeX_files/busqueda}
+%\include{./TeX_files/cadenas}
+%\include{./TeX_files/combinatoria}
+%\include{./TeX_files/teoria_numeros}
+%\include{./TeX_files/geometria}
+%\include{./TeX_files/programacion_dinamica}
+%\include{./TeX_files/teoria_juego}
+%\include{./TeX_files/estructura_datos}
+%\include{./TeX_files/greedy}
+%\include{./TeX_files/teoria_grafo}
+%\include{./TeX_files/miscelaneas}
+
+
+%Para cambiarle el nombre a la bibliografia
+%\renewcommand\bibname{\large Referencias bibliográficas}
+%\rhead{\MakeUppercase{\textit{ Referencias bibliográficas}}}
+%\bibliography{tesis}
+%\bibliographystyle{ieeetr}
+
+%\nocite{deitel2008java}
+
+%\include{bibliografia}
+%\pagebreak
+% bibliography, glossary and index would go here.
+
+\end{document}

@@ -1,0 +1,106 @@
+\subsection{El caso degenerado}
+
+Un caso degenerado que debe ser atendido es cuando $a = b = 0$. Es fácil ver que o no tenemos soluciones o tenemos infinitas soluciones, dependiendo de si $c = 0$ o no. En el resto de este artículo ignoraremos este caso.
+
+\subsection{Solución analítica}
+
+Cuando $a \neq 0$ y $b \neq 0$, la ecuación $ax+by=c$ puede ser tratado de manera equivalente como cualquiera de los siguientes:
+
+
+	$$ax \equiv c \pmod b,\newline$$
+	$$by \equiv c \pmod a.$$
+	
+Sin pérdida de generalidad, supongamos que $b \neq 0$ y considere la primera ecuación. Cuando $a$ y $b$ son coprimos, la solución se da como:
+
+$$x \equiv ca^{-1} \pmod b,$$
+
+dónde $a^{-1}$ es el inverso modular de $a$ módulo $b$.
+
+Cuando $a$ y $b$ no son coprimos, los valores de $ax$ módulo $b$ para todo entero $x$ son divisibles por $g=\gcd(a, b)$, por lo que la solución sólo existe cuando $c$ es divisible por $g$. En este caso, una de las soluciones se puede encontrar reduciendo la ecuación por $g$:
+
+$$(a/g) x \equiv (c/g) \pmod{b/g}.$$
+
+Por la definición de $g$, los números $a/g$ y $b/g$ son coprimos, por lo que la solución se da explícitamente como:
+
+$$\begin{cases}
+	x \equiv (c/g)(a/g)^{-1}\pmod{b/g},\\
+	y = \frac{c-ax}{b}.
+\end{cases}$$
+
+\subsection{Solución algorítmica}
+
+Para encontrar una solución de la ecuación diofántica con 2 incógnitas, puedes utilizar el algoritmo euclidiano extendido. Primero, suponga que $a$ y $b$ no son negativos. Cuando aplicamos el algoritmo euclidiano extendido para $a$ y $b$, podemos encontrar su máximo común divisor $g$ y 2 números $x_g$ y $y_g$ tal que:
+
+$$a x_g + b y_g =g$$
+
+Si $c$ es divisible por $g = \gcd(a, b)$, entonces la ecuación diofántica dada tiene solución; de lo contrario, no tiene solución. La prueba es sencilla: una combinación lineal de dos números es divisible por su divisor común.
+
+Ahora se supone que $c$ es divisible por $g$, entonces nosotros tenemos:
+
+$$a \cdot x_g \cdot \frac{c}{g} + b \cdot y_g \cdot \frac{c}{g} = c$$
+
+Por tanto una de las soluciones de la ecuación diofántica es:
+
+$$x_0 = x_g \cdot \frac{c}{g},$$
+
+$$y_0 = y_g \cdot \frac{c}{g}.$$
+
+La idea anterior todavía funciona cuando $a$ o $b$ o ambos son negativos. Sólo necesitamos cambiar el signo de $x_0$ y $y_0$ cuando sea necesario.
+
+Finalmente, podemos implementar esta idea de la siguiente manera (tenga en cuenta que no considera el caso $a = b = 0$).
+
+\subsection{Obteniendo todas las soluciones}
+
+De una solución $(x_0, y_0)$, podemos obtener todas las soluciones de la ecuación dada. Dejar $g = \gcd(a, b)$ y deja $x_0, y_0$ ser números enteros que satisfagan lo siguiente:
+
+$$a \cdot x_0 + b \cdot y_0 = c$$
+
+Ahora deberíamos ver que añadiendo $b/g$ a $x_0$, y al mismo tiempo restar $a/g$ de $y_0$ no romperá la igualdad:
+
+$$a \cdot \left(x_0 + \frac{b}{g}\right) + b \cdot \left(y_0 - \frac{a}{g}\right) = a \cdot x_0 + b \cdot y_0 + a \cdot \frac{b}{g} - b \cdot \frac{a}{g} = c$$
+
+Obviamente, este proceso se puede repetir nuevamente, así que todos los números de la forma:
+
+$$x = x_0 + k \cdot \frac{b}{g}$$
+
+$$y = y_0 - k \cdot \frac{a}{g}$$
+
+son soluciones de la ecuación diofántica dada. Además, este es el conjunto de todas las posibles soluciones de la ecuación diofántica dada.
+
+\subsection{Encontrar el número de soluciones y las soluciones en un intervalo dado}
+
+De la sección anterior, debería quedar claro que si no imponemos ninguna restricción a las soluciones, habría un número infinito de ellas. Entonces, en esta sección, agregamos algunas restricciones en el intervalo de $x$ y $y$, e intentaremos contar y enumerar todas las soluciones.
+
+Sean dos intervalos: $[min_x; max_x]$ y $[min_y; max_y]$ y digamos que solo queremos encontrar las soluciones en estos dos intervalos.
+
+Tenga en cuenta que si $a$ o $b$ es $0$, entonces el problema sólo tiene una solución. No consideramos este caso aquí.
+
+Primero, podemos encontrar una solución que tenga un valor mínimo de $x$, tal que $x \ge min_x$. Para hacer esto, primero encontramos cualquier solución de la ecuación diofántica. Luego, cambiamos esta solución para obtener $x \ge min_x$ (usando lo que sabemos sobre el conjunto de todas las soluciones en la sección anterior). Esto se puede hacer en $O(1)$. Denota este valor mínimo de $x$ por $l_{x1}$.
+
+De manera similar, podemos encontrar el valor máximo de $x$ que satisface $x \le max_x$. Denota este valor máximo de $x$ por $r_{x1}$.
+
+De manera similar, podemos encontrar el valor mínimo de $y$, $(y \ge min_y)$ y valor máximo de $y$ $(y\le max_y)$. Denota los valores correspondientes de $x$ por $l_{x2}$ y $r_{x2}$.
+
+La solución final son todas las soluciones con x en la intersección de $[l_{x1}, r_{x1}]$ y $[l_{x2}, r_{x2}]$. Denotemos esta intersección por $[l_x,r_x]$.
+
+A continuación en la sección de implementación se muestra el código que implementa esta idea. Note que dividimos $a$ y $b$ al principio por $g$. Desde la ecuación $ax + por = c$ es equivalente a la ecuación $\frac{a}{g} x + \frac{b}{g} y = \frac{c}{g}$, podemos usar este en su lugar y tener $\gcd(\frac{a}{g}, \frac{b}{g}) = 1$, lo que simplifica las fórmulas.
+
+Una vez que tengamos $l_x$ y $r_x$, también es sencillo enumerar todas las soluciones. Sólo necesito iterar
+$x = l_x + k \cdot \frac{b}{g}$ para todos $k\ge 0$ hasta $x = r_x$ y encuentre el correspondiente $y$ valores usando la ecuación $ax + por = c$.
+
+\subsection{Encuentre la solución con el valor mínimo de $x+y$}
+
+Aquí, $x$ y $y$ también es necesario darle alguna restricción; de lo contrario, la respuesta puede convertirse en infinito negativo.
+
+La idea es similar a la sección anterior: encontramos cualquier solución de la ecuación diofántica y luego cambiamos la solución para satisfacer algunas condiciones.
+
+Finalmente, utilice el conocimiento del conjunto de todas las soluciones para encontrar el mínimo:
+
+$$x' = x + k \cdot \frac{b}{g},$$
+$$y' = y - k \cdot \frac{a}{g}.$$
+
+Tenga en cuenta que $x + y$ cambiar de la siguiente manera:
+
+$$x' + y' = x + y + k \cdot \left(\frac{b}{g} - \frac{a}{g}\right) = x + y + k \cdot \frac{b-a}{g}$$
+
+Si $a<b$, necesitamos seleccionar el valor más pequeño posible de $k$. Si $a>b$, necesitamos seleccionar el mayor valor posible de $k$. Si $a=b$, todas las soluciones tendrán la misma suma $x+y$.

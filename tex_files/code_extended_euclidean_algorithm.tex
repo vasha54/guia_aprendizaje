@@ -1,0 +1,71 @@
+\subsection{Versión recursiva}
+
+La función recursiva siguiente devuelve el GCD y los valores de los coeficientes a $x$ y $y$ (que se pasan por referencia a la función). Esta implementación del algoritmo euclidiano extendido también produce resultados correctos para números enteros negativos.
+
+\subsubsection{C++}
+\begin{lstlisting}[language=C++]
+int gcd_recursive(int a, int b, int& x, int& y) {
+   if (b == 0) {
+      x = 1; y = 0;
+      return a;
+   }
+   int x1, y1;
+   int d = gcd_recursive(b, a % b, x1, y1);
+   x = y1;
+   y = x1 - y1 * (a / b);
+   return d;
+}
+
+\end{lstlisting}
+
+\subsubsection{Java}
+\begin{lstlisting}[language=Java]
+// retorna { gcd(a,b), x, y } tal que gcd(a,b) = a*x + b*y
+public static long[] gcd_recursive(long a, long b) {
+   if (b == 0) return a > 0 ? new long[]{a, 1, 0} : new long[]{-a, -1, 0};
+   long[] r = gcd_recursive(b, a % b);
+   return new long[]{r[0], r[2], r[1] - a / b * r[2]};
+}
+\end{lstlisting}
+
+\subsection{Versión iterativa}
+También es posible escribir el algoritmo euclidiano extendido de forma iterativa. Como evita la recursividad, el código se ejecutará un poco más rápido que el recursivo.
+
+Si observa detenidamente las variables $a_1$ y $b_1$ , podrá notar que toman exactamente los mismos valores que en la versión iterativa del algoritmo euclidiano normal . Entonces el algoritmo al menos calculará el GCD correcto.
+
+Para ver por qué el algoritmo también calcula los coeficientes correctos, puede verificar que las siguientes invariantes se mantendrán en cualquier momento (antes del ciclo while y al final de cada iteración): $x \cdot a + y \cdot b = a_1$ y $x_1 \cdot a + y_1 \cdot b = b_1$ . Es trivial ver que estas dos ecuaciones se satisfacen al principio. Y puede comprobar que la actualización en la iteración del bucle seguirá manteniendo válidas esas igualdades.
+
+Al final sabemos que $a_1$ contiene el GCD, por lo que $x \cdot a + y \cdot b = g$. Lo que significa que hemos encontrado los coeficientes requeridos.
+
+Incluso puedes optimizar más el código y eliminar la variable $a_1$ y $b_1$ del código, y simplemente reutilizar $a$ y $b$. Sin embargo, si lo hace, perderá la capacidad de discutir sobre las invariantes.
+
+\subsubsection{C++}
+\begin{lstlisting}[language=C++]
+int gcd_iterative(int a, int b, int& x, int& y) {
+   x = 1, y = 0;
+   int x1 = 0, y1 = 1, a1 = a, b1 = b;
+   while (b1) {
+      int q = a1 / b1;
+      tie(x, x1) = make_tuple(x1, x - q * x1);
+      tie(y, y1) = make_tuple(y1, y - q * y1);
+      tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+   }
+   sreturn a1;
+}
+\end{lstlisting}
+
+\subsubsection{Java}
+\begin{lstlisting}[language=Java]
+// retorna { gcd(a,b), x, y } tal que gcd(a,b) = a*x + b*y
+public static long[] gcd_iterative(long a, long b) {
+   long x = 1, y = 0, x1 = 0, y1 = 1, t;
+   while (b != 0) {
+      long q = a / b; t = x;
+      x = x1; x1 = t - q * x1;
+      t = y; y = y1;
+      y1 = t - q * y1; t = b;
+      b = a - q * b; a = t;
+   }
+   return a > 0 ? new long[]{a, x, y} : new long[]{-a, -x, -y};
+}
+\end{lstlisting}

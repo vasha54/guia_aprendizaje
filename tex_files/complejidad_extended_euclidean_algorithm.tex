@@ -1,0 +1,5 @@
+La complejidad temporal del algoritmo extendido de Euclides para encontrar el máximo común divisor (gcd) de dos números $a$ y $b$ es O($\log(\min(a, b))$), donde $\log$ representa el logaritmo en base $2$ y $\min(a, b)$ es el menor de los dos números $a$ y $b$.
+
+El algoritmo extendido de Euclides se basa en la recursión y en la división entera. En cada iteración, se realizan operaciones aritméticas simples como restas y divisiones enteras. Dado que en cada paso se reduce uno de los números $a$ o $b$ al menos a la mitad de su valor, el número de iteraciones necesarias para llegar al gcd es proporcional al logaritmo en base 2 del menor de los dos números.
+
+Por lo tanto, la complejidad temporal del algoritmo extendido de Euclides es O($\log(\min(a, b))$). Esto significa que el tiempo de ejecución del algoritmo crece de forma logarítmica con respecto al tamaño de los números $a$ y $b$, lo cual lo hace muy eficiente para calcular el $\gcd$ de dos números enteros grandes.

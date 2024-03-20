@@ -1,0 +1,43 @@
+Las estructuras de datos basadas en políticas en C++ son algo similares a los conjuntos. Proporcionan algunas operaciones adicionales, pero considerablemente poderosas, que otorgan al programador las virtudes de alto rendimiento, seguridad semántica y flexibilidad en comparación con las estructuras de datos estándar de la biblioteca estándar de C++.
+
+Un árbol de estadísticas de orden es un tipo de árbol de búsqueda binario equilibrado que mantiene información adicional sobre el orden de los elementos del árbol. Esta información permite la recuperación rápida del k-ésimo elemento más pequeño del árbol, así como otras consultas relacionadas con pedidos.
+
+La implementación de un árbol de estadísticas de pedidos normalmente implica aumentar un árbol de búsqueda binario estándar con campos u operaciones adicionales para mantener la información de las estadísticas de pedidos. Esto se puede hacer utilizando técnicas como árboles rojo-negro o árboles AVL.
+
+
+\subsection{Conjunto ordenado}
+
+Los conjuntos ordenados pueden verse como versiones extendidas de conjuntos en la estructura de datos basada en políticas.
+
+\subsection{Operaciones}
+
+Hay dos operaciones adicionales en las estructuras de datos basadas en políticas, además de las de la biblioteca estándar. Se enumeran a continuación:
+
+\begin{itemize}
+	\item \textbf{order\_of\_key(k):} Devuelve el número de elementos estrictamente menores que $k$.
+	\item \textbf{find\_by\_order(k):} Devuelve la dirección del elemento en el késimo índice del conjunto mientras se utiliza la indexación basada en cero, es decir, el primer elemento está en el índice cero.
+\end{itemize}
+
+Aclarando las operaciones adicionales que ofrece PBDS:
+
+Sea $a$ un conjunto ordenado en el que se insertan los elementos $2,~4,~3,~7,~5$.
+
+Entonces los elementos en un conjunto ordenado $a$ se almacenarían en el siguiente orden:
+
+$$2,~3,~4,~5,~7$$
+
+\begin{itemize}
+	\item \textbf{find\_by\_order:} Aquí, \emph{find\_by\_order(x)} devolverá la dirección del (x+1)-ésimo elemento en el conjunto ordenado $a$. Por ejemplo, \emph{find\_by\_order(3)} devolverá la dirección de $'5'$ ya que el cuarto elemento (usando indexación basada en 1) presente en el conjunto es $5$.
+	
+	\item \textbf{order\_of\_key:} Aquí, \emph{order\_of\_key(x)} devolverá el número de elementos estrictamente menor que $x$. Por ejemplo, \emph{order\_of\_key(10)} devolverá 5, ya que todas las entradas del conjunto son menores de 10. 
+\end{itemize}
+
+Supongamos que tenemos una situación donde los elementos se insertan uno por uno en un arreglo y después de cada inserción, se nos da un rango $[l, r]$ y tenemos que determinar el número de elementos en el arreglo mayor que igual a $l$ y menor igual a $r$. Inicialmente, el  arreglo está vacío. 
+
+Aplicando esta estructura con estas funciones podemos resolver el problema anterior fácilmente, es decir, el recuento de elementos entre $l$ y $r$ se puede encontrar mediante:
+
+\begin{lstlisting}[language=C++]
+o_set.order_of_key(r+1) - o_set.order_of_key(l)
+\end{lstlisting}
+
+Como el conjunto contiene solo los elementos ÚNICOS, para realizar las operaciones en un arreglo que tiene elementos repetidos, podemos tomar la CLAVE como un par de elementos en lugar de un número entero en el que el primer elemento es nuestro elemento requerido del arreglo y solo el segundo elemento. del par debe ser único para que todo el par sea único.

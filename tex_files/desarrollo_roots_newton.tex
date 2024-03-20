@@ -1,0 +1,29 @@
+Los parámetros de entrada del algoritmo constan no solo de la función $f(x)$ sino también la aproximación inicial -algunos $x_0$ , con el que comienza el algoritmo.
+
+% TODO: \usepackage{graphicx} required
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.45\linewidth]{img/roots_newton}
+	\label{fig:rootsnewton}
+\end{figure}
+
+
+Supongamos que ya hemos calculado  $x_i$, calcular  $x_{i+1}$ como sigue. Dibuja la tangente a la gráfica de la función  $f(x)$ en el punto $x = x_i$ , y encuentre el punto de intersección de esta tangente con la $x$-eje. $x_{i+1}$ se iguala a la $x$-coordenada del punto encontrado, y repetimos todo el proceso desde el principio.
+
+No es difícil obtener la siguiente fórmula,
+
+$$ x_{i+1} = x_i - \frac{f(x_i)}{f^\prime(x_i)} $$
+
+Primero calculamos la pendiente $f'(x)$, derivado de $f(x)$, y luego determine la ecuación de la tangente que es,
+
+$$ y - f(x_i) = f'(x_i)(x - x_i) $$
+
+La tangente interseca con el eje x en la coordenada, $y = 0$ y $x = x_{i+1}$,
+
+$$ - f(x_i) = f'(x_i)(x_{i+1} - x_i) $$
+
+Ahora resolviendo la ecuación obtenemos el valor de $x_{i+1}$
+
+Es intuitivamente claro que si la función $f(x)$ es \emph{bueno} (suave), y $x_i$ está lo suficientemente cerca de la raíz, entonces $x_{i+1}$  estará aún más cerca de la raíz deseada.
+
+La tasa de convergencia es cuadrática, lo que, condicionalmente hablando, significa que el número de dígitos exactos en el valor aproximado $x_i$ se duplica con cada iteración.

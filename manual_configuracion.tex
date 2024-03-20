@@ -1,0 +1,142 @@
+
+\newcommand{\universidad}{\large{Universidad de Matanzas }}
+\newcommand{\facultad}{\large{Departamento de Recursos para el Aprendizaje}}
+
+\newcommand{\espacios}{\vspace{0.5in}}
+
+\newcommand{\espaciosH}{\hspace{0.5in}}
+
+\newcommand{\titleguide}[1]{\gdef\@titleguide{#1}}
+
+\newcommand{\uchapter}[1]{\chapter*{#1}
+	\addcontentsline{toc}{section}{\protect\numberline{}#1}}
+
+\newcommand{\usection}[1]{\section*{#1}
+	\addcontentsline{toc}{section}{\protect\numberline{}#1}}
+
+\newcommand{\usubsection}[1]{\subsection*{#1}
+	\addcontentsline{toc}{subsection}{\protect\numberline{}#1}}
+
+\newcommand{\usubsubsection}[1]{\subsubsection*{#1}
+	\addcontentsline{toc}{subsubsection}{\protect\numberline{}#1}}
+
+
+\newcommand{\entidad}
+{
+ 	\begin{tabular}{c}
+ 		
+ 		\universidad \\
+ 		\facultad \\ 
+ 		\espacios \\
+ 		
+ 	\end{tabular}
+}
+
+\newcommand{\logoACM}{\includegraphics[scale=0.7]{img/icpc.png}}
+\newcommand{\banner}
+{
+ \espacios
+
+\begin{tabular}{ccc}
+
+\logoUniversidad  &  \entidad  &  \logoFacultad  \\
+
+\end{tabular}
+
+
+ \espacios
+ }
+
+
+% Escribir el titulo de la tesis que va a exponer.
+\newcommand{\tituloTesis}{Manual de preparación para estudiantes preuniversitarios concursantes del ICPC y IOI en la provincia de Matanzas }
+
+% Cambiar el tipo de trabajo si es necesario.
+\newcommand{\nombreTipoTesis}{}
+
+% Cambiar los nombres de los autores.
+\newcommand{\autorTemaUNO}{Ernesto Ojea Torres}
+\newcommand{\autorTemaTRES}{Luis Alejandro Arteaga Morales}
+\newcommand{\autorTemaDOS}{Luis Andrés Valido Fajardo}
+\newcommand{\autorTemaCUATRO}{Frank Hernández González}
+
+\newcommand{\analistaUNO}{Luis Andrés Valido Fajardo}
+\newcommand{\analistaDOS}{Ernesto David Escariz Ramos}
+\newcommand{\analistaTRES}{Luis Alejandro Arteaga Morales}
+\newcommand{\analistaCUATRO}{Roniel Navarro Villa}
+\newcommand{\analistaCINCO}{Leonardo Fundora Luis}
+\newcommand{\analistaSEIS}{Leyán Robaina Mesa}
+
+\newcommand{\correctoreUNO}{Arian Amadeo Castellanos Rodriguez}
+\newcommand{\correctoreDOS}{Zaniel García Orihuela}
+
+
+% Cambiar el cargo del tutor y co-tutor
+\newcommand{\cargoTutor}{Cargo del tutor}
+\newcommand{\cargoCoTutor}{Cargo del co-tutor}
+
+% Cambiar la fecha de confección de la tesis. Por defecto es el día de hoy
+\newcommand{\fecha}{\large{\today}}
+
+\newcommand{\titulo}{ \centering	\large{\bf \tituloTesis}\espacios}
+
+\newcommand{\tipoTesis}{\large{\nombreTipoTesis}\espacios}
+
+\newcommand{\autores}
+{
+    
+    \begin{tabular}{ll}
+    \large{\bf Autor de temas:}  &  \large{\autorTemaDOS} \\
+                          
+   
+    
+     
+    \end{tabular}
+
+ \vspace{0.5in}
+
+	% \begin{tabular}{ll}
+	
+		
+	%	\large{\bf Correciones:}    & \large{\correctoreUNO}    \\
+	%	                            & \large{\correctoreDOS} \\
+		
+		
+	%\end{tabular}
+
+    %\vspace{0.5in}
+    
+  %   \begin{tabular}{ll}
+    
+    	
+  %  	\large{\bf Análisis de ejercicios:}    & \large{\analistaUNO} \\    
+  %  \end{tabular}
+}
+
+\newcommand{\ciudadFecha}{\large{\bf Matanzas, \fecha}}
+
+\newcommand{\fillDia}{\makebox[0.3in]{\hrulefill}\space}
+\newcommand{\fillMes}{\makebox[1in]{\hrulefill}\space}
+\newcommand{\fillAnno}{\makebox[0.5in]{\hrulefill}}
+
+\newcommand{\firma}{\makebox[2in]{\hrulefill}}
+
+\newcommand{\firmaTesis}
+{
+    \begin{center}
+    \begin{tabular}{cp{0.5in}c}
+        \firma      &   & \firma        \\
+        \firma      &   & \firma        \\
+        \cargoTutor &   & \cargoCoTutor \\
+        \tutor      &   & \coTutor
+    \end{tabular}
+    \end{center}
+}
+
+\newcommand{\comentario}[2][]
+{
+	\todo[caption={#2}, size=\small, #1, inline,color={red!100!green!8},bordercolor=red,linecolor=red]
+	{
+	  \renewcommand{\baselinestretch}{1.2}\selectfont#2\par
+	}
+}
