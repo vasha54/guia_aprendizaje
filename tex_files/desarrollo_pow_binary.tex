@@ -1,11 +1,26 @@
-La generalización más obvia: los restos de un determinado módulo (obviamente, la asociatividad se conserva). Lo siguiente en la \emph{popularidad} es una generalización del producto matricial (es una asociatividad bien conocida).
+Levantamiento $a$ a la potencia de $n$ se expresa ingenuamente como multiplicación por $a$ hecho $n-1$
+ veces: $a^{n} = a \cdot a \cdot \ldots \cdot a$. Sin embargo, este enfoque no es práctico para grandes $a$ o $n$.
 
-Tenga en cuenta que para cualquier número de una identidad obvia factible de un número par (que se deduce de la asociatividad de la multiplicación):
+$$a^{2b} = a^b \cdot a^b = (a^b)^2$$
 
-$a^{n}=(a^{n/2})^{2}=a^{n/2} *a^{n/2} $
 
-Es el principal método de exponenciación binaria. De hecho, incluso para n Hemos demostrado cómo, después de realizar solo una operación de multiplicación, podemos reducir el problema a menos de la mitad de la potencia. Queda por entender qué hacer si el grado de n es impar. Aquí lo que hacemos es muy simple: ve en la medida n-1 Eso tendrá incluso:
+La idea de la exponenciación binaria es que dividimos el trabajo usando la representación binaria del exponente.
 
-$a^{n}=a^{n-1}*a$
+Vamos a escribir $n$ en base 2, por ejemplo:
 
-Entonces, en realidad encontramos una fórmula recursiva: el grado de n que vamos, si es igual a n/2 y de lo contrario, a n-1. Está claro que no habrá más transiciones 2 $\log( n)$ antes de que lleguemos a n = 0 (basado en la fórmula recursiva).
+$$3^{13} = 3^{1101_2} = 3^8 \cdot 3^4 \cdot 3^1$$
+
+Desde el número $n$ tiene exactamente $\lfloor \log_2 n \rfloor + 1$ dígitos en base 2, solo necesitamos realizar $O(\log n)$ multiplicaciones, si conocemos las potencias $a^1, a^2, a^4, a^8, \dots, a^{2^{\lfloor \log n \rfloor}}$.
+
+Entonces sólo necesitamos conocer una forma rápida de calcularlos. Por suerte esto es muy fácil, ya que un elemento de la secuencia es sólo el cuadrado del elemento anterior.
+
+\begin{align}
+	3^1 &= 3 \\
+	3^2 &= \left(3^1\right)^2 = 3^2 = 9 \\
+	3^4 &= \left(3^2\right)^2 = 9^2 = 81 \\
+	3^8 &= \left(3^4\right)^2 = 81^2 = 6561
+\end{align}
+
+Entonces, para obtener la respuesta final para $3^{13}$, sólo necesitamos multiplicar tres de ellos (omitiendo $3^2$ porque el bit correspondiente en $n$ no está configurado): $3^{13} = 6561 \cdot 81 \cdot 3 = 1594323$
+
+

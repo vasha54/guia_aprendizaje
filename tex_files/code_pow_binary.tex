@@ -1,6 +1,6 @@
 \subsection{C++}
 
-Variante recursiva:
+Primero, el enfoque recursivo, que es una traducción directa de la fórmula recursiva:
 
 \begin{lstlisting}[language=C++]
 int binpow (int a, int n){
@@ -13,7 +13,7 @@ int binpow (int a, int n){
 }
 \end{lstlisting}
 
-Variante iterativa (la división por 2 se reemplaza por operaciones de bit):
+El segundo enfoque logra la misma tarea sin recursividad. Calcula todas las potencias en un bucle y multiplica las que tienen el bit establecido correspondiente en $n$. Aunque la complejidad de ambos enfoques es idéntica, este enfoque será más rápido en la práctica ya que no tenemos la sobrecarga de las llamadas recursivas.
 
 \begin{lstlisting}[language=C++]
 int binpow (int a, int n){
@@ -29,7 +29,7 @@ int binpow (int a, int n){
 
 \subsection{Java}
 
-Variante recursiva:
+Primero, el enfoque recursivo, que es una traducción directa de la fórmula recursiva:
 
 \begin{lstlisting}[language=C++]
 public int binpow (int a, int n){
@@ -42,7 +42,7 @@ public int binpow (int a, int n){
 }
 \end{lstlisting}
 
-Variante iterativa (la división por 2 se reemplaza por operaciones de bit):
+El segundo enfoque logra la misma tarea sin recursividad. Calcula todas las potencias en un bucle y multiplica las que tienen el bit establecido correspondiente en $n$. Aunque la complejidad de ambos enfoques es idéntica, este enfoque será más rápido en la práctica ya que no tenemos la sobrecarga de las llamadas recursivas.
 
 \begin{lstlisting}[language=C++]
 public int binpow (int a, int n){

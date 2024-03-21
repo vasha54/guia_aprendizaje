@@ -1,1 +1,5 @@
-La exponenciaión binaria es una técnica que permite generar cualquier cantidad de potencia $n^{th}$ para multiplicaciones O ($\log N$) (en lugar de n multiplicaciones en el método habitual).
+La complejidad final de este algoritmo es $O(\log n)$: tenemos que calcular $\log n$ poderes de $a$, y luego tener que hacer como máximo $\log n$ multiplicaciones para obtener la respuesta final de ellas.
+
+El siguiente enfoque recursivo expresa la misma idea:
+
+$$a^n = \begin{cases} 1 &\text{if } n == 0 \\ \left(a^{\frac{n}{2}}\right)^2 &\text{si } n > 0 \text{ y } n \text{ par}\\ \left(a^{\frac{n - 1}{2}}\right)^2 \cdot a &\text{si } n > 0 \text { y } n \text{ impar}\\ \end{cases}$$

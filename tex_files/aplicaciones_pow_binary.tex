@@ -8,7 +8,18 @@ A continuación vamos a mencionar algunas aplicaciones de esta técnica:
 	Como sabemos que el operador de módulo no interfiere con las multiplicaciones ($a \cdot b \equiv (a 
 	\bmod m) \cdot (b \bmod m) \pmod m$), podemos usar directamente el mismo código y simplemente 
 	reemplazar cada multiplicación con una multiplicación modular.
-	 
+\begin{lstlisting}[language=C++]	
+long long binpow(long long a, long long b, long long m) {
+   a %= m;
+   long long res = 1;
+   while (b > 0) {
+      if (b & 1) res = res * a % m;
+      a = a * a % m;
+      b >>= 1;
+   }
+   return res;
+}
+\end{lstlisting}
 	\item \textbf{Cálculo efectivo de los números de Fibonacci:} Calcular $n$-ésimo número de 
 	Fibonacci $F_n$. Para calcular el siguiente número de Fibonacci, solo se necesitan los dos 
 	anteriores, ya que $F_n = F_{n-1} + F_{n-2}$. Podemos construir un $2 \times 2$ matriz que 
@@ -21,9 +32,85 @@ A continuación vamos a mencionar algunas aplicaciones de esta técnica:
 	exponenciación binaria, y luego aplicarla a la secuencia. Esto le dará una complejidad de tiempo de 
 	$O(n \log k)$.
 	
+\begin{lstlisting}[language=C++]	
+vector<int> applyPermutation(vector<int> sequence, vector<int> permutation) {
+   vector<int> newSequence(sequence.size());
+   for(int i = 0; i < sequence.size(); i++) {
+      newSequence[i] = sequence[permutation[i]];
+   }
+   return newSequence;
+}
+
+vector<int> permute(vector<int> sequence, vector<int> permutation, long long k) {
+   while (k > 0) {
+      if (k & 1) {
+         sequence = applyPermutation(sequence, permutation);
+      }
+      permutation = applyPermutation(permutation, permutation);
+      k >>= 1;
+   }
+   return sequence;
+}
+\end{lstlisting}
 	
 	\item \textbf{Aplicación rápida de un conjunto de operaciones geométricas a un conjunto de puntos:}
-	Dado $n$ puntos $p_i$ , aplicar $m$ transformaciones a cada uno de estos puntos. Cada transformación puede ser un cambio, una escala o una rotación alrededor de un eje dado por un ángulo dado. También hay una operación de "bucle" que aplica una lista dada de transformaciones $k$ veces (las operaciones de "bucle" se pueden anidar). Debe aplicar todas las transformaciones más rápido que $O(n \cdot longitud)$, dónde $longitud$ es el número total de transformaciones que se aplicarán (después de desenrollar las operaciones de "bucle").
+	Dado $n$ puntos $p_i$ , aplicar $m$ transformaciones a cada uno de estos puntos. Cada transformación puede ser un cambio, una escala o una rotación alrededor de un eje dado por un ángulo dado. También hay una operación de "bucle" que aplica una lista dada de transformaciones $k$ veces (las operaciones de "bucle" se pueden anidar). Debe aplicar todas las transformaciones más rápido que $O(n \cdot longitud)$, dónde $longitud$ es el número total de transformaciones que se aplicarán (después de desenrollar las operaciones de "bucle"). Veamos cómo los diferentes tipos de transformaciones cambian las coordenadas:
+	
+	\begin{itemize}
+		\item Operación de desplazamiento: añade una constante diferente a cada una de las coordenadas.
+		\item Operación de escalado: multiplica cada una de las coordenadas por una constante diferente.
+		\item Operación de rotación: la transformación es más complicada (no entraremos en detalles aquí), pero cada una de las nuevas coordenadas aún se puede representar como una combinación lineal de las antiguas.
+	\end{itemize}
+
+	Como puedes ver, cada una de las transformaciones se puede representar como una operación lineal sobre las coordenadas. Por tanto, una transformación se puede escribir como $4 \times 4$ matriz de la forma:
+	
+	$$\begin{pmatrix}
+		a_{11} & a_ {12} & a_ {13} & a_ {14} \\
+		a_{21} & a_ {22} & a_ {23} & a_ {24} \\
+		a_{31} & a_ {32} & a_ {33} & a_ {34} \\
+		a_{41} & a_ {42} & a_ {43} & a_ {44}
+	\end{pmatrix}$$
+
+que, cuando se multiplica por un vector con las antiguas coordenadas y una unidad, da un nuevo vector con las nuevas coordenadas y una unidad:
+
+$$\begin{pmatrix} x & y & z & 1 \end{pmatrix} \cdot
+\begin{pmatrix}
+	a_{11} & a_ {12} & a_ {13} & a_ {14} \\
+	a_{21} & a_ {22} & a_ {23} & a_ {24} \\
+	a_{31} & a_ {32} & a_ {33} & a_ {34} \\
+	a_{41} & a_ {42} & a_ {43} & a_ {44}
+\end{pmatrix}
+= \begin{pmatrix} x' & y' & z' & 1 \end{pmatrix}$$
+
+(¿Por qué introducir una cuarta coordenada ficticia, te preguntarás? Esa es la belleza de las coordenadas homogéneas , que encuentran una gran aplicación en los gráficos por computadora. Sin esto, no sería posible implementar operaciones afines como la operación de desplazamiento como una multiplicación de una sola matriz, como requiere que agreguemos una constante a las coordenadas. ¡La transformación afín se convierte en una transformación lineal en la dimensión superior!)
+
+A continuación se muestran algunos ejemplos de cómo se representan las transformaciones en forma matricial:
+
+\begin{itemize}
+	\item Operación de cambio: cambio $x$ coordinar por $5$, $y$ coordinar por $7$ y $z$ coordinar por $9$.
+$$\begin{pmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 \\
+	0 & 0 & 1 & 0 \\
+	5 & 7 & 9 & 1
+\end{pmatrix}$$
+	\item Operación de escalado: escalar el $x$ coordinar por $10$ y los otros dos por $5$.
+$$\begin{pmatrix}
+	10 & 0 & 0 & 0 \\
+	0 & 5 & 0 & 0 \\
+	0 & 0 & 5 & 0 \\
+	0 & 0 & 0 & 1
+\end{pmatrix}$$
+	\item Operación de rotación: girar $\theta$ grados alrededor del $x$ eje siguiendo la regla de la mano derecha (sentido antihorario)
+$$\begin{pmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & \cos \theta & -\sin \theta & 0 \\
+	0 & \sin \theta & \cos \theta & 0 \\
+	0 & 0 & 0 & 1
+\end{pmatrix}$$
+\end{itemize}
+
+Ahora bien, una vez que cada transformación se describe como una matriz, la secuencia de transformaciones se puede describir como un producto de estas matrices, y un "bucle" de $k$. Las repeticiones pueden describirse como la matriz elevada a la potencia de $k$ (que se puede calcular usando exponenciación binaria en $O(\log{k})$). De esta manera, la matriz que representa todas las transformaciones se puede calcular primero en $O(m\log{k})$, y luego se puede aplicar a cada uno de los $n$ puntos en $O(n)$ para una complejidad total de $O(n + m\log{k})$.
 	
 	\item \textbf{Números de caminos de longitud K en un grafo:} Dada un grafo no ponderada dirigida de 
 	$n$ vértices, encuentre el número de caminos de longitud $k$ desde cualquier vértice $u$ a 
