@@ -1,0 +1,29 @@
+\section{DMOJ - UCLV}
+
+\subsection{DMOJ - Juego AB} Se tiene una cadena compuesta por los caracteres \emph{A} y \emph{B}. Dos jugadores de forma alternativa toman subcadenas que no se superpongan con ninguna escogida anteriormente. Cuando todos los elementos de la cadena son tomados gana el jugador que menos \emph{A} tome. Determinar el ganador si ambos juegan de forma óptima. Fernando juega primero y Ricardo después. En caso de empate se debe imprimir -1. 
+
+Para solucionar este juego vamos aplicar teoría de juego. Para eso vamos a contar la cantidad de letras \emph{A} y con las \emph{B} agrupar por cantidades concecutivas en pilas para con estas aplicar el algoritmo de Nim. Vamos a analizar el problema por situaciones.
+
+\textbf{Situación de empate}
+
+Si la cantidad de \emph{A} es par. No importa la cantidad de \emph{B} y como estén distribuidas cuando estás se agoten cada jugador puede tomar $N/2$ cantidad de \emph{A} siendo $N$ cantidad de \emph{A} en la cadena original.
+
+\textbf{Situación ganadora de Fernando}
+
+Para que Fernando gane debe suceder lo siguiente:
+\begin{enumerate}
+	\item La cantidad de \emph{A} debe ser impar.
+	\item Aplicando el algoritmo de Nim con las pilas de \emph{B} debe perder es decir el xor debe arrojar un valor distinto de 0.
+\end{enumerate}
+
+\textbf{Situación ganadora de Ricardo}
+
+Para que Ricardo gane debe suceder lo siguiente:
+\begin{enumerate}
+	\item La cantidad de \emph{A} debe ser impar.
+	\item Aplicando el algoritmo de Nim con las pilas de \emph{B} debe perder es decir el xor debe arrojar un valor igual a 0.
+\end{enumerate}
+
+Porque debe suceder esto?. Analicemos. Si la cantidad de \emph{A} es impar el primero jugador que comience a tomar \emph{A} va tener siempre un turno adicional para tomar al menos una \emph{A} extra con respecto al segundo juegador. Por lo tanto para que el jugador no sea el primero de tomar al menos una letra \emph{A} debe tratar de coger las últimas letras \emph{B} para obligar a que el otro jugador a que comience a tomar letras \emph{A}. Para saber si un jugador tiene una estrategia que le permita coger las últimas letras \emph{B} aplicamos el algoritmo de Nim y de acuerdo del resultado de este puede indicar la victoria o derrota de un determinado jugador.
+
+\subsection{Un juego interesante} El segundo jugador solo podrá ganar cuando la cantidad de elementos disponibles al inicio es impar y distinto de uno. Esto se debe a que con una cantidad impar de elementos cada jugador va hacer la misma cantidad de jugadas. Si cada jugador hace la misma cantidad de jugadas el segundo jugador solo tiene que sumar el número generado por la jugada anterior del primer jugador mas uno de los números adyacentes a este. Esto le garantiza en cada jugada sumar la misma catidad de puntos que el primer jugador mas un adicional que hace que su acumulado sea mayor. El primer jugador solo puede ganar cuando la cantidad de elemento al iniciar el juego es par. Esto es porque con una cantidad par elementos la cantidad de sumas es impar. Lo que significa que el primer jugador realiza una suma mas que el segundo. Por lo que solo tiene que \textquotedblleft perder un turno\textquotedblright sumando cualquier par de elementos en su primera jugada. A partir de la segunda jugada asume la estrategia ganadora del segundo jugador cuando la cantidad de elementos es impar y sumar el número generado por la jugada anterior del segundo jugador  por uno de sus adyacentes. Es empate cuando la cantidad de elementos inicial es 1.

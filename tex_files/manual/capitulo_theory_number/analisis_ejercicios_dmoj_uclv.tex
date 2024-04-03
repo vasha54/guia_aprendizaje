@@ -1,0 +1,75 @@
+\section{DMOJ - UCLV}
+\subsection{Convertir a Binario} Un ejercicio bastante simple solo debemos leer un numero en su representación decimal e imprimir su representación en sistema binario.
+
+
+\subsection{DMOJ - Cuba Roulette} Se tiene una circunferencia que es dividida en $2N$ cuñas. Todas las cuñas fueron enumeradas de $1$ a $2N$. Se quiere saber cuantas cuñas existen tales que la que la cuña que se le opone sus valores sean números coprimos en otra palabras que el máximo común divisor entre los números de las cuñas opuestas sea $1$.
+
+Vamos asumir que tenemos dos números $A$ y $B$ los cuales están en el rango de $[1 2N]$ y que $1 < A \leq N$ y $N+1 \leq B \leq 2N$. Y $B$ puede ser expresado como $N+A$.
+
+Si factorizamos los números $N$ y $A$ en números primos puede provocar dos cosas:
+
+\begin{enumerate}
+	\item La factorización puede dar que no existen uno o varios números primos comunes.
+	
+	$B=(a^{b} \cdot c^{d} \cdot e^{f}  \cdot .... \cdot g^{h} )+( k^{l} \cdot h^{p} \cdot q^{t})$
+	
+	\item La factorización puede dar que existe uno o varios números primos coumunes en la factorización de los valores $A$ y $N$.
+	
+	$B=(a^{b} \cdot c^{d} \cdot e^{f}  \cdot .... \cdot g^{h} )+( k^{l} \cdot h^{p} \cdot a^{t})$
+	
+	$B=a \cdot [(a^{b-1} \cdot c^{d} \cdot e^{f}  \cdot .... \cdot g^{h} )+( k^{l} \cdot h^{p} \cdot a^{t-1})]$
+\end{enumerate} 
+
+La segunda idea hace que podamos expresar que :
+
+Que tanto $A$, $N$ y $B$ son divisibles por el números primo $a$ que es mayor que uno por tanto para ese caso $A$ y $B$ no son coprimos por tanto ese par de cuñas no se cuenta.
+
+Por lo anterior podemos ver que la cantidad de pares de cuña que cumplen la condición es igual a la cantidad de números comprimos con $N$ y menores que $N$. Para hallar dicha cantidad podemos aplicar la función \emph{EulerPhi}.
+
+\subsection{N por 17} El problema nos pide que dado un número $N$ en representación binaria multiplicarlo por 17 e imprimir su resultado en representación binaria. La tarea es bastante simple el único detalle es que el $N$ tiene en su representación binaria puede tener hasta 1000 dígitos. 
+
+Para solucionar este problema podemos utilizar dos variantes. La primera es usar Java para utilizar el $BigInteger$ y trabajar con números grandes. Leer el número convertilo a decimal con $BigInteger$ luego multiplicarlo por 17 y el resultado llevarlo a binario todo esto con $BigInteger$.
+
+La otra idea es la que tendría que usar si utilizara C++. Vamos a partir de lo siguiente:
+
+$ X=N_{2} \cdot 17_{10} $
+
+Que puede ser expresado como:
+
+$ X=N_{2} \cdot 16_{10} + N_{2} $
+
+Como vemos tenemos una operación con números en bases númericas diferentes así que lo primero es llevar todos los números a una misma base, en este caso será a base 2. Por tanto convertiremos el 16 en base decimal a binario 10000. Eso hace que nuestra expresión quede ahora de la siguiente manera:
+
+$ X=N_{2} \cdot 10000_{2} + N_{2} $
+
+Vamos a trabajar la expresión por pedazos. El término $N_{2} \cdot 10000_{2}$ es una multiplicación y si hacemos un estudio veremos que la multiplicación siempre da un valor $Z$ cuyos primeros dígitos es igual a $N$ mientras los últimos cuatros dígitos sea igual a $0$.
+
+$Z = "N"+"0000" $
+
+
+$ X=Z_{2} + N_{2} $
+
+Ya esta manera solo nos queda simular una suma entre dos números binarios. Para esto solo debemos conocer las reglas de sumas de números binarios.
+
+\begin{itemize}
+	\item $0+0=0$
+	\item $0+1=1$
+	\item $1+1=0$ y paso un $1$ a la siguiente posición de los números. Por ejemplo $101_{2} +001_{2}=111_{2} $
+\end{itemize}
+
+Antes lo explicado anteriormente para resolverlo en C++ basta con leer el número hacer una copia de este número en otra variable de tipo cadena concatenarle una cadena "0000" al final a la variable copia y luego simular una suma binaria entre estas dos variables cadenas.
+
+\subsection{Firmas Primas} Dado un número $N$ ($1 \leq N \leq 10^{6}$) se nos pide imprimir los exponentes de los números primos que participan en la factorización en números primos de $N$ dichos exponentes debe ser impresos en forma ascedente, así como la cantidad de divisores de $N$.
+
+Para solucionar el problema vamos a precalcular los números primos hasta un $10^{6}$ utilizando un criba. Luego factorizamos el $N$ utilizando algún algoritmo de factorización explicado en este manual, en dicho proceso guardamos los exponentes de dichos primos en un vector llamado \emph{exponents}. Dicho vector los ordenamos e imprimimos. 
+
+Para calcular la cantidad de divisores de $N$ solo debemos recorrer el vector \emph{exponents} de la siguiente manera:\\
+divisores=1\\
+Para cada  $ e \in exponents$\\
+\hspace*{0.3in}divisores*=(e+1)\\
+Imprimir divisores\\
+
+
+\subsection{Suma de fracciones} Dados los valores $k$ y $n$ hallar todos los pares de la forma (a,b) que formen una fracción irreducible de la forma (a/b) tal que $a < b$ y $k \leq a < b \leq n$ y determinar la suma de todas las fracciones. Lo primero es saber que una fracción irreducible es cuando el máximo común divisor entre el valor de denominador y el valor numerador es uno. Como los valores son pequeños se puede generar con fuerza bruta todas las posibles fracciones que pueden existir. Por cada fracción se comprueba si es irreducible o no de ser irreducible se va sumando al total. Como el valor del denominador o numerador pueden crecer rapidamente se puede utiliza Java donde se cree una clase que represente una fracción la cual tenga entre sus funcionalidades la suma de fracciones. Ahora dicha clase cuenta con dos atributos de tipo BigInteger para representar el numerador y denominador.
+
+\subsection{Secuencia numerada de lapices} Una vez leido el problema y si calculamos los primeros valores de $N$ nos podemos percatar que el problema se reduce a encontrar el enesimo termino de fibonacci el cual como hemos visto en este anual existe varias variantes en nuestro caso utilizamos la exponenciación matricial siempre modulando por el valor pedido en el ejercicio. 

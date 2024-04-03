@@ -98,7 +98,7 @@ En casos de los tipos de datos que soportan datos númericos de tipo entero si s
 
 Una variable se define especificando el tipo y el nombre de dicha variable. Estas variables pueden
 ser tanto de tipos primitivos como referencias a objetos de alguna clase perteneciente al lenaguaje de programación o generada por el usuario. Si no se especifica un valor en su declaración, las variable
-primitivas se inicializan a cero (salvo boolean y char, que se inicializan a false y $'\0'$).
+primitivas se inicializan a cero (salvo boolean y char, que se inicializan a false y $'\\0'$).
 Análogamente las variables de tipo referencia son inicializadas por defecto a un valor especial:
 null.
 
@@ -109,7 +109,11 @@ int y = 5; //Declaracion de la variable y. Se inicializa a 5
 
 \subsection{Constante}
 
-Contrario a una variable, una constante es un determinado objetocuyo valor no puede ser alterado durante el proceso de una tarea específica. En C, C++ para declararvariables no existe una palabra especial, es decir, las variables se declaran escribiendo el tipo seguidode uno o más identificadores o nombres de variables. Por otro lado, para declarar constantes existela palabra reservada const, así como la directiva #define. A continuación se muestran ejemplos de declaración de variables y constantes.
+Contrario a una variable, una constante es un determinado objeto
+cuyo valor no puede ser alterado durante el proceso de una tarea específica. En C, C++ para declarar
+variables no existe una palabra especial, es decir, las variables se declaran escribiendo el tipo seguido
+de uno o más identificadores o nombres de variables. Por otro lado, para declarar constantes existe
+la palabra reservada const, así como la directiva $\sharp define$. A continuación se muestran ejemplos de declaración de variables y constantes.
 
 \begin{lstlisting}[language=C++]
 //Constante primera variante
@@ -122,7 +126,10 @@ const double b = 100;
 int a,c;
 \end{lstlisting}
 
-A diferencia de las constantes declaradas con la palabra const los símbolos definidos con #define noocupan espacio en la memoria del código ejecutable resultante.El tipo de la variable o constante puede ser cualquiera de los listados en Tipos primitivos, o bien de un tipo definido por el usuario.
+A diferencia de las constantes declaradas con la palabra const los símbolos definidos con $\sharp define$ no
+ocupan espacio en la memoria del código ejecutable resultante.
+El tipo de la variable o constante puede ser cualquiera de los listados en Tipos primitivos, o bien de
+ un tipo definido por el usuario.
 
 En el caso de Java para definir una constante basta con usar la palabra reservada \textbf{final}
 
@@ -130,4 +137,5 @@ En el caso de Java para definir una constante basta con usar la palabra reservad
 final double PI=3.14159265358979323846;
 \end{lstlisting}
 
-Las constantes son usadas a menudo con un doble propósito, el primero es con el fin de hacer más legible el código del programa
+Las constantes son usadas a menudo con un doble propósito, el primero es con el fin de hacer más
+ legible el código del programa

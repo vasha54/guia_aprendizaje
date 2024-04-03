@@ -1,0 +1,50 @@
+\section{MOG}
+\subsection{Eggfruit Cake} El problema nos cuenta sobre un pastel el cual esta dividido en $N$ cuñas donde cada cuña tiene un adorno frutal comestible dichos adornos se clasican en dos tipos los cuales son representandos por las letras \emph{E} y \emph{P}. Se nos pide hallar la cantidad de conjuntos con a lo sumo $S$ cuñas consecutivas que al menos unas de estas tenga la letra \emph{E}. 
+Lo primero que debemos tener en cuenta es el cake es circular por lo que la primera cuña sus vecinas son la última y segunda cuña de igual forma sucede con la última cuña quien tiene a la primera y penúltima como vecina. Para simular este proceso vamos a duplicar la cadena inicial es decir si la cadena inicial es \emph{PEPEP} vamos a trabajar con una cadena cuyo valor será \emph{PEPEPPEPEP} la cual tendría una longitud $2N$ y las posiciones validas serían de $0$ a $N-1$. 
+
+Lo siguiente es construir un arreglo $dpNextE$ con una dimensión $2N +5$ en el cual vamos almacenar por cada posición la posición del simbolo \emph{E} mas cercano por la derecha. En caso que en dicha posición exista un símbolo \emph{E} el valor será el mismo de esa posición. Para la posición  $dpNextE[2N]$ el valor inicial será -1.
+
+Para calcular el símbolo \emph{E} más cercano por la derecha para cada posición se puede aplicar la siguiente idea:
+
+\emph{Si yo soy símbolo E entonces mi vecino E más cercano por la derecha soy yo sino es el mismo vecino que el de mi vecino a la derecha.}
+
+Esto se traduce la siguiente dinámica:
+
+
+\begin{lstlisting}[language=C++]
+	dpNextE[2*N]=-1;
+	for(int i=2*N-1;i>=0;i--){
+		dpNextE[i]=( cake[i]=='E' ? i : dpNextE[i+1] );
+	}
+\end{lstlisting} 
+
+
+Una vez llenado el arreglo $dpNextE$ vamos a recorrer los primeros N posiciones y por cada posición realizaremos el siguiente análisis:
+
+\begin{itemize}
+	\item Si el valor almacenado en la posición \emph{i} es igual a \emph{i} significa que en esa posición del cake hay una letra \emph{E} por lo que puedo forma $S$ cojuntos tomando como cuña de partida la de la posición \emph{i} la cual de paso ya me asegura que al menos va existir entre las cuñas que conforman el conjunto una con el valor \emph{E}.
+	
+	\item Ahora que pasa si el valor almacenado posición \emph{i} no es igual a \emph{i}?. Lo primero que implica es que en esa posición del cake hay una letra \emph{P} y tengo que ver que tan cerca esta la primera \emph{E} por su derecha. 
+	
+	\begin{enumerate}
+		\item Si el valor almacenado es -1 o mayor igual que $i+S$ significa que no tiene \emph{E} por la derecha o que la mas cercana a él no le permite ni siquiera conformar un conjunto donde la cuña inicial sea él , incluya a la cuña que contiene esa \emph{E} y la cantidad de elementos del conjunto no supere los $S$ que pone como restricción el problema.
+		
+		\item En caso que no se cumpla las dos condiciones anteriores entonces la cantidad de conjuntos que pueden formar tomando como cuña inicial y que incluya su vecina \emph{E} mas cercana viene dada por la expresión:
+		
+		$i+S-dpNextE[i]$ 
+	\end{enumerate}
+\end{itemize}
+
+Lo anterior se puede codificar de la siguiente manera:
+
+
+\begin{lstlisting}[language=C++]
+	slices=0;
+	
+	REP(i,N){
+		indexNextE=dpNextE[i];
+		if(indexNextE==-1 || indexNextE>=i+S)
+		continue;
+		slices+=(i+S-indexNextE);
+	}
+\end{lstlisting} 

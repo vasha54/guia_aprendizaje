@@ -1,0 +1,51 @@
+Este es el algoritmo más básico para encontrar una factorización prima.
+
+Dividimos por cada divisor posible $d$. Se puede observar que es imposible que todos los factores primos de un número compuesto $n$ ser más grande que $\sqrt{n}$. Por lo tanto, sólo necesitamos probar los divisores $2 \le d \le \sqrt{n}$.
+
+El divisor más pequeño debe ser un número primo. Eliminamos el número factorizado y continuamos el proceso. Si no podemos encontrar ningún divisor en el rango $[2; \sqrt{n}]$, entonces el número en sí tiene que ser primo.
+
+\subsubsection{Factorización de rueda}
+Esta es una optimización de la división de prueba. Una vez que sabemos que el número no es divisible por 2, no necesitamos verificar otros números pares. Esto nos deja sólo $50\%$ de los números a comprobar. Después de factorizar 2 y obtener un número impar, podemos simplemente comenzar con 3 y contar solo los demás números impares.
+
+Este método se puede ampliar aún más. Si el número no es divisible por 3, también podemos ignorar 
+todos los demás múltiplos de 3 en cálculos futuros. Entonces solo necesitamos verificar los 
+números $5,~7,~11,~13,~17,~19,~23,~\dots$. Podemos observar un patrón de estos números restantes. 
+Necesitamos verificar todos los números con $d \bmod 6 = 1$ y $d \bmod 6 = 5$. Entonces esto nos 
+deja sólo con $33,3\%$ por ciento de los números a verificar. Podemos implementar esto 
+factorizando primero los números primos 2 y 3, después de lo cual comenzamos con 5 y solo 
+contamos los restos $1$ y $5$ módulo $6$.
+
+Si continuamos ampliando este método para incluir aún más números primos, se pueden alcanzar mejores porcentajes, pero las listas de omisión serán más grandes.
+
+\subsubsection{Primos precalculados}
+
+Extendiendo el método de factorización de la rueda indefinidamente, solo nos quedarán números primos para verificar. Una buena forma de comprobarlo es precalcular todos los números primos con el criba de Eratóstenes hasta que $\sqrt{n}$ y pruébelos individualmente.
+
+\subsubsection{Factorización de N}
+
+Una buena manera de verificar es precalcular todos los números primos con la criba de Eratóstenes hasta $\sqrt{N}$ y probarlos individualmente.
+
+Para un factor primo $p$ de $N$, la multiplicidad de $p$ es el máximo exponente $a$ para el cual $p^a$ es un divisor de $N$. La factorización de un número entero es una lista de los factores primos de ese número, junto con su multiplicidad. El Teorema fundamental de la Aritmética establece que todo número entero positivo tiene una factorización de primos única.
+
+\subsubsection{Factorización de N!}
+
+Que pasa si ahora queremos descomponer N! la idea básica seria iterar desde 1 hasta N e ir descomponiendo cada número acumulando las potencias o hallar N! y luego descomponerlo, pero esto tendría una complejidad de O($N* \sqrt{N}$) el cual sería muy costoso para valores muy grandes de N. Analicemos la siguiente idea:
+
+10!=1*2*3*4*5*6*7*8*9*10 Necesitamos hallar cuantos 2 hay.
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+	\hline 
+	10!& 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & total \\ 
+	\hline 
+	Descomposición de n1& 1 & 2 & 3 & 2$^{2}$ & 5 & 2*3 & 7 & 2$^{3}$ & 3$^{2}$ & 2*5 &  \\ 
+	\hline 
+	Primo 2& 0 & 1 & 0 & 2 & 0 & 1 & 0 & 3 & 0 & 1 & 8 \\ 
+	\hline 
+	Primo 3& 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 2 & 0 & 4 \\ 
+	\hline 
+\end{tabular} 
+
+\hspace{0.5em}
+
+Para el caso del 2 seria todos los múltiplos de 2 hasta N ejemplo para 10 hay 5 que seria 10/2 luego todos los múltiplos de 4 hasta N que sería N/4 y así hasta que la potencia de 2 sea mayor que N la suma de estos seria el exponente de la potencia de 2 luego de descomponer N!, en  este caso sería 2$^{10/2+10/4+10/8}$=2$^{5+2+1}$=2$^{8}$ y este sería el procedimiento para todos los primos hasta N.
+

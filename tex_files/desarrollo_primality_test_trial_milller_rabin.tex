@@ -1,0 +1,31 @@
+La prueba de Miller-Rabin amplía las ideas de la prueba de Fermat. Para un número impar $n$, $n-1$ es par y podemos factorizar todas las potencias de 2. Podemos escribir:
+
+$$n - 1 = 2^s \cdot d,~\text{con}~d~\text{impar}.$$
+
+Esto nos permite factorizar la ecuación del pequeño teorema de Fermat:
+
+$$
+\begin{array}{rl}
+	a^{n-1} \equiv 1 \bmod n &\Longleftrightarrow a^{2^s d} - 1 \equiv 0 \bmod n \\\\
+	&\Longleftrightarrow (a^{2^{s-1} d} + 1) (a^{2^{s-1} d} - 1) \equiv 0 \bmod n \\\\
+	&\Longleftrightarrow (a^{2^{s-1} d} + 1) (a^{2^{s-2} d} + 1) (a^{2^{s-2} d} - 1) \equiv 0 \bmod n \\\\
+	&\quad\vdots \\\\
+	&\Longleftrightarrow (a^{2^{s-1} d} + 1) (a^{2^{s-2} d} + 1) \cdots (a^{d} + 1) (a^{d} - 1) \equiv 0 \bmod n \\\\
+\end{array}
+$$
+
+Si $n$ es primo, entonces $n$ tiene que dividir uno de estos factores. Y en la prueba de primalidad de Miller-Rabin verificamos exactamente esa afirmación, que es una versión más estricta de la afirmación de la prueba de Fermat para una base $2 \le a \le n-2$ comprobamos si alguno:
+
+$$a^d \equiv 1 \bmod n$$
+
+sostiene o
+
+$$a^{2^r d} \equiv -1 \bmod n$$
+
+se mantiene para algunos $0 \le r \le s-1$.
+
+Si encontramos una base $a$ que no satisface ninguna de las igualdades anteriores, entonces encontramos un testigo de la composición de $n$. En este caso hemos demostrado que $n$ no es un número primo.
+
+De manera similar a la prueba de Fermat, también es posible que el conjunto de ecuaciones se cumpla para un número compuesto. En ese caso la base $a$ Se le llama mentiroso fuerte si una base $a$ satisface las ecuaciones (una de ellas), $n$ es solo un primo probable fuerte. Sin embargo, no existen números como los números de Carmichael, donde se encuentran todas las bases no triviales. De hecho, es posible demostrar que, como máximo, $\frac{1}{4}$ de las bases pueden ser fuertes mentirosos. Si $n$ es compuesto, tenemos una probabilidad de $\ge 75\%$ que una base aleatoria nos dirá que es compuesta. Al realizar múltiples iteraciones y elegir diferentes bases aleatorias, podemos saber con muy alta probabilidad si el número es verdaderamente primo o si es compuesto.
+
+Antes de realizar la prueba de Miller-Rabin, puedes comprobar además si uno de los primeros números primos es divisor. Esto puede acelerar mucho la prueba, ya que la mayoría de los números compuestos tienen divisores primos muy pequeños. P.ej $88\%$ de todos los números tienen un factor primo menor que $100$.

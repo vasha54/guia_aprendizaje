@@ -1,0 +1,150 @@
+\section{DMOJ - UCLV}
+
+\subsection{Calculando en Matelandia} Lo primero que debemos darnos cuenta que la sucesión que se generan es la sucesiçión de los números pares considerando al cero como un números par en este caso. Nos están pidiendo la suma de los primeros $N$ números pares lo cual se resuelve de una forma muy elegante con la siguiente expresión $N*(N-1)$. 
+
+\subsection{Creating Teams} Se tiene $M$ mujeres y $N$ hombres para formar equipos de integrantes, donde en cada equipo debe existir 2 integrantes femeninas y 1 integrante masculino. Adicionalmente se debe enviar $K$ personas a un evento. Dado lo valores $K$, $N$ y $M$ hallar la máxima cantidad de equipos que se pueden formar. Para resolver el problema vamos a plantear el siguiente análisis:
+
+\begin{itemize}
+	\item La cantidad máxima de equipos que se pueden conformar lo vamos a definir como $T$ y es igual a la siguiente expresión:
+	
+	$$T=\min (M, \frac{N}{2})$$
+	
+	\item Una vez conformados los equipos puede que queden $Q$ mujeres y $H$ hombres disponibles para conformar las $K$ personas que hay que enviar al evento.
+	
+	$$Q=M-2T , H=N-T$$
+	
+	\item Puede que la suma de $Q$ y $H$ no se igual o sueprior a $K$ de ocurrir estos tendriamos que coger integrantes de equipos ya conformados para ser enviados al evento, por lo que el procedimiento sería de la siguiente manera:
+	\begin{lstlisting}
+		Mientras Q+H < K 
+		T--
+		Q=Q+2
+		H++
+		Imprimir max(T,0)
+	\end{lstlisting} 
+	
+	
+\end{itemize}
+
+\subsection{Último Dígito de A \^ B} Si leemos el problemas nos podemos percatar que nos pide dado dos valores $A$ y $B$ hallar el dígito que ocupa el lugar de las unidades del resultado $A^{B}$. Para solucionar el problema solo basta aplicar exponenciación binaria explicada en este manual con la adecuación que en cada operación de multiplicación se debe modular por el valor 10 para quedarnos con el último digito que será la respuesta.
+
+\subsection{Construyendo un super número} Se tiene un número $Z$ conformado por $N$ dígitos sobrel el cual se realiza $K$ operaciones. Una operación implica colocar entre cada par de dígitos del número insertar el número original , así repetidamente $K$ veces. Despúes de realizar las $K$ operaciones se quiere saber cuantos dígitos forman parte el nuevo número y si el mismo es divisile por 3.
+
+Si un número tiene $N$ dígitos tendrá $N-1=X$ ranuras y cuando coloque el número nuevamente voy a crear $N-1 +(N(N-1))$ ranuras nuevas. Esto conduce a una fórmula de recurrencia para determinar cuantas ranuras tiene el número el la inesima opración:
+
+Para saber cuantas ranuras tiene el número en la k-inesima operación se define por la siguiente recurrencia:
+
+$\begin{matrix}
+	&     N-1 \quad para \quad i=0\\ 
+	X_{i}	&  \\ 
+	& X_{i}+(N \cdotp X_{i-1}) \quad para \quad i<0
+\end{matrix}$ 
+
+Donde $N$ es la cantidad de dígitos del número original. Por lo tanto para saber la cantidad de dígitos que tendrá el número el la operacion k-enésima basta con sumar $X_{i}+1$ este resultado por supuesto que debe ser modulado por el valor que pide el problema. Para hallar $X_{i}$ como el valor de $K$ es pequeño podemos hallarlo de forma iterativa.
+
+Si sumo los valores de los dígitos del número original va dar dar como resultado un valor $Q$. En la próxima operación esa suma sería igual a :
+
+$R_{i}=R_{i-1}+(Q \cdotp X_{i-1})$
+
+Donde $X_{i-1}$ es la cantidad de ranuras del número en la operación anterior y $Q$ la suma de los dígitos iniciales del número lo que conduce a la siguiente recurrencia:
+
+$\begin{matrix}
+	&     Q \quad para \quad i=0\\ 
+	R_{i}	&  \\ 
+	& R_{i}+(Q \cdotp X_{i-1}) \quad para \quad i<0
+\end{matrix}$ 
+
+De igual forma como $K$ es un valor pequeño podemos hallar $R_{i}$ de forma iterativa. Para saber si $R_{i}$ es multiplo de 3 podemos ir modulando con el valor  3 los resultados parciales. De esta forma si al llegar a la operación $K$ el valor de $R_{i}$ es $0$ entonces podemos decir que el número que se forma es dvisible por 3. 
+
+Antes de pasar a la implementación notemos un detalle que $R_{i}$ depende de $X_{i-1}$ que es un valor que se va modulando tambíen en cada iteración por un valor por tanto vamos a crear un valor  $Y_{i-1}$ que va tener la misma función de recurrencia que $X_{i-1}$ pero va ser utilizado en para hallar $R_{i}$ y va ser modulado con 3 y no con 34047161064.
+
+\subsection{Davids expedition} El problema nos plantea que se hace una expedición para la cual se recaudo $N$ pesos. La recaudación de la expedición duró 52 semanas y se conoce que el recaudo por día de la semana es la siguiente:
+
+\begin{itemize}
+	\item Lunes: $X$
+	\item Martes: $X + K$
+	\item Miercoles: $X + 2K$
+	\item Jueves: $X + 3K$
+	\item Viernes: $X + 4K$
+	\item Sábado: $X + 5K$
+	\item Domingo: $X + 6K$
+\end{itemize}
+
+Se pide hallar los posibles valores de $X$ y $K$ que permita al final de la expedición consumir completamente el dinero recaudado. De existir varias soluciones hallar aquella con el mayor valor de $X$ y el menor valor de $K$. 
+
+Para resolver el problema vamos a plantear los siguiente:
+
+$52 \cdot RS = N \qquad (I)$
+
+Donde $RS$ es el recuado semanal que si lo desarrollamos nos queda de la siguiente manera:
+
+$RS = X + (X+K) + (X+2K) + (X+3K) + (X+4K) + (X+5K) +  (X+6K)$
+
+Simplificando y agrupando términos semejantes nos queda:
+
+$RS=7X+21K = 7(X+3K)$
+
+Sustityendo en la ecuación $(I)$ nos queda lo siguiente:
+
+
+$52 \cdot (7(X+3K)) = N \qquad (I)$
+
+Si la desarrollamos nos queda lo siguiente:
+
+$364X + 1092K = N$ 
+
+Donde tenemos dos variables desconocidas que son $X$ y $K$. En este punto del ánalisis vamos a dividir en dos variantes de solución al problema con diferentes enfoques:
+
+\begin{enumerate}
+	\item La primera variante se aprovecha que me piden según el problema un $X$ que debe estar entre 0 y 100, puedo realizar una busqueda binaria o casí iterativa de 100 a 0 incluyendo los extremos del intervalo buscando la pimera que me de un valor para $K$ mayor que 0 que es un requisito para el valor de $K$ pedido por el problema.
+	
+	\item La segunda variante aplicar ecuaciones diofanticas con el algoritmo de Euclides extendido. $364X + 1092K = N $ solo tiene solución si el $d=mcd(A,B)$ es divisor de C. Donde $C=N$, $A=364$ y $B=1092$ donde $d=364$ Por lo que si $N \quad mod \quad 364 == 0 $ existen soluciones con valores $X$ y $K$ que pertenece a los números naturales.  
+\end{enumerate}
+
+Ambas variantes fueron aceptadas al problema.
+
+
+\subsection{Tráingulo de Fibonacci} Una vez leido el problema no es complicado entender lo qe se nos pide hallar. Haciendo el analisis propio de un ejercicio de aritmética-algebra con papel y lápiz. Partiendo de que el único valor que conocemos es el valor de la fila que es $k$ vamos expresar todos nuestros calculos en base a esta variable.
+
+Para hallar el valor mínimo de la fila es a través de la siguiente expresión:
+
+$K_{min}= \frac{(k-1)*k}{2} * 2 - 1 + 2 $ 
+
+Es evidente que dicha expresión se pueda reducir a:
+
+$K_{min}= (k-1)*k + 1 $ 
+
+Ahora expresemos como calcular el valor máimo de la fila
+
+$K_{min}= \frac{(k+1)*k}{2} * 2 - 1 $
+
+Reduciendo dicha expresión:
+
+$K_{min}= (k+1)*k - 1 $
+
+Ahora para calcular la suma de todos los valores de esa fila nos vamos apoyar en los valores mínimo y máximo de la fila así como la paridad de la misma. Si $k$ es par entonces la suma de los valores de esa fila es igual a la siguiente expresión:
+
+$K_{sum}= (K_{max}+K_{min}) * \frac{k}{2}  $
+
+Mientras para cuando $k$ sea impar:
+
+$K_{sum}= (K_{max}+K_{min}) * \frac{k}{2} + \frac{K_{max}+K_{min}}{2}$
+
+Es importante recalcar que para este problema utilice tipo de datos númericos para enteros grandes (para los que usen C++ \textbf{unsigned long long}) debido al rango de valores de $k$.
+
+
+\subsection{Divisibilidad por 3} Dados tres dígitos distintos de cero. Se debe encontrar el menor entero positivo divisible por 3 que tenga en su representación decimal solamente los dígitos dados. Cada dígito
+dado puede no estar incluido o ser incluido varias veces en el resultado. Para resolver el ejercicio vamos a partir que cualquier número dividido por tres puede arrojar como resto los posibles valores de cero, uno o dos y que aquellos con resto cero son divisible por tres. Tambien nos vamos apoyar en la regla de divisibilidad del tres la cual plantea que cualquier número cuya suma de sus digitos sea un producto del tres es divisible por tres. El primer paso es determinar de los tres digitos iniciales cual es el menor de los tres con resto 0 , el menor de los tres con resto 1 y el de estos con resto 2 siempre dividiendo por tres (tenga en cuenta que bien pude no existir digitos para un determinado resto). Una vez determinado la existencia y el minimo digito para cada posible resto la solución al problema va a depender de que se cumpla unas de estas condiciones en el orden que se dan. 
+
+\begin{itemize}
+	\item Si existe un digito con resto 0 entonces la solución será ese mismo digito ya que el por si solo el es divisible por tres.
+	\item Si no existe un digito con resto 0 y si existe un digito con resto 1 \emph{mod1} y otro digito resto dos \emph{mod2} la solucion sería $min(mod1,mod2)*10+max(mod1,mod2)$ 
+	\item Si no existe un digito con resto 0 y si no existe un digito con resto 1 es evidente que el que existe es digitos con resto 2 por tanto la solución sería: $mod2*100+mod2*10+mod2$  
+	\item Si no existe un digito con resto 0 y si no existe un digito con resto 2 es evidente que el que existe es digitos con resto 1 por tanto la solución sería: $mod1*100+mod1*10+mod1$
+\end{itemize}  
+
+
+\subsection{El problema de Josephus} Este problema es el clásico problema tratado dentro de unos de los epígrafes de este capítulo. Para su solución puede aplicar el algoritmo descripto en dicho apartado o si consulta el libro de \emph{Concrete Mathematics} de Graham, Knuth y Patashnik verá que existe dos formas de resolverlo una mediante una función de recurrencia que se puede llevar a una función de recursividad la otra variante es una sencilla operación de a nivel de bit (rotación circular izquierda) con el valor de N. Esta variante solo requiere que convierta el valor de N a binario busque el bit mas a la izquierda activo y lo coloque a la derecha con esta nueva representación binaria conviertala a decimal y el número obtenido será la solución al problema.
+
+\subsection{Otro problema de conteo (II)}  Si alguna vez se han detendo a leer el libro \emph{Concrete Mathematics} de Graham, Knuth y Patashnik verán que el epígrafe 1.2 expone este problema así como su solución a través de las funciones de recurrencias, llegando a función que determinada la solución para cualquier valor de $N$  dicha función es: $ f(n) = \frac{n(n+1)}{2}+1$   
+
+\subsection{Desfile en el campo}  Para saber quien es la persona al frente cuando termina de pasar todas puertas basta con aplicar  la operación de resto de la operación de \emph{pu} \% \emph{pe} siendo \emph{pu} la cantidad de puertas y \emph{pe} la cantidad de personas con esta operación incrementado en uno sabremos quien esta al frente del desfile.

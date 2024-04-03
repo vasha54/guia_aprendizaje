@@ -1,0 +1,18 @@
+La prueba de división nos da la factorización prima en O($\sqrt{n}$). (Este es un tiempo pseudopolinomial , es decir, polinomio en el valor de la entrada pero exponencial en el número de bits de la entrada).
+
+
+El método de factorización de Fermat puede ser muy rápido si la diferencia entre los dos factores
+$p$ y $q$ es pequeño. El algoritmo se ejecuta en O($|p-q|$) tiempo. Sin embargo, en la práctica 
+este método rara vez se utiliza. Una vez que los factores se alejan más, es extremadamente lento.
+
+Sin embargo, todavía existe una gran cantidad de opciones de optimización con respecto a este 
+enfoque. Mirando los cuadrados $a^2$ módulo un número pequeño fijo, se puede observar que ciertos 
+valores $a$ no es necesario verlos, ya que no pueden producir un número cuadrado $a^2-n$.
+
+La complejidad del método Pollard $P-1$ es O($B \log B \log^2 n$) por iteración.
+
+El algoritmo Floyd generalmente se ejecuta en O($\sqrt[4]{n} \log(n)$) tiempo. 
+
+El algoritmo de Brent se ejectua en tiempo lineal, pero generalmente es más rápido que el de Floyd, ya que utiliza menos evaluaciones de la función $f$.
+
+Observe que si el número que desea factorizar es en realidad un número primo, la mayoría de los algoritmos se ejecutarán muy lentamente. Esto es especialmente cierto para los algoritmos de factorización  de Fermat, Pollard p-1 y Rho de Pollard. Por lo tanto, tiene más sentido realizar una prueba de primalidad probabilística (o determinista rápida) antes de intentar factorizar el número.

@@ -1,0 +1,475 @@
+\subsection{C++}
+
+\subsubsection{Probando división}
+\begin{lstlisting}[language=C++]
+vector<long long> division1(long long n) {
+   vector<long long> factorization;
+   for (long long d = 2; d * d <= n; d++) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+   }
+   if (n > 1) factorization.push_back(n);
+   return factorization;
+}
+
+\end{lstlisting}
+
+\subsubsection{Factorización de rueda}
+\begin{lstlisting}[language=C++]
+vector<long long> wheel(long long n) {
+   vector<long long> factorization;
+   while (n % 2 == 0) {
+      factorization.push_back(2);
+      n /= 2;
+   }
+   for (long long d = 3; d * d <= n; d += 2) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+   }
+   if (n > 1) factorization.push_back(n);
+   return factorization;
+}
+
+vector<long long> wheelv2(long long n) {
+   vector<long long> factorization;
+   for (int d : {2, 3, 5}) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+   }
+   static array<int, 8> increments = {4, 2, 4, 2, 4, 6, 2, 6};
+   int i = 0;
+   for (long long d = 7; d * d <= n; d += increments[i++]) {
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+      if (i == 8) i = 0;
+   }
+   if (n > 1) factorization.push_back(n);
+   return factorization;
+}
+\end{lstlisting} 
+
+\subsubsection{Primos precalculados}
+\begin{lstlisting}[language=C++]
+vector<long long> primes;
+
+vector<long long> trial_division4(long long n) {
+   vector<long long> factorization;
+   for (long long d : primes) {
+      if (d * d > n) break;
+      while (n % d == 0) {
+         factorization.push_back(d);
+         n /= d;
+      }
+   }
+   if (n > 1) factorization.push_back(n);
+   return factorization;
+}
+\end{lstlisting} 
+
+\subsubsection{Factorización de N}
+En las dos implementaciones siguientes es evidente que se necesita precalcular todos los primos al menos hasta $N$ y tenerlos almacenados en el vector \emph{primos}
+
+\begin{lstlisting}[language=C++]
+//definir una tupla para almacenar a^b 
+//(a base)=>.first  (b expo)=>.second
+typedef pair<int,int>fac;
+vector<fac> Factorizar(int n){
+   int l = primos.size();
+   //iterar sobre todos los primos
+   //hasta que algun primo sea mayor que n
+   vector<fac>FP;
+   for(int i=0;i<l && primos[i]<=n ;i++){
+      int pi = primos[i];
+      int exp = 0;
+      if(n%pi==0){
+         while(n%pi==0){
+            exp++;//contador para el exponente
+            n/=pi;//divido entre la base
+         }
+         // pi^exp
+	     // {a,b}  es lo mismo que make_pair(a,b) o Pair(a,b)
+         FP.push_back({pi,exp});
+	  }
+   }
+   // si n es distinto n es un primo
+   if(n>1) FP.push_back({n,1});
+   return FP;
+}
+\end{lstlisting}
+
+\subsubsection{Factorización de N!}s
+\begin{lstlisting}[language=C++]
+vector<fac> FactorizarFactorial(int n){
+   int l = primos.size();
+   vector<fac>FP;
+   //iterar sobre todos los primos menores e iguales que n
+   for(int i=0;i<l && primos[i]<=n;i++){
+      //acumulador para la potencia del primo actual
+      int exp = 0;
+      //potencia del primo actual
+      int pot = primos[i];
+      //mientras la potencia sea menor que n
+      while(pot<=n){
+        //multiplos de la potencia menores que n
+        exp+=n/pot;
+        //proxima potencia del primo
+        pot*=primos[i];
+      }
+      FP.push_back({primos[i],exp});
+   }
+   return FP;
+}
+\end{lstlisting}
+
+
+\subsubsection{Método de factorización de Fermat}
+\begin{lstlisting}[language=C++]
+int fermat(int n) {
+   int a = ceil(sqrt(n));
+   int b2 = a*a - n;
+   int b = round(sqrt(b2));
+   while (b * b != b2) {
+      a = a + 1;
+      b2 = a*a - n;
+      b = round(sqrt(b2));
+   }
+   return a - b;
+}
+
+\end{lstlisting} 
+
+
+\subsubsection{Método de Pollard $P-1$}
+\begin{lstlisting}[language=C++]
+long long pollards_p_minus_1(long long n) {
+   int B = 10;
+   long long g = 1;
+   while (B <= 1000000 && g < n) {
+      long long a = 2 + rand() %  (n - 3);
+      g = gcd(a, n);
+      if (g > 1) return g;
+      
+      // calcular a^M
+      for (int p : primes) {
+         if (p >= B) continue;
+         long long p_power = 1;
+         while (p_power * p <= B)
+            p_power *= p;
+            a = power(a, p_power, n);
+			g = gcd(a - 1, n);
+            if (g > 1 && g < n) return g;
+      }
+      B *= 2;
+   }
+   return 1;
+}
+\end{lstlisting}
+
+
+\subsubsection{Algoritmo de $\rho$ de Pollard}
+\begin{lstlisting}[language=C++]
+long long mult(long long a, long long b, long long mod) {
+   long long result = 0;
+   while (b) {
+      if (b & 1) result = (result + a) % mod;
+      a = (a + a) % mod;
+      b >>= 1;
+   }
+   return result;
+}
+
+long long f(long long x, long long c, long long mod) {
+   return (mult(x, x, mod) + c) % mod;
+}
+
+long long rho(long long n, long long x0=2, long long c=1) {
+   long long x = x0;
+   long long y = x0;
+   long long g = 1;
+   while (g == 1) {
+      x = f(x, c, n);
+      y = f(y, c, n);
+      y = f(y, c, n);
+      g = gcd(abs(x - y), n);
+   }
+   return g;
+}	
+\end{lstlisting}
+
+
+\subsubsection{Algoritmo de Brent}
+\begin{lstlisting}[language=C++]
+long long brent(long long n, long long x0=2, long long c=1) {
+   long long x = x0;
+   long long g = 1;
+   long long q = 1;
+   long long xs, y;
+	
+   int m = 128;
+   int l = 1;
+   while (g == 1) {
+      y = x;
+      for (int i = 1; i < l; i++) x = f(x, c, n);
+      int k = 0;
+      while (k < l && g == 1) {
+         xs = x;
+         for (int i = 0; i < m && i < l - k; i++) {
+            x = f(x, c, n);
+            q = mult(q, abs(y - x), n);
+         }
+         g = gcd(q, n);
+         k += m;
+      }
+      l *= 2;
+   }
+   if (g == n) {
+     do {
+        xs = f(xs, c, n);
+        g = gcd(abs(xs - y), n);
+     } while (g == 1);
+   }
+   return g;
+}
+\end{lstlisting}
+
+
+\subsection{Java}
+
+\subsubsection{Probando división}
+\begin{lstlisting}[language=Java]
+public static ArrayList<Long> division1(long n) {
+   ArrayList<Long> factorization = new ArrayList<Long>();
+   for (long d = 2; d * d <= n; d++) {
+      while (n % d == 0) {
+         factorization.add(d);
+         n /= d;
+      }
+   }
+   if (n > 1) factorization.add(n);
+   return factorization;
+}
+\end{lstlisting}
+
+\subsubsection{Factorización de rueda}
+\begin{lstlisting}[language=Java]
+public static ArrayList<Long> wheel(long n) {
+   ArrayList<Long> factorization = new ArrayList<Long>();
+   while (n % 2 == 0) {
+      factorization.add(2L);
+      n /= 2;
+   }
+   for (long d = 3; d * d <= n; d += 2) {
+      while (n % d == 0) {
+         factorization.add(d);
+         n /= d;
+      }
+   }
+   if (n > 1) factorization.add(n);
+   return factorization;
+}
+
+ArrayList<Long> wheelv2(long n) {
+   ArrayList<Long> factorization = new ArrayList<Long>();
+   int [] pr = {2, 3, 5};
+   for (int d : pr) {
+      while (n % d == 0) {
+         factorization.add((long)d);
+         n /= d;
+      }
+   }
+   int [] increments = {4, 2, 4, 2, 4, 6, 2, 6};
+   int i = 0;
+   for (long d = 7; d * d <= n; d += increments[i++]) {
+      while (n % d == 0) {
+         factorization.add(d);
+         n /= d;
+      }
+      if (i == 8) i = 0;
+   }
+   if (n > 1) factorization.add(n);
+   return factorization;
+}
+\end{lstlisting} 
+
+\subsubsection{Primos precalculados}
+\begin{lstlisting}[language=Java]
+public static ArrayList<Long> trial_division4(long n, ArrayList<Long> primes) {
+   ArrayList<Long> factorization = new  ArrayList<Long>();
+   for (long d : primes) {
+      if (d * d > n) break;
+      while (n % d == 0) {
+         factorization.add(d);
+         n /= d;
+      }
+   }
+   if (n > 1) factorization.add(n);
+   return factorization;
+}
+\end{lstlisting} 
+
+\subsubsection{Factorización de N}
+En las dos implementaciones siguientes es evidente que se necesita precalcular todos los primos al menos hasta $N$ y tenerlos almacenados en el vector \emph{primos}
+
+\begin{lstlisting}[language=Java]
+public static Map<Integer, Integer> factorizar(int n, ArrayList<Integer> primos){
+   int l = primos.size();
+   //iterar sobre todos los primos
+   //hasta que algun primo sea mayor que n
+   Map<Integer, Integer> factors = new LinkedHashMap<>();
+   for(int i=0;i<l && primos.get(i)<=n ;i++){
+      int pi = primos.get(i);
+      int exp = 0;
+      if(n%pi==0){
+         while(n%pi==0){
+            exp++;//contador para el exponente
+            n/=pi;//divido entre la base
+         }
+         // pi^exp
+         // {a,b}  es lo mismo que make_pair(a,b) o Pair(a,b)
+         factors.put(pi,exp);
+      }
+    }
+	// si n es distinto n es un primo
+	if(n>1) factors.put(n,1);
+	return factors;
+}
+\end{lstlisting}
+
+\subsubsection{Factorización de N!}
+\begin{lstlisting}[language=Java]
+public static Map<Integer, Integer> factorizarFactorial(int n, ArrayList<Integer> primos){
+   int l = primos.size();
+   Map<Integer, Integer> factors = new LinkedHashMap<>();
+   //iterar sobre todos los primos menores e iguales que n
+   for(int i=0;i<l && primos.get(i)<=n;i++){
+      //acumulador para la potencia del primo actual
+      int exp = 0;
+      //potencia del primo actual
+      int pot = primos.get(i);
+      //mientras la potencia sea menor que n
+      while(pot<=n){
+         //multiplos de la potencia menores que n
+         exp+=n/pot;
+         //proxima potencia del primo
+         pot*=primos.get(i);
+      }
+      factors.put(primos.get(i),exp);
+   }
+   return factors;
+}
+\end{lstlisting}
+
+
+\subsubsection{Método de factorización de Fermat}
+\begin{lstlisting}[language=Java]
+public static int fermat(int n) {
+   int a = (int)Math.ceil(Math.sqrt(n));
+   int b2 = a*a - n;
+   int b = (int)Math.round(Math.sqrt(b2));
+   while (b * b != b2) {
+      a = a + 1;
+      b2 = a*a - n;
+      b = (int)Math.round(Math.sqrt(b2));
+   }
+   return a - b;
+}
+\end{lstlisting} 
+
+
+\subsubsection{Método de Pollard $P-1$}
+\begin{lstlisting}[language=Java]
+public static long pollards_p_minus_1(long n) {
+   int B = 10;
+   long g = 1;
+   while (B <= 1000000 && g < n) {
+      Random rnd = new Random(); 
+      long a = 2 + rnd.nextLong((n - 3))  ;
+      g = gcd(a, n);
+      if (g > 1) return g;
+		
+      // calcular a^M
+      for (int p : primes) {
+         if (p >= B) continue;
+         long p_power = 1;
+         while (p_power * p <= B) p_power *= p;
+         a = power(a, p_power, n);
+         g = gcd(a - 1, n);
+         if (g > 1 && g < n) return g;
+      }
+      B *= 2;
+   }
+   return 1;
+}
+\end{lstlisting}
+
+
+\subsubsection{Algoritmo de $\rho$ de Pollard}
+\begin{lstlisting}[language=Java]
+public static long mult(long a, long b, long mod) {
+   long result = 0;
+   while (b!=0) {
+      if ((b & 1) == 1) result = (result + a) % mod;
+      a = (a + a) % mod;
+      b >>= 1;
+   }
+   return result;
+}
+
+public static long f(long x, long c, long mod) {
+   return (mult(x, x, mod) + c) % mod;
+}
+
+//Cuando se invoque x0=2 y c=1
+public static long rho(long n, long x0, long c) {
+   long x = x0; long y = x0; long g = 1;
+   while (g == 1) {
+      x = f(x, c, n);
+      y = f(y, c, n);
+      y = f(y, c, n);
+      g = gcd(Math.abs(x - y), n);
+   }
+   return g;
+}
+\end{lstlisting}
+
+
+\subsubsection{Algoritmo de Brent}
+\begin{lstlisting}[language=Java]
+//Cuando se invoque al metodo x0=2 y c=1
+public static long brent(long n, long x0, long c) {
+   long x = x0; long g = 1;
+   long q = 1; long xs, y;
+   int m = 128; int l = 1;
+   
+   while (g == 1) {
+      y = x;
+      for (int i = 1; i < l; i++) x = f(x, c, n);
+      int k = 0;
+      while (k < l && g == 1) {
+         xs = x;
+         for (int i = 0; i < m && i < l - k; i++) {
+            x = f(x, c, n);
+            q = mult(q, Math.abs(y - x), n);
+         }
+         g = gcd(q, n);
+         k += m;
+      }
+      l *= 2;
+   }
+   if (g == n) {
+      do{
+         xs = f(xs, c, n);
+         g = gcd(Math.abs(xs - y), n);
+      } while (g == 1);
+   }
+   return g;
+}
+\end{lstlisting}

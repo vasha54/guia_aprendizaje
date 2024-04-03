@@ -1,0 +1,135 @@
+\section{DMOJ - UCLV}
+\subsection{Prince} Una vez leído el problema nos podemos percatar que es un clásico problema de mochila01 donde solo debemos aplicar el algoritmo para cada caso y devolver la suma de todas mochilas juntas. 
+
+\subsection{La pronunciación de vocales} Se tiene una cadena de hasta $10^{5}$ y se quiere hallar la longitud de la subcadena mayor que contenga solo vocales. Para resolver el problema podemos aplicar una especie de dinamica que recorra la cadena e incremente un contador cada vez que la letra analizada sea vocal y que su valor sea cero cuando no sea vocal. Luego dentro de la misma estructura repetitiva que nos permite analizar cada carácter quedarnos con el mayor valor que puede tomar el contador mencionado anteriormente. 
+
+\subsection{Suma de digitos} El ejercicio nos pide hallar para un valor $N$ cuantos unos se necesitan para escribir todos los números de 1 a $N$ en base binario. Para resolver el problema vamos a dividirlo en dos fases:
+\begin{enumerate}
+	\item \textbf{Calcular cuantos uno:} La primera fases calcular para cada número entre 1 y $10^{6}$ cuantos unos se utilizan para representarlos en binarios para hacer esto vamos a crear un arreglo donde en la posición $i$ vamos a guardar cuantos unos se utilizan para representar el valor $i$ en binario. Para esto solo debemos darnos cuenta de lo siguiente que para un número $x$ utiliza la misma cantidad de uno en binario que el doble su valor mientras el doble mas uno utiliza la misma cantidad de unos incrementado en uno. Por lo que nos puede que dar la siguiente recurrencia:
+	\begin{itemize}
+		\item Si $i==0$ la cantidad de unos es cero.
+		\item Si $i!=0$ y $i \quad mod \quad 2 ==0 $ la cantidad de unos es la misma que las utilizadas para representar el valor
+		$i/2$
+		
+		\item Si $i!=0$ y $i \quad mod \quad 2 ==1 $ la cantidad de unos es la misma que las utilizadas para representar el valor
+		$(i/2) + 1$
+	\end{itemize}
+	
+	\begin{lstlisting}[language=C++]
+		solutions[0]=0
+		for x in [1,1000001)
+		solutions[x]=solutions[x/2]
+		if x%2==1
+		solutions[x]++; 
+	\end{lstlisting} 
+	
+	\item \textbf{Tabla acumulativa:} Con los valores almacenados en el arreglo haremos una tabla acumulativa de tal forma que en la posición $i$ este la cantidad de unos que se necesitan para  escribir todos los números entre 1 y $i$
+	\begin{lstlisting}[language=C++]
+		for x in [1,1000001)
+		solutions[x]+=solutions[x-1]
+	\end{lstlisting} 	
+	
+\end{enumerate}
+
+\subsection{Diamond Collector} El mismo problema que el \emph{3649 - Diamond Collector} del COJ también explicado anteriormente en este manual, por tanto la misma solución. 
+
+\subsection{Bolos Bovinos} Dada una matriz triangular con valores hallar el camino con mayor suma comenzando desde la punta de arriba del triangulo hacia la base, sabiendo que los movimientos permitidos es hacia una fila de abajo  en la misma columna o una fila abajo pero una columna hacia la derecha. 
+
+Este es un clasico ejercicio de dinamica de \textbf{Problema de la mina de oro} en este caso vamos a buscar la ruta que produzca el maximo valor.
+
+\subsection{Equipo de Futbol} El problema nos plantea que se tiene $N$ jugadores de futbol cada uno con una habilidad $R$ determinada para cada jugador y que no tiene que ser necesariamente única por jugador. Se quiere saber cuantos equipos distintos se pueden formar con esos jugadores tal que la habilidad del equipo sea un valor multiplo de un valor $F$. La habilidad de un equipo se determina por la suma de todas las habilidades de los integrantes. Un equipo puede ser formado uno o más jugadores. Dos equipos son diferentes si al menos difieren en la cantidad de jugadores o en al menos un jugador. Dicho lo anterior podemos reducir nuestro problema a encontrar la cantidad de subconjunto que se puede formar tal que la suma de los elementos que lo conforman sea múltiplo de un valor $F$ . Este problema es una variación del problema de hallar la existencia dentro de un conjunto un subconjunto cuya suma sea múltiplo de un valor de $M$ para el cual si hay un algortimo conocido por lo nuestra solución ser hará modificando el algoritmo original.
+
+
+Otra variante es ver que se puede ver el problema como un Coin Change, donde se nos pide la cantidad de maneras de lograr una suma dada, entonces, haciendo una analogía podemos llegar a la conclusion de que podemos llevar este problema a la misma estructura y contar cuantos subconjuntos son congruentes con cada resto que pueden devolver las posibles sumas modulo $F$, e ir llevando esa cuenta en una matriz, en la cual obviamente la respuesta se encontrará en la posición 0.  
+
+\subsection{Cotillón Vacuno} Luego de leido el problema podemos arribar que se nos pide dada una cadena de texto solo integrado por los carácteres $<,>$ verificar si la misma es una cadena balanceada . Este problema es na extrapolación de cadena de paréntisis. balanceada solo que esta vez los paréntisis fueron sustituidos por los operadores menor que y mayor que que son la siguiente analogía.
+
+$( = >$ , $) = <$
+
+Para resolver el problema bien podemos usar la estrategia conocida de una pila o contador. La voy explicar con el contador. Vamos a tener un contador cuo valor inicial es cero. Comienzo a recorrer la cadena de carácteres cada vez que encuentre un carácter $>$ aumento el contador en uno y cada vez que encuentre un carácter $<$ decremento el contador en uno. Si durante el recorrido de la cadena nuestro contador coge n valor negativo ya podemos decir con seguridad que la cadena no es balanceada porqe va existir un carácter $<$ que no tiene ningún carácter $>$ por su izquierda que le haga pareja. Si despes de recorrido la cadena y durante el recorrido nuestro contador nunca cogío un valor negativo y su valor despues del recorrido es cero podemos decir que la cadena es balanceada en caso que su valor sea distinto de cero la cadena no es balanceada. 
+
+\subsection{Cuadrado Máximo} Dada una matriz cuadrada de dimensión N de valores enteros encontrar la submatriz cuadrada tambíen que sus valores producen la mayor suma e imprimir dicha suma. Este en un ejercicio que se puede resolver aplicando aplicando lo visto en epígrafe \textbf{Tabla acumulativa} sobre todo en el apartado de tabla acumulativa de dos dimensiones. 
+
+\subsection{Tiling} Problema clásico de dinámica quee sale con el algoritmo explicado en la sección de igual nombre en este capítulo.
+
+\subsection{Fibbonaci 2D} Se define que la secuencia Fibbonaci 2D como:\\
+$f(x,y)=f(x-1,y)+f(x,y-1)+f(x-1,y-1)$\\
+$f(x,0)=1$\\
+$f(0,y)=1$\\
+
+Piden hallar el valor de Fibbonaci 2D  dados los valores \emph{x} y \emph{y} modulando el valor por $10^{9}+7$. Como los valores máximo de \emph{x} y \emph{y} son relativamente pequeño podemos construir una matriz sobre la cual podemos aplicar una dinamica de tabla acumulativa e ir llenado cada posición [x,y] con el valor de Fibbonaci para esos valores. 
+
+\subsection{Segmentos sin Intersección} Se tiene $N$ segmentos paralelos al eje $X$ sin intersectarse ninguno de ellos. De cada uno de ellos se sabe en que coordenadas comienza y termina. Se quiere saber la menor suma de las distancias se debe mover para que los segmentos formen una línea continua y estos se intersectan solamente en los extremos.
+
+Si nos detenemos a realizar un esbozo de la situación nos podemos percatar que siempre en proceso de los diferentes segmentos siempre va existir uno que no se mueve mientras los otros se mueven hacia él. Veamos dos casos:
+
+\begin{enumerate}
+	\item \textbf{Dos segmentos:} Digamos que tenemos dos segmentos $A$ y $B$ cuya distancia entre ellos es $x$. Evidentemente en esta caso podemos mover $x$ unidades $A$ hacia $B$ o $x$ unidades $B$ hacia $A$.
+	
+	\item \textbf{Tres segmentos:} Digamos que tenemos tres segmentos $A$ , $B$ y $C$, entre $A$ y $B$ hay una distancia de $x$ y entre $B$ y $C$ existe una separación de $y$ unidades. Aquí existen tres variantes :
+	
+	\begin{itemize}
+		\item Mover $B$ y $C$ hacia $A$ por lo que el desplazamiento total sería de $x+(x+y)$ (mover primero a $B$ y luego a $C$) que se simplifica $2x+y$.
+		
+		\item  Mover $B$ y $A$ hacia $C$ por lo que el desplazamiento total sería de $y+(x+y)$ (mover primero a $B$ y luego a $A$) que se simplifica $2y+x$.
+		
+		\item Mover $A$ y $C$ hacia $B$ por lo que el desplazamiento total sería de $x+y$ (mover primero a $A$ y luego a $C$).
+	\end{itemize}
+	
+	Esto hace que la respuesta para este caso sea el resultado de la siguiente expresión:\\
+	$mi(2x+y, 2y+x, x+y)$
+\end{enumerate}
+
+Solo vamos a detallar estos casos porque cualquier otra variante que incluya una cantidad de superior de segmentos se puede descomponer en varios casos de los vistos anteriormente.
+
+La solución radica encontrar el segmento que provoque que la suma de los desplazamientos de los segmentos a su izquierda hacia él más la suma de los desplazamientos de los segmentos a su derecha hacia él sea mínima. Para hallar dicha información para cada segmento vamos aplicar programación dinámica y \emph{sweepline} 
+
+Lo primero es crear la siguiente estructura que representa un segmento:
+
+\begin{lstlisting}[language=C++]
+	struct Segment{
+		long long beginSegment;
+		long long endSegment;
+		long long nsegmentLeft;
+		long long nsegmentRight;
+		long long distanceSegmentLeft;
+		long long distanceSegmentRigth;
+		
+	};
+\end{lstlisting}
+
+Donde:
+
+\begin{itemize}
+	\item \emph{beginSegment}: Coordenada $x$ donde comienza el segmento.
+	\item \emph{endSegment}: Coordenada $x$ donde termina el segmento.
+	\item \emph{nsegmentLeft}: Cantidad de segmentos que están a la izquierda de este.
+	\item \emph{nsegmentRight}: Cantidad de segmentos que están a la derecha de este.
+	\item \emph{distanceSegmentLeft}: Distancia que debe recorrer todos los segmentos a su izquierda para pegarse al segmento.
+	\item \emph{distanceSegmentRigth}: Distancia que debe recorrer todos los segmentos a su derecha para pegarse al segmento.
+\end{itemize}
+
+Todos estos atributos deben ser inicializados con valor cero exceptuando los atributos \emph{beginSegment} y \emph{endSegment} los cuales depende de los valores de entrada.
+
+Para lograr calcular los valores \emph{distanceSegmentLeft} y \emph{distanceSegmentRigth} de cada segmento vamos a crear un vector $S$ donde almacenaremos todos los segmentos y los ordenaremos de forma creciente por el valor del atributo \emph{beginSegment}. De esta manera todos segmento que este por delante de otro en el vector esta a su izquierda mientras si esta detrás esta a su derecha. Ya con esto vamos aplicar el \emph{sweepline} primero de izquierda a derecha y luego de derecha a izquierda de la siguiente manera.\\
+nleft=0\\
+p=null\\
+Para $s \in S ->$\\
+\hspace*{0.3in}s.nsegmentLeft=nleft\\
+\hspace*{0.3in}Si nleft!=0:\\
+\hspace*{0.6in}s.distanceSegmentLeft=p.distanceSegmentLeft+s.nsegmentLeft*\\
+\hspace*{0.9in}(s.beginSegment-p.endSegment)\\
+\hspace*{0.3in}nleft++\\
+\hspace*{0.3in}p=s\\
+\\
+nright=0\\
+q=null\\ 
+Para $s \in S <-$\\
+\hspace*{0.3in}s.nsegmentRight=nright\\
+\hspace*{0.3in}Si nright!=0:\\
+\hspace*{0.6in}s.distanceSegmentRigth=q.distanceSegmentRigth+s.nsegmentRight*\\
+\hspace*{0.9in}(q.beginSegment-s.endSegment)\\
+\hspace*{0.3in}nright++\\
+\hspace*{0.3in}q=s\\
+
+Una vez concluido este procedimiento solo debemos buscar el segmento cuya suma de los atributos \emph{distanceSegmentLeft} y \emph{distanceSegmentRigth} sea la mínima posible. Y esa será la respuesta al problema. 

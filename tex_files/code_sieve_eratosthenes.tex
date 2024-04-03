@@ -1,0 +1,207 @@
+\subsection{C++}
+
+\subsubsection{Implementación clásica}
+\begin{lstlisting}[language=C++]
+int n;
+vector<bool> is_prime(n+1, true);
+is_prime[0] = is_prime[1] = false;
+for (int i = 2; i <= n; i++) {
+   if (is_prime[i] && (long long)i * i <= n) {
+      for (int j = i * i; j <= n; j += i)
+      is_prime[j] = false;
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Iterar hasta la raíz}
+\begin{lstlisting}[language=C++]
+int n;
+vector<bool> is_prime(n+1, true);
+is_prime[0] = is_prime[1] = false;
+for (int i = 2; i * i <= n; i++) {
+   if (is_prime[i]) {
+      for (int j = i * i; j <= n; j += i)
+         is_prime[j] = false;
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Iterar por bloques}
+\begin{lstlisting}[language=C++]
+int count_primes(int n) {
+   const int S = 10000;
+   vector<int> primes;
+   int nsqrt = sqrt(n);
+   vector<char> is_prime(nsqrt + 2, true);
+   for (int i = 2; i <= nsqrt; i++) {
+      if (is_prime[i]) {
+         primes.push_back(i);
+         for (int j = i * i; j <= nsqrt; j += i)
+         is_prime[j] = false;
+      }
+   }
+   
+   int result = 0;
+   vector<char> block(S);
+   for (int k = 0; k * S <= n; k++) {
+      fill(block.begin(), block.end(), true);
+      int start = k * S;
+      for (int p : primes) {
+         int start_idx = (start + p - 1) / p;
+         int j = max(start_idx, p) * p - start;
+         for (; j < S; j += p)
+            block[j] = false;
+      }
+      if (k == 0) block[0] = block[1] = false;
+      for (int i = 0; i < S && start + i <= n; i++) {
+         if (block[i]) result++;
+      }
+   }
+   return result;
+}
+\end{lstlisting}
+
+\subsubsection{Encontrar los primos en un rango}
+\begin{lstlisting}[language=C++]
+vector<char> segmentedSieve(long long L, long long R) {
+// generar todos los numeros primos hasta sqrt(R)
+   long long lim = sqrt(R);
+   vector<char> mark(lim + 1, false);
+   vector<long long> primes;
+   for (long long i = 2; i <= lim; ++i) {
+      if (!mark[i]) {
+         primes.emplace_back(i);
+         for (long long j = i * i; j <= lim; j += i) mark[j] = true;
+      }
+   }
+   vector<char> isPrime(R - L + 1, true);
+   for (long long i : primes)
+      for (long long j = max(i * i, (L + i - 1) / i * i); j <= R; j += i)
+         isPrime[j - L] = false;
+   if(L == 1)
+      isPrime[0] = false;
+   return isPrime;
+}
+\end{lstlisting}
+
+También es posible que no generemos previamente todos los números primos:
+
+\begin{lstlisting}[language=C++]
+vector<char> segmentedSieveNoPreGen(long long L, long long R) {
+   vector<char> isPrime(R - L + 1, true);
+   long long lim = sqrt(R);
+   for (long long i = 2; i <= lim; ++i)
+      for (long long j = max(i * i, (L + i - 1) / i * i); j <= R; j += i)
+	     isPrime[j - L] = false;
+   if (L == 1) isPrime[0] = false;
+   return isPrime;
+}	
+\end{lstlisting}
+
+\subsection{Java}
+
+
+\subsubsection{Implementación clásica}
+\begin{lstlisting}[language=Java]
+int n;
+boolean [] is_prime = new boolean [n+1];
+Arrays.fill(is_prime,true);
+is_prime[0] = is_prime[1] = false;
+for (int i = 2; i <= n; i++) {
+   if (is_prime[i] && i * i <= n) {
+      for (int j = i * i; j <= n; j += i)
+         is_prime[j] = false;
+   }
+}
+\end{lstlisting}
+
+\subsubsection{Iterar hasta la raíz}
+\begin{lstlisting}[language=Java]
+int n;
+boolean[] is_prime= new boolean[n+1];
+Arrays.fill(is_prime,true);
+is_prime[0] = is_prime[1] = false;
+for (int i = 2; i * i <= n; i++) {
+   if (is_prime[i]) {
+      for (int j = i * i; j <= n; j += i)
+         is_prime[j] = false;
+   }
+}	
+\end{lstlisting}
+
+
+\subsubsection{Iterar por bloques}
+\begin{lstlisting}[language=Java]
+public static int count_primes(int n) {
+   final int S = 10000;
+   List<Integer> primes =new ArrayList<Integer>();
+   int nsqrt = (int)Math.sqrt(n);
+   char [] is_prime=new char [nsqrt + 2];
+   Arrays.fill(is_prime,'T');
+   for (int i = 2; i <= nsqrt; i++) {
+      if (is_prime[i]=='T') {
+         primes.add(i);
+         for (int j = i * i; j <= nsqrt; j += i)
+            is_prime[j] = 'F';
+      }
+   }
+   int result = 0;
+   char [] block =new char [S];
+   for (int k = 0; k * S <= n; k++) {
+      Arrays.fill(block, 'T');
+      int start = k * S;
+      for (int p : primes) {
+         int start_idx = (start + p - 1) / p;
+         int j = Math.max(start_idx, p) * p - start;
+         for (; j < S; j += p)
+            block[j] = 'F';
+      }
+      if (k == 0) block[0] = block[1] = 'F';
+         for (int i = 0; i < S && start + i <= n; i++) {
+            if (block[i]=='T') result++;
+      }
+   }
+   return result;
+}
+\end{lstlisting}
+
+\subsubsection{Encontrar los primos en un rango}
+\begin{lstlisting}[language=Java]
+public static char [] segmentedSieve(int L, int R) {
+   // generar todos los numeros primos hasta sqrt(R)
+   int lim = (int)Math.sqrt(R);
+   char[] mark= new char[lim + 1];
+   Arrays.fill(mark,'F');
+   ArrayList<Integer> primes = new ArrayList<Integer>();
+   for (int i = 2; i <= lim; ++i) {
+      if (mark[i]=='F') {
+         primes.add(i);
+         for (int j = i * i; j <= lim; j += i) mark[j] = 'T';
+      }
+   }
+   char [] isPrime = new char[R - L + 1];
+   Arrays.fill(isPrime,'T');
+   for (int i : primes)
+      for (int j = Math.max(i * i, (L + i - 1) / i * i); j <= R; j += i)
+         isPrime[j - L] = 'F';
+   if(L == 1) isPrime[0] = 'F';
+   return isPrime;
+}
+\end{lstlisting}
+
+También es posible que no generemos previamente todos los números primos:
+
+\begin{lstlisting}[language=Java]
+public static char[] segmentedSieveNoPreGen(int L, int R) {
+   char [] isPrime=new char[R - L + 1];
+   Arrays.fill(isPrime,'T');
+   int lim = (int)Math.sqrt(R);
+   for (int i = 2; i <= lim; ++i)
+      for (int j = Math.max(i * i, (L + i - 1) / i * i); j <= R; j += i) 
+         isPrime[j - L] = 'F';
+   if (L == 1) isPrime[0] = 'F';
+   return isPrime;
+}
+\end{lstlisting}
+
+La implementación clásica primero marca todos los números excepto el cero y el uno como números primos potenciales, luego comienza el proceso de cribado de números compuestos. Para esto itera sobre todos los números de $2$ a $n$. Si el número actual $i$ es un número primo, marca todos los números que son múltiplos de $i$ como números compuestos, a partir de $i^2$. Esto ya es una optimización sobre una forma ingenua de implementarlo y está permitido ya que todos los números más pequeños que son múltiplos de $i$ necesario también tener un factor primo que sea menor que $i$, por lo que todos ellos ya fueron tamizados antes. Desde $i^2$ puede desbordar fácilmente el tipo \textbf{int}, la verificación adicional se realiza usando el tipo \textbf{long long} antes del segundo bucle anidado.

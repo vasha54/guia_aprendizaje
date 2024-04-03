@@ -1,0 +1,9 @@
+La cualidad redentora es que este algoritmo calcula una matriz $lp[]$, que nos permite encontrar la factorización de cualquier número en el rango $[2;n]$ en el momento del orden de tamaño de esta factorización. Además, usar solo una matriz extra nos permitirá evitar divisiones cuando busquemos factorización.
+
+Conocer las factorizaciones de todos los números es muy útil para algunas tareas, y este algoritmo es uno de los pocos que permite encontrarlos en tiempo lineal.
+
+La debilidad del algoritmo dado es que usa más memoria que la criba clásica de Eratóstenes: requiere una matriz de números, mientras que para criba clásico de Eratóstenes basta con tener
+bits de memoria (que es 32 veces menos).
+
+Por lo tanto, tiene sentido usar el algoritmo descrito solo hasta que para números de orden
+y no mayor $10^{7}$.

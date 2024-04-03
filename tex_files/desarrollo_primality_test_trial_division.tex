@@ -1,0 +1,5 @@
+Por definición, un número primo no tiene más divisores que $1$ y a sí mismo. Un número compuesto tiene al menos un divisor adicional, llamémoslo $d$. Naturalmente $\frac{n}{d}$ también es divisor de $n$. Es fácil ver que tampoco $d\le\sqrt{n}$ o $\frac{n}{d} \le \sqrt{n}$, por lo tanto uno de los divisores $d$ y $\frac{n}{d}$ es $\le\sqrt{n}$. Podemos utilizar esta información para comprobar la primalidad.
+
+Intentamos encontrar un divisor no trivial, comprobando si alguno de los números entre $2$ y $\sqrt{n}$ es un divisor de $n$. Si es divisor, entonces $n$ Definitivamente no es primo, de lo contrario lo es.
+
+Esta es la forma más simple de verificación primaria. Puede optimizar bastante esta función, por ejemplo, verificando solo todos los números impares en el ciclo, ya que el único número primo par es 2. En el artículo sobre factorización de enteros se describen múltiples optimizaciones de este tipo .

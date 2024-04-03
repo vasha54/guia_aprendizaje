@@ -1,0 +1,5 @@
+Miller demostró que es posible hacer que el algoritmo sea determinista comprobando únicamente todas las bases $\le O((\ln n)^2)$. Bach luego dio un límite concreto, solo es necesario probar todas las bases $a \le 2 \ln(n)^2$.
+
+Sigue siendo una cantidad bastante grande de bases. Por eso la gente ha invertido bastante poder de cálculo en encontrar límites inferiores. Resulta que para probar un entero de 32 bits sólo es necesario comprobar las primeras 4 bases primas: 2, 3, 5 y 7. El número compuesto más pequeño que no pasa esta prueba es $3,215,031,751 = 151 \cdot 751 \cdot 28351$. Y para probar números enteros de 64 bits basta con comprobar las primeras 12 bases primas: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 y 37.
+
+También es posible hacer la verificación con solo 7 bases: 2, 325, 9375, 28178, 450775, 9780504 y 1795265022. Sin embargo, como estos números (excepto 2) no son primos, es necesario verificar adicionalmente si el número que estás verificando es igual a cualquier divisor primo de esas bases: 2, 3, 5, 13, 19, 73, 193, 407521, 299210837.

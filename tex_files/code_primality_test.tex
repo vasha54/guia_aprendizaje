@@ -1,0 +1,217 @@
+\subsection{C++}
+
+\subsubsection{Prueba por división}
+\begin{lstlisting}[language=C++]
+bool isPrime(int x) {
+   for (int d = 2; d * d <= x; d++) {
+      if (x % d == 0)
+         return false;
+   }
+   return x >= 2;
+}
+\end{lstlisting} 
+
+\subsection{Prueba de primalidad de Fermat}
+\begin{lstlisting}[language=C++]
+bool probablyPrimeFermat(int n, int iter=5) {
+   if (n < 4) return n == 2 || n == 3;
+   for (int i = 0; i < iter; i++) {
+      int a = 2 + rand() % (n - 3);
+      if (binpower(a, n - 1, n) != 1) return false;
+   }
+   return true;
+}
+\end{lstlisting} 
+
+Usamos la exponenciación binaria para calcular eficientemente la potencia $a^{p-1}$.
+
+\subsection{Prueba de primdealidad  Miller-Rabin}
+\begin{lstlisting}[language=C++]
+using u64 = uint64_t;
+using u128 = __uint128_t;
+
+u64 binpower(u64 base, u64 e, u64 mod) {
+   u64 result = 1;
+   base %= mod;
+   while (e) {
+      if (e & 1)
+        result = (u128)result * base % mod;
+      base = (u128)base * base % mod;
+      e >>= 1;
+   }
+   return result;
+}
+
+bool check_composite(u64 n, u64 a, u64 d, int s) {
+   u64 x = binpower(a, d, n);
+   if (x == 1 || x == n - 1) return false;
+   for (int r = 1; r < s; r++) {
+      x = (u128)x * x % n;
+      if (x == n - 1) return false;
+   }
+   return true;
+};
+
+bool MillerRabin(u64 n, int iter=5) { 
+//devuelve verdadero si n probablemente sea primo; en caso contrario, devuelve falso.
+   if (n < 4) return n == 2 || n == 3;
+   int s = 0;
+   u64 d = n - 1;
+   while ((d & 1) == 0) {
+      d >>= 1;
+      s++;
+   }
+   for (int i = 0; i < iter; i++) {
+      int a = 2 + rand() % (n - 3);
+      if (check_composite(n, a, d, s))
+         return false;
+   }
+   return true;
+}
+\end{lstlisting} 
+
+\subsubsection{Versión determinista}
+\begin{lstlisting}[language=C++]
+bool MillerRabin(u64 n) { 
+//devuelve verdadero si n probablemente sea primo; en caso contrario, devuelve falso.
+   if (n < 2) return false;
+   int r = 0;
+   u64 d = n - 1;
+   while ((d & 1) == 0){d >>= 1; r++;}
+   for (int a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+      if (n == a) return true;
+      if (check_composite(n, a, d, r)) return false;
+   }
+   return true;
+}
+\end{lstlisting} 
+
+
+
+\subsection{Java}
+
+\subsubsection{Prueba por división}
+\begin{lstlisting}[language=Java]
+public static boolean isPrime(int x) {
+   for (int d = 2; d * d <= x; d++) {
+      if (x % d == 0) return false;
+   }
+   return x >= 2;
+}
+\end{lstlisting} 
+
+\subsection{Prueba de primalidad de Fermat}
+\begin{lstlisting}[language=Java]
+import java.util.Random;
+
+public long modPow(long a, long b, long c) {
+   long res = 1;
+   for (int i = 0; i < b; i++) res = (res * a) % c;
+   return res % c;
+}
+
+public boolean isPrimeFermat(long n, int iteration) {
+   if (n == 0 || n == 1) return false;
+   if (n == 2) return true;
+   if (n % 2 == 0) {
+      Random rand = new Random();
+      for (int i = 0; i < iteration; i++) {
+         long r = Math.abs(rand.nextLong());
+         long a = r % (n - 1) + 1;
+         if (modPow(a, n - 1, n) != 1) return false;
+      }
+      return true;
+   }
+   return false;
+}
+\end{lstlisting} 
+
+
+\subsection{Prueba de primalidad de Miller-Rabin}
+\begin{lstlisting}[language=Java]
+import java.util.Random;
+import java.math.BigInteger;
+
+public long modPow(long a, long b, long c) {
+   long res = 1;
+   for (int i = 0; i < b; i++) res *= a;
+   return res % c;
+}
+
+public long mulMod(long a, long b, long mod) {
+   return BigInteger.valueOf(a).multiply(BigInteger.valueOf(b)).mod(BigInteger.valueOf(mod)).longValue();
+}
+
+public boolean isPrimeMillerRabin(long n, int iteration) {
+   if (n == 0 || n == 1) return false;
+   if (n == 2) return true;
+   if (n % 2 == 0) {
+      long s = n - 1;
+      while (s % 2 == 0) s /= 2;
+      Random rand = new Random();
+      for (int i = 0; i < iteration; i++) {
+         long r = Math.abs(rand.nextLong());
+         long a = r % (n - 1) + 1, temp = s;
+         long mod = modPow(a, temp, n);
+         while (temp != n - 1 && mod != 1 && mod != n - 1) {
+            mod = mulMod(mod, mod, n);
+            temp *= 2;
+         }
+         if (mod != n - 1 && temp % 2 == 0) return false;
+      }
+      return true;
+   }
+   return false;
+}
+\end{lstlisting} 
+
+\subsubsection{Versión deterministas}
+\begin{lstlisting}[language=Java]
+import java.util.Random;
+
+private static boolean checkComposite(long n, long a, long d, int s) {
+   long x = powerModP(a, d, n);
+   if (x == 1 || x == n - 1) return false;
+   for (int r = 1; r < s; r++) {
+      x = powerModP(x, 2, n);
+      if (x == n - 1) return false;
+   }
+   return true;
+}
+	
+private static long powerModP(long x, long y, long p) {
+   long res = 1;
+   x = x % p;
+   if (x == 0) return 0;
+   while (y > 0) {
+      if ((y & 1) == 1) res = multiplyModP(res, x, p);
+      y = y >> 1;
+      x = multiplyModP(x, x, p);
+   }
+   return res;
+}
+	
+private static long multiplyModP(long a, long b, long p) {
+   long aHi = a >> 24;
+   long aLo = a & ((1 << 24) - 1);
+   long bHi = b >> 24;
+   long bLo = b & ((1 << 24) - 1);
+   long result = ((((aHi * bHi << 16) % p) << 16) % p) << 16;
+   result += ((aLo * bHi + aHi * bLo) << 24) + aLo * bLo;
+   return result % p;
+}
+
+public static boolean isPrime(long n) {
+   if (n < 2) return false;
+   int r = 0;
+   long d = n - 1;
+   while ((d & 1) == 0) {
+      d >>= 1; r++;
+   }
+   for (int a : new int[] {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+      if (n == a) return true;
+      if (checkComposite(n, a, d, r)) return false;
+   }
+   return true;
+}
+\end{lstlisting} 
