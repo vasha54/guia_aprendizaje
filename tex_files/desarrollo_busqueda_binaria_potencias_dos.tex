@@ -1,0 +1,3 @@
+Otra forma notable de realizar una búsqueda binaria es, en lugar de mantener un segmento activo, mantener el puntero actual $i$ y la potencia actual $k$. El puntero comienza en $i=L$ y luego en cada iteración se prueba el predicado en el punto $i+2^k$. Si el predicado sigue siendo $0$, el puntero avanza desde $i$ a $i+2^k$, de lo contrario permanece igual, entonces el poder $k$ se reduce en $1$.
+
+Este paradigma se usa ampliamente en tareas relacionadas con árboles, como encontrar el ancestro común más bajo de dos vértices o encontrar un ancestro de un vértice específico que tenga una altura determinada. También podría adaptarse para, por ejemplo, encontrar el $k$-ésimo elemento distinto de cero en un árbol de Fenwick.

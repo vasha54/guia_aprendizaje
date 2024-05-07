@@ -67,72 +67,8 @@ Aplicando lo conocido de la multiplicación nos quedaría de la siguiente manera
 $$(a \mod m \times b^{-1} \mod m ) \mod m$$
 
 Con el primer término no debe existir duda pero con el segundo término $b^{-1} \mod m$ nos queda ver como operar. Si estudiamos un poco de congruencia nos podemos percatar que podemos sustituir el término $b^{-1}$ por su inverso multiplicativo al cual le vamos a dedicar un espacio a continuación.
+
+\input{tex_files/desarrollo_arithmetic_modular_inverse_modular.tex}
  
-\subsubsection{Inverso Multiplicativo Modular } 
-Un inverso multiplicativo modular de un entero $a$ es un entero $x$ tal que  $a\cdot x$ es congruente con $1$ modular algún módulo $m$. Para escribirlo 
-de manera formal: queremos encontrar un número entero $x$ de modo que $$a 
-\cdot x \equiv 1 \mod m.$$ También denotaremos $x$ simplemente con $a^{-1}$.
 
-
-Debemos tener en cuenta que el inverso modular no siempre existe. Por ejemplo, deja $m=4$, $a=2$. Comprobando todos los valores posibles 
-módulo $m$ debe quedar claro que no podemos encontrar $a^{-1}$ satisfaciendo la ecuación anterior. Se puede probar que el inverso modular 
-existe si y solo si $a$ y $m$ son relativamente primos (es decir $\gcd(a, m) = 1$).
-
-Presentamos dos métodos para encontrar el inverso modular en caso de que exista, y un método para encontrar el inverso modular para todos los números en tiempo lineal.
-
-\subsubsection{Encontrar el inverso modular usando el algoritmo euclidiano extendido}
-
-Considere la siguiente ecuación (con incógnita $x$ y $y$):
-
-$$a \cdot x + m \cdot y = 1$$
-
-Esta es una ecuación Diofántica Lineal en dos variables. Cuando $\gcd(a, m) = 1$, la ecuación tiene una solución que se puede encontrar utilizando el algoritmo euclidiano extendido . Tenga en cuenta que $\gcd(a, m) = 1$ es también la condición para que exista el inverso modular.
-
-Ahora bien, si tomamos módulo $m$ de ambos lados, podemos deshacernos de $m \cdot y$, y la ecuación se convierte en:
-
-$$a \cdot x \equiv 1 \mod m$$
-
-Así, el inverso modular de $a$ es $x$.
-
-\subsubsection{Encontrar el inverso modular usando exponenciación binaria}
-
-Otro método para encontrar el inverso modular es usar el teorema de Euler, que establece que la siguiente congruencia es verdadera si $a$ y $m$ son relativamente primos:
-
-$$a^{\phi (m)} \equiv 1 \mod m$$
-
-$\phi$ es la función Totient de Euler . De nuevo, tenga en cuenta que $a$ y $m$ ser primo relativo también era la condición para que existiera el inverso modular.
-
-Si $m$ es un número primo, esto se simplifica al pequeño teorema de Fermat :
-
-$$a^{m - 1} \equiv 1 \mod m$$
-
-Multiplica ambos lados de las ecuaciones anteriores por $a^{-1}$ , y obtenemos:
-
-\begin{itemize}
-	\item Para un módulo arbitrario (pero coprimo) $m$:$a^{\phi(m)-1}\equiv a ^{-1}\mod m$
-	\item Para un módulo primo $m$:$a^{m-2} \equiv a^{-1}\mod m$
-\end{itemize}
-
-A partir de estos resultados, podemos encontrar fácilmente el inverso modular usando el algoritmo de exponenciación binaria , que funciona en $O(\log m)$ tiempo.
-
-Aunque este método es más fácil de entender que el método descrito en el párrafo anterior, en el caso de que $m$ no es un número primo, necesitamos calcular la función phi de Euler, que implica la factorización de $m$, que puede ser muy difícil. Si la factorización prima de $m$ se conoce, entonces la complejidad de este método es $O(\log m)$.
-
-\subsubsection{Encontrar el inverso modular usando la división euclidiana}
-
-Dado que $m>i$ (o podemos modular para hacerlo más pequeño en 1 paso), según la división euclidiana
-
-$$m = k \cdot i + r$$
-
-dónde $k= \left\lfloor \frac{m}{i} \right\rfloor$ y $r=m \bmod i$, entonces
-
-
-\begin{align*}
-	& \implies & 0          & \equiv k \cdot i + r   & \mod m \\
-	& \iff & r              & \equiv -k \cdot i      & \mod m \\
-	& \iff & r \cdot i^{-1} & \equiv -k              & \mod m \\
-	& \iff & i^{-1}         & \equiv -k \cdot r^{-1} & \mod m
-\end{align*}
-
-
-Una vez visto las formas de encontrar el inverso multiplicativo modular solo nos queda sustituir donde está $b^{-1}$ por su inverso multiplicativo al cual llamaremos $B$ y de esta forma la expresión $(a/b) \% m$ se sustituye por $(a mod m * B mod m) mod m$ donde $B$ es el inverso multiplicativo entre de $b$ y $m$ 
 

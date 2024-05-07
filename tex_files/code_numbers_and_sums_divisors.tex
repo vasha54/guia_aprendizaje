@@ -1,0 +1,92 @@
+\subsection{C++}
+
+\subsubsection{Números de divisores}
+\begin{lstlisting}[language=C++]
+long long number_divisors(long long num) {
+   long long total = 1;
+   for (long long i = 2; (long long)i * i <= num; i++) {
+      if (num % i == 0) {
+         long long e = 0;
+         do {
+            e++;
+            num /= i;
+         } while (num % i == 0);
+         total *= e + 1;
+      }
+   }
+   if (num > 1) total *= 2;
+   return total;
+}
+\end{lstlisting}
+
+
+\subsubsection{Suma de divisores}
+\begin{lstlisting}[language=C++]
+long long sum_divisors(long long num) {
+   long long total = 1;
+   for (long long i = 2; (long long)i * i <= num; i++) {
+      if (num % i == 0) {
+         long long e = 0;
+         do {
+            e++;
+            num /= i;
+         } while (num % i == 0);
+         long long sum = 0, pow = 1;
+         do {
+            sum += pow;
+            pow *= i;
+         } while (e-- > 0);
+         total *= sum;
+      }
+   }
+   if (num > 1) total *= (1 + num);
+   return total;
+}
+\end{lstlisting}
+
+
+\subsection{Java}
+
+\subsubsection{Números de divisores}
+\begin{lstlisting}[language=Java]
+public static long number_divisors(long num) {
+  long total = 1;
+  for (long i = 2; i * i <= num; i++) {
+     if (num % i == 0) {
+        long e = 0;
+        do {
+           e++;
+           num /= i;
+        } while (num % i == 0);
+        total *= e + 1;
+     }
+  }
+  if (num > 1) total *= 2;
+  return total;
+}
+\end{lstlisting}
+
+
+\subsubsection{Suma de divisores}
+\begin{lstlisting}[language=Java]
+public static long sum_divisors(long num) {
+   long total = 1;
+   for (long i = 2; i * i <= num; i++) {
+      if (num % i == 0) {
+         long e = 0;
+         do {
+            e++;
+            num /= i;
+         } while (num % i == 0);
+           long sum = 0, pow = 1;
+         do {
+            sum += pow;
+            pow *= i;
+         } while (e-- > 0);
+         total *= sum;
+      }
+   }
+   if (num > 1) total *= (1 + num);
+   return total;
+}
+\end{lstlisting}

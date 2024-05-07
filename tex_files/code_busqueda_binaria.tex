@@ -1,5 +1,7 @@
 La implementación de la búsqueda binaria tiene dos variantes una recursiva y otra iterativa. En este caso vamos a presentar la iterativa por ser mas conveniente para lo que deseamos utilizar.
 
+Calcular  $m = (r + l) / 2$ puede provocar un desbordamiento si $l$ y $r$ son dos números enteros positivos, y este error duró aproximadamente 9 años en JDK de Java . Algunos enfoques alternativos incluyen, por ejemplo, escribir $m = l + (r - l) / 2$, que siempre funciona para números enteros positivos $l$ y $r$, pero aún podría desbordarse si les un número negativo. Si utiliza C++ 20, ofrece una solución alternativa que $m = std::midpoint(l, r)$ siempre funciona correctamente.
+
 \subsection{C++}
 \lstset{language=C++, breaklines=true, basicstyle=\footnotesize}
 \begin{lstlisting}[language=C++]
@@ -24,6 +26,168 @@ inline int b_search(int left, int right, int x){
 }
 \end{lstlisting}
 
+\subsubsection{Funciones de C++ relacionados con la búsqueda binaria}
+
+\begin{enumerate}
+\item \textbf{binary\_search:} Devuelve verdadero si algún elemento en el rango $[begin, end)$ es equivalente a val y falso en caso contrario. Los elementos se comparan usando operator $<$ para la primera versión y comp para la segunda. Dos elementos, $a$ y $b$, se consideran equivalentes si $(!(a<b) \&\& !(b<a))$ o si $(!comp(a,b) \&\& !comp(b,a))$. Los elementos del rango ya deberán estar ordenados según este mismo criterio (operador< o comp), o al menos particionados respecto a val.
+
+\textbf{Parámetros:}
+
+\begin{itemize}
+	\item \textbf{first, last:} Reenvía iteradores a las posiciones inicial y final de una secuencia ordenada (o correctamente dividida). El rango utilizado es [primero, último), que contiene todos los elementos entre el primero y el último, incluido el elemento señalado por el primero pero no el elemento señalado por el último.
+	
+	
+	\item \textbf{val:} Valor a buscar en el rango. Para (1), T será un tipo que admita la comparación con elementos del rango [first, last) como cualquiera de los operandos del operador $<$.
+	
+	\item \textbf{comp:} Función binaria que acepta dos argumentos del tipo señalado por ForwardIterator (y de tipo T), y devuelve un valor convertible a bool. El valor devuelto indica si se considera que el primer argumento va antes del segundo. La función no modificará ninguno de sus argumentos. Puede ser un puntero de función o un objeto de función. 
+\end{itemize} 
+
+\begin{lstlisting}[language=C++]
+#include <iostream>     // std::cout
+#include <algorithm>    // std::binary_search, std::sort
+#include <vector>       // std::vector
+
+bool myfunction (int i,int j) { return (i<j); }
+
+int main () {
+   int myints[] = {1,2,3,4,5,4,3,2,1};
+   std::vector<int> v(myints,myints+9); // 1 2 3 4 5 4 3 2 1
+	
+   // usando comparacion predeterminada::
+   std::sort (v.begin(), v.end());
+	
+   std::cout << "buscando un 3... ";
+   if (std::binary_search (v.begin(), v.end(), 3))
+   std::cout << "encontrado!\n"; else std::cout << "no encontrado.\n";
+	
+   // usando mi funcion como comparacion:
+   std::sort (v.begin(), v.end(), myfunction);
+	
+   std::cout << "buscando un 6... ";
+   if (std::binary_search (v.begin(), v.end(), 6, myfunction))
+   std::cout << "encontrado!\n"; else std::cout << "no encontrado.\n";
+	
+   return 0;
+}
+\end{lstlisting}
+
+
+\item \textbf{lower\_bound:} Devuelve un iterador que apunta al primer elemento del rango $[begin, end)$ que no compara menos que val. Los elementos se comparan usando operator $<$ para la primera versión y comp para la segunda. Los elementos del rango ya deberán estar ordenados según este mismo criterio (operador $<$ o comp), o al menos particionados respecto a val. La función optimiza el número de comparaciones realizadas comparando elementos no consecutivos del rango ordenado, lo cual es especialmente eficiente para iteradores de acceso aleatorio. A diferencia de upper\_bound, el valor señalado por el iterador devuelto por esta función también puede ser equivalente a val, y no solo mayor.
+
+\textbf{Parámetros:}
+
+\begin{itemize}
+	\item \textbf{first, last:} Reenvía iteradores a las posiciones inicial y final de una secuencia ordenada (o correctamente dividida). El rango utilizado es [primero, último), que contiene todos los elementos entre el primero y el último, incluido el elemento señalado por el primero pero no el elemento señalado por el último.
+	
+	
+	\item \textbf{val:} Valor del límite inferior a buscar en el rango.
+	Para (1), T será un tipo que admita la comparación con elementos del rango [primero, último) como operando del lado derecho del operador <.
+	
+	\item \textbf{comp:}  Función binaria que acepta dos argumentos (el primero del tipo señalado por ForwardIterator, y el segundo, siempre val), y devuelve un valor convertible a bool. El valor devuelto indica si se considera que el primer argumento va antes del segundo. La función no modificará ninguno de sus argumentos. Puede ser un puntero de función o un objeto de función.
+\end{itemize} 
+
+\begin{lstlisting}[language=C++]
+#include <iostream>  // std::cout
+#include <algorithm> // std::lower_bound, std::upper_bound, std::sort
+#include <vector>    // std::vector
+
+int main () {
+   int myints[] = {10,20,30,30,20,10,10,20};
+   std::vector<int> v(myints,myints+8);           // 10 20 30 30 20 10 10 20
+	
+   std::sort (v.begin(), v.end());                // 10 10 10 20 20 20 30 30
+	
+   std::vector<int>::iterator low,up;
+   low=std::lower_bound (v.begin(), v.end(), 20); //          ^
+   up= std::upper_bound (v.begin(), v.end(), 20); //                   ^
+	
+   std::cout << "limite inferior en la posicion " << (low- v.begin()) << '\n';
+   std::cout << "limite superior en la posicion " << (up - v.begin()) << '\n';
+   
+   return 0;
+}
+\end{lstlisting}
+
+
+\item \textbf{upper\_bound:} Devuelve un iterador que apunta al primer elemento del rango $[begin, end)$ que compara mayor que val. Los elementos se comparan usando operator $<$ para la primera versión y comp para la segunda. Los elementos del rango ya deberán estar ordenados según este mismo criterio (operador $<$ o comp), o al menos particionados respecto a val. La función optimiza el número de comparaciones realizadas comparando elementos no consecutivos del rango ordenado, lo cual es especialmente eficiente para iteradores de acceso aleatorio. A diferencia de lower\_bound, el valor señalado por el iterador devuelto por esta función no puede ser equivalente a val, solo mayor.
+
+\textbf{Parámetros:}
+
+\begin{itemize}
+	\item \textbf{first, last:} Reenvía iteradores a las posiciones inicial y final de una secuencia ordenada (o correctamente dividida). El rango utilizado es [primero, último), que contiene todos los elementos entre el primero y el último, incluido el elemento señalado por el primero pero no el elemento señalado por el último.
+	
+	
+	\item \textbf{val:} Valor del límite superior a buscar en el rango.
+	Para (1), T será un tipo que admita la comparación con elementos del rango [primero, último) como operando del lado izquierdo del operador <.
+	
+	\item \textbf{comp:}  Función binaria que acepta dos argumentos (el primero del tipo señalado por ForwardIterator, y el segundo, siempre val), y devuelve un valor convertible a bool. El valor devuelto indica si se considera que el primer argumento va antes del segundo. La función no modificará ninguno de sus argumentos. Puede ser un puntero de función o un objeto de función.
+\end{itemize} 
+
+\begin{lstlisting}[language=C++]
+#include <iostream>  // std::cout
+#include <algorithm> // std::lower_bound, std::upper_bound, std::sort
+#include <vector>    // std::vector
+	
+int main () {
+   int myints[] = {10,20,30,30,20,10,10,20};
+   std::vector<int> v(myints,myints+8);           // 10 20 30 30 20 10 10 20
+		
+   std::sort (v.begin(), v.end());                // 10 10 10 20 20 20 30 30
+		
+   std::vector<int>::iterator low,up;
+   low=std::lower_bound (v.begin(), v.end(), 20); //          ^
+   up= std::upper_bound (v.begin(), v.end(), 20); //                   ^
+		
+   std::cout << "limite inferior en la posicion " << (low- v.begin()) << '\n';
+   std::cout << "limite superior en la posicion " << (up - v.begin()) << '\n';
+		
+   return 0;
+}
+\end{lstlisting}
+
+\item \textbf{equal\_range:} Devuelve los límites del subrango que incluye todos los elementos del rango $[begin, end)$ con valores equivalentes a val. Los elementos se comparan usando operator $<$ para la primera versión y comp para la segunda. Dos elementos, $a$ y $b$, se consideran equivalentes si $(!(a<b) \&\& !(b<a))$ o si $(!comp(a,b) \&\& !comp(b,a))$. Los elementos del rango ya deberán estar ordenados según este mismo criterio (operador $<$ o comp), o al menos particionados respecto a val. Si val no es equivalente a ningún valor en el rango, el subrango devuelto tiene una longitud de cero, con ambos iteradores apuntando al valor más cercano mayor que val, si lo hay, o al último, si val se compara con un valor mayor que todos los elementos en el rango. rango.
+
+
+\textbf{Parámetros:}
+
+\begin{itemize}
+	\item \textbf{first, last:} Reenvía iteradores a las posiciones inicial y final de una secuencia ordenada (o correctamente dividida). El rango utilizado es [primero, último), que contiene todos los elementos entre el primero y el último, incluido el elemento señalado por el primero pero no el elemento señalado por el último.
+	
+	
+	\item \textbf{val:} Valor del subrango a buscar en el rango.
+	Para (1), T será un tipo que admita la comparación con elementos del rango [primero, último) como cualquiera de los operandos del operador $<$.
+	
+	\item \textbf{comp:} Función binaria que acepta dos argumentos del tipo señalado por ForwardIterator (y de tipo T), y devuelve un valor convertible a bool. El valor devuelto indica si se considera que el primer argumento va antes del segundo. La función no modificará ninguno de sus argumentos. Puede ser un puntero de función o un objeto de función.
+\end{itemize} 
+
+\begin{lstlisting}[language=C++]
+#include <iostream>     // std::cout
+#include <algorithm>    // std::equal_range, std::sort
+#include <vector>       // std::vector
+
+bool mygreater (int i,int j) { return (i>j); }
+
+int main () {
+   int myints[] = {10,20,30,30,20,10,10,20};
+   std::vector<int> v(myints,myints+8); // 10 20 30 30 20 10 10 20
+   std::pair<std::vector<int>::iterator,std::vector<int>::iterator> bounds;
+	
+   // usando comparacion predeterminada:
+   std::sort (v.begin(), v.end());                  // 10 10 10 20 20 20 30 30
+   bounds=std::equal_range (v.begin(), v.end(), 20) //          ^        ^
+	
+   // usando "mygreater" como comp:
+   std::sort (v.begin(), v.end(), mygreater);                   // 30 30 20 20 20 10 10 10
+   bounds=std::equal_range (v.begin(), v.end(), 20, mygreater); //       ^        ^
+	
+   std::cout << "limites en posiciones " << (bounds.first - v.begin());
+   std::cout << " y " << (bounds.second - v.begin()) << '\n';
+	
+   return 0;
+}
+\end{lstlisting}	
+\end{enumerate}
+
 \subsection{Java}
 \begin{lstlisting}[language=Java]
 /* Busqueda de un elemento en un arreglo
@@ -46,10 +210,123 @@ int binarySearch(int arr[], int x) {
    return -1;
 }
 
-/*las clases Arrays y Colections poseen el metodo busqueda binaria 
-* para buscar un elemento bien sea dentro de un arreglo o coleccion, 
-* en ambos caso devuelve la posicion donde se encuentra el elemento 
-* buscado. En caso de no encontrarse el valor devuelto es -1. El arreglo
-* o colecion debe esta ordenado de forma ascendente  previamente */
-
 \end{lstlisting}
+
+\subsubsection{Funciones de Java relacionados con la búsqueda binaria}
+
+\begin{enumerate}
+	\item \textbf{Arrays.binarySearch():} El método busca en la matriz especificada del tipo de datos dado el valor especificado utilizando el algoritmo de búsqueda binaria. La matriz debe ordenarse según el método Arrays.sort() antes de realizar esta llamada. Si no está ordenado, los resultados no están definidos. Si la matriz contiene varios elementos con el valor especificado, no hay garantía de cuál se encontrará.
+	
+	\textbf{Parámetros:}
+	
+	\begin{itemize}
+		\item La matriz a buscar
+		\item  El valor a buscar
+	\end{itemize}
+   
+   Retorna el índice de la clave de búsqueda, si está contenida en la matriz; de lo contrario, (-1). El punto de inserción se define como el punto en el que la clave se insertaría en la matriz: el índice del primer elemento mayor que la clave, o a.length si todos los elementos de la matriz son menores que la clave especificada. Tenga en cuenta que esto garantiza que el valor de retorno será >= 0 si y sólo si se encuentra la clave. Hay ciertos puntos importantes a tener en cuenta, como sigue:
+   
+   \begin{itemize}
+   	\item Si la lista de entrada no está ordenada, los resultados no están definidos.
+   	\item Si hay duplicados, no hay garantía de cuál se encontrará. 
+   \end{itemize}
+
+\begin{lstlisting}[language=Java]
+public class Main {
+   public static void main(String[] args){
+      int arr[] = { 10, 20, 15, 22, 35 };
+      Arrays.sort(arr);
+      int key = 22;
+      int res = Arrays.binarySearch(arr, key);
+		
+      if (res >= 0) System.out.println( key + " encontrada en la posicion = " + res);
+      else System.out.println(key + " No encontrada");
+		
+      key = 40;
+      res = Arrays.binarySearch(arr, key);
+      if (res >= 0) System.out.println( key + " encontrada en el indice = " + res);
+      else System.out.println(key + " No encontrada");
+	}
+}
+\end{lstlisting}
+   
+   \item \textbf{Collections.binarySearch():} 
+   
+   \textbf{Parámetros:}
+   
+   \begin{itemize}
+   	\item La colección a buscar
+   	\item  El valor a buscar
+   \end{itemize}
+   
+   Retorna el índice de la clave de búsqueda, si está contenida en la colección; de lo contrario, (-1). El punto de inserción se define como el punto en el que la clave se insertaría en la matriz: el índice del primer elemento mayor que la clave, o a.length si todos los elementos de la matriz son menores que la clave especificada. Tenga en cuenta que esto garantiza que el valor de retorno será >= 0 si y sólo si se encuentra la clave. Hay ciertos puntos importantes a tener en cuenta, como sigue:
+   
+   \begin{itemize}
+   	\item Si la lista de entrada no está ordenada, los resultados no están definidos.
+   	\item Si hay duplicados, no hay garantía de cuál se encontrará. 
+   \end{itemize}
+   
+   \begin{lstlisting}[language=Java]
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Main {
+   public static void main(String[] args){
+      List<Integer> al = new ArrayList<Integer>();
+      al.add(100); al.add(50);
+      al.add(30); al.add(10);
+      al.add(2);
+      
+      // El ultimo parametro especifica el comparador
+      // metodo utilizado para ordenar.
+      int index = Collections.binarySearch(al, 50, Collections.reverseOrder());
+      System.out.println("Encontrado en la posicion " + index);
+   }
+}
+\end{lstlisting}
+
+Buscando en una lista de objetos de clase definidos por el usuario:
+
+\begin{lstlisting}[language=Java]
+import java.util.*;
+
+class Main {
+   public static void main(String[] args) {
+      List<Domain> l = new ArrayList<Domain>();
+      l.add(new Domain(10, "www.google.com"));
+      l.add(new Domain(20, "eva.umcc.cu"));
+      l.add(new Domain(30, "youtube.com"));
+      l.add(new Domain(40, "dmoj.uclv.edu.cu"));
+      
+      Comparator<Domain> c = new Comparator<Domain>() {
+         public int compare(Domain u1, Domain u2){
+            return u1.getId().compareTo(u2.getId());
+         }
+      };
+		
+      // Buscando un dominio con valor clave 10. Para buscar
+      // creamos un objeto de dominio con clave 10.
+      int index = Collections.binarySearch(l, new Domain(10, null), c);
+      System.out.println("Encontrado en el indice " + index);
+		
+      // Buscando un articulo con la clave 5
+      index = Collections.binarySearch(l, new Domain(5, null), c);
+      System.out.println(index);
+   }
+}
+
+class Domain {
+   private int id;
+   private String url;
+	
+   // Constructor
+   public Domain(int id, String url) {
+      this.id = id;
+      this.url = url;
+   }
+   public Integer getId() { return Integer.valueOf(id); }
+}
+\end{lstlisting}
+	
+\end{enumerate}

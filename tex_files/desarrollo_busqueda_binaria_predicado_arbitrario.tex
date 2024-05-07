@@ -1,0 +1,22 @@
+Sea $f : \{0,1,\dots, n-1\} \to \{0, 1\}$  ser una función booleana definida en $f : \{0,1,\dots, n-1\} \to \{0, 1\}$  tal que aumenta monótonamente, es decir
+
+$$ f(0) \leq f(1) \leq \dots \leq f(n-1). $$
+
+La búsqueda binaria, como se describe arriba, encuentra la partición de la matriz por el predicado $f(M)$ , manteniendo el valor booleano de $k < A_M$  expresión. Es posible utilizar un predicado monótono arbitrario en lugar de $k < A_M$. Es particularmente útil cuando el cálculo de $f(k)$ esto requiere demasiado tiempo para calcularlo para cada valor posible. En otras palabras, la búsqueda binaria encuentra el índice único $L$ tal que $f(L) = 0$ y
+$f(R)=f(L+1)=1$ si tal punto de transición existe, o nos da $L = n-1$ si $f(0) = \dots = f(n-1) = 0$ o $L = -1$  si $f(0) = \dots = f(n-1) = 1$.
+
+Prueba de corrección suponiendo que exista un punto de transición, es decir $f(0)=0$ y $f(n-1)=1$: La implementación mantiene el bucle invariante $f(l)=0, f(r)=1$. . Cuando $r - l > 1$, la elección de $m$ medio $r-l$ siempre disminuirá. El bucle termina cuando $r - l = 1$, dándonos nuestro punto de transición deseado.
+
+Esta situación ocurre a menudo cuando se nos pide que calculemos algún valor, pero solo somos capaces de verificar si este valor es al menos $i$. Por ejemplo, te dan una matriz $a_1,\dots,a_n$ y se le pide que encuentre la suma promedio máxima fijada
+
+$$ \left \lfloor \frac{a_l + a_{l+1} + \dots + a_r}{r-l+1} \right\rfloor $$
+
+entre todos los pares posibles de $l,r$ tal que $r-l \geq x$. Una de las formas sencillas de resolver este problema es comprobar si la respuesta es al menos $\lambda$ , eso si hay un par $l, r$  tal que lo siguiente es cierto:
+
+$$ \frac{a_l + a_{l+1} + \dots + a_r}{r-l+1} \geq \lambda. $$
+
+De manera equivalente, se reescribe como
+
+$$ (a_l - \lambda) + (a_{l+1} - \lambda) + \dots + (a_r - \lambda) \geq 0, $$
+
+entonces ahora necesitamos verificar si hay un subarreglo de un nuevo arreglo $a_i - \lambda$ de longitud al menos $x+1$ con suma no negativa, lo cual es factible con algunas sumas de prefijo.

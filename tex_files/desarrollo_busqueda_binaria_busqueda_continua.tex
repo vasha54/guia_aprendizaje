@@ -1,0 +1,13 @@
+Dejar $f : \mathbf{R}  \to \mathbf{R} $ ser una función de valor real que es continua en un segmento $[L, R]$.
+
+Sin pérdida de generalidad supongamos que $f(L) \leq f(R)$. Del teorema del valor intermedio se deduce que para cualquier $y \in [f(L), f(R)]$ hay $x \in [L, R]$ tal que $f(x) = y$. Tenga en cuenta que, a diferencia de los párrafos anteriores, no es necesario que la función sea monótona.
+
+El valor $x$ podría aproximarse hasta $\pm\delta$ en $O\left(\log \frac{RL}{\delta}\right)$ tiempo para 
+cualquier valor específico de $\delta$. La idea es esencialmente la misma, si tomamos $M \in (L, R)$ entonces 
+podríamos reducir el intervalo de búsqueda a cualquiera de los dos $[L,M]$ o $[M,R]$ dependiendo de si $f(M)$ es mas grande que $y$ . Un ejemplo común aquí sería encontrar raíces de polinomios de grados impares.
+
+
+Por ejemplo, dejemos $f(x)=x^3 + ax^2 + bx + c$. Entonces $f(L) \to -\infty$ y $f(R) \to +\infty$ con
+$L \to -\infty$ y $R \to +\infty$. Lo que significa que siempre es posible encontrar cantidades 
+suficientemente pequeñas $l$ y suficientemente grande $R$ tal que $f(L) < 0$ y $f(R) > 0$. Entonces, es 
+posible encontrar con búsqueda binaria un intervalo arbitrariamente pequeño que contenga $x$ tal que $f(x)=0$ .

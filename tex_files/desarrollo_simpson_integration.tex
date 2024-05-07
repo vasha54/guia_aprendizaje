@@ -1,0 +1,32 @@
+La integración mediante la fórmula de Simpson es un método numérico utilizado para aproximar el valor de una integral definida. Este método se basa en la idea de aproximar el área bajo una curva mediante la división de la región en segmentos y la utilización de polinomios de segundo grado para estimar el valor de la integral.
+
+La fórmula de Simpson es más precisa que otros métodos de integración numérica, como la regla del trapecio, ya que utiliza polinomios de segundo grado para ajustarse mejor a la curva original. Esto permite obtener aproximaciones más precisas del valor de la integral definida.
+
+\subsection{Fórmula Simpson}
+
+El principio básico de la fórmula de Simpson consiste en dividir el intervalo de integración en subintervalos de igual longitud y luego aplicar una fórmula que utiliza los valores de la función en los extremos y en el punto medio de cada subintervalo para aproximar el valor de la integral.
+
+Digamos que tenemos algún número natural $n$. Dividiremos el intervalo de integración $[a, b]$ en $2n$ partes iguales:  
+
+$$x_i = a + i h, ~~ i = 0 \ldots 2n,$$
+$$h = \frac {b-a} {2n}.$$
+
+Ahora calcularemos la función de la integral de forma separada por cada intervalo $[x_ {2i-2}, x_ {2i}]$, $i = 1 \ldots n$, y entonces sumaremos los valores obtenidos por  cada  intervalo.
+
+Entonces, supongamos que consideramos el siguiente intervalo $[x_ {2i-2}, x_ {2i}], i = 1 \ldots n$. Reemplace la función $f(x)$ en una parábola $P(x)$ pasando a través de 3 puntos $(x_{2i-2}, x_{2i-1}, x_{2i})$. Tal parábola siempre existe y es única; Se puede encontrar analíticamente. Por ejemplo, podríamos construirlo utilizando la interpolación polinomial Lagrange. Lo único que queda por hacer es integrar este polinomio. Si hace esto para una función general $f$, recibe una expresión notablemente simple:
+
+$$\int_{x_{2i-2}}^{x_{2i}}f(x)~dx\approx \int_{x_{2i-2}}^{x_{2i}}P(x)~dx =\left(f(x_{2i-2})+ 4f(x_{2i-1})+(f(x_{2i})\right)\frac{h}{3}$$
+
+Agregamos estos valores en todos los intervalos, obtenemos la fórmula final de Simpson:
+
+$$\int_a^bf(x)dx\approx \left(f(x_0)+4f(x_1)+2f(x_2)+4f(x_3)+2f(x_4)+\ldots+4f(x_{2N-1})+f(x_{2N}) \right)\frac{h}{3}$$ 
+
+\subsection{Error}
+
+El error de la  integración mediante la fórmula de Simpson es:
+
+$$ -\tfrac{1}{90} \left(\tfrac{b-a}{2}\right)^5 f^{(4)}(\xi)$$
+
+donde $\xi$ es algún número entre $a$ y $b$.
+
+El error es asintóticamente proporcional a $(b-a)^5$. Sin embargo, las derivaciones anteriores sugieren un error proporcional a $(b-a)^4$. La regla de Simpson gana un orden adicional porque los puntos en los que se evalúa el integrando se distribuyen simétricamente en el intervalo $[a, b]$.

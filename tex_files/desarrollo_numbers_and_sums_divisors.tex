@@ -1,0 +1,56 @@
+\subsection{Números de divisores}
+
+Debe ser obvio que la factorización principal de un divisor $d$ tiene que ser un subconjunto de la factorización principal de $n$ , por ejemplo. $6 = 2 \cdot 3$ es un divisor de $60 = 2^2  \cdot 3  \cdot 5$ . Así que sólo se está consolviendo todos los subconjuntos diferentes de la factorización principal de $n$.
+
+Por lo general, el número de subconjuntos es de $2^x$ por un conjunto con $x$ elementos. Sin embargo, esto ya no es cierto, si hay elementos repetidos en el conjunto. En nuestro caso, algunos factores principales pueden aparecer varias veces en la factorización principal de $n$.
+
+Si un factor primo $p$ aparece $e$ veces en la factorización principal de $n$, entonces podemos usar el factor $p$ hasta la $e$ veces en el subconjunto. Lo que significa que tenemos $e+1$ opciones.
+
+Por lo tanto, si la factorización principal de $n$ es $p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$, donde $p_i$ son números primos diferentes entonces, el número de divisores es:  
+
+$$d(n) = (e_1 + 1) \cdot (e_2 + 1) \cdots (e_k + 1)$$
+
+Una forma de pensarlo es lo siguiente:
+
+\begin{itemize}
+	\item Si hay un único divisor primo $n = p_1^{e_1}$, entonces obviamente tendrá $e_1 + 1$ divisores ($1, p_1, p_1^2, \dots, p_1^{e_1}$).
+	\item Si hay dos divisores primos diferentes  $n = p_1^{e_1} \cdot p_2^{e_2}$, entonces se puede organizar todos los divisores de forma tabular.
+	
+	$$\begin{array}{c|ccccc} & 1 & p_2 & p_2^2 & \dots & p_2^{e_2} \\\\\hline 1 & 1 & p_2 & p_2^2 & \dots & p_2^{e_2} \\\\ p_1 & p_1 & p_1 \cdot p_2 & p_1 \cdot p_2^2 & \dots & p_1 \cdot p_2^{e_2} \\\\ p_1^2 & p_1^2 & p_1^2 \cdot p_2 & p_1^2 \cdot p_2^2 & \dots & p_1^2 \cdot p_2^{e_2} \\\\ \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\\\ p_1^{e_1} & p_1^{e_1} & p_1^{e_1} \cdot p_2 & p_1^{e_1} \cdot p_2^2 & \dots & p_1^{e_1} \cdot p_2^{e_2} \\\\ \end{array}$$
+	
+	lo que nos indica que el número de divisores en este caso es $(e_1 + 1) \cdot (e_2 + 1)$.
+	
+	\item Se puede argumentar de manera similar si hay más de dos factores primos distintos.
+\end{itemize}
+
+\subsection{Suma de divisores}
+
+Podemos realizar el razonamiento de la sección anterior.
+
+\begin{itemize}
+	\item Si hay un único divisor primo $n = p_1^{e_1}$, entonces las suma es:
+	
+	$$1 + p_1 + p_1^2 + \dots + p_1^{e_1} = \frac{p_1^{e_1 + 1} - 1}{p_1 - 1}$$
+	
+	\item Si hay dos divisores primos diferentes  $n = p_1^{e_1} \cdot p_2^{e_2}$, podemos hacer la misma tabla que antes. La diferencia única es que ahora se puede calcular la suma en el lugar de contar los elementos. Es fácil ver que la suma de cada combinación puede expresarse como:
+	
+	$$\left(1 + p_1 + p_1^2 + \dots + p_1^{e_1}\right) \cdot \left(1 + p_2 + p_2^2 + \dots + p_2^{e_2}\right)$$
+	$$ = \frac{p_1^{e_1 + 1} - 1}{p_1 - 1} \cdot \frac{p_2^{e_2 + 1} - 1}{p_2 - 1}$$
+	
+	\item En general, para $n = p_1^{e_1} \cdot p_2^{e_2} \cdots p_k^{e_k}$ tenemos la fórmula:
+	
+	$$\sigma(n) = \frac{p_1^{e_1 + 1} - 1}{p_1 - 1} \cdot \frac{p_2^{e_2 + 1} - 1}{p_2 - 1} \cdots \frac{p_k^{e_k + 1} - 1}{p_k - 1}$$
+	
+\end{itemize}
+
+\subsection{Funciones multiplicativas}
+
+Una función multiplicativa es una función $f (x)$ que se consina
+
+$$f(a \cdot b) = f(a) \cdot f(b)$$
+
+si $a$ y $b$ son coprimos.
+
+Tanto $d(n)$ y $\sigma (n)$ son funciones multiplicativas.
+
+Las funciones multiplicativas tienen una gran variedad de propiedades interesantes, que pueden ser muy útiles en los problemas de teoría de números. Por ejemplo, la convolución Dirichlet de dos funciones multiplicativas también es multiplicativa.

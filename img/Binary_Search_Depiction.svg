@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="470px"
+   height="200px"
+   viewBox="0 0 600 250"
+   version="1.1"
+   id="svg140"
+   sodipodi:docname="Binary_Search_Depiction.svg"
+   inkscape:export-filename="Binary_Search_Depiction.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview142"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="2.6255319"
+     inkscape:cx="168.53728"
+     inkscape:cy="100.17018"
+     inkscape:window-width="1366"
+     inkscape:window-height="708"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg140" />
+  <!--
+  Author: Paul J. DeMarco 
+  Email : pjdemarco@gmail.com
+  Date  : 11/30/2016
+  This is an image of a binary search execution timing diagram.  
+  This image is in the public domain.
+-->
+  <defs
+     id="defs8">
+    <marker
+       id="green_arrow"
+       markerWidth="10"
+       markerHeight="10"
+       refX="0"
+       refY="3"
+       orient="auto"
+       markerUnits="strokeWidth">
+      <path
+         d="M0,0 L0,6 L9,3 z"
+         fill="#559955"
+         id="path2" />
+    </marker>
+    <marker
+       id="blue_arrow"
+       markerWidth="10"
+       markerHeight="10"
+       refX="0"
+       refY="3"
+       orient="auto"
+       markerUnits="strokeWidth">
+      <path
+         d="M0,0 L0,6 L9,3 z"
+         fill="#5555ff"
+         id="path5" />
+    </marker>
+  </defs>
+  <rect
+     x="0"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect10" />
+  <text
+     font-size="15"
+     x="10"
+     y="225"
+     fill="black"
+     id="text12">1</text>
+  <text
+     font-size="6"
+     x="2"
+     y="233"
+     fill="black"
+     id="text14">0</text>
+  <rect
+     x="35"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect16" />
+  <text
+     font-size="15"
+     x="45"
+     y="225"
+     fill="black"
+     id="text18">3</text>
+  <text
+     font-size="6"
+     x="37"
+     y="233"
+     fill="black"
+     id="text20">1</text>
+  <rect
+     x="70"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect22" />
+  <text
+     font-size="15"
+     x="80"
+     y="225"
+     fill="black"
+     id="text24">4</text>
+  <text
+     font-size="6"
+     x="72"
+     y="233"
+     fill="black"
+     id="text26">2</text>
+  <rect
+     x="105"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect28" />
+  <text
+     font-size="15"
+     x="115"
+     y="225"
+     fill="black"
+     id="text30">6</text>
+  <text
+     font-size="6"
+     x="107"
+     y="233"
+     fill="black"
+     id="text32">3</text>
+  <rect
+     x="140"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect34" />
+  <text
+     font-size="15"
+     x="150"
+     y="225"
+     fill="black"
+     id="text36">7</text>
+  <text
+     font-size="6"
+     x="142"
+     y="233"
+     fill="black"
+     id="text38">4</text>
+  <rect
+     x="175"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect40" />
+  <text
+     font-size="15"
+     x="185"
+     y="225"
+     fill="black"
+     id="text42">8</text>
+  <text
+     font-size="6"
+     x="177"
+     y="233"
+     fill="black"
+     id="text44">5</text>
+  <rect
+     x="210"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#f2f2f2"
+     id="rect46" />
+  <text
+     font-size="15"
+     x="220"
+     y="225"
+     fill="black"
+     id="text48">10</text>
+  <text
+     font-size="6"
+     x="212"
+     y="233"
+     fill="black"
+     id="text50">6</text>
+  <rect
+     x="245"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect52" />
+  <text
+     font-size="15"
+     x="255"
+     y="225"
+     fill="black"
+     id="text54">13</text>
+  <text
+     font-size="6"
+     x="247"
+     y="233"
+     fill="black"
+     id="text56">7</text>
+  <rect
+     x="280"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect58" />
+  <text
+     font-size="15"
+     x="290"
+     y="225"
+     fill="black"
+     id="text60">14</text>
+  <text
+     font-size="6"
+     x="282"
+     y="233"
+     fill="black"
+     id="text62">8</text>
+  <rect
+     x="315"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect64" />
+  <text
+     font-size="15"
+     x="325"
+     y="225"
+     fill="black"
+     id="text66">18</text>
+  <text
+     font-size="6"
+     x="317"
+     y="233"
+     fill="black"
+     id="text68">9</text>
+  <rect
+     x="350"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect70" />
+  <text
+     font-size="15"
+     x="360"
+     y="225"
+     fill="black"
+     id="text72">19</text>
+  <text
+     font-size="6"
+     x="352"
+     y="233"
+     fill="black"
+     id="text74">10</text>
+  <rect
+     x="385"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect76" />
+  <text
+     font-size="15"
+     x="395"
+     y="225"
+     fill="black"
+     id="text78">21</text>
+  <text
+     font-size="6"
+     x="387"
+     y="233"
+     fill="black"
+     id="text80">11</text>
+  <rect
+     x="420"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect82" />
+  <text
+     font-size="15"
+     x="430"
+     y="225"
+     fill="black"
+     id="text84">24</text>
+  <text
+     font-size="6"
+     x="422"
+     y="233"
+     fill="black"
+     id="text86">12</text>
+  <rect
+     x="455"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect88" />
+  <text
+     font-size="15"
+     x="465"
+     y="225"
+     fill="black"
+     id="text90">37</text>
+  <text
+     font-size="6"
+     x="457"
+     y="233"
+     fill="black"
+     id="text92">13</text>
+  <rect
+     x="490"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect94" />
+  <text
+     font-size="15"
+     x="500"
+     y="225"
+     fill="black"
+     id="text96">40</text>
+  <text
+     font-size="6"
+     x="492"
+     y="233"
+     fill="black"
+     id="text98">14</text>
+  <rect
+     x="525"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect100" />
+  <text
+     font-size="15"
+     x="535"
+     y="225"
+     fill="black"
+     id="text102">45</text>
+  <text
+     font-size="6"
+     x="527"
+     y="233"
+     fill="black"
+     id="text104">15</text>
+  <rect
+     x="560"
+     y="200"
+     height="35"
+     width="35"
+     style="stroke:#888888;fill:#ffffff"
+     id="rect106" />
+  <text
+     font-size="15"
+     x="570"
+     y="225"
+     fill="black"
+     id="text108">71</text>
+  <text
+     font-size="6"
+     x="562"
+     y="233"
+     fill="black"
+     id="text110">16</text>
+  <line
+     x1="297.5"
+     y1="0"
+     x2="297.5"
+     y2="32"
+     stroke="#5555ff"
+     stroke-width="2"
+     marker-end="url(#blue_arrow)"
+     id="line112" />
+  <line
+     style="stroke:rgb(0,0,0); stroke-width:2;"
+     stroke-dasharray="5, 5"
+     x1="297.5"
+     y1="50"
+     x2="297.5"
+     y2="200"
+     id="line114" />
+  <line
+     x1="122.5"
+     y1="50"
+     x2="122.5"
+     y2="82"
+     stroke="#5555ff"
+     stroke-width="2"
+     marker-end="url(#blue_arrow)"
+     id="line116" />
+  <line
+     style="stroke:rgb(0,0,0); stroke-width:2;"
+     stroke-dasharray="5, 5"
+     x1="122.5"
+     y1="100"
+     x2="122.5"
+     y2="200"
+     id="line118" />
+  <line
+     x1="297.5"
+     y1="50"
+     x2="122.5"
+     y2="50"
+     stroke="#5555ff"
+     stroke-width="2"
+     id="line120" />
+  <line
+     x1="192.5"
+     y1="100"
+     x2="192.5"
+     y2="132"
+     stroke="#5555ff"
+     stroke-width="2"
+     marker-end="url(#blue_arrow)"
+     id="line122" />
+  <line
+     style="stroke:rgb(0,0,0); stroke-width:2;"
+     stroke-dasharray="5, 5"
+     x1="192.5"
+     y1="150"
+     x2="192.5"
+     y2="200"
+     id="line124" />
+  <line
+     x1="122.5"
+     y1="100"
+     x2="192.5"
+     y2="100"
+     stroke="#5555ff"
+     stroke-width="2"
+     id="line126" />
+  <line
+     x1="157.5"
+     y1="150"
+     x2="157.5"
+     y2="182"
+     stroke="#559955"
+     stroke-width="2"
+     marker-end="url(#green_arrow)"
+     id="line128" />
+  <line
+     style="stroke:rgb(0,0,0); stroke-width:2;"
+     stroke-dasharray="5, 5"
+     x1="157.5"
+     y1="200"
+     x2="157.5"
+     y2="200"
+     id="line130" />
+  <line
+     x1="192.5"
+     y1="150"
+     x2="157.5"
+     y2="150"
+     stroke="#559955"
+     stroke-width="2"
+     id="line132" />
+  <text
+     font-size=""
+     x="315"
+     y="57.5"
+     fill="black"
+     id="text134">7&lt;14</text>
+  <text
+     font-size=""
+     x="70"
+     y="107.5"
+     fill="black"
+     id="text136">7&gt;6</text>
+  <text
+     font-size=""
+     x="210"
+     y="157.5"
+     fill="black"
+     id="text138">7&lt;8</text>
+</svg>

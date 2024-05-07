@@ -1,1 +1,10 @@
-La complejidad temporal exacta de esta recursión no se conoce. Está en algún lugar entre $O(\frac{\log m}{\log\log m})$ y $O(n^{\frac{1}{3} - \frac{2}{177} + \epsilon})$ . En la práctica, esta implementación es rápida, por ejemplo, para el módulo $10^9 + 7$ siempre terminará en menos de 50 iteraciones.
+Encontrar el inverso modular utilizando el algoritmo euclidiano extendido tiene una complejidad propia de la implementación del algoritmo euclidiano extendido, es decir  O($\log \min(a,b)$).
+
+Aunque encontrar el inverso modular usando exponenciación binaria es más fácil de entender que el 
+utilizando el algoritmo euclidiano extendido, en el caso de que $m$ no es un número primo, necesitamos 
+calcular la función phi de Euler, que implica la factorización de $m$, lo que podría resultar muy 
+difícil. Si la factorización prima de $m$ se conoce, entonces la complejidad de este método es $O(\log m)$.
+
+La complejidad temporal exacta de la recursión utilizada para Encontrar el inverso modular para módulos primos usando la división euclidiana no se conoce. Está en algún lugar entre $O(\frac{\log m}{\log\log m})$ y $O(n^{\frac{1}{3} - \frac{2}{177} + \epsilon})$ . En la práctica, esta implementación es rápida, por ejemplo, para el módulo $10^9 + 7$ siempre terminará en menos de 50 iteraciones.
+
+Para calcular previamente el inverso modular para cada número en el rango $[1,m-1]$ se hace con una complejidad de $O(m)$.

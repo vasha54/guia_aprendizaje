@@ -2,16 +2,155 @@ Implementación del cálculo del inverso modular entre $i$ y $m$ usando la divis
 
 \subsection{C++}
 
+\subsubsection{Encontrar el inverso modular utilizando el algoritmo euclidiano extendido}
+\begin{lstlisting}[language=C++]
+int extended_euclidean(int a, int b, int& x, int& y) {
+   x = 1, y = 0;
+   int x1 = 0, y1 = 1, a1 = a, b1 = b;
+   while (b1) {
+      int q = a1 / b1;
+      tie(x, x1) = make_tuple(x1, x - q * x1);
+      tie(y, y1) = make_tuple(y1, y - q * y1);
+      tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+   }
+   return a1;
+}
+
+int find_inverse_modular(int a, int m){
+   int x, y;
+   int g = extended_euclidean(a, m, x, y);
+   if (g != 1) return -1;
+   else return (x % m + m) % m;
+}
+\end{lstlisting}
+
+
+\subsubsection{Encontrar el inverso modular para módulos primos usando la división euclidiana}
 \begin{lstlisting}[language=C++]
 long long inverseModular(long long i, long long m) {
    return i <= 1 ? i : m - (long long)(m/i) * inv(m % i, m) % m;
 }
 \end{lstlisting}
 
+\subsubsection{Encontrar el inverso modular para todos los números de 1 a $m$}
+\begin{lstlisting}[language=C++]
+vector<int> inverse_modular_1_to_m(int m){
+   vector<int> inv(m,0);
+   inv[1] = 1;
+   for(int a = 2; a < m; ++a) inv[a] = m - (m/a) * inv[m%a] % m;
+   return inv;
+}
+\end{lstlisting}
+
+
+\subsubsection{Encontrar el inverso modular para una matriz de números módulo $m$}
+\begin{lstlisting}[language=C++]
+int extended_euclidean(int a, int b, int& x, int& y) {
+   x = 1, y = 0;
+   int x1 = 0, y1 = 1, a1 = a, b1 = b;
+   while (b1) {
+      int q = a1 / b1;
+      tie(x, x1) = make_tuple(x1, x - q * x1);
+      tie(y, y1) = make_tuple(y1, y - q * y1);
+      tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+   }
+   return a1;
+}
+
+vector<int> invs(const vector<int> &a, int m) {
+   int n = a.size();
+   if (n == 0) return {};
+   vector<int> b(n);
+   int v = 1;
+   for (int i = 0; i != n; ++i) {
+      b[i] = v;
+      v = static_cast<long long>(v) * a[i] % m;
+   }
+   int x, y;
+   extended_euclidean(v, m, x, y);
+   x = (x % m + m) % m;
+   for (int i = n - 1; i >= 0; --i) {
+      b[i] = static_cast<long long>(x) * b[i] % m;
+      x = static_cast<long long>(x) * a[i] % m;
+   }
+   return b;
+}
+\end{lstlisting}
+
 \subsection{Java}
 
+\subsubsection{Encontrar el inverso modular utilizando el algoritmo euclidiano extendido}
+\begin{lstlisting}[language=Java]
+public static long[] extended_euclidean(long a, long b) {
+   long x = 1, y = 0, x1 = 0, y1 = 1, t;
+   while (b != 0) {
+      long q = a / b; t = x;
+      x = x1; x1 = t - q * x1;
+      t = y; y = y1;
+      y1 = t - q * y1; t = b;
+      b = a - q * b; a = t;
+   }
+   return a > 0 ? new long[]{a, x, y} : new long[]{-a, -x, -y};
+}
+
+
+public static long find_inverse_modular(long a, long m){
+   long [] sols = extended_euclidean(a, m);
+   if (sols[0] != 1) return -1;
+   else return (sols[1] % m + m) % m;
+}
+\end{lstlisting}
+
+\subsubsection{Encontrar el inverso modular para módulos primos usando la división euclidiana}
 \begin{lstlisting}[language=Java]
 public long inverseModular(long i, long m) {
    return i <= 1L ? i : m - (long)(m/i) * inv(m % i, m) % m;
+}
+\end{lstlisting}
+
+\subsubsection{Encontrar el inverso modular para todos los números de 1 a $m$}
+\begin{lstlisting}[language=Java]
+public static int [] inverse_modular_1_to_m(int m){
+   int [] inv = new int [m];
+   Arrays.fill(inv,0);
+   inv[1] = 1;
+   for(int a = 2; a < m; ++a) inv[a] = m - (m/a) * inv[m%a] % m;
+   return inv;
+}
+\end{lstlisting}
+
+
+\subsubsection{Encontrar el inverso modular para una matriz de números módulo $m$}
+\begin{lstlisting}[language=Java]
+public static long[] extended_euclidean(long a, long b) {
+   long x = 1, y = 0, x1 = 0, y1 = 1, t;
+   while (b != 0) {
+      long q = a / b; t = x;
+      x = x1; x1 = t - q * x1;
+      t = y; y = y1;
+      y1 = t - q * y1; t = b;
+      b = a - q * b; a = t;
+   }
+   return a > 0 ? new long[]{a, x, y} : new long[]{-a, -x, -y};
+}
+
+public static long [] invs(long [] a, long m) {
+   int n = a.length;
+   if (n == 0) return new long [0];
+   long [] b =new long [n];
+   long v = 1;
+   for (int i = 0; i != n; ++i) {
+      b[i] = v;
+      v = v * a[i] % m;
+   }
+   long x, y;
+   long [] sols =extended_euclidean(v, m);
+   x= sols[1]; y= sols[2];
+   x = (x % m + m) % m;
+   for (int i = n - 1; i >= 0; --i) {
+      b[i] = x * b[i] % m;
+      x = x * a[i] % m;
+   }
+   return b;
 }
 \end{lstlisting}

@@ -7,7 +7,7 @@ Siga los pasos a continuación para implementar la fórmula recursiva anterior:
 	\item Condición base para el enfoque recursivo, cuando $n \le 1$, devuelve 1.
 	\item Iterar desde $i = 0$ hasta $i < n$
 	\begin{itemize}
-		\item Haga una llamada recursiva a $catalán(i)$ y $catalán(n-i-1)$ y siga sumando el producto de ambos en $res$.
+		\item Haga una llamada recursiva a $catalan(i)$ y $catalan(n-i-1)$ y siga sumando el producto de ambos en $res$.
 	\end{itemize}
 	\item Devuelve $res$
 \end{itemize}
@@ -20,10 +20,10 @@ A continuación se muestra la implementación de la idea anterior:
 
 \begin{itemize}
 	\item Cree una matriz $catalan[]$ para almacenar el i-ésimo número catalán.
-	\item Inicializar, $catalán[0]$ y $catalán[1] = 1$.
+	\item Inicializar, $catalan[0]$ y $catalan[1] = 1$.
 	\item Recorre $i = 2$ hasta el número catalán dado $n$.
 	\begin{itemize}
-		\item Recorra $j = 0$ hasta $j < i$ y siga agregando el valor de $catalan[j] * catalan[i-j-1]$ en $catalán[i]$.
+		\item Recorra $j = 0$ hasta $j < i$ y siga agregando el valor de $catalan[j] * catalan[i-j-1]$ en $catalan[i]$.
 	\end{itemize}
 	\item Finalmente, regresa $catalan[n]$
 \end{itemize}
